@@ -1,0 +1,41 @@
+{
+  "name": "krosmobot",
+  "version": "0.1.0",
+  "private": false,
+  "description": "A stupid Discord bot for a stupid Dofus guild...",
+  "repository": "https://github.com/brinkflew/krosmobot.git",
+  "author": "Antoine van Serveyt <avs+krosmobot@avanserv.com>",
+  "license": "MIT",
+  "main": "dist/client.js",
+  "scripts": {
+    "lint": "eslint --ext ts src",
+    "lint:fix": "eslint --ext ts src --fix",
+    "clean": "rm -rf dist",
+    "build": "tsc -p .",
+    "watch": "tsc -p . -w",
+    "build:clean": "yarn clean && yarn build",
+    "start": "nodemon dist/src/client.js",
+    "serve": "nodemon -e ts --exec 'yarn build:clean && node dist/client.js'"
+  },
+  "dependencies": {
+    "discord-akairo": "^8.1.0",
+    "discord.js": "^12.4.1",
+    "dotenv": "^8.2.0",
+    "rethinkdb-ts": "^2.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.9",
+    "@types/ws": "^7.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "module-alias": "^2.2.2",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  },
+  "_moduleAliases": {
+    "@": "dist"
+  }
+}
