@@ -1,0 +1,64 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "alwaysStrict": true,
+        "checkJs": true,
+        "downlevelIteration": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "forceConsistentCasingInFileNames": true,
+        "importHelpers": true,
+        "incremental": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "./dist",
+        "removeComments": true,
+        "resolveJsonModule": true,
+        "sourceMap": false,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "target": "esnext",
+        "tsBuildInfoFile": "./dist/info.json",
+
+        /* Libs */
+        "lib": [
+            "ESNext",
+            "ESNext.Array",
+            "ESNext.AsyncIterable",
+            "ESNext.Intl",
+            "ESNext.Symbol",
+            "DOM"
+        ],
+
+        /* Paths */
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+
+        /* Types */
+        "types": [
+            "node",
+            "discord.js",
+            "discord-akairo"
+        ]
+    },
+    "include": [
+        "src/**/*.ts",
+        "types/*.d.ts"
+    ],
+    "exclude": [
+        "node_modules/"
+    ]
+}
