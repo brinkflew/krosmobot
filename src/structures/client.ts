@@ -1,7 +1,8 @@
 import {
   AkairoClient,
   AkairoOptions,
-  CommandHandler
+  CommandHandler,
+  ListenerHandler
 } from 'discord-akairo';
 import { ClientOptions } from 'discord.js';
 import { resolve, join } from 'path';
@@ -12,6 +13,7 @@ import { resolve, join } from 'path';
  */
 export class Client extends AkairoClient {
   public commandHandler: CommandHandler;
+  public listenerHandler: ListenerHandler;
 
   /**
    * @param akairoOptions Options to pass to discord-akairo
@@ -24,14 +26,22 @@ export class Client extends AkairoClient {
       directory: resolve(join(__dirname, '..', 'commands')),
       prefix: '!'
     });
+
+    this.listenerHandler = new ListenerHandler(this, {
+      directory: resolve(join(__dirname, '..', 'events'))
+    });
   }
 
   /**
    * Initializes the client and loads the handlers.
    */
   public init(): Client {
-    this.commandHandler.loadAll();
+    this.listenerHandler.setEmitters({
+      commandHandler: this.commandHandler
+    });
 
+    this.commandHandler.loadAll();
+    this.listenerHandler.loadAll();
     return this;
   }
 }
