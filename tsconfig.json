@@ -51,7 +51,8 @@
         "types": [
             "node",
             "discord.js",
-            "discord-akairo"
+            "discord-akairo",
+            "mongoose"
         ]
     },
     "include": [

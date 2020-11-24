@@ -1,8 +1,12 @@
 import { Command as AkairoCommand, CommandOptions } from 'discord-akairo';
-import { Message, MessageEmbed } from 'discord.js';
+import {
+  Guild,
+  Message,
+  MessageEmbed,
+  MessageEmbedOptions
+} from 'discord.js';
 import { GREEN, RED, YELLOW, DEFAULT } from '@/constants/colors';
 import { code } from '@/utils/message';
-import { MessageEmbedOptions } from 'discord.js';
 
 /**
  * Represents a command.
@@ -70,5 +74,37 @@ export class Command extends AkairoCommand {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
     if (!content.color) content.setColor(DEFAULT);
     return this.sendUtil(message, content);
+  }
+
+  /**
+   * Stores a value in the datastore.
+   * @param guild Guild for which data needs to be updated
+   * @param key Key to update
+   * @param value Value to set
+   */
+  public async set(guild: Guild, key: string, value: any): Promise<any> {
+    const settings = this.client.settings;
+    if (guild instanceof Guild) return settings.guilds.set(guild.id, key, value);
+  }
+
+  /**
+   * Fetches a value from the datastore.
+   * @param guild Guild for which data needs to be updated
+   * @param key Key to update
+   * @param defaultValue Default value if none is find
+   */
+  public async get(guild: Guild, key: string, defaultValue: any) {
+    const settings = this.client.settings;
+    if (guild instanceof Guild) return settings.guilds.get(guild.id, key, defaultValue);
+  }
+
+  /**
+   * Removes a value from the datastore.
+   * @param guild Guild from which data needs to be removed
+   * @param key Key to remove
+   */
+  public async delete(guild: Guild, key: string) {
+    const settings = this.client.settings;
+    if (guild instanceof Guild) return settings.guilds.delete(guild.id, key);
   }
 }

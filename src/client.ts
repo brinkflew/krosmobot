@@ -9,10 +9,12 @@ import discordConfig from '@/config/discord';
 // Load environment variables from the `.env` file
 dotenv.config();
 
+// Setup the connection to MongoDB
+import './database';
+
 // Find the owners if set in the environment
-const ownerID = process.env.KROSMOBOT_OWNERS?.split(',') || undefined;
+const ownerID = process.env.KROSMOBOT_OWNERS?.split(',');
 
 // Fire the client up
 new Client({ ownerID, ...akairoConfig }, discordConfig)
-  .init()
   .login(process.env.KROSMOBOT_TOKEN);

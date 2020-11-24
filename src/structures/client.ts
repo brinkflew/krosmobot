@@ -6,14 +6,19 @@ import {
 } from 'discord-akairo';
 import { ClientOptions } from 'discord.js';
 import { resolve, join } from 'path';
+import MongooseProvider from '@/providers/mongoose';
+
+// Import models for the provider
+import { GuildModel } from '@/models';
 
 /**
  * Client connecting to the Discord gateway.
  * Creates the handlers and sets them up.
  */
 export class Client extends AkairoClient {
-  public commandHandler: CommandHandler;
-  public listenerHandler: ListenerHandler;
+  public settings: {
+    guilds: MongooseProvider
+  };
 
   /**
    * @param akairoOptions Options to pass to discord-akairo
@@ -35,6 +40,11 @@ export class Client extends AkairoClient {
     this.listenerHandler = new ListenerHandler(this, {
       directory: resolve(join(__dirname, '..', 'events'))
     });
+
+    /** Providers */
+    this.settings = {
+      guilds: new MongooseProvider(GuildModel)
+    };
   }
 
   /**
@@ -45,8 +55,16 @@ export class Client extends AkairoClient {
       commandHandler: this.commandHandler
     });
 
-    this.commandHandler.loadAll();
-    this.listenerHandler.loadAll();
+    await Promise.all(Object.values(this.settings).map((provider) => provider.init()));
     return this;
+  }
+
+  /**
+   * Login to the Discord gateway.
+   * @param token Token of the Discord bot to boot up
+   */
+  public async login(token?: string) {
+    await this.init();
+    return super.login(token);
   }
 }

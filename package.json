@@ -21,9 +21,11 @@
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.4.1",
     "dotenv": "^8.2.0",
+    "mongoose": "^5.10.15",
     "rethinkdb-ts": "^2.4.5"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.10.1",
     "@types/node": "^14.14.9",
     "@types/ws": "^7.4.0",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
