@@ -93,7 +93,7 @@ export class Command extends AkairoCommand {
    * @param key Key to update
    * @param defaultValue Default value if none is find
    */
-  public async get(guild: Guild, key: string, defaultValue: any) {
+  public get(guild: Guild, key: string, defaultValue: any): any {
     const settings = this.client.settings;
     if (guild instanceof Guild) return settings.guilds.get(guild.id, key, defaultValue);
   }
@@ -106,5 +106,30 @@ export class Command extends AkairoCommand {
   public async delete(guild: Guild, key: string) {
     const settings = this.client.settings;
     if (guild instanceof Guild) return settings.guilds.delete(guild.id, key);
+  }
+
+  /**
+   * Fetches the correct translation for this message.
+   * @param key Key for the translation to fetch
+   * @param message Message which triggered the command
+   * @param args Parameters to pass to the translation
+   */
+  public translate(key: string, message: Message, ...args: any[]): string {
+    const language = message.guild
+      ? <string> this.get(message.guild, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en')
+      : 'en';
+    const locale = this.client.locales.get(language);
+    return locale.translate(key, ...args);
+  }
+
+  /**
+   * Fetches the correct translation for this message.
+   * This is a shortand for `Command#translate()`.
+   * @param key Key for the translation to fetch
+   * @param message Message which triggered the command
+   * @param args Parameters to pass to the translation
+   */
+  public t(key: string, message: Message, ...args: any[]): string {
+    return this.translate(key, message, ...args);
   }
 }

@@ -7,6 +7,7 @@ import {
 import { ClientOptions, Message } from 'discord.js';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
+import { LocaleHandler } from '@/handlers';
 
 // Import models for the provider
 import { GuildModel } from '@/models';
@@ -18,6 +19,7 @@ import { GuildModel } from '@/models';
 export class Client extends AkairoClient {
   public commands: CommandHandler;
   public events: ListenerHandler;
+  public locales: LocaleHandler;
   public settings: {
     guilds: MongooseProvider
   };
@@ -50,6 +52,10 @@ export class Client extends AkairoClient {
       directory: resolve(join(__dirname, '..', 'events'))
     });
 
+    this.locales = new LocaleHandler(this, {
+      directory: resolve(join(__dirname, '..', 'locales'))
+    });
+
     /** Providers */
     this.settings = {
       guilds: new MongooseProvider(GuildModel)
@@ -66,6 +72,7 @@ export class Client extends AkairoClient {
 
     this.commands.loadAll();
     this.events.loadAll();
+    this.locales.loadAll();
 
     await Promise.all(Object.values(this.settings).map((provider) => provider.init()));
     return this;

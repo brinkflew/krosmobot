@@ -16,18 +16,18 @@ export default class PingCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message) {
-    const embed = { title: 'Pong !' };
+    const embed = { title: this.t('COMMAND_PING_RESPONSE_TITLE', message) };
     const sent = await this.embed(message, embed);
-
+    
     const diff = (sent.editedAt || sent.createdAt).getTime() - (message.editedAt || message.createdAt).getTime();
     const ping = Math.round(this.client.ws.ping);
 
     return this.embed(message, {
       ...embed,
       fields: [
-        { name: 'Round-Trip Time', value: `${diff} ms`, inline: true },
+        { name: this.t('COMMAND_PING_RESPONSE_RTT', message), value: `${diff} ms`, inline: true },
         SEPARATORS.HORIZONTAL,
-        { name: 'Heartbeat', value: `${ping} ms`, inline: true }
+        { name: this.t('COMMAND_PING_RESPONSE_HEARTBEAT', message), value: `${ping} ms`, inline: true }
       ]
     });
   }

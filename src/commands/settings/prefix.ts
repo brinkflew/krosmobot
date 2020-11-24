@@ -24,18 +24,19 @@ export default class PrefixCommand extends Command {
      // Reset the default prefix
       if (!prefix) {
         await this.set(message.guild!, 'prefix', defaultPrefix);
-        return this.success(message, `Prefix reset to ${defaultPrefix}`);
+        return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_RESET', message, defaultPrefix));
       }
 
       // Check if the prefix actually changes
-      let oldPrefix = await this.get(message.guild!, 'prefix', defaultPrefix);
-      if (oldPrefix === prefix) return this.warning(message, `Identical prefix`);
+      let oldPrefix = this.get(message.guild!, 'prefix', defaultPrefix);
+      if (oldPrefix === prefix)
+        return this.warning(message, this.t('COMMAND_PREFIX_RESPONSE_IDENTICAL', message));
 
       // Save the new prefix
       await this.set(message.guild!, 'prefix', prefix);
-      return this.success(message, `Prefix changed to ${prefix}`);
+      return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_MODIFIED', message, prefix));
     } catch (error) {
-      return this.error(message, `Couldn't set prefix`, error);
+      return this.error(message, this.t('COMMAND_PREFIX_RESPONSE_ERROR', message));
     }
   }
 }

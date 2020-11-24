@@ -52,7 +52,8 @@
             "node",
             "discord.js",
             "discord-akairo",
-            "mongoose"
+            "mongoose",
+            "common-tags"
         ]
     },
     "include": [
