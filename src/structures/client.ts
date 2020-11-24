@@ -24,7 +24,12 @@ export class Client extends AkairoClient {
 
     this.commandHandler = new CommandHandler(this, {
       directory: resolve(join(__dirname, '..', 'commands')),
-      prefix: '!'
+      prefix: '!',
+      aliasReplacement: /-/g,
+      commandUtil: true,
+      handleEdits: true,
+      storeMessages: true,
+      defaultCooldown: 2000
     });
 
     this.listenerHandler = new ListenerHandler(this, {
