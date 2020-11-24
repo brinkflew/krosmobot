@@ -16,6 +16,8 @@ import { GuildModel } from '@/models';
  * Creates the handlers and sets them up.
  */
 export class Client extends AkairoClient {
+  public commands: CommandHandler;
+  public events: ListenerHandler;
   public settings: {
     guilds: MongooseProvider
   };
@@ -27,7 +29,9 @@ export class Client extends AkairoClient {
   constructor(akairoOptions: AkairoOptions, discordOptions: ClientOptions) {
     super(akairoOptions, discordOptions);
 
-    this.commandHandler = new CommandHandler(this, {
+    /** Handlers */
+
+    this.commands = new CommandHandler(this, {
       directory: resolve(join(__dirname, '..', 'commands')),
       prefix: '!',
       aliasReplacement: /-/g,
@@ -37,7 +41,7 @@ export class Client extends AkairoClient {
       defaultCooldown: 2000
     });
 
-    this.listenerHandler = new ListenerHandler(this, {
+    this.events = new ListenerHandler(this, {
       directory: resolve(join(__dirname, '..', 'events'))
     });
 
@@ -50,10 +54,13 @@ export class Client extends AkairoClient {
   /**
    * Initializes the client and loads the handlers.
    */
-  public init(): Client {
-    this.listenerHandler.setEmitters({
-      commandHandler: this.commandHandler
+  private async init(): Promise<Client> {
+    this.events.setEmitters({
+      commands: this.commands
     });
+
+    this.commands.loadAll();
+    this.events.loadAll();
 
     await Promise.all(Object.values(this.settings).map((provider) => provider.init()));
     return this;
