@@ -4,7 +4,7 @@ import {
   CommandHandler,
   ListenerHandler
 } from 'discord-akairo';
-import { ClientOptions } from 'discord.js';
+import { ClientOptions, Message } from 'discord.js';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 
@@ -33,7 +33,12 @@ export class Client extends AkairoClient {
 
     this.commands = new CommandHandler(this, {
       directory: resolve(join(__dirname, '..', 'commands')),
-      prefix: '!',
+      prefix: (message: Message) => {
+        let prefix = process.env.KROSMOBOT_PREFIX || '!';
+        return message.guild
+          ? this.settings.guilds.get(message.guild.id, 'prefix', prefix)
+          : prefix;
+      },
       aliasReplacement: /-/g,
       commandUtil: true,
       handleEdits: true,
