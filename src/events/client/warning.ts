@@ -1,7 +1,7 @@
 import { Listener } from 'discord-akairo';
 
 /**
- * Does something once the client is ready.
+ * Does something when the client emits a warning.
  */
 export default class extends Listener {
   constructor() {

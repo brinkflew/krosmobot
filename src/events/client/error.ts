@@ -2,7 +2,7 @@ import { Listener } from 'discord-akairo';
 import { shutdown } from '@/utils';
 
 /**
- * Does something once the client is ready.
+ * Does something when the client encounters an error.
  */
 export default class extends Listener {
   constructor() {

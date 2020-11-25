@@ -2,7 +2,7 @@ import { Listener } from 'discord-akairo';
 import { shutdown } from '@/utils';
 
 /**
- * Does something once the client is ready.
+ * Does something once a SIGINT is captured (aka Ctrl+C is pressed).
  */
 export default class extends Listener {
   constructor() {
