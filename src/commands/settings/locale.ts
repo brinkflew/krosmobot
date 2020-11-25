@@ -47,9 +47,11 @@ export default class LocaleCommand extends Command {
 
       // Check if the locale actually changes
       let oldLocale = this.get(settings, 'locale', defaultLocale);
-      if (oldLocale === locale)
-        return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message));
-
+      if (oldLocale === locale) {
+        const language = this.t(`LANG_${oldLocale.toUpperCase()}`, message);
+        return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, language));
+      }
+      
       // Save the new locale
       await this.set(settings, 'locale', locale);
       const language = this.t(`LANG_${locale.toUpperCase()}`, message);

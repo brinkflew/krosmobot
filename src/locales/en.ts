@@ -31,7 +31,7 @@ export default class EnglishLocale extends Locale {
       
       // LOCALE Command
       COMMAND_LOCALE_RESPONSE_MODIFIED: (locale) => `The language has been changed to ${locale}.`,
-      COMMAND_LOCALE_RESPONSE_IDENTICAL: 'The old and the new languages are identical.',
+      COMMAND_LOCALE_RESPONSE_IDENTICAL: (locale) => `The current locale is already set to ${locale}.`,
       COMMAND_LOCALE_RESPONSE_RESET: (locale) => `The language has been reset to ${locale}.`,
       COMMAND_LOCALE_RESPONSE_ERROR: 'An error occured while saving the new language.',
       COMMAND_LOCALE_RESPONSE_UNKNOWN: (locale) => `The locale \`${locale}\` is invalid or does not exist.`,

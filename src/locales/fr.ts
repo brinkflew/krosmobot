@@ -31,7 +31,7 @@ export default class FrenchLocale extends Locale {
       
       // LOCALE Command
       COMMAND_LOCALE_RESPONSE_MODIFIED: (locale) => `La langue a été changée en ${locale}.`,
-      COMMAND_LOCALE_RESPONSE_IDENTICAL: 'L\'ancienne et la nouvelle langues sont identiques.',
+      COMMAND_LOCALE_RESPONSE_IDENTICAL: (locale) => `La langue actuelle est déjà ${locale}.`,
       COMMAND_LOCALE_RESPONSE_RESET: (locale) => `La langue a été réinitialisée à ${locale}.`,
       COMMAND_LOCALE_RESPONSE_ERROR: 'Une erreur est survenue au moment de sauvegarder la nouvelle langue.',
       COMMAND_LOCALE_RESPONSE_UNKNOWN: (locale) => `La langue \`${locale}\` est invalide ou n'existe pas.`,
