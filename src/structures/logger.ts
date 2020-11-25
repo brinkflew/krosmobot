@@ -73,7 +73,7 @@ export class Logger {
    * @param description Message to log
    * @param timestamp Timestamp
    */
-  public ok(description: string, timestamp = Date.now()): Logger {
+  public success(description: string, timestamp = Date.now()): Logger {
     return this.log(description, LEVELS.SUCCESS, timestamp);
   }
 
@@ -82,7 +82,7 @@ export class Logger {
    * @param description Message to log
    * @param timestamp Timestamp
    */
-  public warn(description: string, timestamp = Date.now()): Logger {
+  public warning(description: string, timestamp = Date.now()): Logger {
     return this.log(description, LEVELS.WARNING, timestamp);
   }
 
@@ -151,7 +151,7 @@ export class Logger {
     if (description instanceof Error)
       description = description.stack ? `${description.message}\n${description.stack}` : description.message;
     return this.client.logs.set(
-      parseInt(nanoid(24), 36).toString(),
+      nanoid(24),
       ['level', 'message', 'timestamp'],
       [getName(level), description, timestamp]
     );
