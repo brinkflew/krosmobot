@@ -1,20 +1,26 @@
 import 'module-alias/register';
 import dotenv from 'dotenv';
 import { Client } from '@/structures';
-
-// Import configuration
-import akairoConfig from '@/config/akairo';
-import discordConfig from '@/config/discord';
+import mongoose from 'mongoose';
 
 // Load environment variables from the `.env` file
 dotenv.config();
 
-// Setup the connection to MongoDB
-import './database';
+// Import configuration
+import akairoConfig from '@/config/akairo';
+import discordConfig from '@/config/discord';
+import mongooseConfig, { url } from '@/config/mongoose';
 
 // Find the owners if set in the environment
 const ownerID = process.env.KROSMOBOT_OWNERS?.split(',');
 
+// Create the client
+const client = new Client({ ownerID, ...akairoConfig }, discordConfig);
+
+// Setup the connection to the database
+mongoose.connect(url, mongooseConfig)
+  .then(() => client.logger.success(`Connected to database at '${url.replace(/(:\/{2}).*@/, '$1')}'`))
+  .catch((error) => client.logger.error(error));
+
 // Fire the client up
-new Client({ ownerID, ...akairoConfig }, discordConfig)
-  .login(process.env.KROSMOBOT_TOKEN);
+client.login(process.env.KROSMOBOT_TOKEN);
