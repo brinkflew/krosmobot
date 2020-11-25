@@ -10,7 +10,11 @@ import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler } from '@/handlers';
 
 // Import models for the provider
-import { GuildModel } from '@/models';
+import {
+  GuildModel,
+  ChannelModel,
+  UserModel
+} from '@/models';
 
 /**
  * Client connecting to the Discord gateway.
@@ -21,7 +25,9 @@ export class Client extends AkairoClient {
   public events: ListenerHandler;
   public locales: LocaleHandler;
   public settings: {
-    guilds: MongooseProvider
+    guilds: MongooseProvider,
+    channels: MongooseProvider,
+    users: MongooseProvider
   };
 
   /**
@@ -58,7 +64,9 @@ export class Client extends AkairoClient {
 
     /** Providers */
     this.settings = {
-      guilds: new MongooseProvider(GuildModel)
+      guilds: new MongooseProvider(GuildModel),
+      channels: new MongooseProvider(ChannelModel),
+      users: new MongooseProvider(UserModel)
     };
   }
 

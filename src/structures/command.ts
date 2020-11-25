@@ -1,10 +1,13 @@
 import { Command as AkairoCommand, CommandOptions } from 'discord-akairo';
 import {
   Guild,
+  TextChannel,
+  User,
   Message,
   MessageEmbed,
   MessageEmbedOptions
 } from 'discord.js';
+import MongooseProvider from '@/providers/mongoose';
 import { GREEN, RED, YELLOW, DEFAULT } from '@/constants/colors';
 import { code } from '@/utils/message';
 
@@ -77,14 +80,26 @@ export class Command extends AkairoCommand {
   }
 
   /**
+   * Gets the correct provider depending on the type of the object for
+   * which data will be fetched or modified.
+   * @param holder Instance to find the correct provider for
+   */
+  private getProvider(holder: Guild | TextChannel | User): MongooseProvider {
+    let settings = this.client.settings;
+    if (holder instanceof Guild) return settings.guilds;
+    if (holder instanceof TextChannel) return settings.channels;
+    /* if (holder instanceof User) */ return settings.users;
+  }
+
+  /**
    * Stores a value in the datastore.
    * @param guild Guild for which data needs to be updated
    * @param key Key to update
    * @param value Value to set
    */
-  public async set(guild: Guild, key: string, value: any): Promise<any> {
-    const settings = this.client.settings;
-    if (guild instanceof Guild) return settings.guilds.set(guild.id, key, value);
+  public async set(holder: Guild | TextChannel | User, key: string, value: any): Promise<any> {
+    const settings = this.getProvider(holder);
+    return settings.set(holder.id, key, value);
   }
 
   /**
@@ -93,9 +108,9 @@ export class Command extends AkairoCommand {
    * @param key Key to update
    * @param defaultValue Default value if none is find
    */
-  public get(guild: Guild, key: string, defaultValue: any): any {
-    const settings = this.client.settings;
-    if (guild instanceof Guild) return settings.guilds.get(guild.id, key, defaultValue);
+  public get(holder: Guild | TextChannel | User, key: string, defaultValue: any): any {
+    const settings = this.getProvider(holder);
+    return settings.get(holder.id, key, defaultValue);
   }
 
   /**
@@ -103,9 +118,9 @@ export class Command extends AkairoCommand {
    * @param guild Guild from which data needs to be removed
    * @param key Key to remove
    */
-  public async delete(guild: Guild, key: string) {
-    const settings = this.client.settings;
-    if (guild instanceof Guild) return settings.guilds.delete(guild.id, key);
+  public async delete(holder: Guild | TextChannel | User, key: string) {
+    const settings = this.getProvider(holder);
+    return settings.delete(holder.id, key);
   }
 
   /**
@@ -115,9 +130,8 @@ export class Command extends AkairoCommand {
    * @param args Parameters to pass to the translation
    */
   public translate(key: string, message: Message, ...args: any[]): string {
-    const language = message.guild
-      ? <string> this.get(message.guild, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en')
-      : 'en';
+    const settings = message.guild || message.author;
+    const language = <string> this.get(settings, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en');
     const locale = this.client.locales.get(language);
     return locale.translate(key, ...args);
   }

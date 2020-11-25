@@ -6,7 +6,9 @@ declare module 'discord-akairo' {
     events: ListenerHandler,
     locales: LocaleHandler,
     settings: {
-      guilds: MongooseProvider
+      guilds: MongooseProvider,
+      channels: MongooseProvider,
+      users: MongooseProvider,
     }
   }
 }
