@@ -18,9 +18,11 @@ const ownerID = process.env.KROSMOBOT_OWNERS?.split(',');
 const client = new Client({ ownerID, ...akairoConfig }, discordConfig);
 
 // Setup the connection to the database
+client.logger.info('Connecting to providers...');
 mongoose.connect(url, mongooseConfig)
   .then(() => client.logger.success(`Connected to database at '${url.replace(/(:\/{2}).*@/, '$1')}'`))
   .catch((error) => client.logger.error(error));
 
 // Fire the client up
+client.logger.info('Connecting to the Discord gateway...');
 client.login(process.env.KROSMOBOT_TOKEN);

@@ -3,18 +3,18 @@ import { Listener } from 'discord-akairo';
 /**
  * Does something once the client is ready.
  */
-export default class ReadyListener extends Listener {
+export default class extends Listener {
   constructor() {
-    super('ready', {
+    super('client-warning', {
       emitter: 'client',
-      event: 'ready'
+      event: 'warn'
     });
   }
 
   /**
    * Executes when the event is fired.
    */
-  public exec() {
-    console.log('Ready!');
+  public exec([warning]: [string]) {
+    this.client.logger.warning(warning);
   }
 }
