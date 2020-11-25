@@ -10,3 +10,10 @@ interface LocaleOptions extends AkairoModuleOptions {
 interface MongooseProviderDocument extends Document {
   [key: string]: any;
 }
+
+interface LoggerOptions {
+  stdout?: NodeJS.WriteStream & { fd: 1 };
+  stderr?: NodeJS.WriteStream & { fd: 2 };
+  colors?: boolean;
+  lineLength?: number;
+}

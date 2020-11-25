@@ -48,14 +48,21 @@ export default class MongooseProvider extends Provider {
    * @param key The key to set
    * @param value The value to set
    */
-  async set(id: string, key: string, value: any) {
+  async set(id: string, key: string | string[], value: any | any[]) {
+    if (!Array.isArray(key)) key = [key];
+    if (!Array.isArray(value)) value = [value];
+    if (key.length !== value.length) throw new TypeError('Different number of keys and values');
+
     const data = this.items.get(id) || {};
-    data[key] = value;
-    this.items.set(id, data);
-    
     const doc = await this.getDocument(id);
-    doc[key] = value;
-    doc.markModified(key);
+  
+    for (const [index, k] of key.entries()) {
+      data[k] = value[index];
+      doc[k] = value[index];
+      doc.markModified(k);
+    }
+
+    this.items.set(id, data);
     return doc.save();
   }
   
@@ -88,11 +95,11 @@ export default class MongooseProvider extends Provider {
    * Finds a document by its ID.
    * @param id ID of the guild
    */
-  async getDocument(id: string): Promise<any> {
+  async getDocument(id: string): Promise<MongooseProviderDocument> {
     const obj = await this.model.findOne({ id });
     if (!obj) {
       // eslint-disable-next-line new-cap
-      const newDoc = await new this.model({ id, settings: {} }).save();
+      const newDoc = await new this.model({ id });
       return newDoc;
     }
     

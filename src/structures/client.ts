@@ -8,12 +8,14 @@ import { ClientOptions, Message } from 'discord.js';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler } from '@/handlers';
+import { Logger } from '@/structures';
 
 // Import models for the provider
 import {
   GuildModel,
   ChannelModel,
-  UserModel
+  UserModel,
+  LogModel
 } from '@/models';
 
 /**
@@ -24,6 +26,8 @@ export class Client extends AkairoClient {
   public commands: CommandHandler;
   public events: ListenerHandler;
   public locales: LocaleHandler;
+  public logger: Logger;
+  public logs: MongooseProvider;
   public settings: {
     guilds: MongooseProvider,
     channels: MongooseProvider,
@@ -36,6 +40,11 @@ export class Client extends AkairoClient {
    */
   constructor(akairoOptions: AkairoOptions, discordOptions: ClientOptions) {
     super(akairoOptions, discordOptions);
+
+    /** Logger */
+
+    this.logs = new MongooseProvider(LogModel);
+    this.logger = new Logger(this);
 
     /** Handlers */
 
