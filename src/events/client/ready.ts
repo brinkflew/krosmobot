@@ -16,5 +16,9 @@ export default class extends Listener {
    */
   public exec() {
     this.client.logger.success('Client ready');
+    this.client.logger.info(`Active in ${this.client.guilds.cache.size} guilds`);
+    this.client.logger.info(`Watching ${this.client.guilds.cache.size} channels`);
+    this.client.logger.info(`Listening to ${this.client.users.cache.size} users`);
+    this.client.logger.info(`Loaded ${this.client.commands.modules.size} commands`);
   }
 }
