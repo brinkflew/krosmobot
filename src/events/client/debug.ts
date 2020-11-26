@@ -1,20 +1,20 @@
 import { Listener } from 'discord-akairo';
 
 /**
- * Does something when the client emits a warning.
+ * Does something when the client emits a debugging event.
  */
 export default class extends Listener {
   constructor() {
-    super('client-warning', {
+    super('client-debug', {
       emitter: 'client',
-      event: 'warn'
+      event: 'debug'
     });
   }
 
   /**
    * Executes when the event is fired.
    */
-  public exec(warning: string) {
-    this.client.logger.warning(warning);
+  public exec(description: string) {
+    this.client.logger.debug(description);
   }
 }

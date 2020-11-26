@@ -1,20 +1,20 @@
 import { Listener } from 'discord-akairo';
 
 /**
- * Does something when the client emits a warning.
+ * Emitted when a shard resumes successfully.
  */
 export default class extends Listener {
   constructor() {
-    super('client-warning', {
+    super('client-shard-resume', {
       emitter: 'client',
-      event: 'warn'
+      event: 'shardResume'
     });
   }
 
   /**
    * Executes when the event is fired.
    */
-  public exec(warning: string) {
-    this.client.logger.warning(warning);
+  public exec(id: number) {
+    this.client.logger.success(`Shard ${id} resumed successfuly`);
   }
 }
