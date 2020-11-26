@@ -35,6 +35,12 @@ export default class FrenchLocale extends Locale {
       COMMAND_LOCALE_RESPONSE_RESET: (locale) => `La langue a été réinitialisée à ${locale}.`,
       COMMAND_LOCALE_RESPONSE_ERROR: 'Une erreur est survenue au moment de sauvegarder la nouvelle langue.',
       COMMAND_LOCALE_RESPONSE_UNKNOWN: (locale) => `La langue \`${locale}\` est invalide ou n'existe pas.`,
+
+      // COLOR Command
+      COMMAND_COLOR_RESPONSE_MODIFIED: (color) => `La couleur de bordure des intégrations a été changée en \`${color}\`.`,
+      COMMAND_COLOR_RESPONSE_IDENTICAL: 'L\'ancienne et la nouvelle couleur de bordure des intégrations sont identiques.',
+      COMMAND_COLOR_RESPONSE_RESET: (color) => `La couleur de bordure des intégrations a été réinitialisée en \`${color}\`.`,
+      COMMAND_COLOR_RESPONSE_ERROR: 'Une erreur est survenue au moment de sauvegarder la nouvelle couleur de bordure des intégrations.',
     };
   }
 }

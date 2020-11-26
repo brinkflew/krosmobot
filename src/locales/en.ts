@@ -35,6 +35,12 @@ export default class EnglishLocale extends Locale {
       COMMAND_LOCALE_RESPONSE_RESET: (locale) => `The language has been reset to ${locale}.`,
       COMMAND_LOCALE_RESPONSE_ERROR: 'An error occured while saving the new language.',
       COMMAND_LOCALE_RESPONSE_UNKNOWN: (locale) => `The locale \`${locale}\` is invalid or does not exist.`,
+
+      // COLOR Command
+      COMMAND_COLOR_RESPONSE_MODIFIED: (color) => `The embeds' border color has been changed to \`${color}\`.`,
+      COMMAND_COLOR_RESPONSE_IDENTICAL: 'The old and the new embeds\' border colors are identical.',
+      COMMAND_COLOR_RESPONSE_RESET: (color) => `The embeds' border color has been reset to \`${color}\`.`,
+      COMMAND_COLOR_RESPONSE_ERROR: 'An error occured while saving the new embeds\' border color.',
     };
   }
 }

@@ -75,7 +75,10 @@ export class Command extends AkairoCommand {
    */
   public async embed(message: Message, content: MessageEmbedOptions | MessageEmbed): Promise<Message> {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
-    if (!content.color) content.setColor(DEFAULT);
+    const color = message.guild
+      ? this.client.settings.guilds.get(message.guild.id, 'color', DEFAULT)
+      : this.client.settings.users.get(message.author.id, 'color', DEFAULT);
+    if (!content.color) content.setColor(color);
     return this.sendUtil(message, content);
   }
 
