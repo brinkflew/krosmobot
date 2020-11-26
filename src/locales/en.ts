@@ -41,6 +41,15 @@ export default class EnglishLocale extends Locale {
       COMMAND_COLOR_RESPONSE_IDENTICAL: 'The old and the new embeds\' border colors are identical.',
       COMMAND_COLOR_RESPONSE_RESET: (color) => `The embeds' border color has been reset to \`${color}\`.`,
       COMMAND_COLOR_RESPONSE_ERROR: 'An error occured while saving the new embeds\' border color.',
+
+      // INVITE Command
+      COMMAND_INVITE_RESPONSE_NOLINK: 'Couln\'t generate an invite link for this server. Please try again later.',
+      COMMAND_INVITE_RESPONSE_TITLE: (clientname) => `Add ${clientname} to your Discord server`,
+      COMMAND_INVITE_RESPONSE_FOOTER: oneLine`
+        The above link was generated with the minimum permissions required to run all its commands.
+        All permissions might not be correct for all servers, hence do not hesitate to uncheck the boxes you don't want.
+        If you try to use a command that requires more permissions, the bot will tell you.
+      `,
     };
   }
 }

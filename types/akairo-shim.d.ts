@@ -1,3 +1,4 @@
+import { Application } from 'discord.js';
 import { LocaleHandler } from '@/handlers';
 import { Logger } from '@/structures';
 
@@ -13,5 +14,6 @@ declare module 'discord-akairo' {
       channels: MongooseProvider,
       users: MongooseProvider
     }
+    invite: string | null;
   }
 }

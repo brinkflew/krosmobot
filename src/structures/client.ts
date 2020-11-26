@@ -4,7 +4,13 @@ import {
   CommandHandler,
   ListenerHandler
 } from 'discord-akairo';
-import { ClientOptions, Message } from 'discord.js';
+import {
+  Application,
+  ClientOptions,
+  Message,
+  Permissions,
+  PermissionResolvable
+} from 'discord.js';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler } from '@/handlers';
@@ -28,11 +34,13 @@ export class Client extends AkairoClient {
   public locales: LocaleHandler;
   public logger: Logger;
   public logs: MongooseProvider;
+  public application?: Application | null;
   public settings: {
     guilds: MongooseProvider,
     channels: MongooseProvider,
     users: MongooseProvider
   };
+
 
   /**
    * @param akairoOptions Options to pass to discord-akairo
@@ -97,8 +105,38 @@ export class Client extends AkairoClient {
    * Login to the Discord gateway.
    * @param token Token of the Discord bot to boot up
    */
-  public async login(token?: string) {
+  public async connect(token?: string): Promise<Client> {
     await this.init();
-    return super.login(token);
+    await super.login(token);
+    this.application = await this.fetchApplication();
+    return this;
   }
+
+  /**
+   * URL to invite the bot to a new guild.
+   * Permissions are calculated automatically based on the rights of the bot
+   * in the current server.
+   */
+  public get invite(): string | null {
+    const { application } = this;
+    if (!application) return null;
+
+    const permissions = Client.basePermissions;
+
+    [...this.commands.modules.values()].map((command) => {
+      if (Array.isArray(command.clientPermissions))
+        return [...command.clientPermissions].map((permission) => permissions.add(permission));
+      if (['string', 'number'].includes(typeof command.clientPermissions))
+        return permissions.add(<number | PermissionResolvable>command.clientPermissions);
+      return null;
+    });
+
+    return `https://discordapp.com/oauth2/authorize?client_id=${application.id}&permissions=${permissions.bitfield}&scope=bot`;
+  }
+
+  /**
+	 * The base Permissions that the {@link Client#invite} asks for.
+   * Defaults to [VIEW_CHANNEL, SEND_MESSAGES].
+	 */
+	public static basePermissions = new Permissions(3072);
 }

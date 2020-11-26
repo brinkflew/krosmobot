@@ -25,4 +25,4 @@ mongoose.connect(url, mongooseConfig)
 
 // Fire the client up
 client.logger.info('Connecting to the Discord gateway...');
-client.login(process.env.KROSMOBOT_TOKEN);
+client.connect(process.env.KROSMOBOT_TOKEN);

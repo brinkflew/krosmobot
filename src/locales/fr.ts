@@ -41,6 +41,15 @@ export default class FrenchLocale extends Locale {
       COMMAND_COLOR_RESPONSE_IDENTICAL: 'L\'ancienne et la nouvelle couleur de bordure des intégrations sont identiques.',
       COMMAND_COLOR_RESPONSE_RESET: (color) => `La couleur de bordure des intégrations a été réinitialisée en \`${color}\`.`,
       COMMAND_COLOR_RESPONSE_ERROR: 'Une erreur est survenue au moment de sauvegarder la nouvelle couleur de bordure des intégrations.',
+      
+      // INVITE Command
+      COMMAND_INVITE_RESPONSE_NOLINK: 'Impossible de générer l\'invitation. Merc de réessayer plus tard.',
+      COMMAND_INVITE_RESPONSE_TITLE: (clientname) => `Ajoutez ${clientname} à votre serveur Discord`,
+      COMMAND_INVITE_RESPONSE_FOOTER: oneLine`
+        Le lien ci-dessus a été généré avec les permissions minimum requises pour utiliser chaque commande sur ce serveur.
+        Toutes les permissions peuvent ne pas être correctes pour chaque serveur, donc n'hésitez pas à décocher certaines cases.
+        Si vous essayez de lancer une commande qui necessite de plus amples permissions, le bot vous le fera savoir.
+      `,
     };
   }
 }
