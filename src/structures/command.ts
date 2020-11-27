@@ -8,7 +8,12 @@ import {
   MessageEmbedOptions
 } from 'discord.js';
 import MongooseProvider from '@/providers/mongoose';
-import { GREEN, RED, YELLOW, DEFAULT } from '@/constants/colors';
+import {
+  EMBED_COLOR_GREEN,
+  EMBED_COLOR_RED,
+  EMBED_COLOR_YELLOW,
+  EMBED_COLOR_DEFAULT
+} from '@/constants';
 import { code } from '@/utils/message';
 
 /**
@@ -39,7 +44,7 @@ export class Command extends AkairoCommand {
    */
   public async success(message: Message, description: string): Promise<Message> {
     this.handler.emit('command-success', this, message);
-    const embed = new MessageEmbed({ color: GREEN, description });
+    const embed = new MessageEmbed({ color: EMBED_COLOR_GREEN, description });
     return this.sendUtil(message, embed);
   }
 
@@ -53,7 +58,7 @@ export class Command extends AkairoCommand {
     this.handler.emit('command-error', this, message, error);
     if (error instanceof Error) error = error.toString();
     if (typeof error === 'string') description = `${description} ${code(error)}`;
-    const embed = new MessageEmbed({ color: RED, description });
+    const embed = new MessageEmbed({ color: EMBED_COLOR_RED, description });
     return this.sendUtil(message, embed);
   }
 
@@ -64,7 +69,7 @@ export class Command extends AkairoCommand {
    */
   public async warning(message: Message, description: string): Promise<Message> {
     this.handler.emit('command-warning', this, message);
-    const embed = new MessageEmbed({ color: YELLOW, description });
+    const embed = new MessageEmbed({ color: EMBED_COLOR_YELLOW, description });
     return this.sendUtil(message, embed);
   }
 
@@ -76,8 +81,8 @@ export class Command extends AkairoCommand {
   public async embed(message: Message, content: MessageEmbedOptions | MessageEmbed): Promise<Message> {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
     const color = message.guild
-      ? this.client.settings.guilds.get(message.guild.id, 'color', DEFAULT)
-      : this.client.settings.users.get(message.author.id, 'color', DEFAULT);
+      ? this.client.settings.guilds.get(message.guild.id, 'color', EMBED_COLOR_DEFAULT)
+      : this.client.settings.users.get(message.author.id, 'color', EMBED_COLOR_DEFAULT);
     if (!content.color) content.setColor(color);
     return this.sendUtil(message, content);
   }

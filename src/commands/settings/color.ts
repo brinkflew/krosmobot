@@ -1,7 +1,7 @@
 import { Argument } from 'discord-akairo';
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { DEFAULT } from '@/constants/colors';
+import { EMBED_COLOR_DEFAULT } from '@/constants';
 
 /**
  * Change the color used in embed borders for the current guild.
@@ -31,14 +31,14 @@ export default class ColorCommand extends Command {
     try {
      // Reset the default color
       if (!color) {
-        await this.set(message.guild!, 'color', DEFAULT);
-        return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_RESET', message, DEFAULT) });
+        await this.set(message.guild!, 'color', EMBED_COLOR_DEFAULT);
+        return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_RESET', message, EMBED_COLOR_DEFAULT) });
       }
 
       color = color.toUpperCase();
 
       // Check if the color actually changes
-      let oldColor = this.get(message.guild!, 'color', DEFAULT);
+      let oldColor = this.get(message.guild!, 'color', EMBED_COLOR_DEFAULT);
       if (oldColor === color)
         return this.warning(message, this.t('COMMAND_COLOR_RESPONSE_IDENTICAL', message));
 

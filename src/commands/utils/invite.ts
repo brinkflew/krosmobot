@@ -1,5 +1,6 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
+import { DEFAULT_CLIENTNAME } from '@/constants';
 
 /**
  * Prepare an invite to add the client to a guild.
@@ -24,7 +25,7 @@ export default class InviteCommand extends Command {
 
     return this.embed(message, {
       title: this.t('COMMAND_INVITE_RESPONSE_TITLE',
-        message, this.client.user?.username || process.env.KROSMOBOT_USERNAME || 'krosmoBot'),
+        message, this.client.user?.username || process.env.KROSMOBOT_USERNAME || DEFAULT_CLIENTNAME),
       url: invite,
       footer: { text: this.t('COMMAND_INVITE_RESPONSE_FOOTER', message) }
     });

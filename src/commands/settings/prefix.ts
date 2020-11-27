@@ -1,5 +1,6 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
+import { DEFAULT_PREFIX } from '@/constants';
 
 /**
  * Change the bot prefix for the current guild.
@@ -19,7 +20,7 @@ export default class PrefixCommand extends Command {
    */
   public async exec(message: Message, { prefix }: any): Promise<Message> {
     try {
-      const defaultPrefix = process.env.KROSMOBOT_PREFIX || '!';
+      const defaultPrefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
 
      // Reset the default prefix
       if (!prefix) {
