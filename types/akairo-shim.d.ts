@@ -1,4 +1,3 @@
-import { Application } from 'discord.js';
 import { LocaleHandler } from '@/handlers';
 import { Logger } from '@/structures';
 
