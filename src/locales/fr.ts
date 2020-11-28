@@ -164,6 +164,28 @@ export default class FrenchLocale extends Locale {
       COMMAND_HELP_RESPONSE_DM: 'L\'aide des commandes vous a été envoyée par message privé.',
       COMMAND_HELP_RESPONSE_FROMGUILD: (guildname) => `Aide demandée sur ${guildname}`,
       COMMAND_HELP_RESPONSE_ERROR: 'Une erreur est survenue en récupérant l\'aide.',
+
+      // ECHO Command
+      COMMAND_ECHO_DESCRIPTION_SHORT: 'Répète un message.',
+      COMMAND_ECHO_DESCRIPTION_EXTENDED: oneLine`
+        Renvoie le contenu d'un message à l'identique dans un salon du même serveur au choix.
+        Il est également possible d'y joindre un fichier ou une image.
+      `,
+      COMMAND_ECHO_DESCRIPTION_EXAMPLE: (prefix) => stripIndent`
+        Envoyer un message dans le salon '\#test' :
+        ${usage(prefix, 'echo #test <message>')}
+        Envoyer un message dans le salon courant :
+        ${usage(prefix, 'echo <message>')}
+        Envoyer un message dans le salon '\#general' et y joindre une image :
+        ${usage(prefix, 'echo #general file:https://www.cesitenexistepas.com/image.jpg <message>')}
+      `,
+      COMMAND_ECHO_DESCRIPTION_USAGE: (prefix) => stripIndent`
+        ${usage(prefix, 'echo [salon] [file:url] [message]')}
+        ${argument('salon')} *Mention* du salon dans lequel envoyer le message (optionnel)
+        ${argument('file:url')} \`file:\ suivit de l'URL d'un fichier ou d'une image à joindre (optionnel)
+        ${argument('message')} Contenu du message à envoyer (optionnel)
+      `,
+      COMMAND_ECHO_RESPONSE_SENT: (channel) => `Message envoyé dans le channel \#${channel}`,
     };
   }
 }
