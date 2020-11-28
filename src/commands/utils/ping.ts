@@ -8,7 +8,14 @@ import { INLINE_SEPARATOR } from '@/constants';
  */
 export default class PingCommand extends Command {
   constructor() {
-    super('ping', {});
+    super('ping', {
+      description: {
+        short: 'COMMAND_PING_DESCRIPTION_SHORT',
+        extended: 'COMMAND_PING_DESCRIPTION_EXTENDED',
+        example: 'COMMAND_PING_DESCRIPTION_EXAMPLE',
+        usage: 'COMMAND_PING_DESCRIPTION_USAGE'
+      },
+    });
   }
 
   /**

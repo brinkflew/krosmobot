@@ -69,7 +69,8 @@ export class Client extends AkairoClient {
       commandUtil: true,
       handleEdits: true,
       storeMessages: true,
-      defaultCooldown: 2000
+      defaultCooldown: 2000,
+      automateCategories: true
     });
 
     this.events = new ListenerHandler(this, {

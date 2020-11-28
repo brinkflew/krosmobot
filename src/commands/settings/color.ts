@@ -9,7 +9,14 @@ import { EMBED_COLOR_DEFAULT } from '@/constants';
 export default class ColorCommand extends Command {
   constructor() {
     super('color', {
-      userPermissions: ['MANAGE_GUILD']
+      aliases: ['colour'],
+      userPermissions: ['MANAGE_GUILD'],
+      description: {
+        short: 'COMMAND_COLOR_DESCRIPTION_SHORT',
+        extended: 'COMMAND_COLOR_DESCRIPTION_EXTENDED',
+        example: 'COMMAND_COLOR_DESCRIPTION_EXAMPLE',
+        usage: 'COMMAND_COLOR_DESCRIPTION_USAGE'
+      },
     });
   }
 

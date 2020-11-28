@@ -9,7 +9,13 @@ export default class LocaleCommand extends Command {
   constructor() {
     super('locale', {
       aliases: ['language', 'lang'],
-      userPermissions: ['MANAGE_GUILD']
+      userPermissions: ['MANAGE_GUILD'],
+      description: {
+        short: 'COMMAND_LOCALE_DESCRIPTION_SHORT',
+        extended: 'COMMAND_LOCALE_DESCRIPTION_EXTENDED',
+        example: 'COMMAND_LOCALE_DESCRIPTION_EXAMPLE',
+        usage: 'COMMAND_LOCALE_DESCRIPTION_USAGE'
+      },
     });
   }
 

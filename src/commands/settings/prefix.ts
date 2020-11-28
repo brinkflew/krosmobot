@@ -10,7 +10,13 @@ export default class PrefixCommand extends Command {
     super('prefix', {
       channel: 'guild',
       userPermissions: ['MANAGE_GUILD'],
-      args: [{ id: 'prefix', type: 'string' }]
+      args: [{ id: 'prefix', type: 'string' }],
+      description: {
+        short: 'COMMAND_PREFIX_DESCRIPTION_SHORT',
+        extended: 'COMMAND_PREFIX_DESCRIPTION_EXTENDED',
+        example: 'COMMAND_PREFIX_DESCRIPTION_EXAMPLE',
+        usage: 'COMMAND_PREFIX_DESCRIPTION_USAGE'
+      },
     });
   }
 

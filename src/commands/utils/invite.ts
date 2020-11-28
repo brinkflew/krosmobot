@@ -10,7 +10,13 @@ export default class InviteCommand extends Command {
     super('invite', {
       userPermissions: ['CREATE_INSTANT_INVITE'],
       clientPermissions: ["ADD_REACTIONS"],
-      channel: 'guild'
+      channel: 'guild',
+      description: {
+        short: 'COMMAND_INVITE_DESCRIPTION_SHORT',
+        extended: 'COMMAND_INVITE_DESCRIPTION_EXTENDED',
+        example: 'COMMAND_INVITE_DESCRIPTION_EXAMPLE',
+        usage: 'COMMAND_INVITE_DESCRIPTION_USAGE'
+      },
     });
   }
 

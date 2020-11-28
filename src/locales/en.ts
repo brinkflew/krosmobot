@@ -1,5 +1,6 @@
-import { oneLine } from 'common-tags';
+import { oneLine, stripIndent } from 'common-tags';
 import { Locale } from '@/structures';
+import { usage } from '@/utils';
 
 export default class EnglishLocale extends Locale {
   constructor() {
@@ -7,7 +8,7 @@ export default class EnglishLocale extends Locale {
 
     this.strings = {
       // Misc.
-      DEFAULT: (key) => `${key} has not been translated to '${this.language.toUpperCase()}' yet.`,
+      DEFAULT: (key) => `${key} has not been translated to ${this.language.toUpperCase()} yet.`,
       DEFAULT_LANGUAGE: 'Default language.',
 
       // Languages
@@ -50,6 +51,34 @@ export default class EnglishLocale extends Locale {
         All permissions might not be correct for all servers, hence do not hesitate to uncheck the boxes you don't want.
         If you try to use a command that requires more permissions, the bot will tell you.
       `,
+
+      // HELP Command
+      COMMAND_HELP_DESCRIPTION_SHORT: 'Show help about commands',
+      COMMAND_HELP_DESCRIPTION_EXTENDED: oneLine`
+        The following commands are available to you. They have been selected based on
+        your permissions in the guild within which you requested this help.
+        Use \`<prefix>help <command>\` to get more information about a specific command.
+      `,
+      COMMAND_HELP_DESCRIPTION_EXAMPLE: (prefix) => stripIndent`
+        Display generic help about the available commands:
+        ${usage(prefix, 'help')}
+        Show extended help for the \`${prefix}ping\` command:
+        ${usage(prefix, 'help ping')}
+      `,
+      COMMAND_HELP_DESCRIPTION_USAGE: (prefix) => stripIndent`
+        ${usage(prefix, 'help [command]')}
+        \`command\` → Name of a command to display the help for (optional)
+      `,
+      COMMAND_HELP_CATEGORY_SETTINGS: 'Settings',
+      COMMAND_HELP_CATEGORY_UTILS: 'Utility Commands',
+      COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE: 'Usage',
+      COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE: 'Examples',
+      COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION: 'No description for this command.',
+      COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE: 'No examples for this command.',
+      COMMAND_HELP_RESPONSE_TITLE: 'Commands Available',
+      COMMAND_HELP_RESPONSE_DM: 'Help for commands was sent to you in your DMs.',
+      COMMAND_HELP_RESPONSE_FROMGUILD: (guildname) => `Help requested from ${guildname}`,
+      COMMAND_HELP_RESPONSE_ERROR: 'An error occured while fetching help.',
     };
   }
 }

@@ -74,17 +74,26 @@ export class Command extends AkairoCommand {
   }
 
   /**
-   * Sends an embed, automatically filling in the border color if necessary.
+   * Crafts an embed (does not send it), automatically filling in the border color if necessary.
    * @param message Message that triggered this command
    * @param content Embed to send over
    */
-  public async embed(message: Message, content: MessageEmbedOptions | MessageEmbed): Promise<Message> {
+  public craftEmbed(message: Message, content: MessageEmbedOptions | MessageEmbed): MessageEmbed {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
     const color = message.guild
       ? this.client.settings.guilds.get(message.guild.id, 'color', EMBED_COLOR_DEFAULT)
       : this.client.settings.users.get(message.author.id, 'color', EMBED_COLOR_DEFAULT);
     if (!content.color) content.setColor(color);
-    return this.sendUtil(message, content);
+    return content;
+  }
+
+  /**
+   * Sends an embed, automatically filling in the border color if necessary.
+   * @param message Message that triggered this command
+   * @param content Embed to send over
+   */
+  public async embed(message: Message, content: MessageEmbedOptions | MessageEmbed): Promise<Message> {
+    return this.sendUtil(message, this.craftEmbed(message, content));
   }
 
   /**
