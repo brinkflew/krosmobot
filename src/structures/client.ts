@@ -13,7 +13,7 @@ import {
 } from 'discord.js';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
-import { LocaleHandler } from '@/handlers';
+import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import { DEFAULT_PREFIX } from '@/constants';
 
@@ -34,6 +34,7 @@ export class Client extends AkairoClient {
   public commands: CommandHandler;
   public events: ListenerHandler;
   public locales: LocaleHandler;
+  public scheduler : TaskHandler;
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
@@ -84,6 +85,11 @@ export class Client extends AkairoClient {
     this.locales = new LocaleHandler(this, {
       directory: resolve(join(__dirname, '..', 'locales'))
     });
+    
+    /** Scheduler */
+    this.scheduler = new TaskHandler(this, {
+      directory: resolve(join(__dirname, '..', 'tasks'))
+    });
 
     /** Providers */
     this.settings = {
@@ -106,6 +112,10 @@ export class Client extends AkairoClient {
     this.commands.loadAll();
     this.events.loadAll();
     this.locales.loadAll();
+
+    this.scheduler
+      .loadAll()
+      .init();
 
     await Promise.all(Object.values(this.settings).map((provider) => provider.init()));
     return this;

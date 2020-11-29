@@ -1,4 +1,4 @@
-import { LocaleHandler } from '@/handlers';
+import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import CustomMongooseProvider from '@/providers/mongoose';
 
@@ -7,6 +7,7 @@ declare module 'discord-akairo' {
     commands: CommandHandler;
     events: ListenerHandler;
     locales: LocaleHandler;
+    scheduler: TaskHandler;
     logger: Logger;
     logs: CustomMongooseProvider;
     settings: {

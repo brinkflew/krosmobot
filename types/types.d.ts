@@ -1,4 +1,4 @@
-import { AkairoModuleOptions } from 'discord-akairo';
+import { AkairoModuleOptions,AkairoHandlerOptions } from 'discord-akairo';
 import { Document } from 'mongoose';
 import { AxiosResponse } from 'axios';
 
@@ -34,7 +34,7 @@ interface ScraperPage {
   fields: ScraperSchema[];
 }
 
-declare class AlmanaxData {
+interface AlmanaxData {
   url: string;
   title: string;
   offering: string;
@@ -46,4 +46,10 @@ declare class AlmanaxData {
   'images.item': string;
   month: string;
   day: string;
+}
+
+interface TaskOptions extends AkairoModuleOptions {
+  interval?: number;
+  timestamp?: number;
+  at?: string;
 }
