@@ -221,6 +221,24 @@ export default class FrenchLocale extends Locale {
       COMMAND_ALMANAX_RESPONSE_DATE_ERROR: (input) => `La valeur \`${input}\` ne correspond pas à une date valide.`,
       COMMAND_ALMANAX_RESPONSE_ALMANAX: (day, month) => `Almanax du ${day} ${month}`,
       COMMAND_ALMANAX_RESPONSE_DESCRIPTION: 'Effet Méryde',
+
+      // SET Command
+      COMMAND_SET_DESCRIPTION_SHORT: 'Assigne une valeur à un paramètre.',
+      COMMAND_SET_DESCRIPTION_EXTENDED: stripIndent`
+        Configure le serveur pour activer ou désactiver des fonctions de ce bot. Plusieurs clés peuvent être
+        configurées à la fois, mais au moins une clé doit être indiquée.
+      `,
+      COMMAND_SET_DESCRIPTION_EXAMPLE: (prefix) => stripIndent`
+        Active l'almanax automatique dans le salon '\#almanax' :
+        ${usage(prefix, 'set almanax.auto enable almanax.channel \#almanax')}
+      `,
+      COMMAND_SET_DESCRIPTION_USAGE: (prefix) => stripIndent`
+        ${usage(prefix, '<key> <value> [<key> <value>,...]')}
+        ${argument('almanax.auto')} Active l'almanax automatique; un salon doit aussi être configuré (optionnel)
+        ${argument('almanax.channel')} Force le salon dans lequel l'almanax est envoyé (optionnel)
+      `,
+      COMMAND_SET_RESPONSE_MODIFIED: (keys) => `Les clés suivantes ont été mises à jour :\n\`${keys.join('`\n`')}\``,
+      COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenu durant l\'exécution de la commande...',
     };
   }
 }
