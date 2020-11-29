@@ -41,7 +41,6 @@ export default class HelpCommand extends Command {
       if (command) {
         const description = command.description;
         const aliases = command.aliases.filter((alias) => alias !== command.id);
-        console.log();
         return this.embed(message, {
           title: command.id.toUpperCase(),
           description: this.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message),
