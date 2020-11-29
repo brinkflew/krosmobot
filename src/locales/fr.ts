@@ -233,7 +233,7 @@ export default class FrenchLocale extends Locale {
         ${usage(prefix, 'set almanax.auto enable almanax.channel \#almanax')}
       `,
       COMMAND_SET_DESCRIPTION_USAGE: (prefix) => stripIndent`
-        ${usage(prefix, '<key> <value> [<key> <value>,...]')}
+        ${usage(prefix, 'set <key> <value> [<key> <value>,...]')}
         ${argument('almanax.auto')} Active l'almanax automatique; un salon doit aussi être configuré (optionnel)
         ${argument('almanax.channel')} Force le salon dans lequel l'almanax est envoyé (optionnel)
       `,
