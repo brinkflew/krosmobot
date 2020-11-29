@@ -153,6 +153,7 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_HELP_CATEGORY_SETTINGS: 'Paramètres',
       COMMAND_HELP_CATEGORY_UTILS: 'Commandes Utilitaires',
+      COMMAND_HELP_CATEGORY_DOFUS : 'Commandes de Dofus',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE: 'Utilisation',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE: 'Exemples',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES: 'Alias',
@@ -186,6 +187,40 @@ export default class FrenchLocale extends Locale {
         ${argument('message')} Contenu du message à envoyer (optionnel)
       `,
       COMMAND_ECHO_RESPONSE_SENT: (channel) => `Message envoyé dans le channel \#${channel}`,
+
+      // ALMANAX Command
+      COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Récupères l\'almanax du jour.',
+      COMMAND_ALMANAX_DESCRIPTION_EXTENDED: stripIndent`
+        ${oneLine`
+          Affiche les détails de l'almanax du jour, ses bonus et l'offrande à apporter au temple afin d'accomplir
+          la quête journalière. Il est possible d'afficher une version plus détaillée (Effet Méryde) en plus de l'offrande
+          et du bonus.
+        `}
+        ${oneLine`
+          Par défault, l'almanax affiché est celui du jour actuel, mais il est également possible d'accéder
+          à l'almanax d'une autre date.
+        `}
+      `,
+      COMMAND_ALMANAX_DESCRIPTION_EXAMPLE: (prefix) => stripIndent`
+        Récupérer l'almanax d'aujourd'hui :
+        ${usage(prefix, 'almanax')}
+        Afficher l'almanax du 2 avril :
+        ${usage(prefix, 'almanax 02/04')}
+        Afficher l'almanax d'il y a trois jours :
+        ${usage(prefix, 'almanax -3')}
+        Afficher plus de détails pour l'almanax de la semaine prochaine :
+        ${usage(prefix, 'almanax details +7')}
+      `,
+      COMMAND_ALMANAX_DESCRIPTION_USAGE: (prefix) => stripIndent`
+        ${usage(prefix, 'almanax [--details] [date|décalage]')}
+        ${argument('details')} Affiche une version détaillée (optionnel)
+        ${argument('date')} Date de l'almanax à récupérer (optionnel)
+        ${argument('décalage')} Nombre de jours à ajouter/retirer à aujourd'hui (optionnel)
+      `,
+      COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR: 'Impossible de récupérer l\'Almanax pour le moment...',
+      COMMAND_ALMANAX_RESPONSE_DATE_ERROR: (input) => `La valeur \`${input}\` ne correspond pas à une date valide.`,
+      COMMAND_ALMANAX_RESPONSE_ALMANAX: (day, month) => `Almanax du ${day} ${month}`,
+      COMMAND_ALMANAX_RESPONSE_DESCRIPTION: 'Effet Méryde',
     };
   }
 }

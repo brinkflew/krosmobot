@@ -4,6 +4,7 @@ import * as embeds from './embeds';
 // Defaults
 export const DEFAULT_PREFIX = defaults.PREFIX;
 export const DEFAULT_CLIENTNAME = defaults.CLIENTNAME;
+export const DEFAULT_LOCALE = defaults.LOCALE;
 
 // Embeds
 export const INLINE_SEPARATOR = embeds.SEPARATORS.INLINE;

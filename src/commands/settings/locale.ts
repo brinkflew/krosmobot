@@ -1,6 +1,7 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
 import { Argument } from 'discord-akairo';
+import { DEFAULT_LOCALE } from '@/constants';
 
 /**
  * Change the localization options for the current guild.
@@ -38,7 +39,7 @@ export default class LocaleCommand extends Command {
   public async exec(message: Message, { locale }: any): Promise<Message> {
     try {
       const settings = message.guild || message.author;
-      const defaultLocale = process.env.KROSMOBOT_LOCALE || 'en';
+      const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
 
       // Reset the default locale
       if (!locale) {

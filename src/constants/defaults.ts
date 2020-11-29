@@ -1,6 +1,7 @@
 export enum DEFAULTS {
   PREFIX = '!',
-  CLIENTNAME = 'KrosmoBot'
+  CLIENTNAME = 'KrosmoBot',
+  LOCALE = 'en'
 };
 
 export default DEFAULTS;

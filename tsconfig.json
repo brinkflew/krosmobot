@@ -53,7 +53,9 @@
             "discord.js",
             "discord-akairo",
             "mongoose",
-            "common-tags"
+            "common-tags",
+            "cheerio",
+            "axios"
         ]
     },
     "include": [

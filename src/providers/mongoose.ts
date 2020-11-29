@@ -20,10 +20,10 @@ export default class MongooseProvider extends Provider {
    * Initializes the provider.
    */
   async init(): Promise<void> {
-    const guilds = await this.model.find();
-    for (const i in guilds) {
-      const guild = guilds[i];
-      this.items.set(guild.id, guild);
+    const records = await this.model.find();
+    for (const key in records) {
+      const record = records[key];
+      this.items.set(record.id, record);
     }
   }
   

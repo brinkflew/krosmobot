@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@types/common-tags": "^1.8.0",
+    "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
     "common-tags": "^1.8.0",
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.4.1",
@@ -27,6 +29,8 @@
     "nanoid": "^3.1.18"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cheerio": "^0.22.22",
     "@types/mongoose": "^5.10.1",
     "@types/node": "^14.14.9",
     "@types/ws": "^7.4.0",
