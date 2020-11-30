@@ -7,6 +7,9 @@
   "author": "Antoine van Serveyt <avs+krosmobot@avanserv.com>",
   "license": "MIT",
   "main": "dist/client.js",
+  "engines": {
+    "node": "v14.15.0"
+  },
   "scripts": {
     "lint": "eslint --ext ts src",
     "lint:fix": "eslint --ext ts src --fix",
@@ -14,7 +17,8 @@
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
     "build:clean": "yarn clean && yarn build",
-    "start": "nodemon -e ts --exec 'yarn build:clean && node dist/client.js'",
+    "start": "node dist/client.js",
+    "postinstall": "tsc",
     "serve": "nodemon -e ts --exec 'yarn build:clean && node dist/client.js'"
   },
   "dependencies": {
