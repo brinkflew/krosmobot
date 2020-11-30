@@ -238,7 +238,7 @@ export default class FrenchLocale extends Locale {
         ${argument('almanax.channel')} Force le salon dans lequel l'almanax est envoyé (optionnel)
       `,
       COMMAND_SET_RESPONSE_MODIFIED: (keys) => `Les clés suivantes ont été mises à jour :\n\`${keys.join('`\n`')}\``,
-      COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenu durant l\'exécution de la commande...',
+      COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
     };
   }
 }
