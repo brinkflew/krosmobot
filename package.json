@@ -14,7 +14,7 @@
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
     "build:clean": "yarn clean && yarn build",
-    "start": "nodemon dist/client.js",
+    "start": "nodemon -e ts --exec 'yarn build:clean && node dist/client.js'",
     "serve": "nodemon -e ts --exec 'yarn build:clean && node dist/client.js'"
   },
   "dependencies": {
