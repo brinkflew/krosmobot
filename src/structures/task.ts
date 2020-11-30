@@ -21,7 +21,6 @@ export class Task extends AkairoModule {
     if (this.at) {
       const timing = this.at.split(':');
       let date = new Date();
-      date = new Date(date.setDate(date.getDate() - 1));
       date = new Date(date.setHours(parseInt(timing[0])));
       date = new Date(date.setMinutes(parseInt(timing[1])));
       this.last = date.setSeconds(0);

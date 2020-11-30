@@ -6,7 +6,7 @@ export const schema = [
   },
   {
     id: 'offering',
-    selector: '.more-infos p',
+    selector: '.more-infos-content p',
     attribute: 'text'
   },
   {

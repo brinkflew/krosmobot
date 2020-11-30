@@ -1,10 +1,12 @@
 import { Message, TextChannel } from 'discord.js';
 import { Command } from '@/structures';
+import { SetCommandArguments } from 'types/types';
+import { findPortalServer } from '@/utils';
 
 /**
  * Change the color used in embed borders for the current guild.
  */
-export default class ColorCommand extends Command {
+export default class SetCommand extends Command {
   constructor() {
     super('set', {
       channel: 'guild',
@@ -30,6 +32,12 @@ export default class ColorCommand extends Command {
           match: 'option',
           flag: 'almanax.channel',
           type: 'textChannel'
+        },
+        {
+          id: 'dofusServer',
+          match: 'option',
+          flag: 'dofus.server',
+          type: 'lowercase',
         }
       ]
     });
@@ -39,14 +47,15 @@ export default class ColorCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { almanaxAuto, almanaxChannel }: { almanaxAuto: string, almanaxChannel: TextChannel }): Promise<Message> {
+  public async exec(message: Message, { almanaxAuto, almanaxChannel, dofusServer } : SetCommandArguments): Promise<Message> {
     try {
       const keys = [];
       const actions = [];
 
       const isSet = {
         almanaxAuto: ['enable', 'disable'].includes(almanaxAuto),
-        almanaxChannel: almanaxChannel instanceof TextChannel
+        almanaxChannel: almanaxChannel instanceof TextChannel,
+        dofusServer: !!dofusServer
       };
       
       if (isSet.almanaxAuto || isSet.almanaxChannel) {
@@ -63,6 +72,14 @@ export default class ColorCommand extends Command {
         }
 
         actions.push(this.set(message.guild!, 'almanax', almanaxConfig));
+      }
+
+      if (isSet.dofusServer) {
+        const server = await findPortalServer(this, message, dofusServer);
+        actions.push(this.set(message.guild!, 'dofus', {
+          server: { id: server.id, name: server.name }
+        }));
+        keys.push('dofus.server');
       }
       
       await Promise.all(actions);

@@ -1,4 +1,5 @@
-import { AkairoModuleOptions,AkairoHandlerOptions } from 'discord-akairo';
+import { AkairoModuleOptions } from 'discord-akairo';
+import { TextChannel } from 'discord.js';
 import { Document } from 'mongoose';
 import { AxiosResponse } from 'axios';
 
@@ -29,7 +30,7 @@ interface ScraperSchema {
 interface ScraperPage {
   url: string;
   language: string;
-  data?: { [key: string]: any };
+  data?: { [key: string]: any }[];
   response?: AxiosResponse;
   fields: ScraperSchema[];
 }
@@ -52,4 +53,10 @@ interface TaskOptions extends AkairoModuleOptions {
   interval?: number;
   timestamp?: number;
   at?: string;
+}
+
+interface SetCommandArguments {
+  almanaxAuto: string;
+  almanaxChannel: TextChannel;
+  dofusServer: string;
 }

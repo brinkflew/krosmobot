@@ -54,8 +54,8 @@ export default class AlmanaxCommand extends Command {
       const url = `http://www.krosmoz.com/${language}/almanax/${date}`;
       const scraped = await Scraper.scrape({ language, url, fields: schema });
 
-      if (!scraped.data) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
-      almanax = <AlmanaxData>scraped.data;
+      if (!scraped.data?.length) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
+      almanax = <AlmanaxData>scraped.data[0];
       almanax.url = url;
       this.client.data.almanax.set(id, 'data', almanax);
     }

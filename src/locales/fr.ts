@@ -135,7 +135,7 @@ export default class FrenchLocale extends Locale {
       `,
       
       // HELP Command
-      COMMAND_HELP_DESCRIPTION_SHORT: 'Affiche l\'aide des commandes',
+      COMMAND_HELP_DESCRIPTION_SHORT: 'Affiche l\'aide des commandes.',
       COMMAND_HELP_DESCRIPTION_EXTENDED: oneLine`
         Les commandes suivantes sont à votre disposition. Elles ont été sélectionnées
         sur base de vos droits sur le serveur dans lequel vous avez demandé cette aide.
@@ -239,6 +239,34 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_SET_RESPONSE_MODIFIED: (keys) => `Les clés suivantes ont été mises à jour :\n\`${keys.join('`\n`')}\``,
       COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
+
+      // PORTAL Command
+      COMMAND_PORTAL_RESPONSE_NODATA: 'Pas de données disponnibles pour ce serveur.',
+      COMMAND_PORTAL_RESPONSE_TO: (dimension) => `Portail vers ${dimension}`,
+      COMMAND_PORTAL_RESPONSE_CYCLE: (cycle) => `Modificateur : ${cycle}`,
+      COMMAND_PORTAL_REPONSE_POSITION: 'Dernière Position Connue',
+      COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN: 'Position inconnue',
+      COMMAND_PORTAL_REPONSE_USES: 'Utilisations',
+      COMMAND_PORTAL_RESPONSE_USES_REMAINING: (uses) => `${uses} utilisations restantes`,
+      COMMAND_PORTAL_RESPONSE_UPDATED: (time, server) => `Mis à jour il y a ${time} pour le serveur ${server}.`,
+      COMMAND_PORTAL_DESCRIPTION_SHORT: 'Affiche la position d\'un portail.',
+      COMMAND_PORTAL_DESCRIPTION_EXTENDED: stripIndent`
+        Récupères la position d'un portail sur le serveur de la guilde, ou sur un serveur particulier.
+      `,
+      COMMAND_PORTAL_DESCRIPTION_EXAMPLE: (prefix) => stripIndent`
+        Afficher tous les portails :
+        ${usage(prefix, 'portals')}
+        Afficher la position du portail vers Xélorium :
+        ${usage(prefix, 'portals xel')}
+        Afficher la position du portail vers Ecafliplus sur le serveur Echo :
+        ${usage(prefix, 'portals xel echo')}
+      `,
+      COMMAND_PORTAL_DESCRIPTION_USAGE: (prefix) => stripIndent`
+        ${usage(prefix, 'portal [dimension] [serveur]')}
+        ${argument('dimension')} Dimension pour laquelle rechercher un portail (optionnel)
+        ${argument('serveur')} Serveur sur lequel chercher un portail (optionnel)
+      `,
+      COMMAND_PORTAL_RESPONSE_NOSERVER: 'Pas de serveur correspondant trouvé.',
     };
   }
 }

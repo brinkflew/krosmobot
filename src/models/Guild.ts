@@ -9,6 +9,12 @@ const schema = new Schema(
     almanax: {
       auto: { type: Boolean },
       channel: { type: String }
+    },
+    dofus: {
+      server: {
+        id: { type: String },
+        name: { type: String }
+      }
     }
   }, { minimize: false }
 );

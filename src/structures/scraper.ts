@@ -32,22 +32,23 @@ export class Scraper {
     try {
       const response = await this.request(page.url);
       const $ = load(response.data);
-      const data = page.data || {};
+      const data = page.data || [];
 
       for (const field of page.fields) {
         const nodes = $(field.selector);
 
-        nodes.each((_index, node) => {
-          const element = $(node).first();
+        nodes.each((index, node) => {
+          const element = $(node); //.first();
           let value = field.attribute === 'text'
             ? element.text()
             : element.attr(field.attribute);
-
+            
           if (!value) return null;
           value = value.trim();
           value = field.transform ? field.transform(value) : value;
           if (typeof value === 'string') value = value.trim();
-          return data[field.id] = value;
+          if (!data[index]) data[index] = {};
+          return data[index][field.id] = value;
         });
       }
 
