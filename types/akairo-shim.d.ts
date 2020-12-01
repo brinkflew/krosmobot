@@ -14,6 +14,7 @@ declare module 'discord-akairo' {
       guilds: CustomMongooseProvider;
       channels: CustomMongooseProvider;
       users: CustomMongooseProvider;
+      members: CustomMongooseProvider;
     };
     data: {
       almanax: CustomMongooseProvider;

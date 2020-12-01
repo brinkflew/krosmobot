@@ -5,7 +5,8 @@ import {
   User,
   Message,
   MessageEmbed,
-  MessageEmbedOptions
+  MessageEmbedOptions,
+  GuildMember
 } from 'discord.js';
 import MongooseProvider from '@/providers/mongoose';
 import {
@@ -101,10 +102,11 @@ export class Command extends AkairoCommand {
    * which data will be fetched or modified.
    * @param holder Instance to find the correct provider for
    */
-  private getProvider(holder: Guild | TextChannel | User): MongooseProvider {
+  private getProvider(holder: Guild | TextChannel | User | GuildMember): MongooseProvider {
     let settings = this.client.settings;
     if (holder instanceof Guild) return settings.guilds;
     if (holder instanceof TextChannel) return settings.channels;
+    if (holder instanceof GuildMember) return settings.members;
     /* if (holder instanceof User) */ return settings.users;
   }
 
@@ -114,7 +116,7 @@ export class Command extends AkairoCommand {
    * @param key Key to update
    * @param value Value to set
    */
-  public async set(holder: Guild | TextChannel | User, key: string, value: any): Promise<any> {
+  public async set(holder: Guild | TextChannel | User | GuildMember, key: string, value: any): Promise<any> {
     const settings = this.getProvider(holder);
     return settings.set(holder.id, key, value);
   }
@@ -125,7 +127,7 @@ export class Command extends AkairoCommand {
    * @param key Key to update
    * @param defaultValue Default value if none is find
    */
-  public get(holder: Guild | TextChannel | User, key: string, defaultValue: any): any {
+  public get(holder: Guild | TextChannel | User | GuildMember, key: string, defaultValue: any): any {
     const settings = this.getProvider(holder);
     return settings.get(holder.id, key, defaultValue);
   }
@@ -135,7 +137,7 @@ export class Command extends AkairoCommand {
    * @param guild Guild from which data needs to be removed
    * @param key Key to remove
    */
-  public async delete(holder: Guild | TextChannel | User, key: string) {
+  public async delete(holder: Guild | TextChannel | User | GuildMember, key: string) {
     const settings = this.getProvider(holder);
     return settings.delete(holder.id, key);
   }

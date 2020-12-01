@@ -3,3 +3,4 @@ export { ChannelModel } from '@/models/Channel';
 export { UserModel } from '@/models/User';
 export { LogModel } from '@/models/Log';
 export { AlmanaxModel } from '@/models/Almanax';
+export { MemberModel } from '@/models/Member';

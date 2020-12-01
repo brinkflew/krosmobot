@@ -267,6 +267,51 @@ export default class FrenchLocale extends Locale {
         ${argument('serveur')} Serveur sur lequel chercher un portail (optionnel)
       `,
       COMMAND_PORTAL_RESPONSE_NOSERVER: 'Pas de serveur correspondant trouvé.',
+
+      // JOB Command
+      COMMAND_JOB_RESPONSE_JOB_ALCHEMIST: 'Alchimiste',
+      COMMAND_JOB_RESPONSE_JOB_JEWELLER: 'Bijoutier',
+      COMMAND_JOB_RESPONSE_JOB_HANDYMAN: 'Bricoleur',
+      COMMAND_JOB_RESPONSE_JOB_LUMBERJACK: 'Bûcheron',
+      COMMAND_JOB_RESPONSE_JOB_HUNTER: 'Chasseur',
+      COMMAND_JOB_RESPONSE_JOB_SHOEMAGUS: 'Cordomage',
+      COMMAND_JOB_RESPONSE_JOB_SHOEMAKER: 'Cordonnier',
+      COMMAND_JOB_RESPONSE_JOB_COSTUMAGUS: 'Costumage',
+      COMMAND_JOB_RESPONSE_JOB_CRAFTMAGUS: 'Façomage',
+      COMMAND_JOB_RESPONSE_JOB_ARTIFICER: 'Façonneur',
+      COMMAND_JOB_RESPONSE_JOB_SMITHMAGUS: 'Forgemage',
+      COMMAND_JOB_RESPONSE_JOB_SMITH: 'Forgeron',
+      COMMAND_JOB_RESPONSE_JOB_JEWELMAGUS: 'Joaillomage',
+      COMMAND_JOB_RESPONSE_JOB_MINER: 'Mineur',
+      COMMAND_JOB_RESPONSE_JOB_FARMER: 'Paysan',
+      COMMAND_JOB_RESPONSE_JOB_FISHERMAN: 'Pêcheur',
+      COMMAND_JOB_RESPONSE_JOB_CARVMAGUS: 'Sculptemage',
+      COMMAND_JOB_RESPONSE_JOB_CARVER: 'Sculpteur',
+      COMMAND_JOB_RESPONSE_JOB_TAILOR: 'Tailleur',
+      COMMAND_JOB_RESPONSE_NOJOBS: (member) => `Il n'y a pas encore de métier référencé pour ${member}.`,
+      COMMAND_JOB_RESPONSE_NOBODY: (job) => `Personne ne possède le métier ${job}.`,
+      COMMAND_JOB_RESPONSE_TITLE_ALL: 'Métiers',
+      COMMAND_JOB_RESPONSE_TITLE_SINGLE: 'Métier',
+      COMMAND_JOB_RESPONSE_ERROR: 'Une erreur est survenue au moment de récupérer les informations sur les métiers...',
+      COMMAND_JOB_DESCRIPTION_SHORT: 'Informations sur les métiers des membres.',
+      COMMAND_JOB_DESCRIPTION_EXTENDED: oneLine`
+        Permet de référencer le niveau de ses propres métiers ou d'afficher les métiers
+        des autres membres du serveur.
+      `,
+      COMMAND_JOB_DESCRIPTION_EXAMPLE: (prefix) => stripIndent`
+        Indiquer que son métier 'Paysan' est au niveau 125 :
+        ${usage(prefix, 'job paysan 100')}
+        Vérifier le niveau de métier 'Forgeron' d'un autre membre :
+        ${usage(prefix, 'job forgeron @Membre')}
+        Vérifier tous les niveaux de métier d'un membre :
+        ${usage(prefix, 'job @Membre')}
+      `,
+      COMMAND_JOB_DESCRIPTION_USAGE: (prefix) => stripIndent`
+        ${usage(prefix, 'job [métier] [niveau] [membre]')}
+        ${argument('métier')} Nom du métier à afficher/mettre à jour (optionnel)
+        ${argument('niveau')} Nouveau niveau du métier dans le cas d'une mise à jour (optionnel)
+        ${argument('membre')} Mention d'un membre pour qui afficher le(s) métier(s) (optionnel)
+      `,
     };
   }
 }

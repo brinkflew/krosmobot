@@ -23,7 +23,8 @@ import {
   ChannelModel,
   UserModel,
   LogModel,
-  AlmanaxModel
+  AlmanaxModel,
+  MemberModel
 } from '@/models';
 
 /**
@@ -41,7 +42,8 @@ export class Client extends AkairoClient {
   public settings: {
     guilds: MongooseProvider,
     channels: MongooseProvider,
-    users: MongooseProvider
+    users: MongooseProvider,
+    members: MongooseProvider
   };
   public data: {
     almanax: MongooseProvider;
@@ -95,7 +97,8 @@ export class Client extends AkairoClient {
     this.settings = {
       guilds: new MongooseProvider(GuildModel),
       channels: new MongooseProvider(ChannelModel),
-      users: new MongooseProvider(UserModel)
+      users: new MongooseProvider(UserModel),
+      members: new MongooseProvider(MemberModel)
     };
 
     this.data = {

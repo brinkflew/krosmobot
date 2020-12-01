@@ -1,0 +1,21 @@
+export const pictures: { [key: string]: string } = {
+  alchemist: 'https://static.ankama.com/dofus/www/game/items/52/36643.w90h90.png',
+  jeweller: 'https://static.ankama.com/dofus/www/game/items/52/9047.w90h90.png',
+  handyman: 'https://static.ankama.com/dofus/www/game/items/52/84226.w90h90.png',
+  lumberjack: 'https://static.ankama.com/dofus/www/game/items/52/38086.w90h90.png',
+  hunter: 'https://static.ankama.com/dofus/www/game/items/52/126065.w90h90.png',
+  shoemagus: 'https://static.ankama.com/dofus/www/game/items/52/78190.w90h90.png',
+  shoemaker: 'https://static.ankama.com/dofus/www/game/items/52/11007.w90h90.png',
+  costumagus: 'https://static.ankama.com/dofus/www/game/items/52/78253.w90h90.png',
+  craftmagus: 'https://static.ankama.com/dofus/www/game/items/52/78250.w90h90.png',
+  artificer: 'https://static.ankama.com/dofus/www/game/items/52/82084.w90h90.png',
+  smithmagus: 'https://static.ankama.com/dofus/www/game/items/52/78184.w90h90.png',
+  smith: 'https://static.ankama.com/dofus/www/game/items/52/6016.w90h90.png',
+  jewelmagus: 'https://static.ankama.com/dofus/www/game/items/52/78181.w90h90.png',
+  miner: 'https://static.ankama.com/dofus/www/game/items/52/39022.w90h90.png',
+  farmer: 'https://static.ankama.com/dofus/www/game/items/200/34083.w90h90.png',
+  fisherman: 'https://static.ankama.com/dofus/www/game/items/52/41400.w90h90.png',
+  carvmagus: 'https://static.ankama.com/dofus/www/game/items/52/78187.w90h90.png',
+  carver: 'https://static.ankama.com/dofus/www/game/items/52/2020.w90h90.png',
+  tailor:'https://static.ankama.com/dofus/www/game/items/52/16044.w90h90.png'
+};
