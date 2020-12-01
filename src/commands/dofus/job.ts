@@ -1,4 +1,4 @@
-import { Message, GuildMember } from 'discord.js';
+import { Message, GuildMember, GuildEmoji } from 'discord.js';
 import { Command } from '@/structures';
 import pictures from '@/resources/pictures/jobs';
 
@@ -123,7 +123,7 @@ export default class JobCommand extends Command {
 
       const author = {
         name: target.displayName,
-        icon_url: target.user.avatarURL() || target.user.defaultAvatarURL
+        icon_url: target.user.avatarURL() || target.user.defaultAvatarURL,
       };
 
       // `!job @Member` → Display all jobs for the single user
@@ -131,7 +131,7 @@ export default class JobCommand extends Command {
       // `!job tailor 125` → Display all jobs for self
       
       if (!name) {
-        let fields: { job: string, level: number }[] = [];
+        let fields: { job: string, level: number, emoji: GuildEmoji | string }[] = [];
         const ordered = Object
           .entries(jobs)
           .sort((a, b) => a[0].localeCompare(b[0]));
@@ -141,18 +141,22 @@ export default class JobCommand extends Command {
 
           fields.push({
             job: this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message),
-            level
+            level,
+            emoji: this.client.emojis.cache.find((emoji) => emoji.name.includes(job)) || ':grey_question:'
           });
         }
 
         if (!fields.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, target.displayName));
         fields = fields.sort((a, b) => a.job.localeCompare(b.job));
+
         return this.embed(message, {
           author,
           fields: [
             {
               name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
-              value: fields.map((field) => field.job).join('\n'),
+              value: fields
+                .map((field) => `${field.emoji} ${field.job}`)
+                .join('\n'),
               inline: true
             },
             {
