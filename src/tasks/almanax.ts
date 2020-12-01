@@ -7,7 +7,7 @@ import { dummyMessage } from '@/utils';
  */
 export default class AlmanaxTask extends Task {
   constructor() {
-    super('almanax', { at: '00:00' });
+    super('almanax', { at: '23:00' });
   }
 
   /**
