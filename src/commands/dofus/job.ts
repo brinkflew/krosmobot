@@ -67,18 +67,18 @@ export default class JobCommand extends Command {
       // `!job tailor @Member` → Display the single job for the single user
 
       if (name && !member && !level) {
-        const actions: Promise<{ [key: string]: number }>[] = [];
+        const fetched: { [key: string]: number }[] = [];
         const members: string[] = [];
         const cachedMembers = message.guild!.members.cache
           .array()
           .filter((member) => !member.user.bot);
 
         for (const member of cachedMembers) {
-          actions.push(this.get(member, 'jobs', {}));
+          fetched.push(this.get(member, 'jobs', {}));
           members.push(member.displayName);
         }
 
-        const jobs = (await Promise.all(actions)).map((list) => list[name] || 0);
+        const jobs = fetched.map((list) => list[name] || 0);
         const ordered = jobs
           .map((job, id) => { return { member: members[id], level: job } })
           .filter((job) => job.level > 0)
