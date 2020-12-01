@@ -27,8 +27,8 @@ export default class JobCommand extends Command {
             ['lumberjack', 'bûcheron', 'bucheron', 'buch'],
             ['hunter', 'chasseur'],
             ['shoemagus', 'cordomage'],
-            ['shoemaker', 'cordonier'],
-            ['costumagus', 'costumage'],
+            ['shoemaker', 'cordonier', 'cordo'],
+            ['costumagus', 'costumage', 'costu'],
             ['craftmagus', 'façomage', 'facomage'],
             ['artificer', 'façonneur', 'faconneur'],
             ['smithmagus', 'forgemage'],
@@ -62,6 +62,10 @@ export default class JobCommand extends Command {
    */
   public async exec(message: Message, { name, level, member }: { name: string, level: number, member: GuildMember }): Promise<Message> {
     try {
+      
+      // `!job tailor` → Display the single job for all users
+      // `!job tailor @Member` → Display the single job for the single user
+
       if (name && !member && !level) {
         const actions: Promise<{ [key: string]: number }>[] = [];
         const members: string[] = [];
@@ -111,7 +115,7 @@ export default class JobCommand extends Command {
           ]
         });
       }
-
+      
       let target = message.member!;
       if (member) target = member;
 
@@ -121,6 +125,10 @@ export default class JobCommand extends Command {
         name: target.displayName,
         icon_url: target.user.avatarURL() || target.user.defaultAvatarURL
       };
+
+      // `!job @Member` → Display all jobs for the single user
+      // `!job` → Display all jobs for self
+      // `!job tailor 125` → Display all jobs for self
       
       if (!name) {
         let fields: { job: string, level: number }[] = [];
@@ -162,8 +170,6 @@ export default class JobCommand extends Command {
         jobs[name] = level;
         if (!member) this.set(message.member!, 'jobs', jobs);
       }
-
-      // if level + member => display members with job at min level = level
 
       return this.embed(message, {
         author: {
