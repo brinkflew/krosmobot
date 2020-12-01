@@ -1,6 +1,6 @@
 import { Command, Scraper } from '@/structures';
 import { Message, MessageEmbed } from 'discord.js';
-import { portal as schema } from '@/constants/scraping';
+import { portal as schema } from '@/scraping-schemas';
 import { findPortalServer } from '@/utils';
 
 /**

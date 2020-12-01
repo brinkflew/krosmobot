@@ -1,6 +1,6 @@
-import { Message,GuildMember } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
 import { Command } from '@/structures';
-import { pictures } from '@/constants/pictures/jobs';
+import pictures from '@/resources/pictures/jobs';
 
 /**
  * Updates or shows the current jobs of a member.

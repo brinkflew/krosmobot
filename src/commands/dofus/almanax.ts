@@ -1,7 +1,7 @@
 import { Command, Scraper } from '@/structures';
 import { Message } from 'discord.js';
 import { DEFAULT_LOCALE } from '@/constants';
-import { almanax as schema } from '@/constants/scraping';
+import { almanax as schema } from '@/scraping-schemas';
 import { AlmanaxData } from 'types/types';
 
 /**

@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command, Scraper } from '@/structures';
-import { servers } from '@/constants/scraping';
+import { servers } from '@/scraping-schemas';
 
 /**
  * Finds the ID of a Dofus server on https://www.dofus-portals.fr.
