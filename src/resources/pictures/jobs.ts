@@ -23,5 +23,5 @@ const jobs = [
 ];
 
 const pictures: { [key: string]: string } = {};
-jobs.forEach((job) => pictures[job] = get(github, 'pictures', job));
+jobs.forEach((job) => pictures[job] = get(github, 'pictures/jobs', `${job}.png`));
 export default pictures;
