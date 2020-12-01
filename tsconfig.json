@@ -1,4 +1,5 @@
 {
+    "extends": "@skyra/eslint-config",
     "compilerOptions": {
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
