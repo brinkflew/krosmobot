@@ -25,7 +25,7 @@ export default class ColorCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { color }: any): Promise<Message> {
+  public async exec(message: Message, { color }: { color: string | null }): Promise<Message> {
     try {
       // Reset the default color
       if (!color) {
@@ -36,7 +36,7 @@ export default class ColorCommand extends Command {
       color = color.toUpperCase();
 
       // Check if the color actually changes
-      let oldColor = this.get(message.guild!, 'color', EMBED_COLOR_DEFAULT);
+      const oldColor = this.get(message.guild!, 'color', EMBED_COLOR_DEFAULT);
       if (oldColor === color) {
         return this.warning(message, this.t('COMMAND_COLOR_RESPONSE_IDENTICAL', message));
       }

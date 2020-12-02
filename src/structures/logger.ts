@@ -5,7 +5,7 @@ import { oneLine } from 'common-tags';
 import { nanoid } from 'nanoid';
 
 // Typings
-import { LoggerOptions } from 'types/types';
+import { LoggerOptions } from 'types';
 
 /**
  * Logs information to both the standard output and a provider.

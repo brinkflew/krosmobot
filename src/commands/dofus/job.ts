@@ -28,7 +28,7 @@ export default class JobCommand extends Command {
             ['lumberjack', 'bûcheron', 'bucheron', 'buch'],
             ['hunter', 'chasseur'],
             ['shoemagus', 'cordomage'],
-            ['shoemaker', 'cordonier', 'cordo'],
+            ['shoemaker', 'cordonnier', 'cordo'],
             ['costumagus', 'costumage', 'costu'],
             ['craftmagus', 'façomage', 'facomage'],
             ['artificer', 'façonneur', 'faconneur'],
@@ -156,7 +156,7 @@ export default class JobCommand extends Command {
             {
               name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
               value: fields
-                .map(field => `${field.emoji} ${field.job}`)
+                .map(field => `${field.emoji.toString()} ${field.job}`)
                 .join('\n'),
               inline: true
             },

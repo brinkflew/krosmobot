@@ -1,5 +1,5 @@
 import { AkairoModule } from 'discord-akairo';
-import { LocaleOptions, LocaleString } from 'types/types';
+import { LocaleOptions, LocaleString } from 'types';
 
 /**
  * Store and/or build translations of messages in a specific language.

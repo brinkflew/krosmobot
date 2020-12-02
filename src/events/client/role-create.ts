@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(role: Role) {
-    this.client.logger.verbose(`Role ${role} created in guild ${role.guild}`);
+    this.client.logger.verbose(`Role ${role.id} created in guild ${role.guild.id}`);
   }
 
 }

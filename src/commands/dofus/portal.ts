@@ -57,7 +57,7 @@ export default class PortalCommand extends Command {
         iconURL: `${baseUrl}/images/servers/${portalServer.name.replace(/\s/g, '')}-min.png`
       },
       url,
-      thumbnail: { url: `${baseUrl}/${data['images.dimension'].replace('../', '')}` },
+      thumbnail: { url: `${baseUrl}/${(<string>data['images.dimension']).replace('../', '')}` },
       fields: [
         {
           name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),

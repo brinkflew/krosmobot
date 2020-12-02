@@ -149,7 +149,7 @@ export class Command extends AkairoCommand {
    * @param holder Instance to find the correct provider for
    */
   private getProvider(holder: Guild | TextChannel | User | GuildMember): MongooseProvider {
-    let { settings } = this.client;
+    const { settings } = this.client;
     if (holder instanceof Guild) return settings.guilds;
     if (holder instanceof TextChannel) return settings.channels;
     if (holder instanceof GuildMember) return settings.members;

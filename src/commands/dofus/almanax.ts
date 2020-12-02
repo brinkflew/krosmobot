@@ -2,7 +2,7 @@ import { Command, Scraper } from '@/structures';
 import { Message } from 'discord.js';
 import { DEFAULT_LOCALE } from '@/constants';
 import { almanax as schema } from '@/scraping-schemas';
-import { AlmanaxData } from 'types/types';
+import { AlmanaxData } from 'types';
 
 /**
  * Fetches the Dofus almanax for a specific date.
@@ -56,7 +56,7 @@ export default class AlmanaxCommand extends Command {
       const scraped = await Scraper.scrape({ language, url, fields: schema });
 
       if (!scraped.data?.length) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
-      almanax = <AlmanaxData>scraped.data[0];
+      almanax = <AlmanaxData><unknown>scraped.data[0];
       almanax.url = url;
       void this.client.data.almanax.set(id, 'data', almanax);
     }
@@ -92,7 +92,7 @@ export default class AlmanaxCommand extends Command {
   private parseDate(input: string): string | null {
     if (!input) return this.formatDate();
 
-    const matches = input.match(/^(([0-2]?[0-9])|(3[0-1]))([/.\s-])((1[0-2])|(0?[0-9]))/i);
+    const matches = /^(([0-2]?[0-9])|(3[0-1]))([/.\s-])((1[0-2])|(0?[0-9]))/i.exec(input);
     if (matches) {
       const date = Date.parse(`${new Date().getFullYear()}-${this.pad(matches[5])}-${this.pad(matches[1])}`);
       if (!date) return null;

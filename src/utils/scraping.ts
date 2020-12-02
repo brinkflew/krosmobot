@@ -12,7 +12,7 @@ export async function findPortalServer(command: Command, message: Message, name:
   const url = 'https://dofus-portals.fr/serveurs';
   const scraped = await Scraper.scrape({ language: 'fr', url, fields: servers });
   if (!scraped.data?.length) return command.error(message, 'COMMAND_SET_RESPONSE_SCRAPE_ERROR');
-  const server: any = scraped.data.find(server => server.name.toLowerCase() === name);
+  const server = scraped.data.find(server => (<string>server.name).toLowerCase() === name);
   if (!server) return command.error(message, 'COMMAND_SET_RESPONSE_NOSERVER');
   return server;
 }

@@ -2,7 +2,7 @@ import { Provider } from 'discord-akairo';
 import { Model, Document } from 'mongoose';
 
 // Typings
-import { MongooseProviderDocument } from 'types/types';
+import { MongooseProviderDocument } from 'types';
 
 /**
 * Custom provider using the mongoose library.
@@ -99,7 +99,7 @@ export default class MongooseProvider extends Provider {
     const obj = await this.model.findOne({ id });
     if (!obj) {
       // eslint-disable-next-line new-cap
-      const newDoc = await new this.model({ id });
+      const newDoc = new this.model({ id });
       return newDoc;
     }
 

@@ -23,7 +23,7 @@ export default class NewsTask extends Task {
    * Runs the task.
    */
   public async exec() {
-    let feeds: Output[] = await Promise.all([
+    const feeds: Output[] = await Promise.all([
       this.parser.parseURL('https://www.dofus.com/fr/rss/news.xml'),
       this.parser.parseURL('https://www.dofus.com/fr/rss/devblog.xml'),
       this.parser.parseURL('https://www.dofus.com/fr/rss/changelog.xml')
@@ -70,7 +70,7 @@ export default class NewsTask extends Task {
       }
     }
 
-    this.lastPublication = Math.max(...feeds.map(feed => feed.pubDate));
+    this.lastPublication = Math.max(...feeds.map(feed => Date.parse(feed.pubDate)));
   }
 
 }

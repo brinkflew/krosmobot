@@ -1,20 +1,32 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "env": {
     "node": true,
     "es6": true
   },
-  "extends": ["@skyra/eslint-config"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "@skyra/eslint-config",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
   "parserOptions": {
     "ecmaVersion": 2020,
-    "sourceType": "module"
+    "sourceType": "module",
+    "tsconfigRootDir": "./",
+    "project": ["./tsconfig.json"]
   },
   "rules": {
     "no-console": "warn",
     "no-debugger": "warn",
     "no-throw-literal": 2,
     "@typescript-eslint/restrict-plus-operands": 1,
-    "@typescript-eslint/indent": ["error", 2]
+    "@typescript-eslint/indent": ["error", 2],
+    "@typescript-eslint/no-unsafe-assignment": 0,
+    "@typescript-eslint/no-unsafe-member-access": 0,
+    "@typescript-eslint/no-unsafe-return": 0
   },
   "overrides": [
     {

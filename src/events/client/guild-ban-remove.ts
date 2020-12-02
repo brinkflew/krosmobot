@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(guild: Guild, user: User) {
-    this.client.logger.info(`Un-banned user ${user} from guild ${guild}`);
+    this.client.logger.info(`Un-banned user ${user.id} from guild ${guild.id}`);
   }
 
 }

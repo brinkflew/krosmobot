@@ -21,8 +21,8 @@ export default class extends Listener {
     this.client.logger.verbose(oneLine`
       Presence status changed for
       ${newPresence.member
-    ? `member ${newPresence.member} in guild ${newPresence.guild}`
-    : `user ${newPresence.user}`}
+    ? `member ${newPresence.member.id} in guild ${newPresence.guild!.id}`
+    : `user ${newPresence.user!.id}`}
       ${oldPresence?.status ? oldPresence.status : 'unknown'}
       -> ${newPresence.status}
     `);

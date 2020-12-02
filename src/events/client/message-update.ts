@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(oldMessage: Message) {
-    this.client.logger.verbose(`Message from ${oldMessage.author} updated`);
+    this.client.logger.verbose(`Message from ${oldMessage.author.id} updated`);
   }
 
 }

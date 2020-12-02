@@ -15,11 +15,11 @@
     "lint:fix": "eslint --ext ts src --fix",
     "clean": "rm -rf dist",
     "build": "tsc -p .",
-    "watch": "tsc -p . -w",
     "build:clean": "yarn clean && yarn build",
     "start": "node dist/client.js",
-    "postinstall": "tsc",
-    "serve": "nodemon -e ts --exec 'yarn build:clean && node dist/client.js'"
+    "postinstall": "yarn build",
+    "precommit": "yarn lint",
+    "serve": "nodemon -e ts --exec 'yarn lint && yarn build:clean && node dist/client.js'"
   },
   "dependencies": {
     "axios": "^0.21.0",
@@ -41,10 +41,11 @@
     "@types/node": "^14.14.9",
     "@types/ws": "^7.4.0",
     "@types/xml2js": "^0.4.7",
-    "@typescript-eslint/eslint-plugin": "^4.7.0",
-    "@typescript-eslint/parser": "^4.7.0",
+    "@typescript-eslint/eslint-plugin": "^4.9.0",
+    "@typescript-eslint/parser": "^4.9.0",
     "eslint": "^7.13.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
     "module-alias": "^2.2.2",
     "nodemon": "^2.0.6",
     "prettier": "^2.1.2",

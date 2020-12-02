@@ -1,5 +1,5 @@
 import { AkairoModule } from 'discord-akairo';
-import { TaskOptions } from 'types/types';
+import { TaskOptions } from 'types';
 
 /**
  * A simple task that get executed repeatedly at an interval

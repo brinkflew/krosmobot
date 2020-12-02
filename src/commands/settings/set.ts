@@ -1,6 +1,6 @@
 import { Message, TextChannel } from 'discord.js';
 import { Command } from '@/structures';
-import { SetCommandArguments } from 'types/types';
+import { SetCommandArguments } from 'types';
 import { findPortalServer } from '@/utils';
 
 /**

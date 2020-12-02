@@ -25,7 +25,7 @@ export default class LocaleCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { locale }: any): Promise<Message> {
+  public async exec(message: Message, { locale }: { locale: string }): Promise<Message> {
     try {
       const settings = message.guild || message.author;
       const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
@@ -43,7 +43,7 @@ export default class LocaleCommand extends Command {
       }
 
       // Check if the locale actually changes
-      let oldLocale = this.get(settings, 'locale', defaultLocale);
+      const oldLocale = <string>(this.get(settings, 'locale', defaultLocale));
       if (oldLocale === locale) {
         const language = this.t(`LANG_${oldLocale.toUpperCase()}`, message);
         return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, language));

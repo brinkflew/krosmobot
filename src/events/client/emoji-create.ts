@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(emoji: GuildEmoji) {
-    this.client.logger.verbose(`Created emoji '${emoji.name}' (${emoji.identifier}) in guild ${emoji.guild}`);
+    this.client.logger.verbose(`Created emoji '${emoji.name}' (${emoji.identifier}) in guild ${emoji.guild.id}`);
   }
 
 }

@@ -30,7 +30,7 @@ interface ScraperSchema {
 interface ScraperPage {
   url: string;
   language: string;
-  data?: { [key: string]: any }[];
+  data?: { [key: string]: unknown }[];
   response?: AxiosResponse;
   fields: ScraperSchema[];
 }

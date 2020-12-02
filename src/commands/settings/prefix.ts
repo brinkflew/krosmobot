@@ -36,7 +36,7 @@ export default class PrefixCommand extends Command {
       }
 
       // Check if the prefix actually changes
-      let oldPrefix = this.get(message.guild!, 'prefix', defaultPrefix);
+      const oldPrefix = this.get(message.guild!, 'prefix', defaultPrefix);
       if (oldPrefix === prefix) {
         return this.warning(message, this.t('COMMAND_PREFIX_RESPONSE_IDENTICAL', message));
       }

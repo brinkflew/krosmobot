@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(member: GuildMember) {
-    this.client.logger.info(`Member ${member} left guild ${member.guild}`);
+    this.client.logger.info(`Member ${member.id} left guild ${member.guild.id}`);
   }
 
 }

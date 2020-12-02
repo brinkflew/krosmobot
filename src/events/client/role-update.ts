@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(oldRole: Role, newRole: Role) {
-    this.client.logger.verbose(`Role ${oldRole} updated in guild ${oldRole.guild} -> ${newRole}`);
+    this.client.logger.verbose(`Role ${oldRole.id} updated in guild ${oldRole.guild.id} -> ${newRole.name}`);
   }
 
 }

@@ -18,7 +18,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(guild: Guild) {
-    this.client.logger.warning(`Guild ${guild} has become unavailable`);
+    this.client.logger.warning(`Guild ${guild.id} has become unavailable`);
   }
 
 }

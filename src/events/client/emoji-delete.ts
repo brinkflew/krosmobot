@@ -18,7 +18,7 @@ export default class extends Listener {
    */
   public exec(emoji: GuildEmoji) {
     this.client.logger.verbose(
-      `Deleted emoji '${emoji.name}' (${emoji.identifier}) in guild ${emoji.guild}`
+      `Deleted emoji '${emoji.name}' (${emoji.identifier}) in guild ${emoji.guild.id}`
     );
   }
 

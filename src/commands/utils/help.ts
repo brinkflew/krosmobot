@@ -70,7 +70,7 @@ export default class HelpCommand extends Command {
       const embed = this.craftEmbed(message, {
         title: this.t('COMMAND_HELP_RESPONSE_TITLE', message),
         description: this.t('COMMAND_HELP_DESCRIPTION_EXTENDED', message),
-        fields: await this.generateCommandsHelp(message)
+        fields: this.generateCommandsHelp(message)
       });
 
       if (message.channel.type !== 'dm') {
@@ -88,8 +88,8 @@ export default class HelpCommand extends Command {
    * Generate some help for each available command, broken down per category.
    * @param message Message that triggered the help command
    */
-  private async generateCommandsHelp(message: Message) {
-    const categories = await this.getCommands(message);
+  private generateCommandsHelp(message: Message) {
+    const categories = this.getCommands(message);
     const fields = [];
 
     for (const [category, commands] of categories) {
@@ -109,7 +109,7 @@ export default class HelpCommand extends Command {
    */
   private formatCommand(message: Message, command: Command): string {
     const prefix = message.guild
-      ? this.client.settings.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
+      ? <string>(this.client.settings.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX))
       : DEFAULT_PREFIX;
     const description = this.t(command.description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message);
     return `\`${prefix}${command.id}\` → ${description}`;

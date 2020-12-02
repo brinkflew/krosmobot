@@ -19,7 +19,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(invite: Invite) {
-    this.client.logger.info(`Invite created in guild ${invite.guild}: ${invite}`);
+    this.client.logger.info(`Invite created ${invite.guild ? `in guild ${invite.guild.id}` : ''}: ${invite.code}`);
   }
 
 }

@@ -69,7 +69,7 @@ export class Client extends AkairoClient {
     this.commands = new CommandHandler(this, {
       directory: resolve(join(__dirname, '..', 'commands')),
       prefix: (message: Message) => {
-        let prefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
+        const prefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
         return message.guild
           ? this.settings.guilds.get(message.guild.id, 'prefix', prefix)
           : prefix;

@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(channel: TextChannel) {
-    this.client.logger.debug(`Webhook updated for channel ${channel.id} in guild ${channel.guild}`);
+    this.client.logger.debug(`Webhook updated for channel ${channel.id} in guild ${channel.guild.id}`);
   }
 
 }

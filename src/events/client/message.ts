@@ -19,7 +19,7 @@ export default class extends Listener {
    */
   public exec(message: Message) {
     this.client.logger.verbose(oneLine`
-      Message ${message.author.id === this.client.user?.id ? 'sent to' : `received from ${message.author} in`}
+      Message ${message.author.id === this.client.user?.id ? 'sent to' : `received from ${message.author.id} in`}
       channel ${message.channel}
     `);
   }

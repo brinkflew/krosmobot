@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(oldGuild: Guild, newGuild: Guild) {
-    this.client.logger.verbose(`Guild ${oldGuild} has been updated -> ${newGuild}`);
+    this.client.logger.verbose(`Guild ${oldGuild.id} has been updated -> ${newGuild.id}`);
   }
 
 }
