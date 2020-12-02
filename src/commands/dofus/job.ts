@@ -1,6 +1,6 @@
 import { Message, GuildMember, GuildEmoji } from 'discord.js';
 import { Command } from '@/structures';
-import pictures from '@/resources/pictures/jobs';
+import { jobs as icons } from '@/constants/pictures';
 
 /**
  * Updates or shows the current jobs of a member.
@@ -100,7 +100,7 @@ export default class JobCommand extends Command {
             name: message.guild!.name,
             icon_url: message.guild!.iconURL() || undefined
           },
-          thumbnail: { url: pictures[name] },
+          thumbnail: { url: icons[name] },
           fields: [
             {
               name: this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message),
@@ -180,7 +180,7 @@ export default class JobCommand extends Command {
           name: target.displayName,
           icon_url: target.user.avatarURL() || target.user.defaultAvatarURL
         },
-        thumbnail: { url: pictures[name] },
+        thumbnail: { url: icons[name] },
         fields: [
           {
             name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
