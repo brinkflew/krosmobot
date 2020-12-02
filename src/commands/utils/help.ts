@@ -7,22 +7,23 @@ import { DEFAULT_PREFIX } from '@/constants';
  * Display help about the available commands.
  */
 export default class HelpCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('help', {
       aliases: ['h'],
       typing: true,
       description: {
-        short: 'COMMAND_HELP_DESCRIPTION_SHORT',
-        extended: 'COMMAND_HELP_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_HELP_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_HELP_DESCRIPTION_USAGE'
+        'short': 'COMMAND_HELP_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_HELP_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_HELP_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_HELP_DESCRIPTION_USAGE'
       },
       args: [
         {
-          id: 'command',
-          default: null,
-          type: Argument.compose('lowercase', 'commandAlias'),
-          description: 'COMMAND_HELP_ARGUMENT_COMMAND_DESCRIPTION'
+          'id': 'command',
+          'default': null,
+          'type': Argument.compose('lowercase', 'commandAlias'),
+          'description': 'COMMAND_HELP_ARGUMENT_COMMAND_DESCRIPTION'
         }
       ]
     });
@@ -39,8 +40,8 @@ export default class HelpCommand extends Command {
         : DEFAULT_PREFIX;
 
       if (command) {
-        const description = command.description;
-        const aliases = command.aliases.filter((alias) => alias !== command.id);
+        const { description } = command;
+        const aliases = command.aliases.filter(alias => alias !== command.id);
         return this.embed(message, {
           title: command.id.toUpperCase(),
           description: this.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message),
@@ -72,8 +73,8 @@ export default class HelpCommand extends Command {
         fields: await this.generateCommandsHelp(message)
       });
 
-      if (message.channel.type != 'dm') {
-        this.success(message, this.t('COMMAND_HELP_RESPONSE_DM', message));
+      if (message.channel.type !== 'dm') {
+        void this.success(message, this.t('COMMAND_HELP_RESPONSE_DM', message));
         embed.setFooter(this.t('COMMAND_HELP_RESPONSE_FROMGUILD', message, message.guild?.name));
       }
 
@@ -94,7 +95,7 @@ export default class HelpCommand extends Command {
     for (const [category, commands] of categories) {
       fields.push({
         name: this.t(`COMMAND_HELP_CATEGORY_${category.toUpperCase()}`, message),
-        value: [...commands].map((command) => this.formatCommand(message, command)).join('\n')
+        value: [...commands].map(command => this.formatCommand(message, command)).join('\n')
       });
     }
 
@@ -119,17 +120,17 @@ export default class HelpCommand extends Command {
    * and the required permissions to execute it.
    * @param message Message from which the command comes
    */
-  private async getCommands(message: Message, ids?: string | string[] | null): Promise<Map<string, Set<Command>>> {
+  private getCommands(message: Message, ids?: string | string[] | null): Map<string, Set<Command>> {
     if (typeof ids === 'string') ids = [ids];
     const store = this.client.commands.modules;
     const conditions = async (command: Command) => [
-      !command.channel || (command.channel === 'guild' && !!message.guild) || (command.channel === 'dm' && !message.guild),
+      !command.channel || (command.channel === 'guild' && Boolean(message.guild)) || (command.channel === 'dm' && !message.guild),
       !command.ownerOnly || (command.ownerOnly && (this.client.ownerID === message.author.id || this.client.ownerID.includes(message.author.id))),
       await this.client.commands.runPermissionChecks(message, command)
     ];
 
     const commands = ([...store.values()] as Command[])
-      .filter(async (command) => (await conditions(command)).every((condition) => condition));
+      .filter(async command => (await conditions(command)).every(condition => condition));
 
 
     const categories: Map<string, Set<Command>> = new Map();
@@ -142,4 +143,5 @@ export default class HelpCommand extends Command {
 
     return categories;
   }
+
 }

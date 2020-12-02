@@ -6,7 +6,8 @@ import { oneLine } from 'common-tags';
  * Does something when the client updates a guild emoji.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-emoji-update', {
       emitter: 'client',
       event: 'emojiUpdate'
@@ -22,4 +23,5 @@ export default class extends Listener {
       -> ${newEmoji.name} (${newEmoji.identifier})
     `);
   }
+
 }

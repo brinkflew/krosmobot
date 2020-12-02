@@ -6,7 +6,8 @@ import { Guild } from 'discord.js';
  * likely due to server outage.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-guild-unavailable', {
       emitter: 'client',
       event: 'guildUnavailable'
@@ -19,4 +20,5 @@ export default class extends Listener {
   public exec(guild: Guild) {
     this.client.logger.warning(`Guild ${guild} has become unavailable`);
   }
+
 }

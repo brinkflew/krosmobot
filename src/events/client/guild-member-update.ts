@@ -6,7 +6,8 @@ import { oneLine } from 'common-tags';
  * Does something when a member of a guild is updated.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-guild-member-update', {
       emitter: 'client',
       event: 'guildMemberUpdate'
@@ -22,4 +23,5 @@ export default class extends Listener {
       -> ${newMember}
     `);
   }
+
 }

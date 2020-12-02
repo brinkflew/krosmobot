@@ -6,7 +6,8 @@ import { oneLine } from 'common-tags';
  * Emitted whenever a guild member's presence (e.g. status, activity) is changed.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-presence-update', {
       emitter: 'client',
       event: 'presenceUpdate'
@@ -20,10 +21,11 @@ export default class extends Listener {
     this.client.logger.verbose(oneLine`
       Presence status changed for
       ${newPresence.member
-        ? `member ${newPresence.member} in guild ${newPresence.guild}`
-        : `user ${newPresence.user}`}
+    ? `member ${newPresence.member} in guild ${newPresence.guild}`
+    : `user ${newPresence.user}`}
       ${oldPresence?.status ? oldPresence.status : 'unknown'}
       -> ${newPresence.status}
     `);
   }
+
 }

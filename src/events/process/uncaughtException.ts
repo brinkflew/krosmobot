@@ -5,7 +5,8 @@ import { shutdown } from '@/utils';
  * Does something when the process encounters an error it cannot recover from.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('process-uncaught-exception', {
       emitter: 'process',
       event: 'uncaughtException'
@@ -15,8 +16,9 @@ export default class extends Listener {
   /**
    * Executes when the event is fired.
    */
-  public async exec([error]: [string | Error]) {
+  public exec([error]: [string | Error]) {
     this.client.logger.error(error);
-    shutdown(this.client, 1);
+    void shutdown(this.client, 1);
   }
+
 }

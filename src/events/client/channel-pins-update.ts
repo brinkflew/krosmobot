@@ -6,7 +6,8 @@ import { DMChannel, GuildChannel } from 'discord.js';
  * in a channel.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-channel-pins-update', {
       emitter: 'client',
       event: 'channelPinsUpdate'
@@ -16,7 +17,8 @@ export default class extends Listener {
   /**
    * Executes when the event is fired.
    */
-  public exec(channel: DMChannel | GuildChannel, _date: Date) {
-    this.client.logger.verbose(`Pinned message in ${channel.type} channel: ${channel}`);
+  public exec(channel: DMChannel | GuildChannel) {
+    this.client.logger.verbose(`Pinned message in ${channel.type} channel: ${channel.id}`);
   }
+
 }

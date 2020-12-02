@@ -4,7 +4,8 @@ import { Listener } from 'discord-akairo';
  * Emitted when a shard is attempting to reconnect or re-identify.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-shard-reconnecting', {
       emitter: 'client',
       event: 'shardReconnecting'
@@ -17,4 +18,5 @@ export default class extends Listener {
   public exec(id: number) {
     this.client.logger.info(`Shard ${id} reconnecting...`);
   }
+
 }

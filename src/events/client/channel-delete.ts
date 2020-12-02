@@ -5,7 +5,8 @@ import { DMChannel, GuildChannel } from 'discord.js';
  * Does something when the client deletes a channel.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-channel-delete', {
       emitter: 'client',
       event: 'channelDelete'
@@ -16,6 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(channel: DMChannel | GuildChannel) {
-    this.client.logger.verbose(`Deleted ${channel.type} channel: ${channel}`);
+    this.client.logger.verbose(`Deleted ${channel.type} channel: ${channel.id}`);
   }
+
 }

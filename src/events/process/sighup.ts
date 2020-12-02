@@ -5,7 +5,8 @@ import { shutdown } from '@/utils';
  * Does something once a SIGHUP is capture.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('process-sighup', {
       emitter: 'process',
       event: 'SIGHUP'
@@ -17,6 +18,7 @@ export default class extends Listener {
    */
   public exec() {
     this.client.logger.warning('Captured SIGHUP');
-    shutdown(this.client, 1);
+    void shutdown(this.client, 1);
   }
+
 }

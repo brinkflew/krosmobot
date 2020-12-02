@@ -4,7 +4,8 @@ import { Listener } from 'discord-akairo';
  * Emitted when a shard turns ready.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-shard-ready', {
       emitter: 'client',
       event: 'shardReady'
@@ -17,4 +18,5 @@ export default class extends Listener {
   public exec(id: number) {
     this.client.logger.success(`Shard ${id} ready`);
   }
+
 }

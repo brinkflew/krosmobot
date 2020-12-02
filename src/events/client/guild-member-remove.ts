@@ -5,7 +5,8 @@ import { GuildMember } from 'discord.js';
  * Does something when a user leaves a guild.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-guild-member-remove', {
       emitter: 'client',
       event: 'guildMemberRemove'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec(member: GuildMember) {
     this.client.logger.info(`Member ${member} left guild ${member.guild}`);
   }
+
 }

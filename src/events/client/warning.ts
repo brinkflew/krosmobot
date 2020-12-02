@@ -4,7 +4,8 @@ import { Listener } from 'discord-akairo';
  * Does something when the client emits a warning.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-warning', {
       emitter: 'client',
       event: 'warn'
@@ -17,4 +18,5 @@ export default class extends Listener {
   public exec(warning: string) {
     this.client.logger.warning(warning);
   }
+
 }

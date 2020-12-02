@@ -6,7 +6,8 @@ import { oneLine } from 'common-tags';
  * Emitted whenever a reaction is removed from a cached message.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-message-reaction-remove', {
       emitter: 'client',
       event: 'messageReactionRemove'
@@ -22,4 +23,5 @@ export default class extends Listener {
       from ${reaction.message.author}
     `);
   }
+
 }

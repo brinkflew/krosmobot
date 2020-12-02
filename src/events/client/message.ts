@@ -6,7 +6,8 @@ import { oneLine } from 'common-tags';
  * Emitted whenever a message is created.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-message', {
       emitter: 'client',
       event: 'message'
@@ -22,4 +23,5 @@ export default class extends Listener {
       channel ${message.channel}
     `);
   }
+
 }

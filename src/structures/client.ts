@@ -20,6 +20,11 @@ import { DEFAULT_PREFIX } from '@/constants';
 // Import models for the provider
 import {
   guildModel,
+  channelModel,
+  userModel,
+  logModel,
+  almanaxModel,
+  memberModel
 } from '@/models';
 
 /**
@@ -27,19 +32,21 @@ import {
  * Creates the handlers and sets them up.
  */
 export class Client extends AkairoClient {
+
   public commands: CommandHandler;
   public events: ListenerHandler;
   public locales: LocaleHandler;
-  public scheduler : TaskHandler;
+  public scheduler: TaskHandler;
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
   public settings: {
-    guilds: MongooseProvider,
-    channels: MongooseProvider,
-    users: MongooseProvider,
-    members: MongooseProvider
+    guilds: MongooseProvider;
+    channels: MongooseProvider;
+    users: MongooseProvider;
+    members: MongooseProvider;
   };
+
   public data: {
     almanax: MongooseProvider;
   };
@@ -49,12 +56,12 @@ export class Client extends AkairoClient {
    * @param akairoOptions Options to pass to discord-akairo
    * @param discordOptions Options to pass to discord.js
    */
-  constructor(akairoOptions: AkairoOptions, discordOptions: ClientOptions) {
+  public constructor(akairoOptions: AkairoOptions, discordOptions: ClientOptions) {
     super(akairoOptions, discordOptions);
 
     /** Logger */
 
-    this.logs = new MongooseProvider(LogModel);
+    this.logs = new MongooseProvider(logModel);
     this.logger = new Logger(this);
 
     /** Handlers */
@@ -82,7 +89,7 @@ export class Client extends AkairoClient {
     this.locales = new LocaleHandler(this, {
       directory: resolve(join(__dirname, '..', 'locales'))
     });
-    
+
     /** Scheduler */
     this.scheduler = new TaskHandler(this, {
       directory: resolve(join(__dirname, '..', 'tasks'))
@@ -90,22 +97,22 @@ export class Client extends AkairoClient {
 
     /** Providers */
     this.settings = {
-      guilds: new MongooseProvider(GuildModel),
-      channels: new MongooseProvider(ChannelModel),
-      users: new MongooseProvider(UserModel),
-      members: new MongooseProvider(MemberModel)
+      guilds: new MongooseProvider(guildModel),
+      channels: new MongooseProvider(channelModel),
+      users: new MongooseProvider(userModel),
+      members: new MongooseProvider(memberModel)
     };
 
     this.data = {
-      almanax: new MongooseProvider(AlmanaxModel),
+      almanax: new MongooseProvider(almanaxModel)
     };
   }
 
   /**
    * Initializes the client and loads the handlers.
    */
-  private async init(): Promise<Client> {
-    this.events.setEmitters({ process: process });
+  public async init(): Promise<Client> {
+    this.events.setEmitters({ process });
 
     this.commands.loadAll();
     this.events.loadAll();
@@ -115,7 +122,7 @@ export class Client extends AkairoClient {
       .loadAll()
       .init();
 
-    await Promise.all(Object.values(this.settings).map((provider) => provider.init()));
+    await Promise.all(Object.values(this.settings).map(provider => provider.init()));
     return this;
   }
 
@@ -141,11 +148,15 @@ export class Client extends AkairoClient {
 
     const permissions = Client.basePermissions;
 
-    [...this.commands.modules.values()].map((command) => {
-      if (Array.isArray(command.clientPermissions))
-        return [...command.clientPermissions].map((permission) => permissions.add(permission));
-      if (['string', 'number'].includes(typeof command.clientPermissions))
+    [...this.commands.modules.values()].map(command => {
+      if (Array.isArray(command.clientPermissions)) {
+        return [...command.clientPermissions].map(permission => permissions.add(permission));
+      }
+
+      if (['string', 'number'].includes(typeof command.clientPermissions)) {
         return permissions.add(<number | PermissionResolvable>command.clientPermissions);
+      }
+
       return null;
     });
 
@@ -156,5 +167,6 @@ export class Client extends AkairoClient {
 	 * The base Permissions that the {@link Client#invite} asks for.
    * Defaults to [VIEW_CHANNEL, SEND_MESSAGES].
 	 */
-	public static basePermissions = new Permissions(3072);
+  public static basePermissions = new Permissions(3072);
+
 }

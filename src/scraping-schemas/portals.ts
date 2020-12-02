@@ -44,7 +44,7 @@ export const schema = [
     attribute: 'title',
     transform: (content: string) => content.split(':')[1]
   },
-  { 
+  {
     id: 'images.cycle',
     selector: '.cycle .modificateurs > :not(.visible-lg-inline) img',
     attribute: 'src'

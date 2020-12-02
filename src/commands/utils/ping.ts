@@ -7,14 +7,15 @@ import { INLINE_SEPARATOR } from '@/constants';
  * and between the client and the Discord servers
  */
 export default class PingCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('ping', {
       description: {
-        short: 'COMMAND_PING_DESCRIPTION_SHORT',
-        extended: 'COMMAND_PING_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_PING_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_PING_DESCRIPTION_USAGE'
-      },
+        'short': 'COMMAND_PING_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_PING_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_PING_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_PING_DESCRIPTION_USAGE'
+      }
     });
   }
 
@@ -25,7 +26,7 @@ export default class PingCommand extends Command {
   public async exec(message: Message) {
     const embed = { title: this.t('COMMAND_PING_RESPONSE_TITLE', message) };
     const sent = await this.embed(message, embed);
-    
+
     const diff = (sent.editedAt || sent.createdAt).getTime() - (message.editedAt || message.createdAt).getTime();
     const ping = Math.round(this.client.ws.ping);
 
@@ -38,4 +39,5 @@ export default class PingCommand extends Command {
       ]
     });
   }
+
 }

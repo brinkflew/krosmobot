@@ -7,27 +7,18 @@ import { EMBED_COLOR_DEFAULT } from '@/constants';
  * Change the color used in embed borders for the current guild.
  */
 export default class ColorCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('color', {
       aliases: ['colour'],
       userPermissions: ['MANAGE_GUILD'],
       description: {
-        short: 'COMMAND_COLOR_DESCRIPTION_SHORT',
-        extended: 'COMMAND_COLOR_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_COLOR_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_COLOR_DESCRIPTION_USAGE'
-      },
+        'short': 'COMMAND_COLOR_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_COLOR_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_COLOR_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_COLOR_DESCRIPTION_USAGE'
+      }
     });
-  }
-
-  /**
-   * Validate the color that was passed in.
-   */
-  *args() {
-    const color = yield Argument.validate('string',
-      (_message: Message, _phrase: string, value: any) => /^#[0-9a-f]{6}$/i.test(value)
-    );
-    return { color };
   }
 
   /**
@@ -36,7 +27,7 @@ export default class ColorCommand extends Command {
    */
   public async exec(message: Message, { color }: any): Promise<Message> {
     try {
-     // Reset the default color
+      // Reset the default color
       if (!color) {
         await this.set(message.guild!, 'color', EMBED_COLOR_DEFAULT);
         return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_RESET', message, EMBED_COLOR_DEFAULT) });
@@ -46,8 +37,9 @@ export default class ColorCommand extends Command {
 
       // Check if the color actually changes
       let oldColor = this.get(message.guild!, 'color', EMBED_COLOR_DEFAULT);
-      if (oldColor === color)
+      if (oldColor === color) {
         return this.warning(message, this.t('COMMAND_COLOR_RESPONSE_IDENTICAL', message));
+      }
 
       // Save the new color
       await this.set(message.guild!, 'color', color);
@@ -56,4 +48,15 @@ export default class ColorCommand extends Command {
       return this.error(message, this.t('COMMAND_COLOR_RESPONSE_ERROR', message));
     }
   }
+
+  /**
+   * Validate the color that was passed in.
+   */
+  // @ts-ignore unused-declaration
+  private *args() {
+    const color = yield Argument.validate('string',
+      (_message: Message, _phrase: string, value: any) => /^#[0-9a-f]{6}$/i.test(value));
+    return { color };
+  }
+
 }

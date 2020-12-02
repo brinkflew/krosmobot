@@ -5,7 +5,8 @@ import { Listener } from 'discord-akairo';
  * that is not handled accordingly.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('process-unhandled-rejection', {
       emitter: 'process',
       event: 'unhandledRejection'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec([error]: [string | Error]) {
     return this.client.logger.error(error);
   }
+
 }

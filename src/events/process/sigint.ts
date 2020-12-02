@@ -5,7 +5,8 @@ import { shutdown } from '@/utils';
  * Does something once a SIGINT is captured (aka Ctrl+C is pressed).
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('process-sigint', {
       emitter: 'process',
       event: 'SIGINT'
@@ -17,6 +18,7 @@ export default class extends Listener {
    */
   public exec() {
     this.client.logger.warning('Captured SIGINT (Ctrl-C)');
-    shutdown(this.client, 2);
+    void shutdown(this.client, 2);
   }
+
 }

@@ -21,4 +21,4 @@ const schema = new Schema(
   }, { minimize: false }
 );
 
-export const AlmanaxModel = model('almanax', schema);
+export const almanaxModel = model('almanax', schema);

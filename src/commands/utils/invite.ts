@@ -6,17 +6,18 @@ import { DEFAULT_CLIENTNAME } from '@/constants';
  * Prepare an invite to add the client to a guild.
  */
 export default class InviteCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('invite', {
       userPermissions: ['CREATE_INSTANT_INVITE'],
-      clientPermissions: ["ADD_REACTIONS"],
+      clientPermissions: ['ADD_REACTIONS'],
       channel: 'guild',
       description: {
-        short: 'COMMAND_INVITE_DESCRIPTION_SHORT',
-        extended: 'COMMAND_INVITE_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_INVITE_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_INVITE_DESCRIPTION_USAGE'
-      },
+        'short': 'COMMAND_INVITE_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_INVITE_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_INVITE_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_INVITE_DESCRIPTION_USAGE'
+      }
     });
   }
 
@@ -25,8 +26,8 @@ export default class InviteCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message) {
-    const invite = this.client.invite;
-    
+    const { invite } = this.client;
+
     if (!invite) return this.error(message, this.t('COMMAND_INVITE_RESPONSE_NOLINK', message));
 
     return this.embed(message, {
@@ -36,4 +37,5 @@ export default class InviteCommand extends Command {
       footer: { text: this.t('COMMAND_INVITE_RESPONSE_FOOTER', message) }
     });
   }
+
 }

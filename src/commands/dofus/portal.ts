@@ -7,14 +7,15 @@ import { findPortalServer } from '@/utils';
  * Fetches the Dofus portal position for a dimension on a server.
  */
 export default class PortalCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('portal', {
       aliases: ['pos', 'portals'],
       description: {
-        short: 'COMMAND_PORTAL_DESCRIPTION_SHORT',
-        extended: 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_PORTAL_DESCRIPTION_USAGE'
+        'short': 'COMMAND_PORTAL_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_PORTAL_DESCRIPTION_USAGE'
       },
       args: [
         {
@@ -23,7 +24,7 @@ export default class PortalCommand extends Command {
             ['enu', 'enutrof', 'enutrosor'],
             ['eca', 'ecaflip', 'ecaflipus'],
             ['sram', 'srambad'],
-            ['xel', 'xelor', 'xelorium'],
+            ['xel', 'xelor', 'xelorium']
           ]
         },
         {
@@ -38,8 +39,8 @@ export default class PortalCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { dimension, server }: { dimension: string, server: string }) {
-    const portalServer: { id: string, name: string } = server
+  public async exec(message: Message, { dimension, server }: { dimension: string; server: string }) {
+    const portalServer: { id: string; name: string } = server
       ? await findPortalServer(this, message, server)
       : message.guild ? this.get(message.guild || message.author, 'dofus', {}).server : null;
     if (!portalServer) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
@@ -48,12 +49,12 @@ export default class PortalCommand extends Command {
     const url = `${baseUrl}/portails/${portalServer.id}`;
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
     if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message));
-    
+
     const generateEmbed = (data: any): MessageEmbed => this.craftEmbed(message, {
       author: {
         url,
         name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
-        icon_url: `${baseUrl}/images/servers/${portalServer.name.replace(/\s/g, '')}-min.png`
+        iconURL: `${baseUrl}/images/servers/${portalServer.name.replace(/\s/g, '')}-min.png`
       },
       url,
       thumbnail: { url: `${baseUrl}/${data['images.dimension'].replace('../', '')}` },
@@ -73,12 +74,12 @@ export default class PortalCommand extends Command {
         {
           name: this.t('COMMAND_PORTAL_RESPONSE_CYCLE', message, data['cycle.title']),
           value: data['cycle.description']
-        },
+        }
       ],
       footer: {
         text: data.update
           ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, portalServer.name)
-          : undefined,
+          : undefined
       }
     });
 
@@ -90,4 +91,5 @@ export default class PortalCommand extends Command {
       default: return scraped.data.map((data: any) => this.embed(message, generateEmbed(data)));
     }
   }
+
 }

@@ -1,6 +1,6 @@
-export { GuildModel } from '@/models/Guild';
-export { ChannelModel } from '@/models/Channel';
-export { UserModel } from '@/models/User';
-export { LogModel } from '@/models/Log';
-export { AlmanaxModel } from '@/models/Almanax';
-export { MemberModel } from '@/models/Member';
+export { guildModel } from '@/models/guild';
+export { channelModel } from '@/models/channel';
+export { userModel } from '@/models/user';
+export { logModel } from '@/models/log';
+export { almanaxModel } from '@/models/almanax';
+export { memberModel } from '@/models/member';

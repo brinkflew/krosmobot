@@ -1,5 +1,4 @@
 {
-    "extends": "@skyra/eslint-config",
     "compilerOptions": {
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
@@ -56,7 +55,8 @@
             "mongoose",
             "common-tags",
             "cheerio",
-            "axios"
+            "axios",
+            "xml2js"
         ]
     },
     "include": [

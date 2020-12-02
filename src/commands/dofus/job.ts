@@ -6,15 +6,16 @@ import { jobs as icons } from '@/constants/pictures';
  * Updates or shows the current jobs of a member.
  */
 export default class JobCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('job', {
       aliases: ['jobs'],
       channel: 'guild',
       description: {
-        short: 'COMMAND_JOB_DESCRIPTION_SHORT',
-        extended: 'COMMAND_JOB_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_JOB_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_JOB_DESCRIPTION_USAGE'
+        'short': 'COMMAND_JOB_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_JOB_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_JOB_DESCRIPTION_USAGE'
       },
       args: [
         {
@@ -60,9 +61,9 @@ export default class JobCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { name, level, member }: { name: string, level: number, member: GuildMember }): Promise<Message> {
+  public async exec(message: Message, { name, level, member }: { name: string; level: number; member: GuildMember }): Promise<Message> {
     try {
-      
+
       // `!job tailor` → Display the single job for all users
       // `!job tailor @Member` → Display the single job for the single user
 
@@ -71,17 +72,17 @@ export default class JobCommand extends Command {
         const members: string[] = [];
         const cachedMembers = message.guild!.members.cache
           .array()
-          .filter((member) => !member.user.bot);
+          .filter(member => !member.user.bot);
 
         for (const member of cachedMembers) {
           fetched.push(this.get(member, 'jobs', {}));
           members.push(member.displayName);
         }
 
-        const jobs = fetched.map((list) => list[name] || 0);
+        const jobs = fetched.map(list => list[name] || 0);
         const ordered = jobs
-          .map((job, id) => { return { member: members[id], level: job } })
-          .filter((job) => job.level > 0)
+          .map((job, id) => ({ member: members[id], level: job }))
+          .filter(job => job.level > 0)
           .sort((a, b) => b.level - a.level);
 
         if (!ordered.length) {
@@ -98,24 +99,24 @@ export default class JobCommand extends Command {
         return this.embed(message, {
           author: {
             name: message.guild!.name,
-            icon_url: message.guild!.iconURL() || undefined
+            iconURL: message.guild!.iconURL() || undefined
           },
           thumbnail: { url: icons[name] },
           fields: [
             {
               name: this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message),
-              value: ordered.map((field) => field.member).join('\n'),
+              value: ordered.map(field => field.member).join('\n'),
               inline: true
             },
             {
               name: '\u200B',
-              value: ordered.map((field) => field.level).join('\n'),
+              value: ordered.map(field => field.level).join('\n'),
               inline: true
             }
           ]
         });
       }
-      
+
       let target = message.member!;
       if (member) target = member;
 
@@ -123,15 +124,15 @@ export default class JobCommand extends Command {
 
       const author = {
         name: target.displayName,
-        icon_url: target.user.avatarURL() || target.user.defaultAvatarURL,
+        iconURL: target.user.avatarURL() || target.user.defaultAvatarURL
       };
 
       // `!job @Member` → Display all jobs for the single user
       // `!job` → Display all jobs for self
       // `!job tailor 125` → Display all jobs for self
-      
+
       if (!name) {
-        let fields: { job: string, level: number, emoji: GuildEmoji | string }[] = [];
+        let fields: { job: string; level: number; emoji: GuildEmoji | string }[] = [];
         const ordered = Object
           .entries(jobs)
           .sort((a, b) => a[0].localeCompare(b[0]));
@@ -142,7 +143,7 @@ export default class JobCommand extends Command {
           fields.push({
             job: this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message),
             level,
-            emoji: this.client.emojis.cache.find((emoji) => emoji.name.includes(job)) || ':grey_question:'
+            emoji: this.client.emojis.cache.find(emoji => emoji.name.includes(job)) || ':grey_question:'
           });
         }
 
@@ -155,13 +156,13 @@ export default class JobCommand extends Command {
             {
               name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
               value: fields
-                .map((field) => `${field.emoji} ${field.job}`)
+                .map(field => `${field.emoji} ${field.job}`)
                 .join('\n'),
               inline: true
             },
             {
               name: '\u200B',
-              value: fields.map((field) => field.level).join('\n'),
+              value: fields.map(field => field.level).join('\n'),
               inline: true
             }
           ]
@@ -172,13 +173,13 @@ export default class JobCommand extends Command {
         level = Math.min(level, 200);
         level = Math.max(level, 0);
         jobs[name] = level;
-        if (!member) this.set(message.member!, 'jobs', jobs);
+        if (!member) void this.set(message.member!, 'jobs', jobs);
       }
 
       return this.embed(message, {
         author: {
           name: target.displayName,
-          icon_url: target.user.avatarURL() || target.user.defaultAvatarURL
+          iconURL: target.user.avatarURL() || target.user.defaultAvatarURL
         },
         thumbnail: { url: icons[name] },
         fields: [
@@ -191,8 +192,8 @@ export default class JobCommand extends Command {
         ]
       });
     } catch (error) {
-      console.log(error);
       return this.error(message, this.t('COMMAND_JOB_RESPONSE_ERROR', message));
     }
   }
+
 }

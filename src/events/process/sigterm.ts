@@ -5,7 +5,8 @@ import { shutdown } from '@/utils';
  * Does something once a SIGTERM is captured.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('process-sigterm', {
       emitter: 'process',
       event: 'SIGTERM'
@@ -17,6 +18,7 @@ export default class extends Listener {
    */
   public exec() {
     this.client.logger.warning('Captured SIGTERM');
-    shutdown(this.client, 15);
+    void shutdown(this.client, 15);
   }
+
 }

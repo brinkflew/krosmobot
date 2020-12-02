@@ -5,7 +5,8 @@ import { Role } from 'discord.js';
  * Emitted whenever a role is updated.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-role-update', {
       emitter: 'client',
       event: 'roleUpdate'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec(oldRole: Role, newRole: Role) {
     this.client.logger.verbose(`Role ${oldRole} updated in guild ${oldRole.guild} -> ${newRole}`);
   }
+
 }

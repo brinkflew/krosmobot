@@ -4,7 +4,8 @@ import { Listener } from 'discord-akairo';
  * Emitted when a shard resumes successfully.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-shard-resume', {
       emitter: 'client',
       event: 'shardResume'
@@ -17,4 +18,5 @@ export default class extends Listener {
   public exec(id: number) {
     this.client.logger.success(`Shard ${id} resumed successfuly`);
   }
+
 }

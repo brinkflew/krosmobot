@@ -7,7 +7,8 @@ import { Invite } from 'discord.js';
  * or `MANAGE_CHANNEL` permissions for the channel.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-invite-delete', {
       emitter: 'client',
       event: 'inviteDelete'
@@ -20,4 +21,5 @@ export default class extends Listener {
   public exec(invite: Invite) {
     this.client.logger.verbose(`Invite deleted in guild ${invite.guild}: ${invite}`);
   }
+
 }

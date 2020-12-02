@@ -5,7 +5,8 @@ import { CloseEvent } from 'discord.js';
  * Emitted when a shard's WebSocket disconnects and will no longer reconnect.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-shard-disconnect', {
       emitter: 'client',
       event: 'shardDisconnect'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec(event: CloseEvent, id: number) {
     this.client.logger.warning(`Shard ${id} disconnected with code ${event.code}: ${event.reason}`);
   }
+
 }

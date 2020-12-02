@@ -5,7 +5,8 @@ import { Guild, User } from 'discord.js';
  * Does something when the client bans a user from a guild.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-guild-ban-add', {
       emitter: 'client',
       event: 'guildBanAdd'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec(guild: Guild, user: User) {
     this.client.logger.info(`Banned user ${user} from guild ${guild}`);
   }
+
 }

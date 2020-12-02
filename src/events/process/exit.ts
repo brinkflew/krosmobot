@@ -5,7 +5,8 @@ import { shutdown } from '@/utils';
  * Does something once the process terminates.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('process-exit', {
       emitter: 'process',
       event: 'exit'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public async exec([code]: [number]) {
     await shutdown(this.client, code);
   }
+
 }

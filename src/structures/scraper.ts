@@ -5,23 +5,8 @@ import { ScraperPage } from 'types/types';
 /**
  * Scrapes a webpage for information.
  */
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class Scraper {
-
-  /**
-   * Fetch the content of a webpage from the world wide web.
-   * @param url URL of the page to download
-   */
-  private static async request(url: string): Promise<AxiosResponse> {
-   return await axios.request({
-      url: url,
-      method: 'get',
-      responseType: 'text',
-      validateStatus: (status) => {
-        if ((status >= 200 && status < 300)) return true;
-        return false;
-      }
-    });
-  }
 
   /**
    * Scrapes a webpage to extract its data based on a defoined schema.
@@ -38,11 +23,11 @@ export class Scraper {
         const nodes = $(field.selector);
 
         nodes.each((index, node) => {
-          const element = $(node); //.first();
+          const element = $(node); // .first();
           let value = field.attribute === 'text'
             ? element.text()
             : element.attr(field.attribute);
-            
+
           if (!value) return null;
           value = value.trim();
           value = field.transform ? field.transform(value) : value;
@@ -58,4 +43,21 @@ export class Scraper {
       throw error;
     }
   }
+
+  /**
+   * Fetch the content of a webpage from the world wide web.
+   * @param url URL of the page to download
+   */
+  private static async request(url: string): Promise<AxiosResponse> {
+    return axios.request({
+      url,
+      method: 'get',
+      responseType: 'text',
+      validateStatus: status => {
+        if ((status >= 200 && status < 300)) return true;
+        return false;
+      }
+    });
+  }
+
 }

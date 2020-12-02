@@ -4,7 +4,8 @@ import { Listener } from 'discord-akairo';
  * Does something once the client is ready.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-ready', {
       emitter: 'client',
       event: 'ready'
@@ -23,4 +24,5 @@ export default class extends Listener {
     this.client.logger.info(`Loaded ${this.client.scheduler.modules.size} tasks`);
     this.client.logger.info(`Loaded ${this.client.locales.modules.size} locales`);
   }
+
 }

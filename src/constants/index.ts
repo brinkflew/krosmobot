@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import defaults from './defaults';
 import * as embeds from './embeds';
 

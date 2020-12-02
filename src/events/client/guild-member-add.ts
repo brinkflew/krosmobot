@@ -5,7 +5,8 @@ import { GuildMember } from 'discord.js';
  * Does something when a user joins a guild.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-guild-member-add', {
       emitter: 'client',
       event: 'guildMemberAdd'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec(member: GuildMember) {
     this.client.logger.info(`Member ${member} joined guild ${member.guild}`);
   }
+
 }

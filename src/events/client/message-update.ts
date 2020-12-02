@@ -5,7 +5,8 @@ import { Message } from 'discord.js';
  * Emitted whenever a message is deleted.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-message-update', {
       emitter: 'client',
       event: 'messageUpdate'
@@ -15,7 +16,8 @@ export default class extends Listener {
   /**
    * Executes when the event is fired.
    */
-  public exec(oldMessage: Message, _newMessage: Message) {
+  public exec(oldMessage: Message) {
     this.client.logger.verbose(`Message from ${oldMessage.author} updated`);
   }
+
 }

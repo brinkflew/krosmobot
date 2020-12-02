@@ -6,7 +6,8 @@ import { dummyMessage } from '@/utils';
  * Sends the almanax every day at midnight.
  */
 export default class AlmanaxTask extends Task {
-  constructor() {
+
+  public constructor() {
     super('almanax', { at: '23:00' });
   }
 
@@ -27,4 +28,5 @@ export default class AlmanaxTask extends Task {
       command.exec(message, { extended: true });
     }
   }
+
 }

@@ -6,7 +6,8 @@ import { oneLine } from 'common-tags';
  * Emitted whenever a message is deleted.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-message-delete', {
       emitter: 'client',
       event: 'messageDelete'
@@ -23,4 +24,5 @@ export default class extends Listener {
       deleted
     `);
   }
+
 }

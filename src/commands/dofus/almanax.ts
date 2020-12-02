@@ -8,14 +8,15 @@ import { AlmanaxData } from 'types/types';
  * Fetches the Dofus almanax for a specific date.
  */
 export default class AlmanaxCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('almanax', {
       aliases: ['alma'],
       description: {
-        short: 'COMMAND_ALMANAX_DESCRIPTION_SHORT',
-        extended: 'COMMAND_ALMANAX_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_ALMANAX_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_ALMANAX_DESCRIPTION_USAGE'
+        'short': 'COMMAND_ALMANAX_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_ALMANAX_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_ALMANAX_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_ALMANAX_DESCRIPTION_USAGE'
       },
       args: [
         {
@@ -36,8 +37,8 @@ export default class AlmanaxCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { extended, target }: { extended: boolean, target: string }) {
-    const settings = this.client.settings;
+  public async exec(message: Message, { extended, target }: { extended: boolean; target: string }) {
+    const { settings } = this.client;
     const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
     const language: string = message.guild
       ? settings.guilds.get(message.guild.id, 'locale', defaultLocale)
@@ -57,14 +58,14 @@ export default class AlmanaxCommand extends Command {
       if (!scraped.data?.length) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
       almanax = <AlmanaxData>scraped.data[0];
       almanax.url = url;
-      this.client.data.almanax.set(id, 'data', almanax);
+      void this.client.data.almanax.set(id, 'data', almanax);
     }
 
     const embed = this.craftEmbed(message, {
       author: {
         name: this.t('COMMAND_ALMANAX_RESPONSE_ALMANAX', message, almanax.day, almanax.month),
         url: almanax.url,
-        icon_url: almanax['images.meryde']
+        iconURL: almanax['images.meryde']
       },
       thumbnail: { url: almanax['images.item'] },
       fields: [
@@ -85,19 +86,19 @@ export default class AlmanaxCommand extends Command {
    * Get an input as a string and parse it to a vald date.
    * The input can be a valid date representation in the format `dd/mm`,
    * or an offset in the format `+x` or `-x` (with `x` the number of days
-   * to add or substract to the current date). 
+   * to add or substract to the current date).
    * @param input String to parse into a valid date
    */
   private parseDate(input: string): string | null {
     if (!input) return this.formatDate();
-    
+
     const matches = input.match(/^(([0-2]?[0-9])|(3[0-1]))([/.\s-])((1[0-2])|(0?[0-9]))/i);
     if (matches) {
       const date = Date.parse(`${new Date().getFullYear()}-${this.pad(matches[5])}-${this.pad(matches[1])}`);
       if (!date) return null;
       return this.formatDate(date);
     }
-    
+
     const offset = parseInt(input, 10);
     if (isNaN(offset)) return null;
     const date = new Date();
@@ -113,14 +114,15 @@ export default class AlmanaxCommand extends Command {
     return date.toISOString().split('T')[0];
   }
 
-    
-/**
+
+  /**
  * Adds zero-padding to a number.
  * @param n Number to pad
  * @param length Length to reach
  */
-private pad(n: number | string, l: number = 2): string {
-  const s = `${n}`;
-  return `${'0'.repeat(Math.max(l - s.split('.')[0].length, 0))}${s}`;
-};
+  private pad(n: number | string, l = 2): string {
+    const s = `${n}`;
+    return `${'0'.repeat(Math.max(l - s.split('.')[0].length, 0))}${s}`;
+  }
+
 }

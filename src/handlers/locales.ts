@@ -3,7 +3,7 @@ import {
   AkairoHandler,
   AkairoHandlerOptions
 } from 'discord-akairo';
-import {Collection } from 'discord.js';
+import { Collection } from 'discord.js';
 import { Locale } from '@/structures';
 
 /**
@@ -12,9 +12,10 @@ import { Locale } from '@/structures';
  * @param options Options for the handler
  */
 export class LocaleHandler extends AkairoHandler {
+
   public modules!: Collection<string, Locale>;
 
-  constructor(client: AkairoClient, options: AkairoHandlerOptions = {}) {
+  public constructor(client: AkairoClient, options: AkairoHandlerOptions = {}) {
     super(client, {
       directory: options.directory,
       classToHandle: Locale
@@ -38,4 +39,5 @@ export class LocaleHandler extends AkairoHandler {
     if (locale) return locale;
     throw new Error(`Invalid locale: '${id}'`);
   }
+
 }

@@ -21,8 +21,8 @@ const client = new Client({ ownerID, ...akairoConfig }, discordConfig);
 client.logger.info('Connecting to providers...');
 mongoose.connect(url, mongooseConfig)
   .then(() => client.logger.success(`Connected to database at '${url.replace(/(:\/{2}).*@/, '$1')}'`))
-  .catch((error) => client.logger.error(error));
+  .catch(error => client.logger.error(error));
 
 // Fire the client up
 client.logger.info('Connecting to the Discord gateway...');
-client.connect(process.env.KROSMOBOT_TOKEN);
+void client.connect(process.env.KROSMOBOT_TOKEN);

@@ -3,7 +3,7 @@ import {
   AkairoHandler,
   AkairoHandlerOptions
 } from 'discord-akairo';
-import {Collection } from 'discord.js';
+import { Collection } from 'discord.js';
 import { Task } from '@/structures';
 
 /**
@@ -12,33 +12,15 @@ import { Task } from '@/structures';
  * @param options Options for the handler
  */
 export class TaskHandler extends AkairoHandler {
-  public modules!: Collection<string, Task>;
-  public interval: number = 60;
 
-  constructor(client: AkairoClient, options: AkairoHandlerOptions = {}) {
+  public modules!: Collection<string, Task>;
+  public interval = 60;
+
+  public constructor(client: AkairoClient, options: AkairoHandlerOptions = {}) {
     super(client, {
       directory: options.directory,
       classToHandle: Task
     });
-  }
-
-  /**
-   * Initializes the scheduler.
-   */
-  public init() {
-    setInterval(() => this.execTasks(), this.interval * 1000);
-  }
-
-  /**
-   * Execute all tasks that needs to be run.
-   */
-  private execTasks(): void {
-    for (const [_, task] of this.modules) {
-      if (task.timestamp && task.last) continue;
-      if (task.interval && Date.now() - task.last < task.interval) continue;
-      task.last = Date.now();
-      task.exec();
-    }
   }
 
   /**
@@ -58,4 +40,24 @@ export class TaskHandler extends AkairoHandler {
     if (task) return task;
     throw new Error(`Invalid task: '${id}'`);
   }
+
+  /**
+   * Initializes the scheduler.
+   */
+  public init() {
+    setInterval(() => this.execTasks(), this.interval * 1000);
+  }
+
+  /**
+   * Execute all tasks that needs to be run.
+   */
+  private execTasks(): void {
+    for (const task of this.modules.values()) {
+      if (task.timestamp && task.last) continue;
+      if (task.interval && Date.now() - task.last < task.interval) continue;
+      task.last = Date.now();
+      task.exec();
+    }
+  }
+
 }

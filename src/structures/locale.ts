@@ -5,10 +5,11 @@ import { LocaleOptions, LocaleString } from 'types/types';
  * Store and/or build translations of messages in a specific language.
  */
 export class Locale extends AkairoModule {
+
   public language: string;
   protected strings: { [key: string]: LocaleString };
 
-  constructor(id: string, options: LocaleOptions = {}) {
+  public constructor(id: string, options: LocaleOptions = {}) {
     super(id, options);
     this.language = options.language || id;
     this.strings = {};
@@ -21,7 +22,7 @@ export class Locale extends AkairoModule {
    */
   public translate(key: string, ...args: any[]): string {
     const translated = this.strings[key];
-    
+
     if (!translated) {
       if (!this.strings.DEFAULT) throw Error(`Missing default translation key for locale '${this.id}'`);
       return this.ensureTranslated(this.strings.DEFAULT, key);
@@ -38,4 +39,5 @@ export class Locale extends AkairoModule {
   private ensureTranslated(translation: LocaleString, ...args: any[]): string {
     return typeof translation === 'string' ? translation : translation(...args);
   }
+
 }

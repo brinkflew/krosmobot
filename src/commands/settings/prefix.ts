@@ -6,17 +6,18 @@ import { DEFAULT_PREFIX } from '@/constants';
  * Change the bot prefix for the current guild.
  */
 export default class PrefixCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('prefix', {
       channel: 'guild',
       userPermissions: ['MANAGE_GUILD'],
       args: [{ id: 'prefix', type: 'string' }],
       description: {
-        short: 'COMMAND_PREFIX_DESCRIPTION_SHORT',
-        extended: 'COMMAND_PREFIX_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_PREFIX_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_PREFIX_DESCRIPTION_USAGE'
-      },
+        'short': 'COMMAND_PREFIX_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_PREFIX_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_PREFIX_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_PREFIX_DESCRIPTION_USAGE'
+      }
     });
   }
 
@@ -28,7 +29,7 @@ export default class PrefixCommand extends Command {
     try {
       const defaultPrefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
 
-     // Reset the default prefix
+      // Reset the default prefix
       if (!prefix) {
         await this.set(message.guild!, 'prefix', defaultPrefix);
         return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_RESET', message, defaultPrefix));
@@ -36,8 +37,9 @@ export default class PrefixCommand extends Command {
 
       // Check if the prefix actually changes
       let oldPrefix = this.get(message.guild!, 'prefix', defaultPrefix);
-      if (oldPrefix === prefix)
+      if (oldPrefix === prefix) {
         return this.warning(message, this.t('COMMAND_PREFIX_RESPONSE_IDENTICAL', message));
+      }
 
       // Save the new prefix
       await this.set(message.guild!, 'prefix', prefix);
@@ -46,4 +48,5 @@ export default class PrefixCommand extends Command {
       return this.error(message, this.t('COMMAND_PREFIX_RESPONSE_ERROR', message));
     }
   }
+
 }

@@ -6,7 +6,7 @@ import { AkairoClient } from 'discord-akairo';
  * @param client Client
  * @param code Exit code for the process
  */
-export const shutdown = async (client: AkairoClient, code: number = 0) => {
+export const shutdown = async (client: AkairoClient, code = 0) => {
   client.logger.warning('Gracefully exiting process...');
 
   // Remove all event listeners and clear the events loop
@@ -29,5 +29,5 @@ export const shutdown = async (client: AkairoClient, code: number = 0) => {
 
   // Remove providers and disconnect from database, though logs are now disabled
   if ([1, 2].includes(mongoose.connection.readyState)) await mongoose.disconnect();
-} 
+};
 

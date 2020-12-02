@@ -4,7 +4,8 @@ import { Listener } from 'discord-akairo';
  * Does something when the client emits a debugging event.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-debug', {
       emitter: 'client',
       event: 'debug'
@@ -17,4 +18,5 @@ export default class extends Listener {
   public exec(description: string) {
     this.client.logger.debug(description);
   }
+
 }

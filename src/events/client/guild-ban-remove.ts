@@ -5,7 +5,8 @@ import { Guild, User } from 'discord.js';
  * Does something when the client un-bans a user from a guild.
  */
 export default class extends Listener {
-  constructor() {
+
+  public constructor() {
     super('client-guild-ban-remove', {
       emitter: 'client',
       event: 'guildBanRemove'
@@ -18,4 +19,5 @@ export default class extends Listener {
   public exec(guild: Guild, user: User) {
     this.client.logger.info(`Un-banned user ${user} from guild ${guild}`);
   }
+
 }

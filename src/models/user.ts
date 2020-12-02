@@ -8,4 +8,4 @@ const schema = new Schema(
   }, { minimize: false }
 );
 
-export const UserModel = model('user', schema);
+export const userModel = model('user', schema);

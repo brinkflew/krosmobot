@@ -7,15 +7,16 @@ import { findPortalServer } from '@/utils';
  * Change the color used in embed borders for the current guild.
  */
 export default class SetCommand extends Command {
-  constructor() {
+
+  public constructor() {
     super('set', {
       channel: 'guild',
       userPermissions: ['MANAGE_GUILD'],
       description: {
-        short: 'COMMAND_SET_DESCRIPTION_SHORT',
-        extended: 'COMMAND_SET_DESCRIPTION_EXTENDED',
-        example: 'COMMAND_SET_DESCRIPTION_EXAMPLE',
-        usage: 'COMMAND_SET_DESCRIPTION_USAGE'
+        'short': 'COMMAND_SET_DESCRIPTION_SHORT',
+        'extended': 'COMMAND_SET_DESCRIPTION_EXTENDED',
+        'example': 'COMMAND_SET_DESCRIPTION_EXAMPLE',
+        'usage': 'COMMAND_SET_DESCRIPTION_USAGE'
       },
       args: [
         {
@@ -24,7 +25,7 @@ export default class SetCommand extends Command {
           flag: 'almanax.auto',
           type: [
             ['enable', 'y', 'yes', 'true'],
-            ['disable', 'n', 'no', 'false'],
+            ['disable', 'n', 'no', 'false']
           ]
         },
         {
@@ -64,12 +65,12 @@ export default class SetCommand extends Command {
         newsChannel: newsChannel instanceof TextChannel,
         dofusServer: Boolean(dofusServer)
       };
-      
+
       if (isSet.almanaxAuto || isSet.almanaxChannel) {
         const almanaxConfig = this.get(message.guild!, 'almanax', {});
 
         if (isSet.almanaxAuto) {
-          almanaxConfig.auto = almanaxAuto === 'enable' ? true :  false;
+          almanaxConfig.auto = almanaxAuto === 'enable' ? true : false;
           keys.push('almanax.auto');
         }
 
@@ -84,12 +85,12 @@ export default class SetCommand extends Command {
       if (isSet.dofusServer || isSet.newsChannel) {
         const dofusConfig = this.get(message.guild!, 'dofus', {});
 
-      if (isSet.dofusServer) {
+        if (isSet.dofusServer) {
           const { id, name } = await findPortalServer(this, message, dofusServer);
           dofusConfig.server = { id, name };
-        keys.push('dofus.server');
-      }
-      
+          keys.push('dofus.server');
+        }
+
         if (isSet.newsChannel) {
           dofusConfig.rss = dofusConfig.rss || {};
           dofusConfig.rss.news = newsChannel.id;
@@ -105,4 +106,5 @@ export default class SetCommand extends Command {
       return this.error(message, this.t('COMMAND_SET_RESPONSE_ERROR', message));
     }
   }
+
 }

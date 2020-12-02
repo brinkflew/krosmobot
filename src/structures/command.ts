@@ -21,21 +21,11 @@ import { code } from '@/utils/message';
  * Represents a command.
  */
 export class Command extends AkairoCommand {
-  constructor(id: string, options: CommandOptions = {}) {
+
+  public constructor(id: string, options: CommandOptions = {}) {
     if (!options.aliases) options.aliases = [];
     if (!options.aliases.includes(id)) options.aliases.push(id);
     super(id, options);
-  }
-
-  /**
-   * Sends a message using CommandUtil if enabled, or fallbacks
-   * to sending a new message to the original channel.
-   * @param message Message that triggered this command
-   * @param content Content to send over
-   */
-  private async sendUtil(message: Message, content: any): Promise<Message> {
-    if (message.util) return message.util.send(content);
-    return message.channel.send(content);
   }
 
   /**
@@ -57,7 +47,7 @@ export class Command extends AkairoCommand {
    */
   public async error(message: Message, description: string, error?: Error | string): Promise<Message> {
     this.handler.emit('command-error', this, message, error);
-    if (error instanceof Error) error = error.toString();
+    if (error instanceof Error) error = error.message;
     if (typeof error === 'string') description = `${description} ${code(error)}`;
     const embed = new MessageEmbed({ color: EMBED_COLOR_RED, description });
     return this.sendUtil(message, embed);
@@ -95,19 +85,6 @@ export class Command extends AkairoCommand {
    */
   public async embed(message: Message, content: MessageEmbedOptions | MessageEmbed): Promise<Message> {
     return this.sendUtil(message, this.craftEmbed(message, content));
-  }
-
-  /**
-   * Gets the correct provider depending on the type of the object for
-   * which data will be fetched or modified.
-   * @param holder Instance to find the correct provider for
-   */
-  private getProvider(holder: Guild | TextChannel | User | GuildMember): MongooseProvider {
-    let settings = this.client.settings;
-    if (holder instanceof Guild) return settings.guilds;
-    if (holder instanceof TextChannel) return settings.channels;
-    if (holder instanceof GuildMember) return settings.members;
-    /* if (holder instanceof User) */ return settings.users;
   }
 
   /**
@@ -165,4 +142,29 @@ export class Command extends AkairoCommand {
   public t(key: string, message: Message, ...args: any[]): string {
     return this.translate(key, message, ...args);
   }
+
+  /**
+   * Gets the correct provider depending on the type of the object for
+   * which data will be fetched or modified.
+   * @param holder Instance to find the correct provider for
+   */
+  private getProvider(holder: Guild | TextChannel | User | GuildMember): MongooseProvider {
+    let { settings } = this.client;
+    if (holder instanceof Guild) return settings.guilds;
+    if (holder instanceof TextChannel) return settings.channels;
+    if (holder instanceof GuildMember) return settings.members;
+    /* if (holder instanceof User) */ return settings.users;
+  }
+
+  /**
+   * Sends a message using CommandUtil if enabled, or fallbacks
+   * to sending a new message to the original channel.
+   * @param message Message that triggered this command
+   * @param content Content to send over
+   */
+  private async sendUtil(message: Message, content: any): Promise<Message> {
+    if (message.util) return message.util.send(content);
+    return message.channel.send(content);
+  }
+
 }

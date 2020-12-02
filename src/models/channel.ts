@@ -6,4 +6,4 @@ const schema = new Schema(
   }, { minimize: false }
 );
 
-export const ChannelModel = model('channel', schema);
+export const channelModel = model('channel', schema);
