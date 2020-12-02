@@ -59,4 +59,5 @@ interface SetCommandArguments {
   almanaxAuto: string;
   almanaxChannel: TextChannel;
   dofusServer: string;
+  newsChannel: TextChannel;
 }

@@ -19,12 +19,7 @@ import { DEFAULT_PREFIX } from '@/constants';
 
 // Import models for the provider
 import {
-  GuildModel,
-  ChannelModel,
-  UserModel,
-  LogModel,
-  AlmanaxModel,
-  MemberModel
+  guildModel,
 } from '@/models';
 
 /**

@@ -37,7 +37,13 @@ export default class SetCommand extends Command {
           id: 'dofusServer',
           match: 'option',
           flag: 'dofus.server',
-          type: 'lowercase',
+          type: 'lowercase'
+        },
+        {
+          id: 'newsChannel',
+          match: 'option',
+          flag: 'news.channel',
+          type: 'textChannel'
         }
       ]
     });
@@ -47,7 +53,7 @@ export default class SetCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { almanaxAuto, almanaxChannel, dofusServer } : SetCommandArguments): Promise<Message> {
+  public async exec(message: Message, { almanaxAuto, almanaxChannel, dofusServer, newsChannel }: SetCommandArguments): Promise<Message> {
     try {
       const keys = [];
       const actions = [];
@@ -55,7 +61,8 @@ export default class SetCommand extends Command {
       const isSet = {
         almanaxAuto: ['enable', 'disable'].includes(almanaxAuto),
         almanaxChannel: almanaxChannel instanceof TextChannel,
-        dofusServer: !!dofusServer
+        newsChannel: newsChannel instanceof TextChannel,
+        dofusServer: Boolean(dofusServer)
       };
       
       if (isSet.almanaxAuto || isSet.almanaxChannel) {
@@ -74,14 +81,24 @@ export default class SetCommand extends Command {
         actions.push(this.set(message.guild!, 'almanax', almanaxConfig));
       }
 
+      if (isSet.dofusServer || isSet.newsChannel) {
+        const dofusConfig = this.get(message.guild!, 'dofus', {});
+
       if (isSet.dofusServer) {
-        const server = await findPortalServer(this, message, dofusServer);
-        actions.push(this.set(message.guild!, 'dofus', {
-          server: { id: server.id, name: server.name }
-        }));
+          const { id, name } = await findPortalServer(this, message, dofusServer);
+          dofusConfig.server = { id, name };
         keys.push('dofus.server');
       }
       
+        if (isSet.newsChannel) {
+          dofusConfig.rss = dofusConfig.rss || {};
+          dofusConfig.rss.news = newsChannel.id;
+          keys.push('news.channel');
+        }
+
+        actions.push(this.set(message.guild!, 'dofus', dofusConfig));
+      }
+
       await Promise.all(actions);
       return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, keys));
     } catch (error) {

@@ -14,9 +14,12 @@ const schema = new Schema(
       server: {
         id: { type: String },
         name: { type: String }
+      },
+      rss: {
+        news: { type: String }
       }
     }
   }, { minimize: false }
 );
 
-export const GuildModel = model('guild', schema);
+export const guildModel = model('guild', schema);
