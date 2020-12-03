@@ -16,7 +16,7 @@ export default class extends Listener {
   /**
    * Executes when the event is fired.
    */
-  public exec([error]: [string | Error]) {
+  public exec(error: string | Error) {
     this.client.logger.error(error);
     void shutdown(this.client, 1);
   }
