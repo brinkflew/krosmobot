@@ -34,7 +34,7 @@ export default class NewsTask extends Task {
         if (!feed.items) continue;
 
         const config = this.client.settings.guilds.get(guild.id, 'dofus', {});
-        if (!config.rss.news) continue;
+        if (!config.rss?.news) continue;
 
         const channel = this.client.util.resolveChannel(config.rss.news, guild.channels.cache);
         if (!(channel instanceof TextChannel)) continue;
