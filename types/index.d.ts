@@ -3,31 +3,31 @@ import { TextChannel } from 'discord.js';
 import { Document } from 'mongoose';
 import { AxiosResponse } from 'axios';
 
-type LocaleString = string | ((...args: any[]) => string);
+export type LocaleString = string | ((...args: any[]) => string);
 
-interface LocaleOptions extends AkairoModuleOptions {
+export interface LocaleOptions extends AkairoModuleOptions {
   language?: string;
 }
 
-interface MongooseProviderDocument extends Document {
+export interface MongooseProviderDocument extends Document {
   [key: string]: any;
 }
 
-interface LoggerOptions {
+export interface LoggerOptions {
   stdout?: NodeJS.WriteStream & { fd: 1 };
   stderr?: NodeJS.WriteStream & { fd: 2 };
   colors?: boolean;
   lineLength?: number;
 }
 
-interface ScraperSchema {
+export interface ScraperSchema {
   id: string;
   selector: string;
   attribute: 'text' | 'src' | string;
   transform?: (value: string) => string;
 }
 
-interface ScraperPage {
+export interface ScraperPage {
   url: string;
   language: string;
   data?: { [key: string]: unknown }[];
@@ -35,7 +35,7 @@ interface ScraperPage {
   fields: ScraperSchema[];
 }
 
-interface AlmanaxData {
+export interface AlmanaxData {
   url: string;
   title: string;
   offering: string;
@@ -49,15 +49,51 @@ interface AlmanaxData {
   day: string;
 }
 
-interface TaskOptions extends AkairoModuleOptions {
+export interface TaskOptions extends AkairoModuleOptions {
   interval?: number;
   timestamp?: number;
   at?: string;
 }
 
-interface SetCommandArguments {
+export interface SetCommandArguments {
   almanaxAuto: string;
   almanaxChannel: TextChannel;
   dofusServer: string;
   newsChannel: TextChannel;
+}
+
+/* eslint-disable @typescript-eslint/naming-convention */
+export interface TwitterResponse {
+  data: {
+    search_metadata: {
+      completed_in: number;
+      max_id: number;
+      max_id_str: string;
+      next_results: string;
+      query: string;
+      refresh_url: string;
+      count: number;
+      since_id: number;
+      since_id_str: string;
+    };
+    statuses: [
+      {
+        created_at: string;
+        id: number;
+        id_str: string;
+        text: string;
+        full_text: string;
+        truncated: boolean;
+        entities: Record<string, unknown>;
+        metadata: Record<string, unknown>;
+        source: string;
+        in_reply_to_status_id: number;
+        in_reply_to_status_id_str: string;
+        in_reply_to_user_id: number;
+        in_reply_to_user_id_str: string;
+        in_reply_to_screen_name: string;
+        user: unknown;
+      }
+    ];
+  };
 }

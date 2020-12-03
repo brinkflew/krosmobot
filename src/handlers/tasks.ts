@@ -14,13 +14,17 @@ import { Task } from '@/structures';
 export class TaskHandler extends AkairoHandler {
 
   public modules!: Collection<string, Task>;
-  public interval = 60;
+  public interval: number;
 
   public constructor(client: AkairoClient, options: AkairoHandlerOptions = {}) {
     super(client, {
       directory: options.directory,
       classToHandle: Task
     });
+
+    let interval = process.env.KROSMOBOT_TASKS_INTERVAL || 60;
+    if (typeof interval === 'string') interval = parseInt(interval, 10);
+    this.interval = interval;
   }
 
   /**

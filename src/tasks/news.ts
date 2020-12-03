@@ -6,14 +6,14 @@ import { rss as icons } from '@/constants/pictures';
 /**
  * Checks for news on the www.dofus.com's RSS feed and sends them to guilds.
  */
-export default class NewsTask extends Task {
+export default class RSSTask extends Task {
 
   public parser: Parser;
   public lastPublication: number;
   public categories = ['news', 'devblog', 'changelog'];
 
   public constructor() {
-    super('news', { interval: 10 });
+    super('rss', { interval: 10 });
 
     this.parser = new Parser();
     this.lastPublication = Date.now();

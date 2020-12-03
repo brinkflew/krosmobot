@@ -28,3 +28,8 @@ export const rss: { [key: string]: string } = {
   dofus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/rss/dofus.png',
   news: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/rss/news.png'
 };
+
+/** Twitter icons */
+export const twitter: { [key: string]: string } = {
+  twitter: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/twitter/twitter.png'
+};
