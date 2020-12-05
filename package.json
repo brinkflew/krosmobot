@@ -16,9 +16,11 @@
     "clean": "rm -rf dist",
     "build": "tsc -p .",
     "build:clean": "yarn clean && yarn build",
-    "start": "node dist/client.js",
+    "start": "pm2 start ecosystem.config.js --env production",
+    "log": "pm2 log kbot",
     "postinstall": "yarn build",
     "precommit": "yarn lint",
+    "deploy": "pm2 deploy",
     "serve": "nodemon -e ts --exec 'yarn lint && yarn build:clean && node dist/client.js'"
   },
   "dependencies": {
@@ -51,6 +53,7 @@
     "husky": "^4.3.0",
     "module-alias": "^2.2.2",
     "nodemon": "^2.0.6",
+    "pm2": "^4.5.0",
     "prettier": "^2.1.2",
     "typescript": "^4.0.5"
   },
