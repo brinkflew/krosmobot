@@ -57,6 +57,7 @@ export class TaskHandler extends AkairoHandler {
    */
   private execTasks(): void {
     for (const task of this.modules.values()) {
+      if (!task.enabled) continue;
       if (task.timestamp && task.last) continue;
       if (task.interval && Date.now() - task.last < task.interval) continue;
       task.last = Date.now();

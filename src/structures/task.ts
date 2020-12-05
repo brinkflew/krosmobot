@@ -11,6 +11,7 @@ export class Task extends AkairoModule {
   public timestamp?: number;
   public at?: string;
   public last: number;
+  public enabled: boolean;
 
   public constructor(id: string, options: TaskOptions = {}) {
     super(id, options);
@@ -18,6 +19,7 @@ export class Task extends AkairoModule {
     this.timestamp = options.interval ? 0 : options.timestamp;
     this.last = 0;
     this.at = options.at;
+    this.enabled = typeof options.enabled === 'boolean' ? options.enabled : true;
 
     if (this.at) {
       const timing = this.at.split(':');

@@ -53,6 +53,7 @@ export interface TaskOptions extends AkairoModuleOptions {
   interval?: number;
   timestamp?: number;
   at?: string;
+  enabled?: boolean;
 }
 
 export interface SetCommandArguments {
