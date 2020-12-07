@@ -2,7 +2,6 @@ import { TextChannel, MessageEmbed } from 'discord.js';
 import Twitter from 'twit';
 import { XmlEntities } from 'html-entities';
 import { Task } from '@/structures';
-// import { TwitterResponse } from 'types';
 import { twitter as icons } from '@/constants/pictures';
 
 const entities = new XmlEntities();
