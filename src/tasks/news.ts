@@ -13,7 +13,7 @@ export default class RSSTask extends Task {
   public categories = ['news', 'devblog', 'changelog'];
 
   public constructor() {
-    super('rss', { interval: 10, enabled: false });
+    super('news', { interval: 10, enabled: false });
 
     this.parser = new Parser();
     this.lastPublication = Date.now();

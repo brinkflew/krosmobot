@@ -15,7 +15,7 @@ export default class TwitterTask extends Task {
   public lastCheck: string;
 
   public constructor() {
-    super('news', { interval: 10 });
+    super('twitter', { interval: 10 });
 
     /* eslint-disable @typescript-eslint/naming-convention */
 
