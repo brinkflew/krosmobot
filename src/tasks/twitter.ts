@@ -15,7 +15,7 @@ export default class TwitterTask extends Task {
   public lastCheck: string;
 
   public constructor() {
-    super('twitter', { interval: 10 });
+    super('twitter', { timestamp: Date.now() });
 
     /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -27,11 +27,11 @@ export default class TwitterTask extends Task {
     } = process.env;
 
     if (!KROSMOBOT_TWITTER_CONSUMER_KEY || !KROSMOBOT_TWITTER_CONSUMER_SECRET) {
-      throw new Error('Invalid Twitter Consumer key/secret');
+      throw new Error('No Twitter consumer key/secret provided');
     }
 
     if (!KROSMOBOT_TWITTER_ACCESS_TOKEN || !KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET) {
-      throw new Error('Invalid Twitter Access token/secret');
+      throw new Error('No Twitter access token/secret provided');
     }
 
     this.twitter = new Twitter({
@@ -50,44 +50,47 @@ export default class TwitterTask extends Task {
   /**
    * Runs the task.
    */
-  public async exec() {
-    /* eslint-disable @typescript-eslint/naming-convention */
-    const tweets = this.twitter.get('search/tweets', {
-      q: `from:DOFUSfr OR from:AnkamaGames since:${this.lastCheck}`,
-      lang: 'fr',
-      result_type: 'recent',
-      tweet_mode: 'extended',
-      include_entities: true
-    });
-    /* eslint-enable @typescript-eslint/naming-convention */
-
+  public exec() {
     this.lastCheck = new Date().toUTCString();
 
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { data } = <any>(await tweets);
-    if (!data.statuses.length) return;
+    /* eslint-disable @typescript-eslint/naming-convention */
 
-    for (const guild of this.client.guilds.cache.array()) {
-      const config = this.client.settings.guilds.get(guild.id, 'dofus', {});
-      if (!config.rss?.news) continue;
+    const stream = this.twitter.stream('statuses/filter', {
+      track: 'from:DOFUSfr OR from:AnkamaGames OR from:AnkamaLive',
+      mode: 'public',
+      tweet_mode: 'extended',
+      result_type: 'recent',
+      include_entities: true
+    });
 
-      const channel = this.client.util.resolveChannel(config.rss.news, guild.channels.cache);
-      if (!(channel instanceof TextChannel)) continue;
+    stream.on('error', error => {
+      throw error;
+    });
 
-      const common = { color: '#1DA1F2' };
+    /* eslint-enable @typescript-eslint/naming-convention */
 
-      /* eslint-disable @typescript-eslint/restrict-template-expressions */
-      for (const tweet of data.statuses) {
+    stream.on('tweet', tweet => {
+      for (const guild of this.client.guilds.cache.array()) {
+        const config = this.client.settings.guilds.get(guild.id, 'dofus', {});
+        if (!config.rss?.news) continue;
+
+        const channel = this.client.util.resolveChannel(config.rss.news, guild.channels.cache);
+        if (!(channel instanceof TextChannel)) continue;
+
+        const common = { color: '#1DA1F2' };
+
+        /* eslint-disable @typescript-eslint/restrict-template-expressions */
+        const userUrl = `https://www.twitter.com/${tweet.user.screen_name}`;
         const embed = new MessageEmbed({
           ...common,
           title: 'Tweet',
-          url: `https://www.twitter.com/${tweet.user.screen_name}/status/${tweet.id_str}`,
+          url: `${userUrl}/status/${tweet.id_str}`,
           author: {
             name: `\@${tweet.user.screen_name}`,
-            url: tweet.user.url,
+            url: userUrl,
             iconURL: tweet.user.profile_image_url_https
           },
-          description: entities.decode(tweet.full_text),
+          description: entities.decode(tweet.extended_tweet?.full_text || tweet.text),
           footer: {
             iconURL: icons.twitter,
             text: 'Twitter'
@@ -100,7 +103,7 @@ export default class TwitterTask extends Task {
 
         void channel.send(embed);
       }
-    }
+    });
   }
 
 }
