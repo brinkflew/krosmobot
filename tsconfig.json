@@ -56,8 +56,7 @@
             "common-tags",
             "cheerio",
             "axios",
-            "xml2js",
-            "twit"
+            "xml2js"
         ]
     },
     "include": [

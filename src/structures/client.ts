@@ -11,6 +11,7 @@ import {
   Permissions,
   PermissionResolvable
 } from 'discord.js';
+import Twitter from 'twitter-lite';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler, TaskHandler } from '@/handlers';
@@ -37,6 +38,7 @@ export class Client extends AkairoClient {
   public events: ListenerHandler;
   public locales: LocaleHandler;
   public scheduler: TaskHandler;
+  public twitter: Twitter;
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
@@ -106,13 +108,45 @@ export class Client extends AkairoClient {
     this.data = {
       almanax: new MongooseProvider(almanaxModel)
     };
+
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const {
+      KROSMOBOT_TWITTER_CONSUMER_KEY,
+      KROSMOBOT_TWITTER_CONSUMER_SECRET,
+      KROSMOBOT_TWITTER_ACCESS_TOKEN,
+      KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
+    } = process.env;
+
+    if (!KROSMOBOT_TWITTER_CONSUMER_KEY || !KROSMOBOT_TWITTER_CONSUMER_SECRET) {
+      throw new Error('No Twitter consumer key/secret provided');
+    }
+
+    if (!KROSMOBOT_TWITTER_ACCESS_TOKEN || !KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET) {
+      throw new Error('No Twitter access token/secret provided');
+    }
+
+    this.twitter = new Twitter({
+      consumer_key: KROSMOBOT_TWITTER_CONSUMER_KEY,
+      consumer_secret: KROSMOBOT_TWITTER_CONSUMER_SECRET,
+      access_token_key: KROSMOBOT_TWITTER_ACCESS_TOKEN,
+      access_token_secret: KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
+    });
+    /* eslint-enable @typescript-eslint/naming-convention */
   }
 
   /**
    * Initializes the client and loads the handlers.
    */
   public async init(): Promise<Client> {
-    this.events.setEmitters({ process });
+    const stream = this.twitter.stream('statuses/filter', {
+      track: 'from:DOFUSfr OR from:AnkamaGames OR from:AnkamaLive',
+      mode: 'public'
+    });
+
+    this.events.setEmitters({
+      process,
+      twitter: stream
+    });
 
     this.commands.loadAll();
     this.events.loadAll();
