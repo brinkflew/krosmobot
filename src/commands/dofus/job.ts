@@ -1,6 +1,7 @@
-import { Message, GuildMember, GuildEmoji } from 'discord.js';
+import { Message, GuildMember } from 'discord.js';
 import { Command } from '@/structures';
 import { jobs as icons } from '@/constants/pictures';
+import { code } from '@/utils/message';
 
 /**
  * Updates or shows the current jobs of a member.
@@ -105,13 +106,11 @@ export default class JobCommand extends Command {
           fields: [
             {
               name: this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message),
-              value: ordered.map(field => field.member).join('\n'),
-              inline: true
-            },
-            {
-              name: '\u200B',
-              value: ordered.map(field => field.level).join('\n'),
-              inline: true
+              value: code(
+                ordered
+                  .map(field => this.padLevel(field.member, field.level))
+                  .join('\n')
+              )
             }
           ]
         });
@@ -132,7 +131,7 @@ export default class JobCommand extends Command {
       // `!job tailor 125` → Display all jobs for self
 
       if (!name) {
-        let fields: { job: string; level: number; emoji: GuildEmoji | string }[] = [];
+        let fields: { job: string; level: number }[] = [];
         const ordered = Object
           .entries(jobs)
           .sort((a, b) => a[0].localeCompare(b[0]));
@@ -142,8 +141,7 @@ export default class JobCommand extends Command {
 
           fields.push({
             job: this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message),
-            level,
-            emoji: this.client.emojis.cache.find(emoji => emoji.name.includes(job)) || ':grey_question:'
+            level
           });
         }
 
@@ -155,15 +153,11 @@ export default class JobCommand extends Command {
           fields: [
             {
               name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
-              value: fields
-                .map(field => `${field.emoji.toString()} ${field.job}`)
-                .join('\n'),
-              inline: true
-            },
-            {
-              name: '\u200B',
-              value: fields.map(field => field.level).join('\n'),
-              inline: true
+              value: code(
+                fields
+                  .map(field => this.padLevel(field.job, field.level))
+                  .join('\n')
+              )
             }
           ]
         });
@@ -185,15 +179,25 @@ export default class JobCommand extends Command {
         fields: [
           {
             name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
-            value: this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message),
-            inline: true
-          },
-          { name: '\u200B', value: jobs[name] || 0, inline: true }
+            value: code(this.padLevel(this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message), jobs[name]))
+          }
         ]
       });
     } catch (error) {
       return this.error(message, this.t('COMMAND_JOB_RESPONSE_ERROR', message));
     }
+  }
+
+  /**
+   * Pads a line to aligns levels to the right while keeping it staigth with
+   * the name of the associated job or member.
+   * @param name Name of the job or member to display
+   * @param level Level for this job and member
+   * @param maxLength Max length for the generated line
+   */
+  private padLevel(name: string, level: number, maxLength = 15): string {
+    const fixed = level.toFixed(0);
+    return `${name} ${' '.repeat(maxLength - name.length - fixed.length)} ${fixed}`;
   }
 
 }
