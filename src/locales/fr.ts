@@ -115,7 +115,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_COLOR_RESPONSE_ERROR: 'Une erreur est survenue au moment de sauvegarder la nouvelle couleur de bordure des intégrations.',
 
       // INVITE Command
-      COMMAND_INVITE_DESCRIPTION_SHORT: 'Génère une invitation pour ajouter ce bot à un serveur',
+      COMMAND_INVITE_DESCRIPTION_SHORT: 'Génère une invitation pour ajouter ce bot à un serveur.',
       COMMAND_INVITE_DESCRIPTION_EXTENDED: oneLine`
         Génère un lien pouvant être utilisé pour inviter ce bot sur un nouveau serveur.
         Les permissions du bot sont calculées automatiquement en fonction des prérequis pour exécuter
@@ -129,7 +129,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_INVITE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'invite')}
       `,
-      COMMAND_INVITE_RESPONSE_NOLINK: 'Impossible de générer l\'invitation. Merc de réessayer plus tard.',
+      COMMAND_INVITE_RESPONSE_NOLINK: 'Impossible de générer l\'invitation. Veuillez réessayer plus tard.',
       COMMAND_INVITE_RESPONSE_TITLE: (clientname: string) => `Ajoutez ${clientname} à votre serveur Discord`,
       COMMAND_INVITE_RESPONSE_FOOTER: oneLine`
         Le lien ci-dessus a été généré avec les permissions minimum requises pour utiliser chaque commande sur ce serveur.
