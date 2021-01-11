@@ -21,10 +21,10 @@ export default class PortalCommand extends Command {
         {
           id: 'dimension',
           type: [
-            ['enu', 'enutrof', 'enutrosor'],
-            ['eca', 'ecaflip', 'ecaflipus'],
-            ['sram', 'srambad'],
-            ['xel', 'xelor', 'xelorium']
+            ['enutrosor', 'enu', 'enutrof'],
+            ['ecaflipus', 'eca', 'ecaflip'],
+            ['srambad', 'sram'],
+            ['xelorium', 'xel', 'xelor']
           ]
         },
         {
@@ -57,7 +57,7 @@ export default class PortalCommand extends Command {
         iconURL: `${baseUrl}/images/servers/${portalServer.name.replace(/\s/g, '')}-min.png`
       },
       url,
-      thumbnail: { url: `${baseUrl}/${(<string>data['images.dimension']).replace('../', '')}` },
+      thumbnail: { url: `${baseUrl}/${(<string>data[`images.dimension`]).replace('../', '')}` },
       fields: [
         {
           name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),
@@ -83,12 +83,21 @@ export default class PortalCommand extends Command {
       }
     });
 
+    const getDimensionData = (name: string) => {
+      const data: { [key: string]: unknown } = {};
+      Object.entries(scraped.data![0])
+        .filter(([key]) => key.startsWith(name))
+        .map(([key, value]) => data[key.replace(`${name}.`, '')] = value);
+      return data;
+    };
+
     switch (dimension) {
-      case 'enu': return this.embed(message, generateEmbed(scraped.data.find((data: any) => data.dimension === 'Enutrosor')));
-      case 'xel': return this.embed(message, generateEmbed(scraped.data.find((data: any) => data.dimension === 'Xelorium')));
-      case 'eca': return this.embed(message, generateEmbed(scraped.data.find((data: any) => data.dimension === 'Ecaflipus')));
-      case 'sram': return this.embed(message, generateEmbed(scraped.data.find((data: any) => data.dimension === 'Srambad')));
-      default: return scraped.data.map((data: any) => this.embed(message, generateEmbed(data)));
+      case 'ecaflipus': return this.embed(message, generateEmbed(getDimensionData(dimension)));
+      case 'enutrosor': return this.embed(message, generateEmbed(getDimensionData(dimension)));
+      case 'srambad': return this.embed(message, generateEmbed(getDimensionData(dimension)));
+      case 'xelorium': return this.embed(message, generateEmbed(getDimensionData(dimension)));
+      default: return ['ecaflipus', 'enutrosor', 'srambad', 'xelorium']
+        .map((dimension: string) => this.embed(message, generateEmbed(getDimensionData(dimension))));
     }
   }
 
