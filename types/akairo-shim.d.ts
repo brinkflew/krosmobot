@@ -1,13 +1,16 @@
+import Twitter, { Stream } from 'twitter-lite';
 import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import CustomMongooseProvider from '@/providers/mongoose';
 
 declare module 'discord-akairo' {
-  interface AkairoClient {
+  export interface AkairoClient {
     commands: CommandHandler;
     events: ListenerHandler;
     locales: LocaleHandler;
     scheduler: TaskHandler;
+    twitter: Twitter;
+    streams: Stream[];
     logger: Logger;
     logs: CustomMongooseProvider;
     settings: {

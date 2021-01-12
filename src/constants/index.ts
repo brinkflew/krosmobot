@@ -2,6 +2,7 @@
 
 import defaults from './defaults';
 import * as embeds from './embeds';
+import * as twitter from './twitter';
 
 // Defaults
 export const DEFAULT_PREFIX = defaults.PREFIX;
@@ -18,3 +19,6 @@ export const EMBED_COLOR_MAGENTA = embeds.COLORS.MAGENTA;
 export const EMBED_COLOR_RED = embeds.COLORS.RED;
 export const EMBED_COLOR_YELLOW = embeds.COLORS.YELLOW;
 export const EMBED_COLOR_DEFAULT = embeds.COLORS.DEFAULT;
+
+// Twitter
+export const TWITTER_USERS = twitter.users;

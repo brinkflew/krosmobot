@@ -1,6 +1,7 @@
 import { Listener } from 'discord-akairo';
 import { TextChannel, MessageEmbed } from 'discord.js';
 import { XmlEntities } from 'html-entities';
+import { TWITTER_USERS } from '@/constants';
 import { twitter as icons } from '@/constants/pictures';
 
 /**
@@ -22,6 +23,11 @@ export default class extends Listener {
    */
   public exec(tweet: any) {
     this.client.logger.debug(`New tweet from ${(<string>tweet.user.screen_name)}`);
+
+    if (!TWITTER_USERS.includes(tweet.user.id_str)) return;
+    if (tweet.in_reply_to_status_id_str || tweet.in_reply_to_user_id_str) return;
+    if (tweet.is_quote_status) return;
+    if (tweet.retweeted_status) return;
 
     for (const guild of this.client.guilds.cache.array()) {
       const config = this.client.settings.guilds.get(guild.id, 'dofus', {});

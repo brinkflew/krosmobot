@@ -11,12 +11,12 @@ import {
   Permissions,
   PermissionResolvable
 } from 'discord.js';
-import Twitter from 'twitter-lite';
+import Twitter, { Stream } from 'twitter-lite';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
-import { DEFAULT_PREFIX } from '@/constants';
+import { DEFAULT_PREFIX, TWITTER_USERS } from '@/constants';
 
 // Import models for the provider
 import {
@@ -39,6 +39,7 @@ export class Client extends AkairoClient {
   public locales: LocaleHandler;
   public scheduler: TaskHandler;
   public twitter: Twitter;
+  public streams: Stream[] = [];
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
@@ -138,10 +139,7 @@ export class Client extends AkairoClient {
    * Initializes the client and loads the handlers.
    */
   public async init(): Promise<Client> {
-    const stream = this.twitter.stream('statuses/filter', {
-      track: 'from:DOFUSfr OR from:AnkamaGames OR from:AnkamaLive',
-      mode: 'public'
-    });
+    const stream = this.streamTweets();
 
     this.events.setEmitters({
       process,
@@ -158,6 +156,19 @@ export class Client extends AkairoClient {
 
     await Promise.all(Object.values(this.settings).map(provider => provider.init()));
     return this;
+  }
+
+  /**
+   * Initilaizes streaming tweets from various accounts.
+   * @param follow IDs of accounts to follow
+   */
+  public streamTweets(): Stream {
+    this.streams.map(stream => process.nextTick(() => stream.destroy()));
+
+    const stream = this.twitter.stream('statuses/filter', { follow: TWITTER_USERS.join(',') });
+    this.streams.push(stream);
+
+    return stream;
   }
 
   /**
