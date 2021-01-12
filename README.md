@@ -4,7 +4,7 @@ A stupid Discord bot for a stupid Dofus guild.
 
 ## Commands
 
-A fex commands are made available to the users of the Discord guild. By default, those commands can be run in any text channel the bot has read-access to.
+A few commands are made available to the users of the Discord guild. By default, those commands can be run in any text channel the bot has read-access to.
 
 ### Dofus
 
