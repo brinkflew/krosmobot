@@ -19,7 +19,7 @@ import { Logger } from '@/structures';
 import { DEFAULT_PREFIX } from '@/constants';
 
 // Import models for the provider
-import { models } from '@/models';
+import { models, logs } from '@/models';
 
 /**
  * Client connecting to the Discord gateway.
@@ -47,7 +47,7 @@ export class Client extends AkairoClient {
 
     /** Logger */
 
-    this.logs = new MongooseProvider(models.logs);
+    this.logs = new MongooseProvider(logs);
     this.logger = new Logger(this);
 
     /** Providers */

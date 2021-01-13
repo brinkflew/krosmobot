@@ -9,7 +9,8 @@ export const models = {
   almanax: almanaxModel,
   channels: channelModel,
   guilds: guildModel,
-  logs: logModel,
   members: memberModel,
   users: userModel
 };
+
+export const logs = logModel;
