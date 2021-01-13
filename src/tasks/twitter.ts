@@ -6,10 +6,10 @@ import { twitter as icons } from '@/constants/pictures';
 /**
  * Check the state of the Twitter stream and ensure it stays alive.
  */
-export default class AlmanaxTask extends Task {
+export default class TwitterTask extends Task {
 
   private color = '#1DA1F2';
-  private query = 'from:krosmobot';
+  private query = 'from:krosmobot OR from:DOFUSfr OR from:AnkamaGames -is:retweet -is:quote';
   private lastTweetID?: string;
   private entities: XmlEntities;
 
@@ -60,12 +60,14 @@ export default class AlmanaxTask extends Task {
 
           let description = this.entities.decode(tweet.text);
 
+          if (tweet.entities?.urls) {
           for (const entity of tweet.entities.urls) {
             if (!entity.expanded_url || !entity.url) continue;
 
             let substitute = '';
             if (!/\/photo\/[0-9]+$/.test(<string>entity.expanded_url)) substitute = `[${entity.display_url}](${entity.expanded_url})`;
             description = description.replace(entity.url, substitute);
+          }
           }
 
           const embed = new MessageEmbed({
@@ -95,7 +97,9 @@ export default class AlmanaxTask extends Task {
         /* eslint-enable @typescript-eslint/restrict-template-expressions */
       }
     } catch (error) {
-      if ('errors' in error) error = new Error(error.errors[0].message || 'Twitter Error');
+      if (typeof error === 'string') error = new Error(error);
+      else if ('errors' in error) error = new Error(error.errors[0].message || 'Twitter Error');
+      else if ('status' in error) error = new Error(`Twitter Error: ${(<number> error.status)} - ${(<string> error.title)}`);
       logger.error(error);
     }
   }
