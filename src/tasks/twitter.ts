@@ -10,6 +10,7 @@ export default class TwitterTask extends Task {
 
   private color = '#1DA1F2';
   private query = 'from:krosmobot OR from:DOFUSfr OR from:AnkamaGames -is:retweet -is:quote';
+  // private query = '(from:krosmobot OR from:DOFUSfr OR from:AnkamaGames) -is:retweet -is:quote';
   private lastTweetID?: string;
   private entities: XmlEntities;
 
@@ -47,10 +48,10 @@ export default class TwitterTask extends Task {
       this.lastTweetID = tweets.meta.newest_id;
 
       for (const guild of this.client.guilds.cache.array()) {
-        const config = this.client.providers.guilds.get(guild.id, 'dofus', {});
-        if (!config.rss?.news) continue;
+        const config = this.client.providers.guilds.get(guild.id, 'settings', {});
+        if (!config.tasks?.news || !config.channels?.news) continue;
 
-        const channel = this.client.util.resolveChannel(config.rss.news, guild.channels.cache);
+        const channel = this.client.util.resolveChannel(config.channels?.news, guild.channels.cache);
         if (!(channel instanceof TextChannel)) continue;
 
         /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -61,13 +62,13 @@ export default class TwitterTask extends Task {
           let description = this.entities.decode(tweet.text);
 
           if (tweet.entities?.urls) {
-          for (const entity of tweet.entities.urls) {
-            if (!entity.expanded_url || !entity.url) continue;
+            for (const entity of tweet.entities.urls) {
+              if (!entity.expanded_url || !entity.url) continue;
 
-            let substitute = '';
-            if (!/\/photo\/[0-9]+$/.test(<string>entity.expanded_url)) substitute = `[${entity.display_url}](${entity.expanded_url})`;
-            description = description.replace(entity.url, substitute);
-          }
+              let substitute = '';
+              if (!/\/photo\/[0-9]+$/.test(<string>entity.expanded_url)) substitute = `[${entity.display_url}](${entity.expanded_url})`;
+              description = description.replace(entity.url, substitute);
+            }
           }
 
           const embed = new MessageEmbed({

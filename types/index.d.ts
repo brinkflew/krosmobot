@@ -1,5 +1,4 @@
 import { AkairoModuleOptions } from 'discord-akairo';
-import { TextChannel } from 'discord.js';
 import { Document } from 'mongoose';
 import { AxiosResponse } from 'axios';
 
@@ -62,47 +61,4 @@ export interface TaskOptions extends AkairoModuleOptions {
   timestamp?: number;
   at?: string;
   enabled?: boolean;
-}
-
-export interface SetCommandArguments {
-  almanaxAuto: string;
-  almanaxChannel: TextChannel;
-  dofusServer: string;
-  newsChannel: TextChannel;
-}
-
-/* eslint-disable @typescript-eslint/naming-convention */
-export interface TwitterResponse {
-  data: {
-    search_metadata: {
-      completed_in: number;
-      max_id: number;
-      max_id_str: string;
-      next_results: string;
-      query: string;
-      refresh_url: string;
-      count: number;
-      since_id: number;
-      since_id_str: string;
-    };
-    statuses: [
-      {
-        created_at: string;
-        id: number;
-        id_str: string;
-        text: string;
-        full_text: string;
-        truncated: boolean;
-        entities: Record<string, unknown>;
-        metadata: Record<string, unknown>;
-        source: string;
-        in_reply_to_status_id: number;
-        in_reply_to_status_id_str: string;
-        in_reply_to_user_id: number;
-        in_reply_to_user_id_str: string;
-        in_reply_to_screen_name: string;
-        user: unknown;
-      }
-    ];
-  };
 }
