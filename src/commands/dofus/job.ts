@@ -128,7 +128,7 @@ export default class JobCommand extends Command {
 
       // `!job @Member` → Display all jobs for the single user
       // `!job` → Display all jobs for self
-      // `!job tailor 125` → Display all jobs for self
+      // `!job tailor 125` → Update level for the selected job
 
       if (!name) {
         let fields: { job: string; level: number }[] = [];
