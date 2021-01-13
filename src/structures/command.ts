@@ -95,7 +95,7 @@ export class Command extends AkairoCommand {
    */
   public async set(holder: Guild | TextChannel | User | GuildMember, key: string, value: any): Promise<any> {
     const settings = this.getProvider(holder);
-    return settings.set(holder.id, key, value);
+    return settings.set(this.getID(holder), key, value);
   }
 
   /**
@@ -106,7 +106,7 @@ export class Command extends AkairoCommand {
    */
   public get(holder: Guild | TextChannel | User | GuildMember, key: string, defaultValue: any): any {
     const settings = this.getProvider(holder);
-    return settings.get(holder.id, key, defaultValue);
+    return settings.get(this.getID(holder), key, defaultValue);
   }
 
   /**
@@ -116,7 +116,7 @@ export class Command extends AkairoCommand {
    */
   public async delete(holder: Guild | TextChannel | User | GuildMember, key: string) {
     const settings = this.getProvider(holder);
-    return settings.delete(holder.id, key);
+    return settings.delete(this.getID(holder), key);
   }
 
   /**
@@ -154,6 +154,16 @@ export class Command extends AkairoCommand {
     if (holder instanceof TextChannel) return providers.channels;
     if (holder instanceof GuildMember) return providers.members;
     /* if (holder instanceof User) */ return providers.users;
+  }
+
+  /**
+   * Gets the correct ID depending on the type of the object for
+   * which data will be fetched or modified.
+   * @param holder Instance to find the correct ID for
+   */
+  private getID(holder: Guild | TextChannel | User | GuildMember): string {
+    if (holder instanceof GuildMember) return `${holder.guild.id}:${holder.id}`;
+    return holder.id;
   }
 
   /**
