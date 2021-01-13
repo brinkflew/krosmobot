@@ -47,9 +47,7 @@ export default class AlmanaxCommand extends Command {
     const date = this.parseDate(target);
     if (!date) return this.error(message, this.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', message, target));
     const id = `${language}:${date}`;
-
-    // TODO: almanax.get always returns 'undefined'
-    let almanax: AlmanaxData = this.client.data.almanax.get(id, 'data');
+    let almanax: AlmanaxData = providers.almanax.get(id, 'data');
 
     if (!almanax) {
       const url = `http://www.krosmoz.com/${language}/almanax/${date}`;
@@ -59,18 +57,23 @@ export default class AlmanaxCommand extends Command {
       almanax = <AlmanaxData><unknown>scraped.data[0];
       almanax.url = url;
       void providers.almanax.set(id, 'data', almanax);
+
+      Object.assign(almanax, {
+        bonus: { title: almanax['bonus.title'], description: almanax['bonus.description'] },
+        images: { meryde: almanax['images.meryde'], item: almanax['images.item'] }
+      });
     }
 
     const embed = this.craftEmbed(message, {
       author: {
         name: this.t('COMMAND_ALMANAX_RESPONSE_ALMANAX', message, almanax.day, almanax.month),
         url: almanax.url,
-        iconURL: almanax['images.meryde']
+        iconURL: almanax.images?.meryde
       },
-      thumbnail: { url: almanax['images.item'] },
+      thumbnail: { url: almanax.images?.item },
       fields: [
         { name: almanax.title, value: almanax.offering, inline: true },
-        { name: almanax['bonus.title'], value: almanax['bonus.description'], inline: true }
+        { name: almanax.bonus?.title, value: almanax.bonus?.description, inline: true }
       ]
     });
 

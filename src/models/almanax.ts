@@ -16,7 +16,9 @@ const schema = new Schema(
       images: {
         meryde: { type: String, trim: true },
         item: { type: String, trim: true }
-      }
+      },
+      day: { type: String, trim: true },
+      month: { type: String, trim: true }
     }
   }, { minimize: false }
 );

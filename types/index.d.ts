@@ -41,10 +41,18 @@ export interface AlmanaxData {
   offering: string;
   meryde: string;
   description: string;
-  'bonus.title': string;
-  'bonus.description': string;
-  'images.meryde': string;
-  'images.item': string;
+  'bonus.title'?: string;
+  'bonus.description'?: string;
+  bonus?: {
+    title: string;
+    description: string;
+  };
+  'images.meryde'?: string;
+  'images.item'?: string;
+  images?: {
+    meryde: string;
+    item: string;
+  };
   month: string;
   day: string;
 }
