@@ -30,7 +30,7 @@ export default class extends Listener {
     if (tweet.retweeted_status) return;
 
     for (const guild of this.client.guilds.cache.array()) {
-      const config = this.client.settings.guilds.get(guild.id, 'dofus', {});
+      const config = this.client.providers.guilds.get(guild.id, 'dofus', {});
       if (!config.rss?.news) continue;
 
       const channel = this.client.util.resolveChannel(config.rss.news, guild.channels.cache);

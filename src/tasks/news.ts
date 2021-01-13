@@ -33,7 +33,7 @@ export default class RSSTask extends Task {
       for (const [id, feed] of feeds.entries()) {
         if (!feed.items) continue;
 
-        const config = this.client.settings.guilds.get(guild.id, 'dofus', {});
+        const config = this.client.providers.guilds.get(guild.id, 'dofus', {});
         if (!config.rss?.news) continue;
 
         const channel = this.client.util.resolveChannel(config.rss.news, guild.channels.cache);

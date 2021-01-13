@@ -48,7 +48,7 @@ export default class MongooseProvider extends Provider {
    * @param key The key to set
    * @param value The value to set
    */
-  public async set(id: string, key: string | string[], value: any | any[]) {
+  public async set(id: string, key: string | string[], value: any | any[]): Promise<MongooseProviderDocument> {
     if (!Array.isArray(key)) key = [key];
     if (!Array.isArray(value)) value = [value];
     if (key.length !== value.length) throw new TypeError('Different number of keys and values');
@@ -71,7 +71,7 @@ export default class MongooseProvider extends Provider {
    * @param id ID of the guild
    * @param key The key to delete
    */
-  public async delete(id: string, key: string): Promise<any> {
+  public async delete(id: string, key: string): Promise<MongooseProviderDocument> {
     const data = this.items.get(id) || {};
     delete data[key];
 

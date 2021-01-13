@@ -13,15 +13,7 @@ declare module 'discord-akairo' {
     streams: Stream[];
     logger: Logger;
     logs: CustomMongooseProvider;
-    settings: {
-      guilds: CustomMongooseProvider;
-      channels: CustomMongooseProvider;
-      users: CustomMongooseProvider;
-      members: CustomMongooseProvider;
-    };
-    data: {
-      almanax: CustomMongooseProvider;
-    };
+    providers: { [key: string]: CustomMongooseProvider };
     invite: string | null;
   }
 }

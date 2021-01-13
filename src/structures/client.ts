@@ -19,14 +19,7 @@ import { Logger } from '@/structures';
 import { DEFAULT_PREFIX, TWITTER_USERS } from '@/constants';
 
 // Import models for the provider
-import {
-  guildModel,
-  channelModel,
-  userModel,
-  logModel,
-  almanaxModel,
-  memberModel
-} from '@/models';
+import { models } from '@/models';
 
 /**
  * Client connecting to the Discord gateway.
@@ -43,16 +36,7 @@ export class Client extends AkairoClient {
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
-  public settings: {
-    guilds: MongooseProvider;
-    channels: MongooseProvider;
-    users: MongooseProvider;
-    members: MongooseProvider;
-  };
-
-  public data: {
-    almanax: MongooseProvider;
-  };
+  public providers: { [key: string]: MongooseProvider } = {};
 
 
   /**
@@ -64,8 +48,14 @@ export class Client extends AkairoClient {
 
     /** Logger */
 
-    this.logs = new MongooseProvider(logModel);
+    this.logs = new MongooseProvider(models.logs);
     this.logger = new Logger(this);
+
+    /** Providers */
+
+    for (const [key, model] of Object.entries(models)) {
+      this.providers[key] = new MongooseProvider(model);
+    }
 
     /** Handlers */
 
@@ -74,7 +64,7 @@ export class Client extends AkairoClient {
       prefix: (message: Message) => {
         const prefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
         return message.guild
-          ? this.settings.guilds.get(message.guild.id, 'prefix', prefix)
+          ? this.providers.guilds.get(message.guild.id, 'prefix', prefix)
           : prefix;
       },
       aliasReplacement: /-/g,
@@ -94,21 +84,10 @@ export class Client extends AkairoClient {
     });
 
     /** Scheduler */
+
     this.scheduler = new TaskHandler(this, {
       directory: resolve(join(__dirname, '..', 'tasks'))
     });
-
-    /** Providers */
-    this.settings = {
-      guilds: new MongooseProvider(guildModel),
-      channels: new MongooseProvider(channelModel),
-      users: new MongooseProvider(userModel),
-      members: new MongooseProvider(memberModel)
-    };
-
-    this.data = {
-      almanax: new MongooseProvider(almanaxModel)
-    };
 
     /* eslint-disable @typescript-eslint/naming-convention */
     const {
@@ -154,7 +133,7 @@ export class Client extends AkairoClient {
       .loadAll()
       .init();
 
-    await Promise.all(Object.values(this.settings).map(provider => provider.init()));
+    await Promise.all(Object.values(this.providers).map(provider => provider.init()));
     return this;
   }
 

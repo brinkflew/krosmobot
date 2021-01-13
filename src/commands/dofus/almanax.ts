@@ -38,11 +38,11 @@ export default class AlmanaxCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, { extended, target }: { extended: boolean; target: string }) {
-    const { settings } = this.client;
+    const { providers } = this.client;
     const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
     const language: string = message.guild
-      ? settings.guilds.get(message.guild.id, 'locale', defaultLocale)
-      : settings.users.get(message.author.id, 'locale', defaultLocale);
+      ? providers.guilds.get(message.guild.id, 'locale', defaultLocale)
+      : providers.users.get(message.author.id, 'locale', defaultLocale);
 
     const date = this.parseDate(target);
     if (!date) return this.error(message, this.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', message, target));
@@ -58,7 +58,7 @@ export default class AlmanaxCommand extends Command {
       if (!scraped.data?.length) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
       almanax = <AlmanaxData><unknown>scraped.data[0];
       almanax.url = url;
-      void this.client.data.almanax.set(id, 'data', almanax);
+      void providers.almanax.set(id, 'data', almanax);
     }
 
     const embed = this.craftEmbed(message, {

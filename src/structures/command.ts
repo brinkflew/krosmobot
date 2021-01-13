@@ -72,8 +72,8 @@ export class Command extends AkairoCommand {
   public craftEmbed(message: Message, content: MessageEmbedOptions | MessageEmbed): MessageEmbed {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
     const color = message.guild
-      ? this.client.settings.guilds.get(message.guild.id, 'color', EMBED_COLOR_DEFAULT)
-      : this.client.settings.users.get(message.author.id, 'color', EMBED_COLOR_DEFAULT);
+      ? this.client.providers.guilds.get(message.guild.id, 'color', EMBED_COLOR_DEFAULT)
+      : this.client.providers.users.get(message.author.id, 'color', EMBED_COLOR_DEFAULT);
     if (!content.color) content.setColor(color);
     return content;
   }
@@ -149,11 +149,11 @@ export class Command extends AkairoCommand {
    * @param holder Instance to find the correct provider for
    */
   private getProvider(holder: Guild | TextChannel | User | GuildMember): MongooseProvider {
-    const { settings } = this.client;
-    if (holder instanceof Guild) return settings.guilds;
-    if (holder instanceof TextChannel) return settings.channels;
-    if (holder instanceof GuildMember) return settings.members;
-    /* if (holder instanceof User) */ return settings.users;
+    const { providers } = this.client;
+    if (holder instanceof Guild) return providers.guilds;
+    if (holder instanceof TextChannel) return providers.channels;
+    if (holder instanceof GuildMember) return providers.members;
+    /* if (holder instanceof User) */ return providers.users;
   }
 
   /**

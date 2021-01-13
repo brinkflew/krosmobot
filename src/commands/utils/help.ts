@@ -36,7 +36,7 @@ export default class HelpCommand extends Command {
   public async exec(message: Message, { command }: { command: Command }) {
     try {
       const prefix = message.guild
-        ? this.client.settings.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
+        ? this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
         : DEFAULT_PREFIX;
 
       if (command) {
@@ -109,7 +109,7 @@ export default class HelpCommand extends Command {
    */
   private formatCommand(message: Message, command: Command): string {
     const prefix = message.guild
-      ? <string>(this.client.settings.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX))
+      ? <string>(this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX))
       : DEFAULT_PREFIX;
     const description = this.t(command.description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message);
     return `\`${prefix}${command.id}\` → ${description}`;
