@@ -90,5 +90,13 @@ Enables sending the almanax of the day automatically in the Discord channel name
 Tells the bot to send a message in a given channel when one of the followed accounts sends a new tweet. A channel with this name must already exist on the server and the bot must have read and write access to that channel.
 
 ```
-!set news.channel #news
+!set news.auto true news.channel #news
+```
+
+### Default Dofus Server
+
+Set a default Dofus server to use when unspecified in some commands (almanax, etc.).
+
+```
+!set dofus.server Jahash
 ```
