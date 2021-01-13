@@ -10,7 +10,6 @@ export default class TwitterTask extends Task {
 
   private color = '#1DA1F2';
   private query = 'from:krosmobot OR from:DOFUSfr OR from:AnkamaGames -is:retweet -is:quote';
-  // private query = '(from:krosmobot OR from:DOFUSfr OR from:AnkamaGames) -is:retweet -is:quote';
   private lastTweetID?: string;
   private entities: XmlEntities;
 
