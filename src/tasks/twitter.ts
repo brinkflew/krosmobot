@@ -72,17 +72,16 @@ export default class TwitterTask extends Task {
 
           const embed = new MessageEmbed({
             color: this.color,
-            title: 'Tweet',
-            url: `${authorURL}/status/${tweet.id}`,
             author: {
               name: `\@${author.name}`,
               url: authorURL,
               iconURL: author.profile_image_url
             },
             description,
+            fields: [{ name: '\u200B', value: `[${this.t('TASK_TWITTER_ORIGINAL_TWEET', guild)}](${authorURL}/status/${tweet.id})` }],
             footer: {
               iconURL: icons.twitter,
-              text: 'Twitter'
+              text: this.t('TASK_TWITTER_FOOTER', guild)
             }
           });
 

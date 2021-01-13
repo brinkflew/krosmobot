@@ -1,4 +1,5 @@
 import { AkairoModule } from 'discord-akairo';
+import { Guild } from 'discord.js';
 import { TaskOptions } from 'types';
 
 /**
@@ -37,6 +38,29 @@ export class Task extends AkairoModule {
       this.last = date.setSeconds(0);
       this.interval = 1000 * 60 * 60 * 24;
     }
+  }
+
+  /**
+   * Fetches the correct translation for the guild a message will be sent to.
+   * @param key Key for the translation to fetch
+   * @param message Guild to which to send a message
+   * @param args Parameters to pass to the translation
+   */
+  public translate(key: string, guild: Guild, ...args: any[]): string {
+    const language = <string> this.client.providers.guilds.get(guild.id, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en');
+    const locale = this.client.locales.get(language);
+    return locale.translate(key, ...args);
+  }
+
+  /**
+   * Fetches the correct translation for the guild a message will be sent to.
+   * This is a shortand for `Task#translate()`.
+   * @param key Key for the translation to fetch
+   * @param message Guild to which to send a message
+   * @param args Parameters to pass to the translation
+   */
+  public t(key: string, guild: Guild, ...args: any[]): string {
+    return this.translate(key, guild, ...args);
   }
 
   /**

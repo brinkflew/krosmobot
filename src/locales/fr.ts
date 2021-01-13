@@ -18,6 +18,10 @@ export default class FrenchLocale extends Locale {
       LANG_EN: 'Anglais',
       LANG_FR: 'Français',
 
+      // TWITTER Task
+      TASK_TWITTER_ORIGINAL_TWEET: 'Ouvrir l\'original',
+      TASK_TWITTER_FOOTER: 'Vu sur Twitter',
+
       // PING Command
       COMMAND_PING_DESCRIPTION_SHORT: 'Latence entre le bot et Discord.',
       COMMAND_PING_DESCRIPTION_EXTENDED: stripIndent`
