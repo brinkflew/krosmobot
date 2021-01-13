@@ -11,12 +11,12 @@ import {
   Permissions,
   PermissionResolvable
 } from 'discord.js';
-import Twitter, { Stream } from 'twitter-lite';
+import Twitter from 'twitter-lite-v2';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
-import { DEFAULT_PREFIX, TWITTER_USERS } from '@/constants';
+import { DEFAULT_PREFIX } from '@/constants';
 
 // Import models for the provider
 import { models } from '@/models';
@@ -32,7 +32,6 @@ export class Client extends AkairoClient {
   public locales: LocaleHandler;
   public scheduler: TaskHandler;
   public twitter: Twitter;
-  public streams: Stream[] = [];
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
@@ -89,41 +88,16 @@ export class Client extends AkairoClient {
       directory: resolve(join(__dirname, '..', 'tasks'))
     });
 
-    /* eslint-disable @typescript-eslint/naming-convention */
-    const {
-      KROSMOBOT_TWITTER_CONSUMER_KEY,
-      KROSMOBOT_TWITTER_CONSUMER_SECRET,
-      KROSMOBOT_TWITTER_ACCESS_TOKEN,
-      KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
-    } = process.env;
+    /** Twitter client */
 
-    if (!KROSMOBOT_TWITTER_CONSUMER_KEY || !KROSMOBOT_TWITTER_CONSUMER_SECRET) {
-      throw new Error('No Twitter consumer key/secret provided');
-    }
-
-    if (!KROSMOBOT_TWITTER_ACCESS_TOKEN || !KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET) {
-      throw new Error('No Twitter access token/secret provided');
-    }
-
-    this.twitter = new Twitter({
-      consumer_key: KROSMOBOT_TWITTER_CONSUMER_KEY,
-      consumer_secret: KROSMOBOT_TWITTER_CONSUMER_SECRET,
-      access_token_key: KROSMOBOT_TWITTER_ACCESS_TOKEN,
-      access_token_secret: KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
-    });
-    /* eslint-enable @typescript-eslint/naming-convention */
+    this.twitter = this.getTwitterConnection();
   }
 
   /**
    * Initializes the client and loads the handlers.
    */
   public async init(): Promise<Client> {
-    const stream = this.streamTweets();
-
-    this.events.setEmitters({
-      process,
-      twitter: stream
-    });
+    this.events.setEmitters({ process });
 
     this.commands.loadAll();
     this.events.loadAll();
@@ -135,19 +109,6 @@ export class Client extends AkairoClient {
 
     await Promise.all(Object.values(this.providers).map(provider => provider.init()));
     return this;
-  }
-
-  /**
-   * Initilaizes streaming tweets from various accounts.
-   * @param follow IDs of accounts to follow
-   */
-  public streamTweets(): Stream {
-    this.streams.map(stream => process.nextTick(() => stream.destroy()));
-
-    const stream = this.twitter.stream('statuses/filter', { follow: TWITTER_USERS.join(',') });
-    this.streams.push(stream);
-
-    return stream;
   }
 
   /**
@@ -185,6 +146,40 @@ export class Client extends AkairoClient {
     });
 
     return `https://discordapp.com/oauth2/authorize?client_id=${application.id}&permissions=${permissions.bitfield}&scope=bot`;
+  }
+
+  /**
+   * Login to Twitter using the credentials provided in the current environment.
+   */
+  private getTwitterConnection(): Twitter {
+
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const {
+      KROSMOBOT_TWITTER_CONSUMER_KEY,
+      KROSMOBOT_TWITTER_CONSUMER_SECRET,
+      KROSMOBOT_TWITTER_ACCESS_TOKEN,
+      KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
+    } = process.env;
+
+    if (!KROSMOBOT_TWITTER_CONSUMER_KEY || !KROSMOBOT_TWITTER_CONSUMER_SECRET) {
+      throw new Error('No Twitter consumer key/secret provided');
+    }
+
+    if (!KROSMOBOT_TWITTER_ACCESS_TOKEN || !KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET) {
+      throw new Error('No Twitter access token/secret provided');
+    }
+
+    const twitter = new Twitter({
+      version: '2',
+      extension: false,
+      consumer_key: KROSMOBOT_TWITTER_CONSUMER_KEY,
+      consumer_secret: KROSMOBOT_TWITTER_CONSUMER_SECRET,
+      access_token_key: KROSMOBOT_TWITTER_ACCESS_TOKEN,
+      access_token_secret: KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
+    });
+    /* eslint-enable @typescript-eslint/naming-convention */
+
+    return twitter;
   }
 
   /**

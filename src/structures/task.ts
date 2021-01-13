@@ -15,7 +15,14 @@ export class Task extends AkairoModule {
 
   public constructor(id: string, options: TaskOptions = {}) {
     super(id, options);
-    this.interval = options.interval;
+
+    let interval = process.env.KROSMOBOT_TASKS_INTERVAL || 60;
+    if (typeof interval === 'string') interval = parseInt(interval, 10);
+
+    this.interval = options.interval
+      ? Math.max(options.interval, interval)
+      : interval;
+    this.interval *= 1000;
     this.timestamp = options.interval ? 0 : options.timestamp;
     this.last = 0;
     this.at = options.at;

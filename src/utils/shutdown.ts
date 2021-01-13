@@ -9,9 +9,6 @@ import { AkairoClient } from 'discord-akairo';
 export const shutdown = async (client: AkairoClient, code = 0) => {
   client.logger.warning('Gracefully exiting process...');
 
-  // Close openend Twitter streams
-  client.streams.map(stream => process.nextTick(() => stream.destroy()));
-
   // Remove all event listeners and clear the events loop
   client.logger.verbose('Removing event listeners...');
   process.removeAllListeners();
