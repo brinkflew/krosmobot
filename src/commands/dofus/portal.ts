@@ -42,7 +42,7 @@ export default class PortalCommand extends Command {
   public async exec(message: Message, { dimension, server }: { dimension: string; server: string }) {
     const portalServer: { id: string; name: string } = server
       ? await findPortalServer(this, message, server)
-      : message.guild ? this.get(message.guild || message.author, 'dofus', {}).server : null;
+      : message.guild ? this.get(message.guild, 'settings', {}).dofus?.server : null;
     if (!portalServer) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
 
     const baseUrl = 'https://dofus-portals.fr';
