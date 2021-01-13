@@ -18,7 +18,6 @@
     "build:clean": "yarn clean && yarn build",
     "start": "yarn install && yarn build:clean && pm2 start ecosystem.config.js --env production",
     "log": "pm2 log kbot",
-    "postinstall": "yarn build",
     "precommit": "yarn lint",
     "deploy": "pm2 deploy",
     "serve": "nodemon -e ts --exec 'yarn lint && yarn build:clean && node dist/client.js'"
