@@ -157,16 +157,15 @@ export class Client extends AkairoClient {
     const {
       KROSMOBOT_TWITTER_CONSUMER_KEY,
       KROSMOBOT_TWITTER_CONSUMER_SECRET,
-      KROSMOBOT_TWITTER_ACCESS_TOKEN,
-      KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
+      KROSMOBOT_TWITTER_BEARER_TOKEN
     } = process.env;
 
     if (!KROSMOBOT_TWITTER_CONSUMER_KEY || !KROSMOBOT_TWITTER_CONSUMER_SECRET) {
       throw new Error('No Twitter consumer key/secret provided');
     }
 
-    if (!KROSMOBOT_TWITTER_ACCESS_TOKEN || !KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET) {
-      throw new Error('No Twitter access token/secret provided');
+    if (!KROSMOBOT_TWITTER_BEARER_TOKEN) {
+      throw new Error('No Twitter bearer token provided');
     }
 
     const twitter = new Twitter({
@@ -174,8 +173,7 @@ export class Client extends AkairoClient {
       extension: false,
       consumer_key: KROSMOBOT_TWITTER_CONSUMER_KEY,
       consumer_secret: KROSMOBOT_TWITTER_CONSUMER_SECRET,
-      access_token_key: KROSMOBOT_TWITTER_ACCESS_TOKEN,
-      access_token_secret: KROSMOBOT_TWITTER_ACCESS_TOKEN_SECRET
+      bearer_token: KROSMOBOT_TWITTER_BEARER_TOKEN
     });
     /* eslint-enable @typescript-eslint/naming-convention */
 
