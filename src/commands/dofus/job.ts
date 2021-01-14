@@ -19,42 +19,6 @@ export default class JobCommand extends Command {
         'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE',
         'usage': 'COMMAND_JOB_DESCRIPTION_USAGE'
       }
-      // args: [
-      //   {
-      //     id: 'name',
-      //     type: [
-      //       ['alchemist', 'alchimiste', 'alchi'],
-      //       ['jeweller', 'bijoutier', 'bijou'],
-      //       ['handyman', 'bricoleur', 'brico'],
-      //       ['lumberjack', 'bûcheron', 'bucheron', 'buch'],
-      //       ['hunter', 'chasseur'],
-      //       ['shoemagus', 'cordomage'],
-      //       ['shoemaker', 'cordonnier', 'cordo'],
-      //       ['costumagus', 'costumage', 'costu'],
-      //       ['craftmagus', 'façomage', 'facomage'],
-      //       ['artificer', 'façonneur', 'faconneur'],
-      //       ['smithmagus', 'forgemage'],
-      //       ['smith', 'forgeron'],
-      //       ['jewelmagus', 'joaillomage', 'joaillo'],
-      //       ['miner', 'mineur'],
-      //       ['farmer', 'paysan'],
-      //       ['fisherman', 'pêcheur', 'pecheur'],
-      //       ['carvmagus', 'sculptemage'],
-      //       ['carver', 'sculpteur'],
-      //       ['tailor', 'tailleur']
-      //     ]
-      //   },
-      //   {
-      //     id: 'level',
-      //     unordered: true,
-      //     type: Argument.range('integer', 1, 200)
-      //   },
-      //   {
-      //     id: 'member',
-      //     unordered: true,
-      //     type: 'member'
-      //   }
-      // ]
     });
   }
 
@@ -200,6 +164,9 @@ export default class JobCommand extends Command {
     return `${name} ${' '.repeat(maxLength - name.length - fixed.length)} ${fixed}`;
   }
 
+  /**
+   * Parses the arguments.
+   */
   // @ts-ignore unused-declaration
   private *args(message: Message) {
     const args = {
@@ -210,10 +177,10 @@ export default class JobCommand extends Command {
 
     if (!args.name) args.level = null;
 
-    if (args.level && (args.level < 1 || args.level > 200)) {
-      void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE', message, args.level));
-      args.level = Math.max(1, args.level);
-      args.level = Math.min(200, args.level);
+    if (typeof args.level === 'number' && (args.level < 1 || args.level > 200)) {
+      const corrected = Math.min(200, Math.max(1, args.level));
+      void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE', message, args.level, corrected));
+      args.level = corrected;
     }
 
     const rest: string[] = yield { type: 'string', match: 'separate' };
@@ -224,6 +191,7 @@ export default class JobCommand extends Command {
       const prefix = message.guild
         ? this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
         : DEFAULT_PREFIX;
+      parsed.map((value, index) => parsed[index] = value instanceof GuildMember ? value.displayName : value);
       void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_PARSED_AS', message, prefix, this.id, parsed));
     }
 

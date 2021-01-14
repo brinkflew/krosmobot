@@ -96,8 +96,9 @@ export default class SetCommand extends Command {
 
       // Configure the default Dofus server for the guild
       if (isSet['dofus.server']) {
-        const { id, name } = await findPortalServer(this, message, args['dofus.server']);
-        settings.dofus.server = { id, name };
+        const server = await findPortalServer(args['dofus.server']);
+        if (!server) throw new Error(`Unknown server: ${(<string> args['dofus.server'])}`);
+        settings.dofus.server = server;
         keys.push('dofus.server');
       }
 

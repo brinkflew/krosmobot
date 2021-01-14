@@ -3,6 +3,7 @@
 import * as argumentTypes from './arguments';
 import defaults from './defaults';
 import * as embeds from './embeds';
+export * from './urls';
 
 // Defaults
 export const DEFAULT_PREFIX = defaults.PREFIX;
@@ -22,3 +23,4 @@ export const EMBED_COLOR_DEFAULT = embeds.COLORS.DEFAULT;
 
 // Arguments
 export const ARGUMENT_TYPE_JOB = argumentTypes.jobs;
+export const ARGUMENT_TYPE_DIMENSIONS = argumentTypes.dimensions;

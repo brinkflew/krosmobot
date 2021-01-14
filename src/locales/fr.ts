@@ -253,7 +253,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
 
       // PORTAL Command
-      COMMAND_PORTAL_RESPONSE_NODATA: 'Pas de données disponnibles pour ce serveur.',
+      COMMAND_PORTAL_RESPONSE_NODATA: (server: { id: string; name: string }) => `Aucune donnée disponnible pour le serveur ${server.name}.`,
       COMMAND_PORTAL_RESPONSE_TO: (dimension: string) => `Portail vers ${dimension}`,
       COMMAND_PORTAL_RESPONSE_CYCLE: (cycle: string) => `Modificateur : ${cycle}`,
       COMMAND_PORTAL_REPONSE_POSITION: 'Dernière Position Connue',
@@ -278,7 +278,7 @@ export default class FrenchLocale extends Locale {
         ${argument('dimension')} Dimension pour laquelle rechercher un portail (optionnel)
         ${argument('serveur')} Serveur sur lequel chercher un portail (optionnel)
       `,
-      COMMAND_PORTAL_RESPONSE_NOSERVER: 'Pas de serveur correspondant trouvé.',
+      COMMAND_PORTAL_RESPONSE_NOSERVER: 'Aucun serveur Dofus n\'a été spécifié, ou bien son nom est incorrect.',
 
       // JOB Command
       COMMAND_JOB_RESPONSE_JOB_ALCHEMIST: 'Alchimiste',
@@ -324,13 +324,13 @@ export default class FrenchLocale extends Locale {
         ${argument('niveau')} Nouveau niveau du métier dans le cas d'une mise à jour (optionnel)
         ${argument('membre')} Mention d'un membre pour qui afficher le(s) métier(s) (optionnel)
       `,
-      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number) => oneLine`
-        Le niveau de métier '${level}' n'est pas compris entre les marges autorisées
-        et sera adapté.
+      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number, corrected: number) => oneLine`
+        Le niveau de métier ${level} n'est pas compris entre les marges autorisées
+        et sera corrigé en ${corrected}.
       `,
       COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
-        Certaines options n'ont pas pu être validées.
-        La commande sera interpretée comme suit :
+        Certaines options n'ont pas pu être interprétées...
+        Commande exécutée :
         ${code(`${prefix}${id} ${parsed.join(' ')}`)}
       `
     };

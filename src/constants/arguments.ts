@@ -19,3 +19,10 @@ export const jobs = [
   ['carver', 'sculpteur'],
   ['tailor', 'tailleur']
 ];
+
+export const dimensions = [
+  ['enutrosor', 'enu', 'enutrof'],
+  ['ecaflipus', 'eca', 'ecaflip'],
+  ['srambad', 'sram'],
+  ['xelorium', 'xel', 'xelor']
+];

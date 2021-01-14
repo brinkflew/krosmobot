@@ -1,7 +1,7 @@
 import { Command, Scraper } from '@/structures';
 import { Message, MessageEmbed } from 'discord.js';
 import { portal as schema } from '@/scraping-schemas';
-import { findPortalServer } from '@/utils';
+import { DOFUS_PORTALS_URL } from '@/constants';
 
 /**
  * Fetches the Dofus portal position for a dimension on a server.
@@ -16,22 +16,22 @@ export default class PortalCommand extends Command {
         'extended': 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
         'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
         'usage': 'COMMAND_PORTAL_DESCRIPTION_USAGE'
-      },
-      args: [
-        {
-          id: 'dimension',
-          type: [
-            ['enutrosor', 'enu', 'enutrof'],
-            ['ecaflipus', 'eca', 'ecaflip'],
-            ['srambad', 'sram'],
-            ['xelorium', 'xel', 'xelor']
-          ]
-        },
-        {
-          id: 'server',
-          type: 'lowercase'
-        }
-      ]
+      } // ,
+      // args: [
+      //   {
+      //     id: 'dimension',
+      //     type: [
+      //       ['enutrosor', 'enu', 'enutrof'],
+      //       ['ecaflipus', 'eca', 'ecaflip'],
+      //       ['srambad', 'sram'],
+      //       ['xelorium', 'xel', 'xelor']
+      //     ]
+      //   },
+      //   {
+      //     id: 'server',
+      //     type: 'lowercase'
+      //   }
+      // ]
     });
   }
 
@@ -39,25 +39,20 @@ export default class PortalCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { dimension, server }: { dimension: string; server: string }) {
-    const portalServer: { id: string; name: string } = server
-      ? await findPortalServer(this, message, server)
-      : message.guild ? this.get(message.guild, 'settings', {}).dofus?.server : null;
-    if (!portalServer) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
-
-    const baseUrl = 'https://dofus-portals.fr';
-    const url = `${baseUrl}/portails/${portalServer.id}`;
+  public async exec(message: Message, { dimension, server }: { dimension: string; server: { id: string; name: string } | null }) {
+    if (!server) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
+    const url = `${DOFUS_PORTALS_URL}/portails/${server.id}`;
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
-    if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message));
+    if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message, server));
 
     const generateEmbed = (data: any): MessageEmbed => this.craftEmbed(message, {
       author: {
         url,
         name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
-        iconURL: `${baseUrl}/images/servers/${portalServer.name.replace(/\s/g, '')}-min.png`
+        iconURL: `${DOFUS_PORTALS_URL}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
       },
       url,
-      thumbnail: { url: `${baseUrl}/${(<string>data[`images.dimension`]).replace('../', '')}` },
+      thumbnail: { url: `${DOFUS_PORTALS_URL}/${(<string>data[`images.dimension`]).replace('../', '')}` },
       fields: [
         {
           name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),
@@ -78,7 +73,7 @@ export default class PortalCommand extends Command {
       ],
       footer: {
         text: data.update
-          ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, portalServer.name)
+          ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, server.name)
           : undefined
       }
     });
@@ -99,6 +94,24 @@ export default class PortalCommand extends Command {
       default: return ['ecaflipus', 'enutrosor', 'srambad', 'xelorium']
         .map((dimension: string) => this.embed(message, generateEmbed(getDimensionData(dimension))));
     }
+  }
+
+  /**
+   * Parses the arguments.
+   */
+  // @ts-ignore unused-declaration
+  private *args(message: Message) {
+    const args = {
+      dimension: yield { type: 'dofusDimension' },
+      server: yield { type: 'dofusServer' }
+    };
+
+    if (!args.server && message.guild) {
+      const settings = this.get(message.guild, 'settings', {});
+      if (settings.dofus?.server?.id) args.server = settings.dofus?.server;
+    }
+
+    return args;
   }
 
 }

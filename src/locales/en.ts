@@ -249,7 +249,7 @@ export default class EnglishLocale extends Locale {
       COMMAND_SET_RESPONSE_ERROR: 'An error occured while executing the command',
 
       // PORTAL Command
-      COMMAND_PORTAL_RESPONSE_NODATA: 'No data available for this server.',
+      COMMAND_PORTAL_RESPONSE_NODATA: (server: { id: string; name: string }) => `No data available for server ${server.name}.`,
       COMMAND_PORTAL_RESPONSE_TO: (dimension: string) => `Portal to ${dimension}`,
       COMMAND_PORTAL_RESPONSE_CYCLE: (cycle: string) => `Modificator : ${cycle}`,
       COMMAND_PORTAL_REPONSE_POSITION: 'Last Known Position',
@@ -274,7 +274,7 @@ export default class EnglishLocale extends Locale {
         ${argument('dimension')} Dimension to search for a portal to (optionnal)
         ${argument('serveur')} Server for which to search a portal (optionnal)
       `,
-      COMMAND_PORTAL_RESPONSE_NOSERVER: 'No corresponding server found.',
+      COMMAND_PORTAL_RESPONSE_NOSERVER: 'No Dofus server was specified, or its name is incorrect.',
 
       // JOB Command
       COMMAND_JOB_RESPONSE_JOB_ALCHEMIST: 'Alchemist',
@@ -320,13 +320,13 @@ export default class EnglishLocale extends Locale {
         ${argument('level')} New level for a job to update (optionnel)
         ${argument('membre')} Mention of a member to display the jobs of (optionnal)
       `,
-      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number) => oneLine`
-        The job level '${level}' is not included between allowed margins
-        and will be adapted.
+      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number, corrected: number) => oneLine`
+        The job level ${level} is not included between the allowed margins
+        and will be corrected to ${corrected}.
       `,
       COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
-        Some options could not be validated.
-        The command will be interpreted as follows:
+        Some options could not be interpreted...
+        Executed command:
         ${code(`${prefix}${id} ${parsed.join(' ')}`)}
       `
     };
