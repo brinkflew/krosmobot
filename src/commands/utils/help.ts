@@ -1,7 +1,6 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
 import { Argument } from 'discord-akairo';
-import { DEFAULT_PREFIX } from '@/constants';
 
 /**
  * Display help about the available commands.
@@ -35,9 +34,7 @@ export default class HelpCommand extends Command {
    */
   public async exec(message: Message, { command }: { command: Command }) {
     try {
-      const prefix = message.guild
-        ? this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
-        : DEFAULT_PREFIX;
+      const prefix = this.getPrefix(message);
 
       if (command) {
         const { description } = command;
@@ -108,9 +105,7 @@ export default class HelpCommand extends Command {
    * @param command The command parsed from arguments
    */
   private formatCommand(message: Message, command: Command): string {
-    const prefix = message.guild
-      ? <string>(this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX))
-      : DEFAULT_PREFIX;
+    const prefix = this.getPrefix(message);
     const description = this.t(command.description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message);
     return `\`${prefix}${command.id}\` → ${description}`;
   }

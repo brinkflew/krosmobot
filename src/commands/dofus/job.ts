@@ -1,6 +1,5 @@
 import { Message, GuildMember } from 'discord.js';
 import { Command } from '@/structures';
-import { DEFAULT_PREFIX } from '@/constants';
 import { jobs as icons } from '@/constants/pictures';
 import { code } from '@/utils/message';
 
@@ -188,9 +187,7 @@ export default class JobCommand extends Command {
       .filter(value => Boolean(value));
 
     if (rest && rest.length !== parsed.length) {
-      const prefix = message.guild
-        ? this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
-        : DEFAULT_PREFIX;
+      const prefix = this.getPrefix(message);
       parsed.map((value, index) => parsed[index] = value instanceof GuildMember ? value.displayName : value);
       void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_PARSED_AS', message, prefix, this.id, parsed));
     }

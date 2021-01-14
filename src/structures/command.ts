@@ -13,7 +13,8 @@ import {
   EMBED_COLOR_GREEN,
   EMBED_COLOR_RED,
   EMBED_COLOR_YELLOW,
-  EMBED_COLOR_DEFAULT
+  EMBED_COLOR_DEFAULT,
+  DEFAULT_PREFIX
 } from '@/constants';
 import { code } from '@/utils/message';
 
@@ -153,6 +154,15 @@ export class Command extends AkairoCommand {
    */
   public t(key: string, message: Message, ...args: any[]): string {
     return this.translate(key, message, ...args);
+  }
+
+  /**
+   * Finds the prefix currnetly in use for this command.
+   * @param message Message that triggered the command
+   */
+  public getPrefix(message?: Message): string {
+    if (!message?.guild) return DEFAULT_PREFIX;
+    return this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX);
   }
 
   /**
