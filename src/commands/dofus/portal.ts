@@ -16,22 +16,7 @@ export default class PortalCommand extends Command {
         'extended': 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
         'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
         'usage': 'COMMAND_PORTAL_DESCRIPTION_USAGE'
-      } // ,
-      // args: [
-      //   {
-      //     id: 'dimension',
-      //     type: [
-      //       ['enutrosor', 'enu', 'enutrof'],
-      //       ['ecaflipus', 'eca', 'ecaflip'],
-      //       ['srambad', 'sram'],
-      //       ['xelorium', 'xel', 'xelor']
-      //     ]
-      //   },
-      //   {
-      //     id: 'server',
-      //     type: 'lowercase'
-      //   }
-      // ]
+      }
     });
   }
 
