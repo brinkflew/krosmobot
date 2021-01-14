@@ -8,6 +8,7 @@ import { twitter as icons } from '@/constants/pictures';
  */
 export default class TwitterTask extends Task {
 
+  public interval!: number;
   private color = '#1DA1F2';
   private query = 'from:krosmobot OR from:DOFUSfr OR from:AnkamaGames -is:retweet -is:quote';
   private lastTweetID?: string;
@@ -27,7 +28,7 @@ export default class TwitterTask extends Task {
     /* eslint-disable @typescript-eslint/naming-convention */
     const params: { [key: string]: string } = {
       'query': this.query,
-      'tweet.fields': 'text,author_id,attachments,entities',
+      'tweet.fields': 'text,author_id,attachments,entities,created_at',
       'user.fields': 'profile_image_url,name,username,verified',
       'media.fields': 'url',
       'expansions': 'author_id,attachments.media_keys'
@@ -36,13 +37,14 @@ export default class TwitterTask extends Task {
     if (this.lastTweetID) {
       params.since_id = this.lastTweetID;
     } else {
-      params.start_time = new Date(Date.now() - (Math.max(this.interval || 0, 10000))).toISOString();
+      params.start_time = new Date(Date.now() - (this.interval * 1.5)).toISOString();
     }
     /* eslint-disable @typescript-eslint/naming-convention */
 
     try {
       const tweets = await twitter.get('tweets/search/recent', params);
       if (!tweets.meta.result_count) return;
+      void logger.debug(`Fetched ${(<number> tweets.meta.result_count)} new tweets since ${params.start_time || params.since_id}`);
 
       this.lastTweetID = tweets.meta.newest_id;
 
@@ -73,12 +75,13 @@ export default class TwitterTask extends Task {
           const embed = new MessageEmbed({
             color: this.color,
             author: {
-              name: `\@${author.name}`,
+              name: `\@${author.username}`,
               url: authorURL,
               iconURL: author.profile_image_url
             },
             description,
             fields: [{ name: '\u200B', value: `[${this.t('TASK_TWITTER_ORIGINAL_TWEET', guild)}](${authorURL}/status/${tweet.id})` }],
+            timestamp: Date.parse(tweet.created_at),
             footer: {
               iconURL: icons.twitter,
               text: this.t('TASK_TWITTER_FOOTER', guild)
