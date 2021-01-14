@@ -37,7 +37,7 @@ export default class TwitterTask extends Task {
     if (this.lastTweetID) {
       params.since_id = this.lastTweetID;
     } else {
-      params.start_time = new Date(Date.now() - (this.interval * 1.5)).toISOString();
+      params.start_time = new Date(Date.now() - (Math.max(this.interval, 10000) * 1.5)).toISOString();
     }
     /* eslint-disable @typescript-eslint/naming-convention */
 
