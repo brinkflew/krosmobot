@@ -18,7 +18,6 @@ export default class SetCommand extends Command {
 
   public constructor() {
     super('set', {
-      channel: 'guild',
       userPermissions: ['MANAGE_GUILD'],
       description: {
         'short': 'COMMAND_SET_DESCRIPTION_SHORT',
@@ -68,7 +67,7 @@ export default class SetCommand extends Command {
   public async exec(message: Message, args: { [key: string]: any }): Promise<Message> {
     try {
       const keys: string[] = [];
-      const settings = this.get(message.guild!, 'settings', {});
+      const settings = this.get(message.guild || message.author, 'settings', {});
 
       settings.channels = settings.channels || {};
       settings.dofus = settings.dofus || {};
@@ -94,7 +93,7 @@ export default class SetCommand extends Command {
         keys.push('almanax.channel');
       }
 
-      // Configure the default Dofus server for the guild
+      // Configure the default Dofus server for the guild or user
       if (isSet['dofus.server']) {
         const server = await findPortalServer(args['dofus.server']);
         if (!server) throw new Error(`Unknown server: ${(<string> args['dofus.server'])}`);
@@ -114,7 +113,7 @@ export default class SetCommand extends Command {
         keys.push('news.channel');
       }
 
-      await this.set(message.guild!, 'settings', settings);
+      await this.set(message.guild || message.author, 'settings', settings);
       return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, keys));
     } catch (error) {
       return this.error(message, this.t('COMMAND_SET_RESPONSE_ERROR', message));
