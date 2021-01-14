@@ -16,6 +16,7 @@ const ownerID = process.env.KROSMOBOT_OWNERS?.split(',');
 
 // Create the client
 const client = new Client({ ownerID, ...akairoConfig }, discordConfig);
+client.logger.info(`Version ${(<string>process.env.npm_package_version)}`);
 
 // Setup the connection to the database
 client.logger.info('Connecting to providers...');

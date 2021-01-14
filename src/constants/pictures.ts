@@ -1,43 +1,45 @@
+const source = `https://raw.githubusercontent.com/brinkflew/krosmobot/${(<string> process.env.npm_package_version)}/static/pictures`;
+
 /** Jobs icons */
 export const jobs: { [key: string]: string } = {
-  alchemist: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/alchemist.png',
-  artificer: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/artificer.png',
-  carver: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/carver.png',
-  carvmagus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/carvmagus.png',
-  costumagus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/costumagus.png',
-  craftmagus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/craftmagus.png',
-  farmer: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/farmer.png',
-  fisherman: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/fisherman.png',
-  handyman: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/handyman.png',
-  hunter: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/hunter.png',
-  jeweller: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/jeweller.png',
-  jewelmagus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/jewelmagus.png',
-  lumberjack: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/lumberjack.png',
-  miner: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/miner.png',
-  shoemagus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/shoemagus.png',
-  shoemaker: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/shoemaker.png',
-  smith: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/smith.png',
-  smithmagus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/smithmagus.png',
-  tailor: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/jobs/tailor.png'
+  alchemist: `${source}/jobs/alchemist.png`,
+  artificer: `${source}/jobs/artificer.png`,
+  carver: `${source}/jobs/carver.png`,
+  carvmagus: `${source}/jobs/carvmagus.png`,
+  costumagus: `${source}/jobs/costumagus.png`,
+  craftmagus: `${source}/jobs/craftmagus.png`,
+  farmer: `${source}/jobs/farmer.png`,
+  fisherman: `${source}/jobs/fisherman.png`,
+  handyman: `${source}/jobs/handyman.png`,
+  hunter: `${source}/jobs/hunter.png`,
+  jeweller: `${source}/jobs/jeweller.png`,
+  jewelmagus: `${source}/jobs/jewelmagus.png`,
+  lumberjack: `${source}/jobs/lumberjack.png`,
+  miner: `${source}/jobs/miner.png`,
+  shoemagus: `${source}/jobs/shoemagus.png`,
+  shoemaker: `${source}/jobs/shoemaker.png`,
+  smith: `${source}/jobs/smith.png`,
+  smithmagus: `${source}/jobs/smithmagus.png`,
+  tailor: `${source}/jobs/tailor.png`
 };
 
 /** RSS feeds icons */
 export const rss: { [key: string]: string } = {
-  changelog: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/rss/changelog.png',
-  devblog: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/rss/devblog.png',
-  dofus: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/rss/dofus.png',
-  news: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/rss/news.png'
+  changelog: `${source}/rss/changelog.png`,
+  devblog: `${source}/rss/devblog.png`,
+  dofus: `${source}/rss/dofus.png`,
+  news: `${source}/rss/news.png`
 };
 
 /** Twitter icons */
 export const twitter: { [key: string]: string } = {
-  twitter: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/twitter/twitter.png'
+  twitter: `${source}/twitter/twitter.png`
 };
 
 /** Message status icons */
 export const statuses: { [key: string]: string } = {
-  error: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/error.png',
-  ingo: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/info.png',
-  success: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/success.png',
-  warning: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/warning.png'
+  error: `${source}/status/error.png`,
+  ingo: `${source}/status/info.png`,
+  success: `${source}/status/success.png`,
+  warning: `${source}/status/warning.png`
 };
