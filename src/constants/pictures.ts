@@ -35,11 +35,3 @@ export const rss: { [key: string]: string } = {
 export const twitter: { [key: string]: string } = {
   twitter: `${source}/twitter/twitter.png`
 };
-
-/** Message status icons */
-export const statuses: { [key: string]: string } = {
-  error: `${source}/status/error.png`,
-  ingo: `${source}/status/info.png`,
-  success: `${source}/status/success.png`,
-  warning: `${source}/status/warning.png`
-};

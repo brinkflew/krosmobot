@@ -19,9 +19,9 @@ export default class EnglishLocale extends Locale {
       LANG_FR: 'French',
 
       // Message statuses
-      MESSAGE_STATUS_SUCCESS: 'Success',
-      MESSAGE_STATUS_ERROR: 'Error',
-      MESSAGE_STATUS_WARNING: 'Warning',
+      MESSAGE_STATUS_SUCCESS: 'Yoohoo!',
+      MESSAGE_STATUS_ERROR: 'Ouch!',
+      MESSAGE_STATUS_WARNING: 'Hmmm...',
 
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Open original',

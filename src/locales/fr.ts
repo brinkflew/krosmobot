@@ -19,9 +19,9 @@ export default class FrenchLocale extends Locale {
       LANG_FR: 'Français',
 
       // Message statuses
-      MESSAGE_STATUS_SUCCESS: 'Succès',
-      MESSAGE_STATUS_ERROR: 'Erreur',
-      MESSAGE_STATUS_WARNING: 'Avertissement',
+      MESSAGE_STATUS_SUCCESS: 'Youpie !',
+      MESSAGE_STATUS_ERROR: 'Aïe !',
+      MESSAGE_STATUS_WARNING: 'Hmmm...',
 
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Ouvrir l\'original',

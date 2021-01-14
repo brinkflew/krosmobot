@@ -15,7 +15,6 @@ import {
   EMBED_COLOR_YELLOW,
   EMBED_COLOR_DEFAULT
 } from '@/constants';
-import { statuses } from '@/constants/pictures';
 import { code } from '@/utils/message';
 
 /**
@@ -38,7 +37,7 @@ export class Command extends AkairoCommand {
     this.handler.emit('command-success', this, message);
     const embed = new MessageEmbed({
       color: EMBED_COLOR_GREEN,
-      author: { name: this.t('MESSAGE_STATUS_SUCCESS', message), iconURL: statuses.success },
+      author: { name: this.t('MESSAGE_STATUS_SUCCESS', message) },
       description
     });
     return this.sendUtil(message, embed);
@@ -56,7 +55,7 @@ export class Command extends AkairoCommand {
     if (typeof error === 'string') description = `${description} ${code(error)}`;
     const embed = new MessageEmbed({
       color: EMBED_COLOR_RED,
-      author: { name: this.t('MESSAGE_STATUS_ERROR', message), iconURL: statuses.error },
+      author: { name: this.t('MESSAGE_STATUS_ERROR', message) },
       description
     });
     return this.sendUtil(message, embed);
@@ -71,7 +70,7 @@ export class Command extends AkairoCommand {
     this.handler.emit('command-warning', this, message);
     const embed = new MessageEmbed({
       color: EMBED_COLOR_YELLOW,
-      author: { name: this.t('MESSAGE_STATUS_WARNING', message), iconURL: statuses.warning },
+      author: { name: this.t('MESSAGE_STATUS_WARNING', message) },
       description
     });
     return this.sendUtil(message, embed);
