@@ -2,7 +2,7 @@
 
 import { oneLine, stripIndent } from 'common-tags';
 import { Locale } from '@/structures';
-import { usage, argument } from '@/utils';
+import { code, usage, argument } from '@/utils';
 
 export default class EnglishLocale extends Locale {
 
@@ -17,6 +17,11 @@ export default class EnglishLocale extends Locale {
       // Languages
       LANG_EN: 'English',
       LANG_FR: 'French',
+
+      // Message statuses
+      MESSAGE_STATUS_SUCCESS: 'Success',
+      MESSAGE_STATUS_ERROR: 'Error',
+      MESSAGE_STATUS_WARNING: 'Warning',
 
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Open original',
@@ -314,6 +319,15 @@ export default class EnglishLocale extends Locale {
         ${argument('job')} Job to display or update (optionnal)
         ${argument('level')} New level for a job to update (optionnel)
         ${argument('membre')} Mention of a member to display the jobs of (optionnal)
+      `,
+      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number) => oneLine`
+        The job level '${level}' is not included between allowed margins
+        and will be adapted.
+      `,
+      COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
+        Some options could not be validated.
+        The command will be interpreted as follows:
+        ${code(`${prefix}${id} ${parsed.join(' ')}`)}
       `
     };
   }

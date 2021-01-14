@@ -33,3 +33,11 @@ export const rss: { [key: string]: string } = {
 export const twitter: { [key: string]: string } = {
   twitter: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/twitter/twitter.png'
 };
+
+/** Message status icons */
+export const statuses: { [key: string]: string } = {
+  error: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/error.png',
+  ingo: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/info.png',
+  success: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/success.png',
+  warning: 'https://raw.githubusercontent.com/brinkflew/krosmobot/akairo/static/pictures/status/warning.png'
+};

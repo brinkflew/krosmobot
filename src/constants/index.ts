@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
+import * as argumentTypes from './arguments';
 import defaults from './defaults';
 import * as embeds from './embeds';
 
@@ -18,3 +19,6 @@ export const EMBED_COLOR_MAGENTA = embeds.COLORS.MAGENTA;
 export const EMBED_COLOR_RED = embeds.COLORS.RED;
 export const EMBED_COLOR_YELLOW = embeds.COLORS.YELLOW;
 export const EMBED_COLOR_DEFAULT = embeds.COLORS.DEFAULT;
+
+// Arguments
+export const ARGUMENT_TYPE_JOB = argumentTypes.jobs;

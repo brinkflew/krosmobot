@@ -1,5 +1,6 @@
 import { Message, GuildMember } from 'discord.js';
 import { Command } from '@/structures';
+import { DEFAULT_PREFIX } from '@/constants';
 import { jobs as icons } from '@/constants/pictures';
 import { code } from '@/utils/message';
 
@@ -17,44 +18,43 @@ export default class JobCommand extends Command {
         'extended': 'COMMAND_JOB_DESCRIPTION_EXTENDED',
         'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE',
         'usage': 'COMMAND_JOB_DESCRIPTION_USAGE'
-      },
-      args: [
-        {
-          id: 'name',
-          unordered: true,
-          type: [
-            ['alchemist', 'alchimiste', 'alchi'],
-            ['jeweller', 'bijoutier', 'bijou'],
-            ['handyman', 'bricoleur', 'brico'],
-            ['lumberjack', 'bûcheron', 'bucheron', 'buch'],
-            ['hunter', 'chasseur'],
-            ['shoemagus', 'cordomage'],
-            ['shoemaker', 'cordonnier', 'cordo'],
-            ['costumagus', 'costumage', 'costu'],
-            ['craftmagus', 'façomage', 'facomage'],
-            ['artificer', 'façonneur', 'faconneur'],
-            ['smithmagus', 'forgemage'],
-            ['smith', 'forgeron'],
-            ['jewelmagus', 'joaillomage', 'joaillo'],
-            ['miner', 'mineur'],
-            ['farmer', 'paysan'],
-            ['fisherman', 'pêcheur', 'pecheur'],
-            ['carvmagus', 'sculptemage'],
-            ['carver', 'sculpteur'],
-            ['tailor', 'tailleur']
-          ]
-        },
-        {
-          id: 'level',
-          unordered: true,
-          type: 'number'
-        },
-        {
-          id: 'member',
-          unordered: true,
-          type: 'member'
-        }
-      ]
+      }
+      // args: [
+      //   {
+      //     id: 'name',
+      //     type: [
+      //       ['alchemist', 'alchimiste', 'alchi'],
+      //       ['jeweller', 'bijoutier', 'bijou'],
+      //       ['handyman', 'bricoleur', 'brico'],
+      //       ['lumberjack', 'bûcheron', 'bucheron', 'buch'],
+      //       ['hunter', 'chasseur'],
+      //       ['shoemagus', 'cordomage'],
+      //       ['shoemaker', 'cordonnier', 'cordo'],
+      //       ['costumagus', 'costumage', 'costu'],
+      //       ['craftmagus', 'façomage', 'facomage'],
+      //       ['artificer', 'façonneur', 'faconneur'],
+      //       ['smithmagus', 'forgemage'],
+      //       ['smith', 'forgeron'],
+      //       ['jewelmagus', 'joaillomage', 'joaillo'],
+      //       ['miner', 'mineur'],
+      //       ['farmer', 'paysan'],
+      //       ['fisherman', 'pêcheur', 'pecheur'],
+      //       ['carvmagus', 'sculptemage'],
+      //       ['carver', 'sculpteur'],
+      //       ['tailor', 'tailleur']
+      //     ]
+      //   },
+      //   {
+      //     id: 'level',
+      //     unordered: true,
+      //     type: Argument.range('integer', 1, 200)
+      //   },
+      //   {
+      //     id: 'member',
+      //     unordered: true,
+      //     type: 'member'
+      //   }
+      // ]
     });
   }
 
@@ -198,6 +198,36 @@ export default class JobCommand extends Command {
   private padLevel(name: string, level: number, maxLength = 15): string {
     const fixed = level.toFixed(0);
     return `${name} ${' '.repeat(maxLength - name.length - fixed.length)} ${fixed}`;
+  }
+
+  // @ts-ignore unused-declaration
+  private *args(message: Message) {
+    const args = {
+      name: yield { type: 'dofusJob', unordered: true },
+      level: yield { type: 'integer', unordered: true },
+      member: yield { type: 'member', unordered: true }
+    };
+
+    if (!args.name) args.level = null;
+
+    if (args.level && (args.level < 1 || args.level > 200)) {
+      void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE', message, args.level));
+      args.level = Math.max(1, args.level);
+      args.level = Math.min(200, args.level);
+    }
+
+    const rest: string[] = yield { type: 'string', match: 'separate' };
+    const parsed: any[] = Object.values(args)
+      .filter(value => Boolean(value));
+
+    if (rest && rest.length !== parsed.length) {
+      const prefix = message.guild
+        ? this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX)
+        : DEFAULT_PREFIX;
+      void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_PARSED_AS', message, prefix, this.id, parsed));
+    }
+
+    return args;
   }
 
 }

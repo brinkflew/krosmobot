@@ -17,6 +17,7 @@ import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import { DEFAULT_PREFIX } from '@/constants';
+import { argumentTypes } from '@/arguments';
 
 // Import models for the provider
 import { models, logs } from '@/models';
@@ -73,6 +74,10 @@ export class Client extends AkairoClient {
       defaultCooldown: 2000,
       automateCategories: true
     });
+
+    for (const [key, type] of Object.entries(argumentTypes)) {
+      this.commands.resolver.addType(key, type);
+    }
 
     this.events = new ListenerHandler(this, {
       directory: resolve(join(__dirname, '..', 'events'))

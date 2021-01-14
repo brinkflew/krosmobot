@@ -2,7 +2,7 @@
 
 import { oneLine, stripIndent } from 'common-tags';
 import { Locale } from '@/structures';
-import { usage, argument } from '@/utils';
+import { usage, argument, code } from '@/utils';
 
 export default class FrenchLocale extends Locale {
 
@@ -17,6 +17,11 @@ export default class FrenchLocale extends Locale {
       // Languages
       LANG_EN: 'Anglais',
       LANG_FR: 'Français',
+
+      // Message statuses
+      MESSAGE_STATUS_SUCCESS: 'Succès',
+      MESSAGE_STATUS_ERROR: 'Erreur',
+      MESSAGE_STATUS_WARNING: 'Avertissement',
 
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Ouvrir l\'original',
@@ -318,6 +323,15 @@ export default class FrenchLocale extends Locale {
         ${argument('métier')} Nom du métier à afficher/mettre à jour (optionnel)
         ${argument('niveau')} Nouveau niveau du métier dans le cas d'une mise à jour (optionnel)
         ${argument('membre')} Mention d'un membre pour qui afficher le(s) métier(s) (optionnel)
+      `,
+      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number) => oneLine`
+        Le niveau de métier '${level}' n'est pas compris entre les marges autorisées
+        et sera adapté.
+      `,
+      COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
+        Certaines options n'ont pas pu être validées.
+        La commande sera interpretée comme suit :
+        ${code(`${prefix}${id} ${parsed.join(' ')}`)}
       `
     };
   }
