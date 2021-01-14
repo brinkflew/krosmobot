@@ -2,7 +2,7 @@
 
 import { oneLine, stripIndent } from 'common-tags';
 import { Locale } from '@/structures';
-import { usage, argument, code } from '@/utils';
+import { usage, argument, code, formatNumber } from '@/utils';
 
 export default class FrenchLocale extends Locale {
 
@@ -174,6 +174,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_HELP_CATEGORY_SETTINGS: 'Paramètres',
       COMMAND_HELP_CATEGORY_UTILS: 'Commandes Utilitaires',
       COMMAND_HELP_CATEGORY_DOFUS: 'Commandes de Dofus',
+      COMMAND_HELP_CATEGORY_GAMES: 'Jeux',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE: 'Utilisation',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE: 'Exemples',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES: 'Alias',
@@ -391,7 +392,28 @@ export default class FrenchLocale extends Locale {
           `
         );
       },
-      COMMAND_MONIT_RESPONSE_UPTIME: (uptime: string) => `En ligne depuis ${uptime}`
+      COMMAND_MONIT_RESPONSE_UPTIME: (uptime: string) => `En ligne depuis ${uptime}`,
+
+      // DICE Command
+      COMMAND_DICE_DESCRIPTION_SHORT: 'Lancé de dés.',
+      COMMAND_DICE_DESCRIPTION_EXTENDED: oneLine`
+        Lance un ou plusieurs dés à faces variables en renvoie le score total obtenu aléatoirement.
+      `,
+      COMMAND_DICE_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Lancer un dé à 6 faces :
+        ${usage(prefix, 'roll')}
+        Lancer deux dés de 100 faces chacun :
+        ${usage(prefix, '2d100')}
+      `,
+      COMMAND_DICE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'roll [jets]d<faces>')}
+        ${argument('jets')} Nombre de jets de dé à réaliser (optionnel)
+        ${argument('faces')} Nombre de faces sur chaque dé
+      `,
+      COMMAND_DICE_ERROR_ROLLS: (max: number) => `Le nombre de jets est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
+      COMMAND_DICE_ERROR_SIZE: (max: number) => `Le nombre de faces est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
+      COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Lancé de ${rolls} dé${rolls > 1 ? 's' : ''} à ${faces} faces`,
+      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score : ${formatNumber(total)}`
     };
   }
 

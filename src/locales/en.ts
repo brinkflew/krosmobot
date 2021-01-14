@@ -2,7 +2,7 @@
 
 import { oneLine, stripIndent } from 'common-tags';
 import { Locale } from '@/structures';
-import { code, usage, argument } from '@/utils';
+import { code, usage, argument, formatNumber } from '@/utils';
 
 export default class EnglishLocale extends Locale {
 
@@ -172,6 +172,7 @@ export default class EnglishLocale extends Locale {
       COMMAND_HELP_CATEGORY_SETTINGS: 'Settings',
       COMMAND_HELP_CATEGORY_UTILS: 'Utils',
       COMMAND_HELP_CATEGORY_DOFUS: 'Dofus',
+      COMMAND_HELP_CATEGORY_GAMES: 'Games',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE: 'Usage',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE: 'Examples',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES: 'Aliases',
@@ -387,7 +388,28 @@ export default class EnglishLocale extends Locale {
           `
         );
       },
-      COMMAND_MONIT_RESPONSE_UPTIME: (uptime: string) => `Online for ${uptime}`
+      COMMAND_MONIT_RESPONSE_UPTIME: (uptime: string) => `Online for ${uptime}`,
+
+      // DICE Command
+      COMMAND_DICE_DESCRIPTION_SHORT: 'Dice roll.',
+      COMMAND_DICE_DESCRIPTION_EXTENDED: oneLine`
+        Roll one or more dice with a variable number of faces and sneds back the total obtained score.
+      `,
+      COMMAND_DICE_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Roll a single 6-faced dice:
+        ${usage(prefix, 'roll')}
+        Roll 2 dices with 2 faces each:
+        ${usage(prefix, '2d100')}
+      `,
+      COMMAND_DICE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'roll [rolls]d<faces>')}
+        ${argument('rolls')} Amount of rolls to run (optional)
+        ${argument('faces')} Amount of faces on each dice
+      `,
+      COMMAND_DICE_ERROR_ROLLS: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max)}.`,
+      COMMAND_DICE_ERROR_SIZE: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max)}.`,
+      COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Rolling ${rolls} ${faces}-faced dice${rolls > 1 ? 's' : ''}`,
+      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total)}`
     };
   }
 
