@@ -113,6 +113,7 @@ export default class SetCommand extends Command {
         keys.push('news.channel');
       }
 
+      if (!keys.length) return this.warning(message, this.t('COMMAND_SET_RESPONSE_NOKEYS', message));
       await this.set(message.guild || message.author, 'settings', settings);
       return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, keys));
     } catch (error) {

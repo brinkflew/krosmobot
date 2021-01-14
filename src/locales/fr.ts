@@ -260,6 +260,7 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_SET_RESPONSE_MODIFIED: (keys: string[]) => `Les clés suivantes ont été mises à jour :\n\`${keys.join('`\n`')}\``,
       COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
+      COMMAND_SET_RESPONSE_NOKEYS: 'Aucune clé valide à metre à jour.',
 
       // PORTAL Command
       COMMAND_PORTAL_RESPONSE_NODATA: (server: { id: string; name: string }) => `Aucune donnée disponnible pour le serveur ${server.name}.`,

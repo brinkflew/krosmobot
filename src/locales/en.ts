@@ -256,6 +256,7 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_SET_RESPONSE_MODIFIED: (keys: string[]) => `The following keys where updated :\n\`${keys.join('`\n`')}\``,
       COMMAND_SET_RESPONSE_ERROR: 'An error occured while executing the command',
+      COMMAND_SET_RESPONSE_NOKEYS: 'No valid keys to update.',
 
       // PORTAL Command
       COMMAND_PORTAL_RESPONSE_NODATA: (server: { id: string; name: string }) => `No data available for server ${server.name}.`,
