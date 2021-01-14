@@ -23,6 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Get news from twitter in real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.0...HEAD
-[0.1.1]: https://github.com/brinkflew/krosmobot/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/v0.0.1
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/0.1.0...HEAD
+[0.1.1]: https://github.com/brinkflew/krosmobot/compare/0.1.0...0.1.1
+[0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/0.0.1
