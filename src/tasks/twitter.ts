@@ -28,7 +28,7 @@ export default class TwitterTask extends Task {
     /* eslint-disable @typescript-eslint/naming-convention */
     const params: { [key: string]: string } = {
       'query': this.query,
-      'tweet.fields': 'text,author_id,attachments,entities,created_at',
+      'tweet.fields': 'text,author_id,attachments,entities,created_at,in_reply_to_user_id',
       'user.fields': 'profile_image_url,name,username,verified',
       'media.fields': 'url',
       'expansions': 'author_id,attachments.media_keys'
@@ -57,6 +57,7 @@ export default class TwitterTask extends Task {
 
         /* eslint-disable @typescript-eslint/restrict-template-expressions */
         for (const tweet of tweets.data) {
+          if (tweet.in_reply_to_user_id) continue;
           const author = (<any[]> tweets.includes.users).find(user => user.id === tweet.author_id);
           const authorURL = `https://www.twitter.com/${author.username}`;
 
