@@ -14,7 +14,7 @@ import {
 import Twitter from 'twitter-lite-v2';
 import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
-import { LocaleHandler, TaskHandler } from '@/handlers';
+import { LocaleHandler, TaskHandler, RivebotHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import { DEFAULT_PREFIX } from '@/constants';
 import { argumentTypes } from '@/arguments';
@@ -32,6 +32,7 @@ export class Client extends AkairoClient {
   public events: ListenerHandler;
   public locales: LocaleHandler;
   public scheduler: TaskHandler;
+  public rivebots: RivebotHandler;
   public twitter: Twitter;
   public logger: Logger;
   public logs: MongooseProvider;
@@ -87,6 +88,10 @@ export class Client extends AkairoClient {
       directory: resolve(join(__dirname, '..', 'locales'))
     });
 
+    this.rivebots = new RivebotHandler(this, {
+      directory: resolve(join(__dirname, '..', 'rivebots'))
+    });
+
     /** Scheduler */
 
     this.scheduler = new TaskHandler(this, {
@@ -113,6 +118,10 @@ export class Client extends AkairoClient {
 
     this.events.loadAll();
     this.locales.loadAll();
+
+    this.rivebots
+      .loadAll()
+      .init();
 
     this.scheduler
       .loadAll()

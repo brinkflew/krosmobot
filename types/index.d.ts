@@ -8,6 +8,10 @@ export interface LocaleOptions extends AkairoModuleOptions {
   language?: string;
 }
 
+export interface RivebotOptions extends AkairoModuleOptions {
+  language?: string;
+}
+
 export interface MongooseProviderDocument extends Document {
   [key: string]: any;
 }

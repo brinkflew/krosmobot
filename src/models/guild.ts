@@ -17,6 +17,10 @@ const schema = new Schema(
       channels: {
         almanax: { type: String },
         news: { type: String }
+      },
+      rive: {
+        enabled: { type: Boolean },
+        rate: { type: Number, min: 0, max: 1 }
       }
     }
   }, { minimize: false }

@@ -55,6 +55,18 @@ export default class SetCommand extends Command {
           match: 'option',
           flag: 'news.channel',
           type: 'textChannel'
+        },
+        {
+          id: 'rive.enable',
+          match: 'option',
+          flag: 'chat.enable',
+          type: booleanOptionType
+        },
+        {
+          id: 'rive.rate',
+          match: 'option',
+          flag: 'chat.rate',
+          type: 'percentage'
         }
       ]
     });
@@ -78,7 +90,9 @@ export default class SetCommand extends Command {
         'almanax.channel': args['almanax.channel'] instanceof TextChannel,
         'dofus.server': Boolean(args['dofus.server']),
         'news.auto': parsedBooleanOptionType.includes(args['news.auto']),
-        'news.channel': args['news.channel'] instanceof TextChannel
+        'news.channel': args['news.channel'] instanceof TextChannel,
+        'rive.enable': parsedBooleanOptionType.includes(args['rive.enable']),
+        'rive.rate': typeof args['rive.rate'] === 'number'
       };
 
       // Enable the almanax task
@@ -111,6 +125,18 @@ export default class SetCommand extends Command {
       if (isSet['news.channel']) {
         settings.channels.news = args['news.channel'].id;
         keys.push('news.channel');
+      }
+
+      // Enable chatting with rive
+      if (isSet['rive.enable']) {
+        settings.rive.enabled = args['rive.enable'] === 'enable' ? true : false;
+        keys.push('rive.enable');
+      }
+
+      // Configure the rate to which replies should be sent with rave
+      if (isSet['rive.rate']) {
+        settings.rive.rate = args['rive.rate'];
+        keys.push('rive.rate');
       }
 
       if (!keys.length) return this.warning(message, this.t('COMMAND_SET_RESPONSE_NOKEYS', message));

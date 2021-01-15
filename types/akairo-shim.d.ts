@@ -1,5 +1,5 @@
 import Twitter from 'twitter-lite-v2';
-import { LocaleHandler, TaskHandler } from '@/handlers';
+import { LocaleHandler, TaskHandler, RivebotHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import CustomMongooseProvider from '@/providers/mongoose';
 
@@ -8,6 +8,7 @@ declare module 'discord-akairo' {
     commands: CommandHandler;
     events: ListenerHandler;
     locales: LocaleHandler;
+    rivebots: RivebotHandler;
     scheduler: TaskHandler;
     twitter: Twitter;
     logger: Logger;
