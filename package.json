@@ -20,7 +20,6 @@
     "start": "yarn install:clean && yarn build:clean && pm2 start ecosystem.config.js --env production --update-env",
     "reload": "yarn install:clean && yarn build:clean && pm2 reload ecosystem.config.js --env production --update-env",
     "precommit": "yarn lint",
-    "deploy": "pm2 deploy",
     "serve": "nodemon -e ts --exec 'yarn lint && yarn build:clean && node dist/client.js'"
   },
   "dependencies": {
