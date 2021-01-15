@@ -16,8 +16,9 @@
     "clean": "rm -rf dist",
     "build": "tsc -p .",
     "build:clean": "yarn clean && yarn build",
-    "start": "yarn install && yarn build:clean && pm2 start ecosystem.config.js --env production",
-    "log": "pm2 log kbot",
+    "install:clean": "rm -rf node_modules && yarn install",
+    "start": "yarn install:clean && yarn build:clean && pm2 start ecosystem.config.js --env production --update-env",
+    "reload": "yarn install:clean && yarn build:clean && pm2 reload ecosystem.config.js --env production --update-env",
     "precommit": "yarn lint",
     "deploy": "pm2 deploy",
     "serve": "nodemon -e ts --exec 'yarn lint && yarn build:clean && node dist/client.js'"
