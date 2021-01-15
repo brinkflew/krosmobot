@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import metrics from '@/metrics';
 
 /**
  * Emitted when a shard is attempting to reconnect or re-identify.
@@ -17,6 +18,7 @@ export default class extends Listener {
    */
   public exec(id: number) {
     this.client.logger.info(`Shard ${id} reconnecting...`);
+    metrics.discord.shards.dec();
   }
 
 }

@@ -102,9 +102,15 @@ export class Client extends AkairoClient {
    * Initializes the client and loads the handlers.
    */
   public async init(): Promise<Client> {
-    this.events.setEmitters({ process });
+    this.events.setEmitters({
+      process,
+      commands: this.commands
+    });
 
-    this.commands.loadAll();
+    this.commands
+      .loadAll()
+      .useListenerHandler(this.events);
+
     this.events.loadAll();
     this.locales.loadAll();
 
