@@ -1,7 +1,9 @@
 import * as discord from './discord';
+import * as mongodb from './mongodb';
 
 const metrics = {
-  discord
+  discord,
+  mongodb
 };
 
 export default metrics;

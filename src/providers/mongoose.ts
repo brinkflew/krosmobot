@@ -1,5 +1,6 @@
 import { Provider } from 'discord-akairo';
 import { Model, Document } from 'mongoose';
+import metrics from '@/metrics';
 
 // Typings
 import { MongooseProviderDocument } from 'types';
@@ -22,8 +23,11 @@ export default class MongooseProvider extends Provider {
    */
   public async init(): Promise<void> {
     const records = await this.model.find();
+    metrics.mongodb.requests.mark();
+
     for (const record of records) {
       this.items.set(record.id, record);
+      metrics.mongodb.cache.mark();
     }
   }
 
@@ -36,6 +40,7 @@ export default class MongooseProvider extends Provider {
   public get(id: string, key: string, defaultValue?: any): any {
     if (this.items.has(id)) {
       const value = this.items.get(id)[key];
+      metrics.mongodb.cache.mark();
       return value === null || value === undefined ? defaultValue : value;
     }
 
@@ -54,7 +59,8 @@ export default class MongooseProvider extends Provider {
     if (key.length !== value.length) throw new TypeError('Different number of keys and values');
 
     const data = this.items.get(id) || {};
-    const doc = await this.getDocument(id);
+    metrics.mongodb.cache.mark();
+    const doc = await this.find(id);
 
     for (const [index, k] of key.entries()) {
       data[k] = value[index];
@@ -63,7 +69,8 @@ export default class MongooseProvider extends Provider {
     }
 
     this.items.set(id, data);
-    return doc.save();
+    metrics.mongodb.cache.mark();
+    return this.save(doc);
   }
 
   /**
@@ -73,12 +80,13 @@ export default class MongooseProvider extends Provider {
    */
   public async delete(id: string, key: string): Promise<MongooseProviderDocument> {
     const data = this.items.get(id) || {};
+    metrics.mongodb.cache.mark();
     delete data[key];
 
-    const doc = await this.getDocument(id);
+    const doc = await this.find(id);
     delete doc[key];
     doc.markModified(key);
-    return doc.save();
+    return this.save(doc);
   }
 
   /**
@@ -87,23 +95,47 @@ export default class MongooseProvider extends Provider {
    */
   public async clear(id: string): Promise<void> {
     this.items.delete(id);
-    const doc = await this.getDocument(id);
-    if (doc) await doc.remove();
+    metrics.mongodb.cache.mark();
+    const doc = await this.find(id);
+    if (doc) await this.remove(doc);
   }
 
   /**
    * Finds a document by its ID.
    * @param id ID of the guild
    */
-  private async getDocument(id: string): Promise<MongooseProviderDocument> {
-    const obj = await this.model.findOne({ id });
-    if (!obj) {
+  private async find(id: string): Promise<MongooseProviderDocument> {
+    const found = await this.model.findOne({ id });
+    metrics.mongodb.requests.mark();
+
+    if (!found) {
       // eslint-disable-next-line new-cap
-      const newDoc = new this.model({ id });
-      return newDoc;
+      const created = new this.model({ id });
+      metrics.mongodb.requests.mark();
+      return created;
     }
 
-    return obj;
+    return found;
+  }
+
+  /**
+   * Saves a document to the database and update the relevant metrics.
+   * @param doc Document to save
+   */
+  private async save(doc: MongooseProviderDocument): Promise<MongooseProviderDocument> {
+    const saved = doc.save();
+    metrics.mongodb.requests.mark();
+    return saved;
+  }
+
+  /**
+   * Removes a document from the database and update the relevant metrics.
+   * @param doc Document to remove
+   */
+  private async remove(doc: MongooseProviderDocument): Promise<MongooseProviderDocument> {
+    const removed = doc.remove();
+    metrics.mongodb.requests.mark();
+    return removed;
   }
 
 }
