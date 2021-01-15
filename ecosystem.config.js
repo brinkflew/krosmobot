@@ -3,7 +3,7 @@ module.exports = {
     {
       name: 'kbot',
       script: './dist/client.js',
-      watch: './dist',
+      watch: false,
       instances: 1,
       autorestart: true,
       max_memory_restart: '250M',
