@@ -4,6 +4,7 @@ import * as argumentTypes from './arguments';
 import defaults from './defaults';
 import * as embeds from './embeds';
 export * from './urls';
+export * from './time';
 
 // Defaults
 export const DEFAULT_PREFIX = defaults.PREFIX;

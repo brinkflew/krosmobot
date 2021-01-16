@@ -18,6 +18,14 @@ export default class EnglishLocale extends Locale {
       LANG_EN: 'English',
       LANG_FR: 'French',
 
+      // Timings
+      TIMING_SECOND: (seconds: number) => `${seconds} second${seconds > 1 ? 's' : ''}`,
+      TIMING_MINUTE: (minutes: number) => `${minutes} minute${minutes > 1 ? 's' : ''}`,
+      TIMING_HOUR: (hours: number) => `${hours} hour${hours > 1 ? 's' : ''}`,
+      TIMING_DAY: (days: number) => `${days} day${days > 1 ? 's' : ''}`,
+      TIMING_MONTH: (months: number) => `${months} month${months > 1 ? 's' : ''}`,
+      TIMING_YEAR: (years: number) => `${years} year${years > 1 ? 's' : ''}`,
+
       // Message statuses
       MESSAGE_STATUS_SUCCESS: 'Yoohoo!',
       MESSAGE_STATUS_ERROR: 'Ouch!',
@@ -328,7 +336,58 @@ export default class EnglishLocale extends Locale {
         Some options could not be interpreted...
         Executed command:
         ${code(`${prefix}${id} ${parsed.join(' ')}`)}
-      `
+      `,
+
+      // MONIT Command
+      COMMAND_MONIT_DESCRIPTION_SHORT: 'Statistics on the bot.',
+      COMMAND_MONIT_DESCRIPTION_EXTENDED: oneLine`
+        Provide statistics about the client and its process.
+      `,
+      COMMAND_MONIT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Get detailed statistics:
+        ${usage(prefix, 'monit')}
+      `,
+      COMMAND_MONIT_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'monit')}
+      `,
+      COMMAND_MONIT_RESPONSE_TITLE: (name: string, version: string) => oneLine`
+        ${name} [v${version}]
+      `,
+      COMMAND_MONIT_RESPONSE_ARCH_TITLE: 'Architecture',
+      COMMAND_MONIT_RESPONSE_ARCH_VALUE: (version: string, platform: string, arch: string) => code(`NodeJS ${version} [${platform} (${arch})]`),
+      COMMAND_MONIT_RESPONSE_PROCESS_TITLE: 'Process',
+      COMMAND_MONIT_RESPONSE_PROCESS_VALUE: (name: string, pid: number) => {
+        const lengths = { name: name.length, pid: pid.toString().length };
+        const padding = Math.max(lengths.name, lengths.pid) + 1;
+        return code(
+          stripIndent`
+            Name: ${' '.repeat(padding - lengths.name)} ${name}
+            PID:  ${' '.repeat(padding - lengths.pid)} ${pid}
+          `
+        );
+      },
+      COMMAND_MONIT_RESPONSE_RESOURCES_TITLE: 'Resources',
+      COMMAND_MONIT_RESPONSE_RESOURCES_VALUE: (cpu: string, rss: string) => {
+        const padding = Math.max(cpu.length, rss.length) + 1;
+        return code(
+          stripIndent`
+            CPU:    ${' '.repeat(padding - cpu.length)}  ${cpu} %
+            Memory: ${' '.repeat(padding - rss.length)} ${rss} MB
+          `
+        );
+      },
+      COMMAND_MONIT_RESPONSE_DISCORD_TITLE: 'Discord',
+      COMMAND_MONIT_RESPONSE_DISCORD_VALUE: (heartbeat: number, shards: number) => {
+        const lengths = { hb: heartbeat.toString().length, shards: shards.toString().length };
+        const padding = Math.max(lengths.hb, lengths.shards) + 1;
+        return code(
+          stripIndent`
+            Latency: ${' '.repeat(padding - lengths.hb)} ${heartbeat} ms
+            Shards:  ${' '.repeat(padding - lengths.shards)}    ${shards}
+          `
+        );
+      },
+      COMMAND_MONIT_RESPONSE_UPTIME: (uptime: string) => `Online for ${uptime}`
     };
   }
 
