@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Monitoring with PM2-IO and Keymetrics
+- Command `monit` to check statistics on the process
+
+### Changed
+
+- Commands' status messages are friendlier
+- More and better deployment/development scripts 
+- Better arguments parsing for `portal` and job `commands`
+
+### Fixed
+
+- Typo in sample DOTENV file prevents mapping the correct client owners
+- Typos in localizations
+
 ## [0.1.1] - 2021-14-01
 
 ### Changed
@@ -23,6 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Get news from twitter in real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/0.1.0...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/0.1.1...HEAD
 [0.1.1]: https://github.com/brinkflew/krosmobot/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/0.0.1

@@ -44,6 +44,7 @@ When in doubt, type `!help` to get a recap of all available commands.
 - `!echo` → Repeats a message.
 - `!help` → Displays help about commands.
 - `!invite` → Generates an invite to add the bot to another Discord guild.
+- `!monit` → Statistics about the bot and its process (owner only).
 - `!ping` → Latency between this bot and Discord.
 
 ## Twitter
