@@ -72,7 +72,7 @@ export default class PingCommand extends Command {
         },
         {
           name: this.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE', message),
-          value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, heartbeat.val(), shards.val()),
+          value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, Math.ceil(heartbeat.val()), shards.val()),
           inline: true
         }
       ],
