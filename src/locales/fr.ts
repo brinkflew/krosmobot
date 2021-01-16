@@ -345,7 +345,7 @@ export default class FrenchLocale extends Locale {
       // MONIT Command
       COMMAND_MONIT_DESCRIPTION_SHORT: 'Statistiques du bot.',
       COMMAND_MONIT_DESCRIPTION_EXTENDED: oneLine`
-        Affiche les statistiques technique du client et de sont process.
+        Affiche les statistiques techniques du client et de son processus.
       `,
       COMMAND_MONIT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Affiche les statistiques techniques :
