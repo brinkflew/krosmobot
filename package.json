@@ -28,7 +28,8 @@
     "remote:reload": "ssh -t krosmobot 'cd krosmobot/run && yarn reload'",
     "remote:list": "ssh -t krosmobot 'cd krosmobot/run && yarn pm2 list'",
     "remote:monit": "ssh -t krosmobot 'cd krosmobot/run && yarn pm2 monit'",
-    "deploy": "git push krosmobot"
+    "deploy": "git push krosmobot",
+    "remote:upgrade": "ssh -t krosmobot 'cd krosmobot/run && git fetch && git reset --hard origin/main && yarn pm2 delete kbot && yarn start'" 
   },
   "dependencies": {
     "@pm2/io": "^4.3.5",
