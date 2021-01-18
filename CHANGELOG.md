@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Monitoring with PM2-IO and Keymetrics
 - Command `monit` to check statistics on the process
+- Roll dices and get a score
 
 ### Changed
 

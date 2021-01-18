@@ -57,6 +57,28 @@ The bot is capable of fetching news from Twitter directly. Currently, it follows
 
 The bot needs a channel to send the news to, see the [news setup](#News) for more details.
 
+## Install
+
+To run the bot on your own server, you'll need [NodeJS](https://nodejs.org/en/) version 14.15.0 or above.
+
+Some commands make use of [canvas](https://www.npmjs.com/package/canvas) which itself requires a few
+dependencies to be installed on your system. To see the list of dependencies and how to install them
+on your operating system, please refer to [the official canvas documentation](https://github.com/Automattic/node-canvas#compiling).
+
+Once there, clone this repository to your machine and navigate to the `krosmobot` folder:
+
+```sh
+git clone --branch stable git@github.com:brinkflew/krosmobot.git && cd krosmobot
+```
+
+Run the client with the provided startup script:
+
+```sh
+yarn start
+```
+
+That's it!
+
 ## Setup
 
 Use the following commands to configure the bot for your Discord guild (those are examples, feel free to update the values to your liking).

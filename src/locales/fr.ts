@@ -412,7 +412,7 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_DICE_ERROR_ROLLS: (max: number) => `Le nombre de jets est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
       COMMAND_DICE_ERROR_SIZE: (max: number) => `Le nombre de faces est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
-      COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Lancé de ${rolls} dé${rolls > 1 ? 's' : ''} à ${faces} faces`,
+      COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Lancé de ${formatNumber(rolls)} dé${rolls > 1 ? 's' : ''} à ${formatNumber(faces)} faces`,
       COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score : ${formatNumber(total)}`
     };
   }

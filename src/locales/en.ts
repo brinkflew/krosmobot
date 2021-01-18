@@ -406,10 +406,10 @@ export default class EnglishLocale extends Locale {
         ${argument('rolls')} Amount of rolls to run (optional)
         ${argument('faces')} Amount of faces on each dice
       `,
-      COMMAND_DICE_ERROR_ROLLS: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max)}.`,
-      COMMAND_DICE_ERROR_SIZE: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max)}.`,
-      COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Rolling ${rolls} ${faces}-faced dice${rolls > 1 ? 's' : ''}`,
-      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total)}`
+      COMMAND_DICE_ERROR_ROLLS: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
+      COMMAND_DICE_ERROR_SIZE: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
+      COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Rolling ${formatNumber(rolls, ',')} ${formatNumber(faces, ',')}-faced dice${rolls > 1 ? 's' : ''}`,
+      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total, ',')}`
     };
   }
 
