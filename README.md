@@ -32,6 +32,10 @@ When in doubt, type `!help` to get a recap of all available commands.
 - `!job` → Information about members' jobs.
 - `!portal` → Display the position of a portal.
 
+### Games
+
+- `!dice` → Dice roll.
+
 ### Settings
 
 - `!color` → Change the color used for embeds' borders in this guild.
