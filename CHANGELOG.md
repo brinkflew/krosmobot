@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2021-01-18
+
 ### Added
 
 - Monitoring with PM2-IO and Keymetrics
@@ -24,14 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Typo in sample DOTENV file prevents mapping the correct client owners
 - Typos in localizations
 
-## [0.1.1] - 2021-14-01
+## [0.1.1] - 2021-01-14
 
 ### Changed
 
 - Filter out tweets that are replies when fetching news
 - Improve argument parsing for jobs and enable handling of invalid arguments
 
-## [0.1.0] - 2021-14-01
+## [0.1.0] - 2021-01-14
 
 ### Added
 
@@ -40,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Get news from twitter in real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/0.1.1...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/0.1.2...HEAD
+[0.1.2]: https://github.com/brinkflew/krosmobot/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/brinkflew/krosmobot/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/0.0.1

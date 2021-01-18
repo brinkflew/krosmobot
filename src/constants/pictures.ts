@@ -1,7 +1,7 @@
 import { resolve, join } from 'path';
 
 const sources = {
-  github: `https://raw.githubusercontent.com/brinkflew/krosmobot/${(<string> process.env.npm_package_version)}/static/pictures`,
+  github: `https://raw.githubusercontent.com/brinkflew/krosmobot/stable/static/pictures`,
   canvas: [__dirname, '..', '..', 'static', 'pictures', 'canvas']
 };
 
