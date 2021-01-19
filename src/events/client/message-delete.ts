@@ -1,6 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { Message } from 'discord.js';
-import { oneLine } from 'common-tags';
+import { Logger } from '@/structures';
 
 /**
  * Emitted whenever a message is deleted.
@@ -18,11 +18,11 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(message: Message) {
-    this.client.logger.verbose(oneLine`
-      Message from ${message.author}
-      in channel ${message.channel}
-      deleted
-    `);
+    this.client.logger.verbose(Logger.format(
+      'discord',
+      'message-delete',
+      { message: message.id }
+    ));
   }
 
 }

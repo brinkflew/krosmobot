@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { Message } from 'discord.js';
+import { Logger } from '@/structures';
 
 /**
  * Emitted whenever a message is deleted.
@@ -16,8 +17,12 @@ export default class extends Listener {
   /**
    * Executes when the event is fired.
    */
-  public exec(oldMessage: Message) {
-    this.client.logger.verbose(`Message from ${oldMessage.author.id} updated`);
+  public exec(oldMessage: Message, newMessage: Message) {
+    this.client.logger.verbose(Logger.format(
+      'discord',
+      'message-updated',
+      { message: `${oldMessage.id} -> ${newMessage.id}` }
+    ));
   }
 
 }

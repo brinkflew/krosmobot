@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import { Logger } from '@/structures';
 
 /**
  * Does something when the process handles a promise rejection.
@@ -16,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec() {
-    return this.client.logger.verbose(`Rejection handled`);
+    return this.client.logger.verbose(Logger.format('process', 'rejection-handled'));
   }
 
 }

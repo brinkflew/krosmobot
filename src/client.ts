@@ -1,6 +1,6 @@
 import 'module-alias/register';
 import dotenv from 'dotenv';
-import { Client } from '@/structures';
+import { Client, Logger } from '@/structures';
 import mongoose from 'mongoose';
 
 // Load environment variables from the `.env` file
@@ -16,14 +16,22 @@ const ownerID = process.env.KROSMOBOT_OWNERS?.split(',');
 
 // Create the client
 const client = new Client({ ownerID, ...akairoConfig }, discordConfig);
-client.logger.info(`Version ${(<string>process.env.npm_package_version)}`);
+client.logger.info(Logger.format('process', 'running', { version: <string> process.env.npm_package_version }));
 
 // Setup the connection to the database
-client.logger.info('Connecting to providers...');
+client.logger.info(Logger.format('provider', 'connecting', { provider: 'MongoDB' }));
 mongoose.connect(url, mongooseConfig)
-  .then(() => client.logger.success(`Connected to database at '${url.replace(/(:\/{2}).*@/, '$1')}'`))
+  .then(() => client.logger.success(Logger.format(
+    'process',
+    'connected',
+    {
+      url: url.replace(/(:\/{2}).*@/, '$1'),
+      database: mongoose.connection.db.databaseName,
+      collections: mongoose.connection.modelNames().length
+    }
+  )))
   .catch(error => client.logger.error(error));
 
 // Fire the client up
-client.logger.info('Connecting to the Discord gateway...');
+client.logger.info(Logger.format('discord', 'connecting'));
 void client.connect(process.env.KROSMOBOT_TOKEN);

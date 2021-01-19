@@ -1,7 +1,7 @@
 import { Listener } from 'discord-akairo';
 import { Message } from 'discord.js';
-import { oneLine } from 'common-tags';
 import metrics from '@/metrics';
+import { Logger } from '@/structures';
 
 /**
  * Emitted whenever a message is created.
@@ -19,10 +19,15 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(message: Message) {
-    this.client.logger.verbose(oneLine`
-    Message ${message.author.id === this.client.user?.id ? 'sent to' : `received from ${message.author.id} in`}
-    channel ${message.channel}
-    `);
+    const params: { [key: string]: string } = {};
+    if (message.author.id === this.client.user?.id) params.to = message.channel.id;
+    else params.from = message.author.id;
+
+    this.client.logger.verbose(Logger.format(
+      'discord',
+      `message-${message.author.id === this.client.user?.id ? 'sent' : 'received'}`,
+      params
+    ));
 
     metrics.discord.messages.mark();
   }

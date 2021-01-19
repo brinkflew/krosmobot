@@ -104,7 +104,8 @@ export class Client extends AkairoClient {
   public async init(): Promise<Client> {
     this.events.setEmitters({
       process,
-      commands: this.commands
+      commands: this.commands,
+      scheduler: this.scheduler
     });
 
     this.commands

@@ -1,6 +1,7 @@
 import { Listener } from 'discord-akairo';
 import { CloseEvent } from 'discord.js';
 import metrics from '@/metrics';
+import { Logger } from '@/structures';
 
 /**
  * Emitted when a shard's WebSocket disconnects and will no longer reconnect.
@@ -18,7 +19,12 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(event: CloseEvent, id: number) {
-    this.client.logger.warning(`Shard ${id} disconnected with code ${event.code}: ${event.reason}`);
+    this.client.logger.warning(`[DISCORD: shard ${id}] SHARD-DISCONNECTED - Code ${event.code}: ${event.reason}`);
+    this.client.logger.warning(Logger.format(
+      `discord: shard ${id}`,
+      'shard-disconnect',
+      { code: event.code, reason: event.reason }
+    ));
     metrics.discord.shards.dec();
   }
 

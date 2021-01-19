@@ -61,8 +61,15 @@ export class TaskHandler extends AkairoHandler {
       if (task.timestamp && task.last) continue;
       if (task.interval && Date.now() - task.last < task.interval) continue;
       task.last = Date.now();
-      this.client.emit('task', task);
-      task.exec();
+
+      try {
+        this.emit('task-running', task);
+        task.exec();
+        this.emit('task-completed', task);
+      } catch (error) {
+        this.emit('task-errored', task, error);
+        throw error;
+      }
     }
   }
 

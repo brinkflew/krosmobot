@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-import { Task } from '@/structures';
+import { Task, Logger } from '@/structures';
 
 /**
  * Emitted whenever a message is created.
@@ -7,9 +7,9 @@ import { Task } from '@/structures';
 export default class extends Listener {
 
   public constructor() {
-    super('client-task', {
-      emitter: 'client',
-      event: 'task'
+    super('scheduler-task-completed', {
+      emitter: 'scheduler',
+      event: 'task-completed'
     });
   }
 
@@ -17,7 +17,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(task: Task) {
-    this.client.logger.debug(`Running task '${task.id}'`);
+    this.client.logger.debug(Logger.format('scheduler', 'task-completed', undefined, task.id));
   }
 
 }

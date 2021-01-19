@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { Client } from '@/structures';
-import { oneLine } from 'common-tags';
+import { oneLine, stripIndents } from 'common-tags';
 import { nanoid } from 'nanoid';
 
 // Typings
@@ -189,6 +189,8 @@ export class Logger {
     WTF: '?'
   };
 
+  public static tabs = '\u3164'.repeat(2);
+
   /**
    * Maps a color to a loglevel.
    * @param level Level to find the color for
@@ -238,6 +240,37 @@ export class Logger {
       case Logger.LEVELS.WTF: return 'WTF';
       default: return 'INFO';
     }
+  }
+
+  /**
+   * Formats log messages consistently.
+   * @param source Emitter that sent the event to log
+   * @param event Name of the event emitted
+   * @param params Additional information to log as a list
+   * @param description Human readable description
+   */
+  public static format(source: string, event: string, params?: { [key: string]: string | number }, description?: string) {
+    let result = `${Logger.COLORS.GREY}[ ${source.toUpperCase()} ]${Logger.COLORS.WHITE} ${event.toUpperCase()}`;
+    const separator = `${Logger.COLORS.GREY}\u2014${Logger.COLORS.WHITE}`;
+    if (description) result = `${result} ${separator} ${description}`;
+    if (!params) return result;
+
+    const entries = Object.entries(params);
+    if (!description && entries.length === 1) return `${result} ${separator} ${entries[0][0]}: ${entries[0][1]}`;
+
+    let maxlength = 0;
+
+    for (const [param] of entries) {
+      maxlength = Math.max(maxlength, param.length);
+    }
+
+    return stripIndents`
+      ${result}
+      ${entries.map(([key, value]) => oneLine`
+        ${Logger.tabs}${key}:
+        ${Logger.COLORS.GREY}${'\u2014'.repeat(maxlength - key.length + 2)}${Logger.COLORS.WHITE}
+        ${value}`).join('\n')}
+    `;
   }
 
 }

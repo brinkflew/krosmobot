@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { Guild } from 'discord.js';
+import { Logger } from '@/structures';
 
 /**
  * Does something when a member of a guild becomes unavailable,
@@ -18,7 +19,11 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(guild: Guild) {
-    this.client.logger.warning(`Guild ${guild.id} has become unavailable`);
+    this.client.logger.warning(Logger.format(
+      'discord',
+      'guild-unavailable',
+      { guild: guild.id }
+    ));
   }
 
 }

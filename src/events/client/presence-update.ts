@@ -1,6 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { Presence } from 'discord.js';
-import { oneLine } from 'common-tags';
+import { Logger } from '@/structures';
 
 /**
  * Emitted whenever a guild member's presence (e.g. status, activity) is changed.
@@ -18,14 +18,22 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(oldPresence: Presence | undefined, newPresence: Presence) {
-    this.client.logger.verbose(oneLine`
-      Presence status changed for
-      ${newPresence.member
-    ? `member ${newPresence.member.id} in guild ${newPresence.guild!.id}`
-    : `user ${newPresence.user!.id}`}
-      ${oldPresence?.status ? oldPresence.status : 'unknown'}
-      -> ${newPresence.status}
-    `);
+    const params: { [key: string]: string } = {
+      status: `${oldPresence?.status || 'unknown'} -> ${newPresence.status}`
+    };
+
+    if (newPresence.member && newPresence.guild) {
+      params.member = newPresence.member.id;
+      params.guild = newPresence.guild.id;
+    } else if (newPresence.user) {
+      params.user = newPresence.user.id;
+    }
+
+    this.client.logger.verbose(Logger.format(
+      'discord',
+      'presence-updated',
+      params
+    ));
   }
 
 }
