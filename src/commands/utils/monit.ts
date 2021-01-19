@@ -7,7 +7,7 @@ import metrics from '@/metrics';
  * Get the latency between the user and the client,
  * and between the client and the Discord servers
  */
-export default class PingCommand extends Command {
+export default class MonitCommand extends Command {
 
   public constructor() {
     super('monit', {
@@ -28,8 +28,8 @@ export default class PingCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message) {
-    const settings = message.guild || message.author;
-    const language = <string> this.get(settings, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en');
+    const target = message.guild || message.author;
+    const language = this.get(target, 'settings', {}).locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
     const locale = this.client.locales.get(language);
 
     const processUptime = process.uptime();

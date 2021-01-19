@@ -84,9 +84,8 @@ export class Command extends AkairoCommand {
    */
   public craftEmbed(message: Message, content: MessageEmbedOptions | MessageEmbed): MessageEmbed {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
-    const color = message.guild
-      ? this.client.providers.guilds.get(message.guild.id, 'color', EMBED_COLOR_DEFAULT)
-      : this.client.providers.users.get(message.author.id, 'color', EMBED_COLOR_DEFAULT);
+    const target = message.guild || message.author;
+    const color = this.get(target, 'settings', {}).color || EMBED_COLOR_DEFAULT;
     if (!content.color) content.setColor(color);
     return content;
   }
@@ -105,10 +104,11 @@ export class Command extends AkairoCommand {
    * @param guild Guild for which data needs to be updated
    * @param key Key to update
    * @param value Value to set
+   * @param merge Whether to merge the values into the existing ones or overwrite them
    */
-  public async set(holder: Guild | TextChannel | User | GuildMember, key: string, value: any): Promise<any> {
+  public async set(holder: Guild | TextChannel | User | GuildMember, key: string, value: any, merge = true): Promise<any> {
     const settings = this.getProvider(holder);
-    return settings.set(this.getID(holder), key, value);
+    return settings.set(this.getID(holder), key, value, merge);
   }
 
   /**
@@ -139,8 +139,8 @@ export class Command extends AkairoCommand {
    * @param args Parameters to pass to the translation
    */
   public translate(key: string, message: Message, ...args: any[]): string {
-    const settings = message.guild || message.author;
-    const language = <string> this.get(settings, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en');
+    const target = message.guild || message.author;
+    const language = this.get(target, 'settings', {}).locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
     const locale = this.client.locales.get(language);
     return locale.translate(key, ...args);
   }
@@ -162,7 +162,7 @@ export class Command extends AkairoCommand {
    */
   public getPrefix(message?: Message): string {
     if (!message?.guild) return DEFAULT_PREFIX;
-    return this.client.providers.guilds.get(message.guild.id, 'prefix', DEFAULT_PREFIX);
+    return this.get(message.guild, 'settings', {}).prefix || DEFAULT_PREFIX;
   }
 
   /**

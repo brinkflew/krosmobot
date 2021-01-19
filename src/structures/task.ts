@@ -47,7 +47,7 @@ export class Task extends AkairoModule {
    * @param args Parameters to pass to the translation
    */
   public translate(key: string, guild: Guild, ...args: any[]): string {
-    const language = <string> this.client.providers.guilds.get(guild.id, 'locale', process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en');
+    const language = <string> this.client.providers.guilds.get(guild.id, 'settings', {}).locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
     const locale = this.client.locales.get(language);
     return locale.translate(key, ...args);
   }

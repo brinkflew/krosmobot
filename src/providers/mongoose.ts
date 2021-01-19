@@ -52,8 +52,9 @@ export default class MongooseProvider extends Provider {
    * @param id ID of the guild
    * @param key The key to set
    * @param value The value to set
+   * @param merge Whether to merge the values into the existing ones or overwrite them
    */
-  public async set(id: string, key: string | string[], value: any | any[]): Promise<MongooseProviderDocument> {
+  public async set(id: string, key: string | string[], value: any | any[], merge = true): Promise<MongooseProviderDocument> {
     if (!Array.isArray(key)) key = [key];
     if (!Array.isArray(value)) value = [value];
     if (key.length !== value.length) throw new TypeError('Different number of keys and values');
@@ -63,8 +64,14 @@ export default class MongooseProvider extends Provider {
     const doc = await this.find(id);
 
     for (const [index, k] of key.entries()) {
-      data[k] = value[index];
-      doc[k] = value[index];
+      let newValue = value[index];
+
+      if (merge && typeof data[k] === 'object' && typeof value[index] === 'object') {
+        newValue = { ...data[k], ...value[index] };
+      }
+
+      data[k] = newValue;
+      doc[k] = newValue;
       doc.markModified(k);
     }
 

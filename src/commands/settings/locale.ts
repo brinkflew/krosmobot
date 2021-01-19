@@ -27,12 +27,12 @@ export default class LocaleCommand extends Command {
    */
   public async exec(message: Message, { locale }: { locale: string }): Promise<Message> {
     try {
-      const settings = message.guild || message.author;
+      const target = message.guild || message.author;
       const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
 
       // Reset the default locale
       if (!locale) {
-        await this.set(settings, 'locale', defaultLocale);
+        await this.set(target, 'settings', { locale: defaultLocale });
         const language = this.t(`LANG_${defaultLocale.toUpperCase()}`, message);
         return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_RESET', message, language));
       }
@@ -43,16 +43,16 @@ export default class LocaleCommand extends Command {
       }
 
       // Check if the locale actually changes
-      const oldLocale = <string>(this.get(settings, 'locale', defaultLocale));
-      if (oldLocale === locale) {
-        const language = this.t(`LANG_${oldLocale.toUpperCase()}`, message);
-        return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, language));
+      const language = <string> this.get(target, 'settings', {}).locale || defaultLocale;
+      if (language === locale) {
+        const languageName = this.t(`LANG_${locale.toUpperCase()}`, message);
+        return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, languageName));
       }
 
       // Save the new locale
-      await this.set(settings, 'locale', locale);
-      const language = this.t(`LANG_${locale.toUpperCase()}`, message);
-      return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_MODIFIED', message, language));
+      await this.set(target, 'settings', { locale });
+      const languageName = this.t(`LANG_${locale.toUpperCase()}`, message);
+      return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_MODIFIED', message, languageName));
     } catch (error) {
       return this.error(message, this.t('COMMAND_LOCALE_RESPONSE_ERROR', message));
     }

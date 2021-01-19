@@ -64,7 +64,7 @@ export class Client extends AkairoClient {
       prefix: (message: Message) => {
         const prefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
         return message.guild
-          ? this.providers.guilds.get(message.guild.id, 'prefix', prefix)
+          ? this.providers.guilds.get(message.guild.id, 'settings', {}).prefix || prefix
           : prefix;
       },
       aliasReplacement: /-/g,

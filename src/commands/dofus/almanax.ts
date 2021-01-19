@@ -25,7 +25,7 @@ export default class AlmanaxCommand extends Command {
           flag: 'details'
         },
         {
-          id: 'target',
+          id: 'offset',
           match: 'phrase',
           type: 'string'
         }
@@ -37,15 +37,15 @@ export default class AlmanaxCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { extended, target }: { extended: boolean; target: string }) {
+  public async exec(message: Message, { extended, offset }: { extended: boolean; offset: string }) {
     const { providers } = this.client;
     const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
-    const language: string = message.guild
-      ? providers.guilds.get(message.guild.id, 'locale', defaultLocale)
-      : providers.users.get(message.author.id, 'locale', defaultLocale);
+    const target = message.guild || message.author;
 
-    const date = this.parseDate(target);
+    const date = this.parseDate(offset);
     if (!date) return this.error(message, this.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', message, target));
+
+    const language = <string> this.get(target, 'settings', {}).locale || defaultLocale;
     const id = `${language}:${date}`;
     let almanax: AlmanaxData = providers.almanax.get(id, 'data');
 
