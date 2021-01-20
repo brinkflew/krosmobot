@@ -22,7 +22,7 @@ client.logger.info(Logger.format('process', 'running', { version: <string> proce
 client.logger.info(Logger.format('provider', 'connecting', { provider: 'MongoDB' }));
 mongoose.connect(url, mongooseConfig)
   .then(() => client.logger.success(Logger.format(
-    'process',
+    'provider',
     'connected',
     {
       url: url.replace(/(:\/{2}).*@/, '$1'),
