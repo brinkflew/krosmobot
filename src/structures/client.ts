@@ -161,6 +161,13 @@ export class Client extends AkairoClient {
   }
 
   /**
+   * Get the count of users accros all known guilds.
+   */
+  public get userCount(): number {
+    return this.guilds.cache.reduce((a, g) => a + g.memberCount, 0);
+  }
+
+  /**
    * Login to Twitter using the credentials provided in the current environment.
    */
   private getTwitterConnection(): Twitter {

@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { DMChannel, GuildChannel } from 'discord.js';
+import metrics from '@/metrics';
 import { Logger } from '@/structures';
 
 /**
@@ -18,6 +19,8 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(channel: DMChannel | GuildChannel) {
+    const { channels } = metrics.discord;
+    channels.set(channels.val() + 1);
     this.client.logger.verbose(Logger.format(
       'discord',
       'channel-deleted',

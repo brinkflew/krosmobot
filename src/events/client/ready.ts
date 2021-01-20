@@ -18,13 +18,14 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec() {
+    const users = this.client.userCount;
     this.client.logger.success(Logger.format(
       'discord',
       'ready',
       {
         guilds: this.client.guilds.cache.size,
         channels: this.client.channels.cache.size,
-        users: this.client.users.cache.size,
+        users,
         commands: this.client.commands.modules.size,
         tasks: this.client.scheduler.modules.size,
         locales: this.client.locales.modules.size
@@ -33,7 +34,7 @@ export default class extends Listener {
 
     metrics.discord.guilds.set(this.client.guilds.cache.size);
     metrics.discord.channels.set(this.client.channels.cache.size);
-    metrics.discord.users.set(this.client.users.cache.size);
+    metrics.discord.users.set(users);
   }
 
 }

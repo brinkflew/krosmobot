@@ -14,5 +14,6 @@ declare module 'discord-akairo' {
     logs: CustomMongooseProvider;
     providers: { [key: string]: CustomMongooseProvider };
     invite: string | null;
+    userCount: number;
   }
 }
