@@ -1,5 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { Logger } from '@/structures';
+import metrics from '@/metrics';
 
 /**
  * Emitted when a shard resumes successfully.
@@ -22,6 +23,7 @@ export default class extends Listener {
       'shard-resumed',
       { attempts }
     ));
+    metrics.discord.shards.inc();
   }
 
 }
