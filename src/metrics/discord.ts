@@ -1,41 +1,39 @@
-import { metric, meter, counter, histogram } from '@pm2/io';
-import { MetricMeasurements } from '@pm2/io/build/main/services/metrics';
+import { metric, meter, counter } from '@pm2/io';
 
 export const shards = counter({
   name: 'Active Shards',
   id: 'discord.shards'
 });
 
-export const heartbeat = histogram({
+export const heartbeat = metric({
   name: 'Discord Gateway Latency',
   id: 'discord.heartbeat',
-  unit: 'ms',
-  measurement: MetricMeasurements.mean
+  unit: 'ms'
 });
 
 export const guilds = metric({
-  name: 'Active Discord Guilds',
+  name: 'Active Guilds',
   id: 'discord.guilds'
 });
 
 export const channels = metric({
-  name: 'Active Discord Channels',
+  name: 'Active Channels',
   id: 'discord.channels'
 });
 
 export const users = metric({
-  name: 'Active Discord Users',
+  name: 'Active Users',
   id: 'discord.users'
 });
 
 export const messages = meter({
-  name: 'Messages Reception',
+  name: 'Messages Received',
   id: 'discord.message.frequency',
   unit: '/s'
 });
 
 export const commands = meter({
-  name: 'Commands Executed',
+  name: 'Commands Completed',
   id: 'discord.commands.frequency',
   unit: '/s'
 });

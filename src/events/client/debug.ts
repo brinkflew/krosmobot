@@ -29,7 +29,7 @@ export default class extends Listener {
       'heartbeat',
       { latency: `${latency}ms` }
     ));
-    metrics.discord.heartbeat.update(latency);
+    metrics.discord.heartbeat.set(latency);
   }
 
 }

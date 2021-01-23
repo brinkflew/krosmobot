@@ -21,6 +21,7 @@ export default class extends Listener {
   public exec(_message: Message, command: Command) {
     this.client.logger.verbose(`[COMMAND] Execution completed: ${command.id}`);
     metrics.discord.commandsQueue.dec();
+    metrics.discord.commands.mark();
   }
 
 }
