@@ -16,8 +16,8 @@ export default class extends Listener {
   /**
    * Executes when the event is fired.
    */
-  public exec(task: Task) {
-    this.client.logger.debug(Logger.format('scheduler', 'task-completed', undefined, task.id));
+  public exec(task: Task, result?: { [key: string]: any }) {
+    this.client.logger.debug(Logger.format('scheduler', 'task-completed', result, task.id));
   }
 
 }

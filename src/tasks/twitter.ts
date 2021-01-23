@@ -23,7 +23,8 @@ export default class TwitterTask extends Task {
    * Runs the task.
    */
   public async exec() {
-    const { twitter, logger } = this.client;
+    const { twitter } = this.client;
+    const result: { [key: string]: string } = {};
 
     /* eslint-disable @typescript-eslint/naming-convention */
     const params: { [key: string]: string } = {
@@ -36,16 +37,17 @@ export default class TwitterTask extends Task {
 
     if (this.lastTweetID) {
       params.since_id = this.lastTweetID;
+      result.since = `${this.lastTweetID} (tweet id)`;
     } else {
       params.start_time = new Date(Date.now() - (Math.max(this.interval, 10000) * 1.5)).toISOString();
+      result.since = `${params.start_time} (timestamp)`;
     }
     /* eslint-disable @typescript-eslint/naming-convention */
 
     try {
       const tweets = await twitter.get('tweets/search/recent', params);
       if (!tweets.meta.result_count) return;
-      void logger.debug(`Fetched ${(<number> tweets.meta.result_count)} new tweets since ${params.start_time || params.since_id}`);
-
+      result.fetched = `${(<number>tweets.meta.result_count)} tweets`;
       this.lastTweetID = tweets.meta.newest_id;
 
       for (const guild of this.client.guilds.cache.array()) {
@@ -99,11 +101,13 @@ export default class TwitterTask extends Task {
         }
         /* eslint-enable @typescript-eslint/restrict-template-expressions */
       }
+
+      return result;
     } catch (error) {
       if (typeof error === 'string') error = new Error(error);
       else if ('errors' in error) error = new Error(error.errors[0].message || 'Twitter Error');
       else if ('status' in error) error = new Error(`Twitter Error: ${(<number> error.status)} - ${(<string> error.title)}`);
-      logger.error(error);
+      throw error;
     }
   }
 

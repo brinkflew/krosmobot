@@ -66,7 +66,7 @@ export class Task extends AkairoModule {
   /**
    * Runs the task.
    */
-  public exec() {
+  public exec(): Promise<unknown> | unknown {
     throw Error('Not implemented');
   }
 

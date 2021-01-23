@@ -49,13 +49,13 @@ export class TaskHandler extends AkairoHandler {
    * Initializes the scheduler.
    */
   public init() {
-    setInterval(() => this.execTasks(), this.interval * 1000);
+    setInterval(() => void this.execTasks(), this.interval * 1000);
   }
 
   /**
    * Execute all tasks that needs to be run.
    */
-  private execTasks(): void {
+  private async execTasks(): Promise<void> {
     for (const task of this.modules.values()) {
       if (!task.enabled) continue;
       if (task.timestamp && task.last) continue;
@@ -64,8 +64,8 @@ export class TaskHandler extends AkairoHandler {
 
       try {
         this.emit('task-running', task);
-        task.exec();
-        this.emit('task-completed', task);
+        const result = await task.exec();
+        this.emit('task-completed', task, result);
       } catch (error) {
         this.emit('task-errored', task, error);
         throw error;
