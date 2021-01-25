@@ -1,6 +1,7 @@
 import { Provider } from 'discord-akairo';
 import { Model, Document } from 'mongoose';
 import metrics from '@/metrics';
+import { clone } from '@/utils';
 
 // Typings
 import { MongooseProviderDocument } from 'types';
@@ -70,8 +71,8 @@ export default class MongooseProvider extends Provider {
         newValue = { ...data[k], ...value[index] };
       }
 
-      data[k] = newValue;
-      doc[k] = newValue;
+      data[k] = clone(newValue);
+      doc[k] = clone(newValue);
       doc.markModified(k);
     }
 

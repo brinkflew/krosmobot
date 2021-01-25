@@ -114,7 +114,7 @@ export default class SetCommand extends Command {
         keys.push('news.channel');
       }
 
-      await this.set(message.guild!, 'settings', settings);
+      await this.set(message.guild!, 'settings', settings, true);
       return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, keys));
     } catch (error) {
       return this.error(message, this.t('COMMAND_SET_RESPONSE_ERROR', message));

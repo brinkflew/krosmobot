@@ -454,7 +454,25 @@ export default class FrenchLocale extends Locale {
         Le créateur du sondage peut réagir avec ${reactions[0]} pour fermer le sondage immédiatement.
         Le sondage sera fermé automatiquement le ${time}.
       `,
-      COMMAND_POLL_RESPONSE_CLOSED_FOOTER: 'Cliquez sur le graphique pour agrandir.'
+      COMMAND_POLL_RESPONSE_CLOSED_FOOTER: 'Cliquez sur le graphique pour agrandir.',
+
+      // REMINDER Command
+      COMMAND_REMIND_DESCRIPTION_SHORT: 'Rappel.',
+      COMMAND_REMIND_DESCRIPTION_EXTENDED: oneLine`
+        Envoie un rappel avec le contenu de son choix après un certain temps.
+      `,
+      COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Envoie un rappel contenant 'Test' dans 24 heures :
+        ${usage(prefix, 'remind 1d Test')}
+      `,
+      COMMAND_REMIND_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'remind [durée] <contenu>')}
+        ${argument('durée')} Durée après laquelle le rappel sera envoyé, un nombre suivit d'un suffixe (j = jours, h = heures, m = minutes)
+        ${argument('contenu')} Contenu à envoyer dans le rappel
+      `,
+      COMMAND_REMIND_RESPONSE_NO_CONTENT: 'Le rappel nécessite un contenu à envoyer.',
+      COMMAND_REMIND_RESPONSE_SUCCESS: (date: string) => `Un rappel sera envoyé ici le ${date}`,
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`
     };
   }
 

@@ -450,7 +450,25 @@ export default class EnglishLocale extends Locale {
         The creator of the poll can react with ${reactions[0]} to close the poll immediately.
         The poll will be closed automatically on ${time}.
       `,
-      COMMAND_POLL_RESPONSE_CLOSED_FOOTER: 'Click on the graph to zoom in.'
+      COMMAND_POLL_RESPONSE_CLOSED_FOOTER: 'Click on the graph to zoom in.',
+
+      // REMINDER Command
+      COMMAND_REMIND_DESCRIPTION_SHORT: 'Reminder.',
+      COMMAND_REMIND_DESCRIPTION_EXTENDED: oneLine`
+        Send a reminder with a custom message after an amount of time has passed.
+      `,
+      COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Sends a reminder containing 'Test' in 24 hours:
+        ${usage(prefix, 'remind 1d Test')}
+      `,
+      COMMAND_REMIND_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'remind [duration] <content>')}
+        ${argument('duration')} Duration after which the reminder will be sent, number followed by a suffix (d = days, h = hours, m = minutes)
+        ${argument('content')} Content to send in the reminder
+      `,
+      COMMAND_REMIND_RESPONSE_NO_CONTENT: 'The reminder requires content to send.',
+      COMMAND_REMIND_RESPONSE_SUCCESS: (date: string) => `A reminder will be sent here on ${date}`,
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`
     };
   }
 

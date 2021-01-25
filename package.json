@@ -1,6 +1,6 @@
 {
   "name": "krosmobot",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": false,
   "description": "A stupid Discord bot for a stupid Dofus guild...",
   "repository": "https://github.com/brinkflew/krosmobot.git",
@@ -29,7 +29,7 @@
     "remote:list": "ssh -t krosmobot 'cd krosmobot/run && yarn pm2 list'",
     "remote:monit": "ssh -t krosmobot 'cd krosmobot/run && yarn pm2 monit'",
     "deploy": "git push krosmobot",
-    "remote:upgrade": "ssh -t krosmobot 'cd krosmobot/run && git fetch && git reset --hard origin/main && yarn pm2 delete kbot && yarn start'"
+    "remote:upgrade": "ssh -t krosmobot 'cd krosmobot/run && git fetch && git reset --hard origin/stable && yarn pm2 delete kbot && yarn start'"
   },
   "dependencies": {
     "@pm2/io": "^4.3.5",

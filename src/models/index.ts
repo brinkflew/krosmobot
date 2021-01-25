@@ -4,6 +4,7 @@ import { guildModel } from '@/models/guild';
 import { logModel } from '@/models/log';
 import { memberModel } from '@/models/member';
 import { pollModel } from '@/models/poll';
+import { reminderModel } from '@/models/reminder';
 import { userModel } from '@/models/user';
 
 export const models = {
@@ -12,6 +13,7 @@ export const models = {
   guilds: guildModel,
   members: memberModel,
   polls: pollModel,
+  reminders: reminderModel,
   users: userModel
 };
 

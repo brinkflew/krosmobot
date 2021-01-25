@@ -4,7 +4,7 @@ import { TextChannel } from 'discord.js';
 /**
  * Close polls that reached their automatic-closing date.
  */
-export default class LogsPruneTask extends Task {
+export default class PollsTask extends Task {
 
   public constructor() {
     super('polls', { interval: 15 });
