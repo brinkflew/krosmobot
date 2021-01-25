@@ -58,7 +58,8 @@ export const formatDate = (timestamp: number, locale = 'en', long = false, inclu
     day: includeDate ? '2-digit' : undefined,
     hour: includeTime ? '2-digit' : undefined,
     minute: includeTime ? '2-digit' : undefined,
-    second: includeTime ? '2-digit' : undefined
+    second: includeTime ? '2-digit' : undefined,
+    hour12: false
   }).format(date);
 };
 

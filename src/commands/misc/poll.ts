@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { MS_PER_DAY, pollReactions, ARGUMENT_TYPE_BOOLEAN } from '@/constants';
+import { MS_PER_DAY, pollReactions, ARGUMENT_TYPE_BOOLEAN, DEFAULT_LOCALE } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
@@ -53,6 +53,8 @@ export default class PollCommand extends Command {
     if (Math.max(...args.text.map(t => t.length)) > 96) return this.error(message, this.t('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG', message));
     if (!args.text.length) args.text = [this.t('YES', message), this.t('NO', message)];
 
+    const settings = this.client.providers.guilds.get(message.guild!.id, 'settings', {});
+    const locale = settings.locale || DEFAULT_LOCALE;
     const propositions = args.text.map((prop, index) => `${pollReactions[index + 1]} ${prop}`);
     const reactions = pollReactions.slice(0, propositions.length + 1);
     const sent = await this.embed(message, {
@@ -63,7 +65,7 @@ export default class PollCommand extends Command {
       title: this.t('COMMAND_POLL_RESPONSE_TITLE', message, title),
       description: propositions.join('\n'),
       footer: {
-        text: this.t('COMMAND_POLL_RESPONSE_FOOTER', message, reactions, formatDate(time, 'fr', true, 'both').slice(0, -3))
+        text: this.t('COMMAND_POLL_RESPONSE_FOOTER', message, reactions, formatDate(time, locale, true, 'both').slice(0, -3))
       }
     });
 
