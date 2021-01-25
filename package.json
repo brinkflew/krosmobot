@@ -29,12 +29,14 @@
     "remote:list": "ssh -t krosmobot 'cd krosmobot/run && yarn pm2 list'",
     "remote:monit": "ssh -t krosmobot 'cd krosmobot/run && yarn pm2 monit'",
     "deploy": "git push krosmobot",
-    "remote:upgrade": "ssh -t krosmobot 'cd krosmobot/run && git fetch && git reset --hard origin/main && yarn pm2 delete kbot && yarn start'" 
+    "remote:upgrade": "ssh -t krosmobot 'cd krosmobot/run && git fetch && git reset --hard origin/main && yarn pm2 delete kbot && yarn start'"
   },
   "dependencies": {
     "@pm2/io": "^4.3.5",
     "axios": "^0.21.0",
     "canvas": "^2.6.1",
+    "chart.js": "^2.9.4",
+    "chartjs-node-canvas": "^3.0.6",
     "cheerio": "^1.0.0-rc.3",
     "common-tags": "^1.8.0",
     "discord-akairo": "^8.1.0",
@@ -49,6 +51,7 @@
   "devDependencies": {
     "@skyra/eslint-config": "^5.3.3",
     "@types/axios": "^0.14.0",
+    "@types/chart.js": "^2.9.30",
     "@types/cheerio": "^0.22.22",
     "@types/common-tags": "^1.8.0",
     "@types/mongoose": "^5.10.1",

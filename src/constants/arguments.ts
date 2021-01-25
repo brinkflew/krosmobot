@@ -26,3 +26,8 @@ export const dimensions = [
   ['srambad', 'sram'],
   ['xelorium', 'xel', 'xelor']
 ];
+
+export const boolean = [
+  ['true', 'yes', 'y', 'oui', 'o'],
+  ['false', 'no', 'n', 'non']
+];

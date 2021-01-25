@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import * as argumentTypes from './arguments';
+export * from './charts';
 import defaults from './defaults';
 import * as embeds from './embeds';
+export * from './emojis';
 export * from './urls';
 export * from './time';
 
@@ -25,3 +27,4 @@ export const EMBED_COLOR_DEFAULT = embeds.COLORS.DEFAULT;
 // Arguments
 export const ARGUMENT_TYPE_JOB = argumentTypes.jobs;
 export const ARGUMENT_TYPE_DIMENSIONS = argumentTypes.dimensions;
+export const ARGUMENT_TYPE_BOOLEAN = argumentTypes.boolean;

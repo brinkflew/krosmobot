@@ -26,6 +26,10 @@ export default class EnglishLocale extends Locale {
       TIMING_MONTH: (months: number) => `${months} month${months > 1 ? 's' : ''}`,
       TIMING_YEAR: (years: number) => `${years} year${years > 1 ? 's' : ''}`,
 
+      // Yes / No
+      YES: 'Yes',
+      NO: 'No',
+
       // Message statuses
       MESSAGE_STATUS_SUCCESS: 'Yoohoo!',
       MESSAGE_STATUS_ERROR: 'Ouch!',
@@ -172,7 +176,8 @@ export default class EnglishLocale extends Locale {
       COMMAND_HELP_CATEGORY_SETTINGS: 'Settings',
       COMMAND_HELP_CATEGORY_UTILS: 'Utils',
       COMMAND_HELP_CATEGORY_DOFUS: 'Dofus',
-      COMMAND_HELP_CATEGORY_GAMES: 'Games',
+      COMMAND_HELP_CATEGORY_GAMES: 'Minigames',
+      COMMAND_HELP_CATEGORY_MISC: 'Miscellaneous',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE: 'Usage',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE: 'Examples',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES: 'Aliases',
@@ -409,7 +414,43 @@ export default class EnglishLocale extends Locale {
       COMMAND_DICE_ERROR_ROLLS: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
       COMMAND_DICE_ERROR_SIZE: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
       COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Rolling ${formatNumber(rolls, ',')} ${formatNumber(faces, ',')}-faced dice${rolls > 1 ? 's' : ''}`,
-      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total, ',')}`
+      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total, ',')}`,
+
+      // POLL Command
+      COMMAND_POLL_DESCRIPTION_SHORT: 'Polls.',
+      COMMAND_POLL_DESCRIPTION_EXTENDED: oneLine`
+        Create a poll and collect responses from users.
+        Polls can be set to accept one single vote per user, or multiple.
+        The first line of text in the message will be used as the poll question.
+        Each subsequent line will be used as a single proposition.
+        Use \`Shift+Enter\` to insert a new line in your message.
+      `,
+      COMMAND_POLL_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Create a poll open for the next 24 hours:
+        ${usage(prefix, 'poll Question ?\nAnswer 1\nAnswer 2')}
+        Create a poll open for the next 10 days:
+        ${usage(prefix, 'poll time:10d Question ?\nAnswer 1\nAnswer 2')}
+        Create a poll to which responses are "Yes" and "No" and on which users can only select one answer:
+        ${usage(prefix, 'poll multi:false Question ?')}
+      `,
+      COMMAND_POLL_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'poll <question> [answer 1, answer 2, [...]] [time:<duration>]')}
+        ${argument('question')} Title of the poll
+        ${argument('answers')} Propositions for the poll: either one, either 2 or more (optional)
+        ${argument('time')} Duration of the poll, number followed by a suffixe (d = days, h = hours, m = minutes)
+        ${argument('multi')} Whether the user can vote for multiple answers at once ('yes' ou 'no')
+      `,
+      COMMAND_POLL_RESPONSE_NO_TITLE: 'No question were asked.',
+      COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS: 'A poll cannot have a songle proposition.',
+      COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG: 'One or more propositions are too long (max. 96 characters allowed).',
+      COMMAND_POLL_RESPONSE_TITLE: (title: string) => `Poll : ${title}`,
+      COMMAND_POLL_RESPONSE_RESULTS: (title: string) => `Results: ${title}`,
+      COMMAND_POLL_RESPONSE_FOOTER: (reactions: string[], time: string) => stripIndent`
+        React to this message with ${reactions.slice(1, -1).join(', ')} or ${reactions[reactions.length - 1]} to vote.
+        The creator of the poll can react with ${reactions[0]} to close the poll immediately.
+        The poll will be closed automatically on ${time}.
+      `,
+      COMMAND_POLL_RESPONSE_CLOSED_FOOTER: 'Click on the graph to zoom in.'
     };
   }
 

@@ -26,6 +26,10 @@ export default class FrenchLocale extends Locale {
       TIMING_MONTH: (months: number) => `${months} mois`,
       TIMING_YEAR: (years: number) => `${years} an${years > 1 ? 's' : ''}`,
 
+      // Yes / No
+      YES: 'Oui',
+      NO: 'Non',
+
       // Message statuses
       MESSAGE_STATUS_SUCCESS: 'Youpie !',
       MESSAGE_STATUS_ERROR: 'Aïe !',
@@ -172,9 +176,10 @@ export default class FrenchLocale extends Locale {
         ${argument('commande')} Nom d'une commande pour laquelle afficher l'aide (optionnel)
       `,
       COMMAND_HELP_CATEGORY_SETTINGS: 'Paramètres',
-      COMMAND_HELP_CATEGORY_UTILS: 'Commandes Utilitaires',
-      COMMAND_HELP_CATEGORY_DOFUS: 'Commandes de Dofus',
-      COMMAND_HELP_CATEGORY_GAMES: 'Jeux',
+      COMMAND_HELP_CATEGORY_UTILS: 'Utilitaires',
+      COMMAND_HELP_CATEGORY_DOFUS: 'Dofus',
+      COMMAND_HELP_CATEGORY_GAMES: 'Mini-Jeux',
+      COMMAND_HELP_CATEGORY_MISC: 'Divers',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE: 'Utilisation',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE: 'Exemples',
       COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES: 'Alias',
@@ -413,7 +418,43 @@ export default class FrenchLocale extends Locale {
       COMMAND_DICE_ERROR_ROLLS: (max: number) => `Le nombre de jets est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
       COMMAND_DICE_ERROR_SIZE: (max: number) => `Le nombre de faces est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
       COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Lancé de ${formatNumber(rolls)} dé${rolls > 1 ? 's' : ''} à ${formatNumber(faces)} faces`,
-      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score : ${formatNumber(total)}`
+      COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score : ${formatNumber(total)}`,
+
+      // POLL Command
+      COMMAND_POLL_DESCRIPTION_SHORT: 'Sondages.',
+      COMMAND_POLL_DESCRIPTION_EXTENDED: oneLine`
+        Crée un sondage et récolte les réponses entrées par les utilisateurs.
+        Le sondage peut être configuré pour n'accepter qu'une seule réponse par utilisateur, ou bien plusieurs.
+        La première ligne de texte du message correspondra à la question du sondage.
+        Chaque line après celle-là sera utilisée comme proposition.
+        Utilisez \`Maj+Entrée\` pour insérer une nouvelle ligne dans votre message.
+      `,
+      COMMAND_POLL_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Création d'un sondage ouvert pendant 24 heures :
+        ${usage(prefix, 'poll Question ?\nRéponse 1\nRéponse 2')}
+        Création d'un sondage ouvert pendant 10 jours :
+        ${usage(prefix, 'poll time:10j Question ?\nRéponse 1\nRéponse 2')}
+        Création d'un sondage dont les réponses possibles sont "Oui" et "Non" et pour lequel l'utilisateur ne peut séléctionner qu'une réponse :
+        ${usage(prefix, 'poll multi:false Question ?')}
+      `,
+      COMMAND_POLL_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'poll <question> [réponse 1, réponse 2, [...]] [time:<durée>]')}
+        ${argument('question')} Titre du sondage
+        ${argument('réponses')} Propositions du sondage: soit aucune, soit deux ou plus (optionnel)
+        ${argument('time')} Durée du sondage, un nombre suivit d'un suffixe (j = jours, h = heures, m = minutes)
+        ${argument('multi')} Si le même utilisateur peut voter plusieurs fois pour une réponse différente ('oui' ou 'non')
+      `,
+      COMMAND_POLL_RESPONSE_NO_TITLE: 'Aucune question n\'a été posée.',
+      COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS: 'Un sondage ne peut pas avoir qu\'une seule proposition.',
+      COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG: 'Une ou plusieurs propositions sont trop longues (max. 96 caractères autorisés).',
+      COMMAND_POLL_RESPONSE_TITLE: (title: string) => `Sondage : ${title}`,
+      COMMAND_POLL_RESPONSE_RESULTS: (title: string) => `Résultats : ${title}`,
+      COMMAND_POLL_RESPONSE_FOOTER: (reactions: string[], time: string) => stripIndent`
+        Réagissez à ce message avec ${reactions.slice(1, -1).join(', ')} ou ${reactions[reactions.length - 1]} pour voter.
+        Le créateur du sondage peut réagir avec ${reactions[0]} pour fermer le sondage immédiatement.
+        Le sondage sera fermé automatiquement le ${time}.
+      `,
+      COMMAND_POLL_RESPONSE_CLOSED_FOOTER: 'Cliquez sur le graphique pour agrandir.'
     };
   }
 
