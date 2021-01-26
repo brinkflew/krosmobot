@@ -21,6 +21,7 @@ export default class MongooseProvider extends Provider {
 
   /**
    * Initializes the provider.
+   * Fetches records from the database and caches them.
    */
   public async init(): Promise<void> {
     const records = await this.model.find();
@@ -34,7 +35,7 @@ export default class MongooseProvider extends Provider {
 
   /**
    * Gets a value.
-   * @param id ID of the guild
+   * @param id ID of the record
    * @param key The key to get
    * @param [defaultValue] Default value if not found
    */
@@ -50,7 +51,7 @@ export default class MongooseProvider extends Provider {
 
   /**
    * Sets a value.
-   * @param id ID of the guild
+   * @param id ID of the record
    * @param key The key to set
    * @param value The value to set
    * @param merge Whether to merge the values into the existing ones or overwrite them
@@ -83,7 +84,7 @@ export default class MongooseProvider extends Provider {
 
   /**
    * Deletes a value.
-   * @param id ID of the guild
+   * @param id ID of the record
    * @param key The key to delete
    */
   public async delete(id: string, key: string): Promise<MongooseProviderDocument> {
@@ -99,7 +100,7 @@ export default class MongooseProvider extends Provider {
 
   /**
    * Removes a document.
-   * @param id ID of the guild
+   * @param id ID of the record
    */
   public async clear(id: string): Promise<void> {
     this.items.delete(id);
@@ -110,7 +111,7 @@ export default class MongooseProvider extends Provider {
 
   /**
    * Finds a document by its ID.
-   * @param id ID of the guild
+   * @param id ID of the record
    */
   private async find(id: string): Promise<MongooseProviderDocument> {
     const found = await this.model.findOne({ id });
