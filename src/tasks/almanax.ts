@@ -25,7 +25,7 @@ export default class AlmanaxTask extends Task {
       if (!(channel instanceof TextChannel)) continue;
 
       const message = dummyMessage(this.client, channel);
-      command.exec(message, { extended: false, target: '+1' });
+      command.exec(message, { extended: false, offset: '+1' });
     }
   }
 
