@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2021-01-27
+
+### Added
+
+- Command `poll` to create polls
+- Command `remind` to set automatic reminders
+- Do not cache logs in memory and prune older logs from the database
+- Log tasks results
+- Fix Discord metrics collection
+- Refactor settings
+
 ## [0.1.2] - 2021-01-18
 
 ### Added
@@ -42,7 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Get news from twitter in real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/0.1.2...HEAD
-[0.1.2]: https://github.com/brinkflew/krosmobot/compare/0.1.1...0.1.2
-[0.1.1]: https://github.com/brinkflew/krosmobot/compare/0.1.0...0.1.1
-[0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/0.0.1
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/brinkflew/krosmobot/compare/v0.1.2...v0.1.3
+[0.1.2]: https://github.com/brinkflew/krosmobot/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/brinkflew/krosmobot/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/v0.0.1
