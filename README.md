@@ -32,9 +32,14 @@ When in doubt, type `!help` to get a recap of all available commands.
 - `!job` → Information about members' jobs.
 - `!portal` → Display the position of a portal.
 
-### Games
+### MiniGames
 
 - `!dice` → Dice roll.
+
+### Miscellaneous
+
+- `!poll` → Polls.
+- `!remind` → Reminder.
 
 ### Settings
 
