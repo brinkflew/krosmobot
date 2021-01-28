@@ -1,7 +1,7 @@
 import { TextChannel, MessageEmbed } from 'discord.js';
 import { safeHtml } from 'common-tags';
 import { Task } from '@/structures';
-import { twitter as icons } from '@/constants/pictures';
+import { PICTURES } from '@/constants';
 import { GuildDocument } from 'types';
 
 /**
@@ -85,7 +85,7 @@ export default class TwitterTask extends Task {
             fields: [{ name: '\u200B', value: `[${this.t('TASK_TWITTER_ORIGINAL_TWEET', guild)}](${authorURL}/status/${tweet.id})` }],
             timestamp: Date.parse(tweet.created_at),
             footer: {
-              iconURL: icons.twitter,
+              iconURL: PICTURES.TWITTER.ICON,
               text: this.t('TASK_TWITTER_FOOTER', guild)
             }
           });

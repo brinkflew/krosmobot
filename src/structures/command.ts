@@ -6,14 +6,7 @@ import {
 } from 'discord.js';
 import { Locale } from '@/structures';
 import MongooseProvider from '@/providers/mongoose';
-import {
-  EMBED_COLOR_GREEN,
-  EMBED_COLOR_RED,
-  EMBED_COLOR_YELLOW,
-  EMBED_COLOR_DEFAULT,
-  DEFAULT_PREFIX,
-  DEFAULT_LOCALE
-} from '@/constants';
+import { EMBEDS, DEFAULTS } from '@/constants';
 import { code } from '@/utils/message';
 import { GuildDocument, UserDocument } from 'types';
 
@@ -36,7 +29,7 @@ export class Command extends AkairoCommand {
   public async success(message: Message, description: string): Promise<Message> {
     this.handler.emit('command-success', this, message);
     const embed = new MessageEmbed({
-      color: EMBED_COLOR_GREEN,
+      color: EMBEDS.COLORS.GREEN,
       author: { name: this.t('MESSAGE_STATUS_SUCCESS', message) },
       description
     });
@@ -54,7 +47,7 @@ export class Command extends AkairoCommand {
     if (error instanceof Error) error = error.message;
     if (typeof error === 'string') description = `${description} ${code(error)}`;
     const embed = new MessageEmbed({
-      color: EMBED_COLOR_RED,
+      color: EMBEDS.COLORS.RED,
       author: { name: this.t('MESSAGE_STATUS_ERROR', message) },
       description
     });
@@ -69,7 +62,7 @@ export class Command extends AkairoCommand {
   public async warning(message: Message, description: string): Promise<Message> {
     this.handler.emit('command-warning', this, message);
     const embed = new MessageEmbed({
-      color: EMBED_COLOR_YELLOW,
+      color: EMBEDS.COLORS.YELLOW,
       author: { name: this.t('MESSAGE_STATUS_WARNING', message) },
       description
     });
@@ -84,7 +77,7 @@ export class Command extends AkairoCommand {
   public craftEmbed(message: Message, content: MessageEmbedOptions | MessageEmbed): MessageEmbed {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
     if (content.color) return content;
-    const color = this.getDocument(message)?.settings?.color || EMBED_COLOR_DEFAULT;
+    const color = this.getDocument(message)?.settings?.color || EMBEDS.COLORS.DEFAULT;
     return content.setColor(color);
   }
 
@@ -125,8 +118,8 @@ export class Command extends AkairoCommand {
    * @param message Message that triggered the command
    */
   public getPrefix(message?: Message): string {
-    if (!message?.guild) return DEFAULT_PREFIX;
-    return this.getDocument(message)?.settings?.prefix || DEFAULT_PREFIX;
+    if (!message?.guild) return DEFAULTS.PREFIX;
+    return this.getDocument(message)?.settings?.prefix || DEFAULTS.PREFIX;
   }
 
   /**
@@ -162,7 +155,7 @@ export class Command extends AkairoCommand {
    * @param message Message to find the current locale for
    */
   public getLocale(message: Message): Locale {
-    const language = this.getDocument(message)?.settings?.locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || DEFAULT_LOCALE;
+    const language = this.getDocument(message)?.settings?.locale || DEFAULTS.LOCALE;
     return this.client.locales.get(language);
   }
 

@@ -1,7 +1,7 @@
 import { Command, Scraper } from '@/structures';
 import { Message, MessageEmbed } from 'discord.js';
 import { portal as schema } from '@/scraping-schemas';
-import { DOFUS_PORTALS_URL } from '@/constants';
+import { URLS } from '@/constants';
 
 /**
  * Fetches the Dofus portal position for a dimension on a server.
@@ -26,7 +26,7 @@ export default class PortalCommand extends Command {
    */
   public async exec(message: Message, { dimension, server }: { dimension: string; server: { id: string; name: string } | null }) {
     if (!server) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
-    const url = `${DOFUS_PORTALS_URL}/portails/${server.id}`;
+    const url = `${URLS.DOFUS_PORTALS}/portails/${server.id}`;
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
     if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message, server));
 
@@ -34,10 +34,10 @@ export default class PortalCommand extends Command {
       author: {
         url,
         name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
-        iconURL: `${DOFUS_PORTALS_URL}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
+        iconURL: `${URLS.DOFUS_PORTALS}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
       },
       url,
-      thumbnail: { url: `${DOFUS_PORTALS_URL}/${(<string>data[`images.dimension`]).replace('../', '')}` },
+      thumbnail: { url: `${URLS.DOFUS_PORTALS}/${(<string>data[`images.dimension`]).replace('../', '')}` },
       fields: [
         {
           name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),

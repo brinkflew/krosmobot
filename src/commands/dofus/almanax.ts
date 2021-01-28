@@ -2,7 +2,7 @@ import { Command, Scraper } from '@/structures';
 import { Message } from 'discord.js';
 import { almanax as schema } from '@/scraping-schemas';
 import { AlmanaxDocument } from 'types';
-import { MS_PER_HOUR } from '@/constants';
+import { TIME } from '@/constants';
 
 /**
  * Fetches the Dofus almanax for a specific date.
@@ -96,7 +96,7 @@ export default class AlmanaxCommand extends Command {
 
     const offset = parseInt(input, 10);
     if (isNaN(offset)) return null;
-    const date = new Date(Date.now() + MS_PER_HOUR);
+    const date = new Date(Date.now() + TIME.MS_PER_HOUR);
     return this.formatDate(date.setDate(date.getDate() + offset));
   }
 
@@ -105,7 +105,7 @@ export default class AlmanaxCommand extends Command {
    * @param date Date to format
    */
   private formatDate(date: Date | number = Date.now()): string {
-    if (typeof date === 'number') date = new Date(date + MS_PER_HOUR);
+    if (typeof date === 'number') date = new Date(date + TIME.MS_PER_HOUR);
     return date.toISOString().split('T')[0];
   }
 

@@ -1,7 +1,7 @@
 import { Listener } from 'discord-akairo';
 import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import { CanvasRenderService } from 'chartjs-node-canvas';
-import { EMBED_COLOR_DEFAULT, DEFAULT_LOCALE, pollChart } from '@/constants';
+import { EMBEDS, DEFAULTS, CHARTS } from '@/constants';
 import { splitToArray } from '@/utils';
 import { PollDocument, DocumentSettings } from 'types';
 
@@ -39,16 +39,16 @@ export default class extends Listener {
       data.votes.push(answers[index].length);
     });
 
-    const canvas = new CanvasRenderService(pollChart.width, pollChart.height * propositions.length, chart => {
-      chart.plugins.register(pollChart.plugins);
+    const canvas = new CanvasRenderService(CHARTS.POLL_RESULT.width, CHARTS.POLL_RESULT.height * propositions.length, chart => {
+      chart.plugins.register(CHARTS.POLL_RESULT.plugins);
     });
 
     const settings = <DocumentSettings> guilds.get(message.guild!.id)?.settings;
-    const locale = this.client.locales.get(settings?.locale || DEFAULT_LOCALE);
-    const color = settings?.color || EMBED_COLOR_DEFAULT;
+    const locale = this.client.locales.get(settings?.locale || DEFAULTS.LOCALE);
+    const color = settings?.color || EMBEDS.COLORS.DEFAULT;
 
     const image = await canvas.renderToBuffer({
-      ...pollChart.options,
+      ...CHARTS.POLL_RESULT.options,
       data: {
         labels: data.propositions,
         datasets: [{ label: 'Votes', data: data.votes, backgroundColor: color }]

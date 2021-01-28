@@ -1,7 +1,7 @@
 import Canvas from 'canvas';
 import { Message, MessageAttachment } from 'discord.js';
 import { Command } from '@/structures';
-import { canvas as pictures } from '@/constants/pictures';
+import { PICTURES } from '@/constants';
 import { formatNumber } from '@/utils';
 
 const font = 'px serif';
@@ -57,7 +57,7 @@ export default class DiceCommand extends Command {
 
     const total = scores.reduce((a, b) => a + b, 0);
 
-    const background = await Canvas.loadImage(pictures.dice);
+    const background = await Canvas.loadImage(PICTURES.CANVAS.DICE);
     const canvas = Canvas.createCanvas(background.width, background.height);
     const ctx = canvas.getContext('2d');
 

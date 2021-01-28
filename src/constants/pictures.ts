@@ -5,43 +5,39 @@ const sources = {
   canvas: [__dirname, '..', '..', 'static', 'pictures', 'canvas']
 };
 
-/** Jobs icons */
-export const jobs: { [key: string]: string } = {
-  alchemist: `${sources.github}/jobs/alchemist.png`,
-  artificer: `${sources.github}/jobs/artificer.png`,
-  carver: `${sources.github}/jobs/carver.png`,
-  carvmagus: `${sources.github}/jobs/carvmagus.png`,
-  costumagus: `${sources.github}/jobs/costumagus.png`,
-  craftmagus: `${sources.github}/jobs/craftmagus.png`,
-  farmer: `${sources.github}/jobs/farmer.png`,
-  fisherman: `${sources.github}/jobs/fisherman.png`,
-  handyman: `${sources.github}/jobs/handyman.png`,
-  hunter: `${sources.github}/jobs/hunter.png`,
-  jeweller: `${sources.github}/jobs/jeweller.png`,
-  jewelmagus: `${sources.github}/jobs/jewelmagus.png`,
-  lumberjack: `${sources.github}/jobs/lumberjack.png`,
-  miner: `${sources.github}/jobs/miner.png`,
-  shoemagus: `${sources.github}/jobs/shoemagus.png`,
-  shoemaker: `${sources.github}/jobs/shoemaker.png`,
-  smith: `${sources.github}/jobs/smith.png`,
-  smithmagus: `${sources.github}/jobs/smithmagus.png`,
-  tailor: `${sources.github}/jobs/tailor.png`
-};
+/* eslint-disable @typescript-eslint/naming-convention */
 
-/** RSS feeds icons */
-export const rss: { [key: string]: string } = {
-  changelog: `${sources.github}/rss/changelog.png`,
-  devblog: `${sources.github}/rss/devblog.png`,
-  dofus: `${sources.github}/rss/dofus.png`,
-  news: `${sources.github}/rss/news.png`
+/** Jobs icons */
+export const DOFUS_JOBS: { [key: string]: string } = {
+  ALCHEMIST: `${sources.github}/jobs/alchemist.png`,
+  ARTIFICER: `${sources.github}/jobs/artificer.png`,
+  CARVER: `${sources.github}/jobs/carver.png`,
+  CARVMAGUS: `${sources.github}/jobs/carvmagus.png`,
+  COSTUMAGUS: `${sources.github}/jobs/costumagus.png`,
+  CRAFTMAGUS: `${sources.github}/jobs/craftmagus.png`,
+  FARMER: `${sources.github}/jobs/farmer.png`,
+  FISHERMAN: `${sources.github}/jobs/fisherman.png`,
+  HANDYMAN: `${sources.github}/jobs/handyman.png`,
+  HUNTER: `${sources.github}/jobs/hunter.png`,
+  JEWELLER: `${sources.github}/jobs/jeweller.png`,
+  JEWELMAGUS: `${sources.github}/jobs/jewelmagus.png`,
+  LUMBERJACK: `${sources.github}/jobs/lumberjack.png`,
+  MINER: `${sources.github}/jobs/miner.png`,
+  SHOEMAGUS: `${sources.github}/jobs/shoemagus.png`,
+  SHOEMAKER: `${sources.github}/jobs/shoemaker.png`,
+  SMITH: `${sources.github}/jobs/smith.png`,
+  SMITHMAGUS: `${sources.github}/jobs/smithmagus.png`,
+  TAILOR: `${sources.github}/jobs/tailor.png`
 };
 
 /** Twitter icons */
-export const twitter: { [key: string]: string } = {
-  twitter: `${sources.github}/twitter/twitter.png`
+export const TWITTER: { [key: string]: string } = {
+  ICON: `${sources.github}/twitter/twitter.png`
 };
 
 /* Canvas images */
-export const canvas: { [key: string]: string } = {
-  dice: resolve(join(...sources.canvas, 'dice.png'))
+export const CANVAS: { [key: string]: string } = {
+  DICE: resolve(join(...sources.canvas, 'dice.png'))
 };
+
+/* eslint-enable @typescript-eslint/naming-convention */

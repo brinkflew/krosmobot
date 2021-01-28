@@ -16,7 +16,7 @@ import { resolve, join } from 'path';
 import MongooseProvider from '@/providers/mongoose';
 import { LocaleHandler, TaskHandler } from '@/handlers';
 import { Logger } from '@/structures';
-import { DEFAULT_PREFIX } from '@/constants';
+import { DEFAULTS } from '@/constants';
 import { argumentTypes } from '@/arguments';
 
 // Import models for the provider
@@ -81,12 +81,9 @@ export class Client extends AkairoClient {
 
     this.commands = new CommandHandler(this, {
       directory: resolve(join(__dirname, '..', 'commands')),
-      prefix: (message: Message) => {
-        const prefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
-        return message.guild
-          ? this.providers.guilds.fetch(message.guild.id)?.settings?.prefix || prefix
-          : prefix;
-      },
+      prefix: (message: Message) => message.guild
+        ? this.providers.guilds.fetch(message.guild.id)?.settings?.prefix || DEFAULTS.PREFIX
+        : DEFAULTS.PREFIX,
       aliasReplacement: /-/g,
       commandUtil: true,
       handleEdits: true,

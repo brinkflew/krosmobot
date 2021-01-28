@@ -5,6 +5,7 @@ import {
 } from 'discord-akairo';
 import { Collection } from 'discord.js';
 import { Task } from '@/structures';
+import { DEFAULTS } from '@/constants';
 
 /**
  * Handles tasks scheduling and execution.
@@ -22,7 +23,7 @@ export class TaskHandler extends AkairoHandler {
       classToHandle: Task
     });
 
-    let interval = process.env.KROSMOBOT_TASKS_INTERVAL || 60;
+    let interval = DEFAULTS.TASKS_INTERVAL;
     if (typeof interval === 'string') interval = parseInt(interval, 10);
     this.interval = interval;
   }

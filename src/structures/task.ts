@@ -1,6 +1,7 @@
 import { AkairoModule } from 'discord-akairo';
 import { Guild, User } from 'discord.js';
 import { GuildDocument, UserDocument, TaskOptions } from 'types';
+import { DEFAULTS } from '@/constants';
 
 /**
  * A simple task that get executed repeatedly at an interval
@@ -17,7 +18,7 @@ export class Task extends AkairoModule {
   public constructor(id: string, options: TaskOptions = {}) {
     super(id, options);
 
-    let interval = process.env.KROSMOBOT_TASKS_INTERVAL || 60;
+    let interval = DEFAULTS.TASKS_INTERVAL;
     if (typeof interval === 'string') interval = parseInt(interval, 10);
 
     this.interval = options.interval
@@ -51,7 +52,7 @@ export class Task extends AkairoModule {
       ? this.client.providers.guilds
       : this.client.providers.users;
     const doc = <GuildDocument | UserDocument> provider.fetch(guild.id);
-    const language = doc.settings.locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
+    const language = doc.settings.locale || DEFAULTS.LOCALE;
     const locale = this.client.locales.get(language);
     return locale.translate(key, ...args);
   }

@@ -1,12 +1,5 @@
 import { Locale } from '@/structures';
-import {
-  MS_PER_SECOND,
-  MS_PER_MINUTE,
-  MS_PER_HOUR,
-  MS_PER_DAY,
-  MS_PER_MONTH,
-  MS_PER_YEAR
-} from '@/constants';
+import { TIME } from '@/constants';
 
 /**
  * Convert seconds to milliseconds.
@@ -70,12 +63,12 @@ export const formatDate = (timestamp: number, locale = 'en', long = false, inclu
  */
 export const formatRelative = (elapsed: number, locale: Locale) => {
   const round = (unit: number) => Math.round(elapsed / unit);
-  if (elapsed < MS_PER_MINUTE) return locale.translate('TIMING_SECOND', round(MS_PER_SECOND));
-  if (elapsed < MS_PER_HOUR) return locale.translate('TIMING_MINUTE', round(MS_PER_MINUTE));
-  if (elapsed < MS_PER_DAY) return locale.translate('TIMING_HOUR', round(MS_PER_HOUR));
-  if (elapsed < MS_PER_MONTH) return locale.translate('TIMING_DAY', round(MS_PER_DAY));
-  if (elapsed < MS_PER_YEAR) return locale.translate('TIMING_MONTH', round(MS_PER_MONTH));
-  return locale.translate('TIMING_YEAR', round(MS_PER_YEAR));
+  if (elapsed < TIME.MS_PER_MINUTE) return locale.translate('TIMING_SECOND', round(TIME.MS_PER_SECOND));
+  if (elapsed < TIME.MS_PER_HOUR) return locale.translate('TIMING_MINUTE', round(TIME.MS_PER_MINUTE));
+  if (elapsed < TIME.MS_PER_DAY) return locale.translate('TIMING_HOUR', round(TIME.MS_PER_HOUR));
+  if (elapsed < TIME.MS_PER_MONTH) return locale.translate('TIMING_DAY', round(TIME.MS_PER_DAY));
+  if (elapsed < TIME.MS_PER_YEAR) return locale.translate('TIMING_MONTH', round(TIME.MS_PER_MONTH));
+  return locale.translate('TIMING_YEAR', round(TIME.MS_PER_YEAR));
 };
 
 /**

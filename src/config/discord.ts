@@ -3,7 +3,7 @@ import { ClientOptions } from 'discord.js';
 const config: ClientOptions = {
   shards: 'auto',
   disableMentions: 'everyone',
-  messageCacheMaxSize: 50,
+  messageCacheMaxSize: 250,
   messageCacheLifetime: 60 * 60 * 2,
   messageSweepInterval: 60 * 5,
   messageEditHistoryMaxSize: 10,

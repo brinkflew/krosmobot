@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { MS_PER_DAY } from '@/constants';
+import { TIME } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
@@ -21,7 +21,7 @@ export default class PollCommand extends Command {
         {
           'id': 'time',
           'type': 'duration',
-          'default': MS_PER_DAY
+          'default': TIME.MS_PER_DAY
         },
         {
           id: 'text',

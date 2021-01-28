@@ -1,3 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export const DOFUS_PORTALS_URL = 'https://dofus-portals.fr';
+export const DOFUS_PORTALS = 'https://dofus-portals.fr';
+
+/* eslint-disable @typescript-eslint/naming-convention */

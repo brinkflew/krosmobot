@@ -1,6 +1,6 @@
 import { Listener } from 'discord-akairo';
 import { MessageReaction, User } from 'discord.js';
-import { pollReactions } from '@/constants';
+import { EMOJIS } from '@/constants';
 import { PollDocument } from 'types';
 
 /**
@@ -24,7 +24,7 @@ export default class extends Listener {
     const fetched = <PollDocument> polls.fetch(reaction.message.id);
     if (!fetched) return;
 
-    let index = pollReactions.indexOf(reaction.emoji.name);
+    let index = EMOJIS.POLL_REACTIONS.indexOf(reaction.emoji.name);
     if (index <= 0) return;
 
     index -= 1;

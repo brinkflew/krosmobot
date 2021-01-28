@@ -1,20 +1,18 @@
-const colors = {
-  text: '#FFFFFF',
-  grid: '#2C2F33',
-  background: '#23272A'
-};
+import { COLORS } from './colors';
 
-export const pollChart = {
+/* eslint-disable @typescript-eslint/naming-convention */
+
+export const POLL_RESULT = {
   colors: {
-    text: colors.text,
-    grid: colors.grid,
-    background: colors.background
+    text: COLORS.text,
+    grid: COLORS.grid,
+    background: COLORS.background
   },
   plugins: {
     beforeDraw: (instance: Chart) => {
       const { ctx, width, height } = instance;
       if (!ctx) return;
-      ctx.fillStyle = colors.background;
+      ctx.fillStyle = COLORS.background;
       ctx.fillRect(0, 0, width!, height!);
     }
   },
@@ -28,13 +26,13 @@ export const pollChart = {
       scales: {
         xAxes: [{
           gridLines: {
-            color: colors.grid,
+            color: COLORS.grid,
             drawBorder: false,
             zeroLineWidth: 2,
-            zeroLineColor: colors.grid
+            zeroLineColor: COLORS.grid
           },
           ticks: {
-            fontColor: colors.text,
+            fontColor: COLORS.text,
             padding: 5,
             beginAtZero: true,
             stepSize: 1
@@ -42,9 +40,11 @@ export const pollChart = {
         }],
         yAxes: [{
           gridLines: { display: false },
-          ticks: { fontColor: colors.text }
+          ticks: { fontColor: COLORS.text }
         }]
       }
     }
   }
 };
+
+/* eslint-enable @typescript-eslint/naming-convention */

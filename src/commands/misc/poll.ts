@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { MS_PER_DAY, pollReactions, ARGUMENT_TYPE_BOOLEAN } from '@/constants';
+import { TIME, EMOJIS, ARGUMENTS } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
@@ -23,14 +23,14 @@ export default class PollCommand extends Command {
           'match': 'option',
           'flag': 'time:',
           'type': 'duration',
-          'default': MS_PER_DAY,
+          'default': TIME.MS_PER_DAY,
           'unordered': true
         },
         {
           'id': 'multi',
           'match': 'option',
           'flag': 'multi:',
-          'type': ARGUMENT_TYPE_BOOLEAN,
+          'type': ARGUMENTS.BOOLEAN,
           'default': 'true',
           'unordered': true
         },
@@ -57,8 +57,8 @@ export default class PollCommand extends Command {
 
     const time = Date.now() + args.time;
     const locale = this.getLocale(message);
-    const propositions = args.text.map((prop, index) => `${pollReactions[index + 1]} ${prop}`);
-    const reactions = pollReactions.slice(0, propositions.length + 1);
+    const propositions = args.text.map((prop, index) => `${EMOJIS.POLL_REACTIONS[index + 1]} ${prop}`);
+    const reactions = EMOJIS.POLL_REACTIONS.slice(0, propositions.length + 1);
 
     const sent = await this.embed(message, {
       author: {

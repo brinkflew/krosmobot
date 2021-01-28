@@ -1,10 +1,5 @@
 import { Message } from 'discord.js';
-import {
-  MS_PER_SECOND,
-  MS_PER_MINUTE,
-  MS_PER_HOUR,
-  MS_PER_DAY
-} from '@/constants';
+import { TIME } from '@/constants';
 
 const parser = /([0-9.,]*)\s?([a-z]*)/i;
 
@@ -27,14 +22,14 @@ export const duration = (_message: Message, phrase: string) => {
 
   switch (unit) {
     case 's':
-      return time * MS_PER_SECOND;
+      return time * TIME.MS_PER_SECOND;
     case 'm':
-      return time * MS_PER_MINUTE;
+      return time * TIME.MS_PER_MINUTE;
     case 'h':
-      return time * MS_PER_HOUR;
+      return time * TIME.MS_PER_HOUR;
     case 'd':
     case 'j':
     default:
-      return time * MS_PER_DAY;
+      return time * TIME.MS_PER_DAY;
   }
 };

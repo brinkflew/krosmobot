@@ -1,4 +1,6 @@
-export const jobs = [
+/* eslint-disable @typescript-eslint/naming-convention */
+
+export const DOFUS_JOBS = [
   ['alchemist', 'alchimiste', 'alchi'],
   ['jeweller', 'bijoutier', 'bijou'],
   ['handyman', 'bricoleur', 'brico'],
@@ -20,20 +22,4 @@ export const jobs = [
   ['tailor', 'tailleur']
 ];
 
-export const dimensions = [
-  ['enutrosor', 'enu', 'enutrof'],
-  ['ecaflipus', 'eca', 'ecaflip'],
-  ['srambad', 'sram'],
-  ['xelorium', 'xel', 'xelor']
-];
-
-export const boolean = [
-  [
-    'true', 'yes', 'y',
-    'vrai', 'oui', 'o'
-  ],
-  [
-    'false', 'no', 'n',
-    'faux', 'non'
-  ]
-];
+/* eslint-enable @typescript-eslint/naming-convention */

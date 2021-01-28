@@ -1,7 +1,7 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
 import { Argument } from 'discord-akairo';
-import { DEFAULT_LOCALE } from '@/constants';
+import { DEFAULTS } from '@/constants';
 
 /**
  * Change the localization options for the current guild.
@@ -27,14 +27,13 @@ export default class LocaleCommand extends Command {
    */
   public async exec(message: Message, args: { [key: string]: string | null }): Promise<Message> {
     try {
-      const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
       const provider = this.getProvider(message);
       const id = this.getID(message);
 
       // Reset the default locale
       if (!args.locale) {
-        await provider.update(id, { settings: { locale: defaultLocale } });
-        const language = this.t(`LANG_${defaultLocale.toUpperCase()}`, message);
+        await provider.update(id, { settings: { locale: DEFAULTS.LOCALE } });
+        const language = this.t(`LANG_${DEFAULTS.LOCALE.toUpperCase()}`, message);
         return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_RESET', message, language));
       }
 
@@ -46,7 +45,7 @@ export default class LocaleCommand extends Command {
       const languageName = this.t(`LANG_${args.locale.toUpperCase()}`, message);
 
       // Check if the locale actually changes
-      const language = <string> provider.fetch(id)?.settings?.locale || defaultLocale;
+      const language = <string> provider.fetch(id)?.settings?.locale || DEFAULTS.LOCALE;
       if (language === args.locale) return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, languageName));
 
       // Save the new locale

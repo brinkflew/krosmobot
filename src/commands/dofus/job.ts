@@ -1,6 +1,6 @@
 import { Message, GuildMember } from 'discord.js';
 import { Command } from '@/structures';
-import { jobs as icons } from '@/constants/pictures';
+import { PICTURES } from '@/constants';
 import { code } from '@/utils/message';
 
 /**
@@ -66,7 +66,7 @@ export default class JobCommand extends Command {
             name: message.guild!.name,
             iconURL: message.guild!.iconURL() || undefined
           },
-          thumbnail: { url: icons[name] },
+          thumbnail: { url: PICTURES.DOFUS_JOBS[`${name.toUpperCase()}`] },
           fields: [
             {
               name: this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message),
@@ -133,7 +133,7 @@ export default class JobCommand extends Command {
 
       return this.embed(message, {
         author,
-        thumbnail: { url: icons[name] },
+        thumbnail: { url: PICTURES.DOFUS_JOBS[`${name.toUpperCase()}`] },
         fields: [
           {
             name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),

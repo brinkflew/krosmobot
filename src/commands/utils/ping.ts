@@ -1,6 +1,6 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
-import { INLINE_SEPARATOR } from '@/constants';
+import { EMBEDS } from '@/constants';
 
 /**
  * Get the latency between the user and the client,
@@ -34,7 +34,7 @@ export default class PingCommand extends Command {
       ...embed,
       fields: [
         { name: this.t('COMMAND_PING_RESPONSE_RTT', message), value: `${diff} ms`, inline: true },
-        INLINE_SEPARATOR,
+        EMBEDS.SEPARATORS.INLINE,
         { name: this.t('COMMAND_PING_RESPONSE_HEARTBEAT', message), value: `${ping} ms`, inline: true }
       ]
     });
