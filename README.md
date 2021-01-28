@@ -22,7 +22,8 @@ An extensive Discord bot for not-too-serious Dofus guilds.
 
 ## Commands
 
-A few commands are made available to the users of the Discord guild. By default, those commands can be run in any text channel the bot has read-access to.
+A few commands are made available to the users of the Discord guild. By default,
+those commands can be run in any text channel the bot has read-access to.
 
 When in doubt, type `!help` to get a recap of all available commands.
 
@@ -59,7 +60,8 @@ When in doubt, type `!help` to get a recap of all available commands.
 
 ## Twitter
 
-The bot is capable of fetching news from Twitter directly. Currently, it follows the following accounts:
+The bot is capable of fetching news from Twitter directly. Currently,
+it follows the following accounts:
 
 - [DOFUSfr](https://twitter.com/DOFUSfr?s=20)
 - [AnkamaGames](https://twitter.com/AnkamaGames?s=20)
@@ -69,13 +71,17 @@ The bot needs a channel to send the news to, see the [news setup](#News) for mor
 
 ## Install
 
-To run the bot on your own server, you'll need [NodeJS](https://nodejs.org/en/) version 14.15.0 or above.
+To run the bot on your own server, you'll need [NodeJS](https://nodejs.org/en/)
+version 14.15.0 or above.
 
-Some commands make use of [canvas](https://www.npmjs.com/package/canvas) which itself requires a few
-dependencies to be installed on your system. To see the list of dependencies and how to install them
-on your operating system, please refer to [the official canvas documentation](https://github.com/Automattic/node-canvas#compiling).
+Some commands make use of [canvas](https://www.npmjs.com/package/canvas)
+which itself requires a few dependencies to be installed on your system.
+To see the list of dependencies and how to install them
+on your operating system, please refer to
+[the official canvas documentation](https://github.com/Automattic/node-canvas#compiling).
 
-Once there, clone this repository to your machine and navigate to the `krosmobot` folder:
+Once there, clone this repository to your machine and navigate
+to the `krosmobot` folder:
 
 ```sh
 git clone --branch stable git@github.com:brinkflew/krosmobot.git && cd krosmobot
@@ -91,7 +97,8 @@ That's it!
 
 ## Setup
 
-Use the following commands to configure the bot for your Discord guild (those are examples, feel free to update the values to your liking).
+Use the following commands to configure the bot for your Discord guild
+(those are examples, feel free to change the values to your liking).
 
 ### Language
 
@@ -104,7 +111,8 @@ Changes the language used by the bot in the current guild.
 ### Color
 
 Changes the colors used by the bot for general-purpose embeds.
-A few distinct embeds will retain their own color to indicate an error, warning or success message.
+A few distinct embeds will retain their own color to indicate an error,
+warning or success message.
 
 ```
 !color #c0ffee
@@ -112,18 +120,22 @@ A few distinct embeds will retain their own color to indicate an error, warning 
 
 ### Almanax
 
-Enables sending the almanax of the day automatically in the Discord channel name `#almanax`. A channel with this name must already exist on the server and the bot must have read and write access to that channel.
+Enables sending the almanax of the day automatically in the Discord channel name `#almanax`.
+A channel with this name must already exist on the server and the bot must have
+read and write access to that channel.
 
 ```
-!set almanax.auto true almanax.channel #almanax
+!set almanax #almanax
 ```
 
 ### News
 
-Tells the bot to send a message in a given channel when one of the followed accounts sends a new tweet. A channel with this name must already exist on the server and the bot must have read and write access to that channel.
+Tells the bot to send a message in a given channel when one of the followed accounts sends
+a new tweet. A channel with this name must already exist on the server and the bot
+must have read and write access to that channel.
 
 ```
-!set news.auto true news.channel #news
+!set twitter #news
 ```
 
 ### Default Dofus Server
@@ -131,5 +143,5 @@ Tells the bot to send a message in a given channel when one of the followed acco
 Set a default Dofus server to use when unspecified in some commands (almanax, etc.).
 
 ```
-!set dofus.server Jahash
+!set server Jahash
 ```
