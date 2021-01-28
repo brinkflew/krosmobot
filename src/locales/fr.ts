@@ -256,15 +256,46 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_SET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Active l'almanax automatique dans le salon '\#almanax' :
-        ${usage(prefix, 'set almanax.auto enable almanax.channel \#almanax')}
+        ${usage(prefix, 'set almanax \#almanax')}
       `,
       COMMAND_SET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'set <key> <value> [<key> <value>,...]')}
-        ${argument('almanax.auto')} Active l'almanax automatique; un salon doit aussi être configuré (optionnel)
-        ${argument('almanax.channel')} Force le salon dans lequel l'almanax est envoyé (optionnel)
+        ${argument('almanax')} Active l'almanax automatique et l'envoie dans le salon configuré (optionnel)
+        ${argument('twitter')} Active la récupération automatique des tweets et les envoie dans le salon configuré (optionnel)
+        ${argument('server')} Configure le serveur Dofus à utiliser par défaut dans les commandes (optionnel)
       `,
-      COMMAND_SET_RESPONSE_MODIFIED: 'Les valeurs ont été mises à jour.',
+      COMMAND_SET_RESPONSE_PAIR: (key: string, value?: string) => `${key} → ${value || 'Aucun'}`,
+      COMMAND_SET_RESPONSE_MODIFIED: (pairs: string[]) => stripIndent`
+        ${pairs.length > 1 ? 'Les clés suivantes ont été mises' : 'La clé suivante a été mise'} à jour :
+        ${code(pairs.join('\n'))}
+      `,
+      COMMAND_SET_RESPONSE_NO_KEYS: 'Aucune valeur valide n\'a été indiquée.',
       COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
+
+      // GET Command
+      COMMAND_GET_DESCRIPTION_SHORT: 'Affiche la valeur d\'un paramètre.',
+      COMMAND_GET_DESCRIPTION_EXTENDED: stripIndent`
+        Affiche les valeurs liées à une ou plusieurs clé(s) de paramétrage.
+        Les valeurs sont affichées pour le serveur courant uniquement.
+      `,
+      COMMAND_GET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Affiche le salon dans lequel l'almanax est envoyé :
+        ${usage(prefix, 'get almanax')}
+        Affiche tous les paramètres enregistrés :
+        ${usage(prefix, 'get')}
+      `,
+      COMMAND_GET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'get <key> [<key>,...]')}
+        ${argument('almanax')} Salon dans lequel l'almanax est envoyé automatiquement (optionnel)
+        ${argument('twitter')} Salon dans lequel les tweets sont envoyés (optionnel)
+        ${argument('server')} Serveur Dofus à utiliser par défaut dans les commandes le nécessitant (optionnel)
+      `,
+      COMMAND_GET_RESPONSE_PAIR: (key: string, value?: string) => `${key} → ${value || 'Aucun'}`,
+      COMMAND_GET_RESPONSE_PAIRS: (pairs: string[]) => stripIndent`
+        Les clés suivantes sont configurées :
+        ${code(pairs.join('\n'))}
+      `,
+      COMMAND_GET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
 
       // PORTAL Command
       COMMAND_PORTAL_RESPONSE_NODATA: (server: { id: string; name: string }) => `Aucune donnée disponnible pour le serveur ${server.name}.`,
@@ -277,7 +308,9 @@ export default class FrenchLocale extends Locale {
       COMMAND_PORTAL_RESPONSE_UPDATED: (time: string, server: string) => `Mis à jour il y a ${time} pour le serveur ${server}.`,
       COMMAND_PORTAL_DESCRIPTION_SHORT: 'Affiche la position d\'un portail.',
       COMMAND_PORTAL_DESCRIPTION_EXTENDED: stripIndent`
-        Récupères la position d'un portail sur le serveur de la guilde, ou sur un serveur particulier.
+        Récupères la position d'un portail sur le serveur de la guilde, ou sur un serveur particulier si indiqué.
+
+        Les positions sont récupérées en temps réel sur [Dofus-Portals](https://dofus-portals.fr/).
       `,
       COMMAND_PORTAL_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Afficher tous les portails :
@@ -322,7 +355,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_JOB_DESCRIPTION_SHORT: 'Informations sur les métiers des membres.',
       COMMAND_JOB_DESCRIPTION_EXTENDED: oneLine`
         Permet de référencer le niveau de ses propres métiers ou d'afficher les métiers
-        des autres membres du serveur.
+        des autres membres de la guilde.
       `,
       COMMAND_JOB_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Indiquer que son métier 'Paysan' est au niveau 125 :
@@ -349,9 +382,11 @@ export default class FrenchLocale extends Locale {
       `,
 
       // MONIT Command
-      COMMAND_MONIT_DESCRIPTION_SHORT: 'Statistiques du bot.',
+      COMMAND_MONIT_DESCRIPTION_SHORT: 'Statistiques du client.',
       COMMAND_MONIT_DESCRIPTION_EXTENDED: oneLine`
-        Affiche les statistiques techniques du client et de son processus.
+        Affiche les statistiques techniques du client et de ses processus.
+
+        Inclus la consommation des ressources matérielles du client ainsi que le temps passé depuis son dernier redémarrage.
       `,
       COMMAND_MONIT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Affiche les statistiques techniques :

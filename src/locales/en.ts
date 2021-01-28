@@ -252,15 +252,46 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_SET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Enables auto-almanax in the '\#almanax' channel:
-        ${usage(prefix, 'set almanax.auto enable almanax.channel \#almanax')}
+        ${usage(prefix, 'set almanax \#almanax')}
       `,
       COMMAND_SET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'set <key> <value> [<key> <value>,...]')}
-        ${argument('almanax.auto')} Enables the automatic fetching of the almanax; a channel must also be configured (optionnal)
-        ${argument('almanax.channel')} Sets the channel in which the almanax must be sent (optionnal)
+        ${argument('almanax')} Enables automatically fetching the almanax and sends it to the configured channel (optional)
+        ${argument('twitter')} Enables fetching tweets and sends them in the configured channel (optional)
+        ${argument('server')} Configures the Dofus server to use by default in commands (optional)
       `,
-      COMMAND_SET_RESPONSE_MODIFIED: 'Values have been updated.',
-      COMMAND_SET_RESPONSE_ERROR: 'An error occured while executing the command',
+      COMMAND_SET_RESPONSE_PAIR: (key: string, value?: string) => `${key} → ${value || 'None'}`,
+      COMMAND_SET_RESPONSE_MODIFIED: (pairs: string[]) => stripIndent`
+        The following ${pairs.length > 1 ? 'keys were' : 'key was'} updated:
+        ${code(pairs.join('\n'))}
+      `,
+      COMMAND_SET_RESPONSE_NO_KEYS: 'No valid value provided.',
+      COMMAND_SET_RESPONSE_ERROR: 'An error occured while executing the command.',
+
+      // GET Command
+      COMMAND_GET_DESCRIPTION_SHORT: 'Display the value of a parameter.',
+      COMMAND_GET_DESCRIPTION_EXTENDED: stripIndent`
+        Display values assigned to configuration parameters.
+        Values are displayed for the current server only.
+      `,
+      COMMAND_GET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Display the channel to which the almanax will be sent:
+        ${usage(prefix, 'get almanax')}
+        Display all configured parameters:
+        ${usage(prefix, 'get')}
+      `,
+      COMMAND_GET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'get <key> [<key>,...]')}
+        ${argument('almanax')} Channel to which the almanax will be sent (optional)
+        ${argument('twitter')} Channel to which tweets will be sent (optional)
+        ${argument('server')} Dofus server ti use by default with other commands (optional)
+      `,
+      COMMAND_GET_RESPONSE_PAIR: (key: string, value?: string) => `${key} → ${value || 'Aucun'}`,
+      COMMAND_GET_RESPONSE_PAIRS: (pairs: string[]) => stripIndent`
+        The following keys are configured:
+        ${code(pairs.join('\n'))}
+      `,
+      COMMAND_GET_RESPONSE_ERROR: 'An error occured while executing the command',
 
       // PORTAL Command
       COMMAND_PORTAL_RESPONSE_NODATA: (server: { id: string; name: string }) => `No data available for server ${server.name}.`,
@@ -273,7 +304,11 @@ export default class EnglishLocale extends Locale {
       COMMAND_PORTAL_RESPONSE_UPDATED: (time: string, server: string) => `Updated ${time} ago for the ${server} server.`,
       COMMAND_PORTAL_DESCRIPTION_SHORT: 'Display the position of a portal.',
       COMMAND_PORTAL_DESCRIPTION_EXTENDED: stripIndent`
-        Fetches the position of a portal on the guild's configured server, or on a specific server.
+        Fetches the position of a portal for the guild's configured server, or for a specific server.
+
+        Positions are fetched in real-time from [Dofus-Portals](https://dofus-portals.fr/).
+
+        Currently, portals information is only available in French due to the limitations of the source website.
       `,
       COMMAND_PORTAL_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Display all portals:
@@ -347,7 +382,9 @@ export default class EnglishLocale extends Locale {
       // MONIT Command
       COMMAND_MONIT_DESCRIPTION_SHORT: 'Statistics on the bot.',
       COMMAND_MONIT_DESCRIPTION_EXTENDED: oneLine`
-        Provide statistics about the client and its process.
+        Provide statistics about the client and its processes.
+
+        Includes information about the client's hardware resources consulption and its uptime.
       `,
       COMMAND_MONIT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Get detailed statistics:
