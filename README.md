@@ -34,12 +34,12 @@ When in doubt, type `!help` to get a recap of all available commands.
 
 ### MiniGames
 
-- `!dice` → Dice roll.
+- `!dice` → Roll some dices and get a score.
 
 ### Miscellaneous
 
-- `!poll` → Polls.
-- `!remind` → Reminder.
+- `!poll` → Create polls and compare answers.
+- `!remind` → Set an automatic reminder in the future.
 
 ### Settings
 
@@ -47,6 +47,7 @@ When in doubt, type `!help` to get a recap of all available commands.
 - `!locale` → Modifies the language for the current guild.
 - `!prefix` → Modifies the prefix in this guild.
 - `!set` → Assigns a value to a parameter.
+- `!get` → Display values assigned to parameters.
 
 ### Utils
 
@@ -62,7 +63,7 @@ The bot is capable of fetching news from Twitter directly. Currently, it follows
 
 - [DOFUSfr](https://twitter.com/DOFUSfr?s=20)
 - [AnkamaGames](https://twitter.com/AnkamaGames?s=20)
-- [AnkamaLive](https://twitter.com/AnkamaLive?s=20)
+- [krosmobot](https://twitter.com/krosmobot?s=20)
 
 The bot needs a channel to send the news to, see the [news setup](#News) for more details.
 

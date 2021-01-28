@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Command `get` to see the currently configured parameters
+
+### Modified
+
+- Simplify command `set`'s usage
+- Dofus-related arguments parsing
+- Harmonize constants and default values
+- Refactor settings' provider: return docs instead of single key-value
+
+### Removed
+
+- RSS feed reading from [Dofus](https://www.dofus.fr/rss): blocked by CloudFlare
+
 ## [0.1.3] - 2021-01-27
 
 ### Added
@@ -55,6 +70,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...HEAD
 [0.1.3]: https://github.com/brinkflew/krosmobot/compare/v0.1.2...v0.1.3
-[0.1.2]: https://github.com/brinkflew/krosmobot/compare/v0.1.1...v0.1.2
-[0.1.1]: https://github.com/brinkflew/krosmobot/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/v0.0.1
+[0.1.2]: https://github.com/brinkflew/krosmobot/compare/0.1.1...v0.1.2
+[0.1.1]: https://github.com/brinkflew/krosmobot/compare/0.1.0...0.1.1
+[0.1.0]: https://github.com/brinkflew/krosmobot/releases/tag/0.0.1
