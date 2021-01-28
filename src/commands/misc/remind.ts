@@ -4,9 +4,9 @@ import { TIME } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
- * Creates a new poll.
+ * Creates a new reminder.
  */
-export default class PollCommand extends Command {
+export default class RemindCommand extends Command {
 
   public constructor() {
     super('remind', {
