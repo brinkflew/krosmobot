@@ -52,10 +52,19 @@ export interface PollDocument extends MongooseProviderDocument {
   multi: boolean;
 }
 
-export interface SetGetCommandArguments {
+export interface SetCommandArguments {
   'channels.almanax'?: TextChannel;
   'channels.twitter'?: TextChannel;
   'dofus.server'?: string;
+}
+
+export interface GetCommandArguments {
+  'channels.almanax': boolean;
+  'channels.twitter': boolean;
+  'dofus.server': boolean;
+  'settings.prefix': boolean;
+  'settings.color': boolean;
+  'settings.locale': boolean;
 }
 
 export interface LoggerOptions {

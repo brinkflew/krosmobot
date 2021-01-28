@@ -16,7 +16,21 @@ export default class PortalCommand extends Command {
         'extended': 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
         'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
         'usage': 'COMMAND_PORTAL_DESCRIPTION_USAGE'
-      }
+      },
+      args: [
+        {
+          id: 'dimension',
+          type: 'dofusDimension',
+          match: 'phrase',
+          unordered: true
+        },
+        {
+          id: 'server',
+          type: 'dofusServer',
+          match: 'phrase',
+          unordered: true
+        }
+      ]
     });
   }
 
@@ -79,24 +93,6 @@ export default class PortalCommand extends Command {
       default: return ['ecaflipus', 'enutrosor', 'srambad', 'xelorium']
         .map((dimension: string) => this.embed(message, generateEmbed(getDimensionData(dimension))));
     }
-  }
-
-  /**
-   * Parses the arguments.
-   */
-  // @ts-ignore unused-declaration
-  private *args(message: Message) {
-    const args = {
-      dimension: yield { type: 'dofusDimension' },
-      server: yield { type: 'dofusServer' }
-    };
-
-    if (!args.server && message.guild) {
-      const doc = this.getDocument(message);
-      if (doc?.dofus?.server?.id) args.server = doc?.dofus?.server;
-    }
-
-    return args;
   }
 
 }
