@@ -3,6 +3,7 @@ import { Message, MessageEmbed, MessageAttachment } from 'discord.js';
 import { CanvasRenderService } from 'chartjs-node-canvas';
 import { EMBED_COLOR_DEFAULT, DEFAULT_LOCALE, pollChart } from '@/constants';
 import { splitToArray } from '@/utils';
+import { PollDocument, DocumentSettings } from 'types';
 
 /**
  * Emitted whenever a reaction is added to an existing message.
@@ -23,10 +24,11 @@ export default class extends Listener {
    */
   public async exec(message: Message) {
     const { polls, guilds } = this.client.providers;
-    const propositions: string[] = polls.get(message.id, 'propositions');
-    const answers: string[][] = polls.get(message.id, 'answers');
-    const title: string = polls.get(message.id, 'title');
-    void polls.clear(message.id);
+    const fetched = <PollDocument> polls.get(message.id);
+    if (!fetched) return;
+
+    const { propositions, answers, title } = fetched;
+    void polls.delete(message.id);
 
     const oldEmbed = message.embeds;
     if (!oldEmbed?.length) return;
@@ -41,9 +43,10 @@ export default class extends Listener {
       chart.plugins.register(pollChart.plugins);
     });
 
-    const settings = guilds.get(message.guild!.id, 'settings');
-    const locale = this.client.locales.get(settings.locale || DEFAULT_LOCALE);
-    const color = settings.color || EMBED_COLOR_DEFAULT;
+    const settings = <DocumentSettings> guilds.get(message.guild!.id)?.settings;
+    const locale = this.client.locales.get(settings?.locale || DEFAULT_LOCALE);
+    const color = settings?.color || EMBED_COLOR_DEFAULT;
+
     const image = await canvas.renderToBuffer({
       ...pollChart.options,
       data: {
@@ -53,7 +56,6 @@ export default class extends Listener {
     });
 
     const attachment = new MessageAttachment(image, 'chart.png');
-
     const embed = new MessageEmbed({
       author: oldEmbed[0].author || undefined,
       color: oldEmbed[0].color || undefined,

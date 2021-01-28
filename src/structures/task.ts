@@ -1,6 +1,6 @@
 import { AkairoModule } from 'discord-akairo';
-import { Guild } from 'discord.js';
-import { TaskOptions } from 'types';
+import { Guild, User } from 'discord.js';
+import { GuildDocument, UserDocument, TaskOptions } from 'types';
 
 /**
  * A simple task that get executed repeatedly at an interval
@@ -43,11 +43,15 @@ export class Task extends AkairoModule {
   /**
    * Fetches the correct translation for the guild a message will be sent to.
    * @param key Key for the translation to fetch
-   * @param message Guild to which to send a message
+   * @param guild Guild or user to which to send a message
    * @param args Parameters to pass to the translation
    */
-  public translate(key: string, guild: Guild, ...args: any[]): string {
-    const language = <string> this.client.providers.guilds.get(guild.id, 'settings', {}).locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
+  public translate(key: string, guild: Guild | User, ...args: any[]): string {
+    const provider = guild instanceof Guild
+      ? this.client.providers.guilds
+      : this.client.providers.users;
+    const doc = <GuildDocument | UserDocument> provider.fetch(guild.id);
+    const language = doc.settings.locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
     const locale = this.client.locales.get(language);
     return locale.translate(key, ...args);
   }
@@ -56,7 +60,7 @@ export class Task extends AkairoModule {
    * Fetches the correct translation for the guild a message will be sent to.
    * This is a shortand for `Task#translate()`.
    * @param key Key for the translation to fetch
-   * @param message Guild to which to send a message
+   * @param guild Guild or user to which to send a message
    * @param args Parameters to pass to the translation
    */
   public t(key: string, guild: Guild, ...args: any[]): string {

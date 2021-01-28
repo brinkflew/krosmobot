@@ -27,6 +27,7 @@ export default class JobCommand extends Command {
    */
   public async exec(message: Message, { name, level, member }: { name: string; level: number; member: GuildMember }): Promise<Message> {
     try {
+      const provider = this.client.providers.members;
 
       // `!job tailor` → Display the single job for all users
       // `!job tailor @Member` → Display the single job for the single user
@@ -39,7 +40,7 @@ export default class JobCommand extends Command {
           .filter(member => !member.user.bot);
 
         for (const member of cachedMembers) {
-          fetched.push(this.get(member, 'jobs', {}));
+          fetched.push(provider.fetch(member.id)?.jobs || {});
           members.push(member.displayName);
         }
 
@@ -79,15 +80,12 @@ export default class JobCommand extends Command {
         });
       }
 
-      let target = message.member!;
-      if (member) target = member;
+      const target = member ? member : message.member || message.author;
+      const jobs: { [key: string]: number } = provider.fetch(target.id)?.jobs || {};
 
-      const jobs: { [key: string]: number } = this.get(target, 'jobs', {});
-
-      const author = {
-        name: target.displayName,
-        iconURL: target.user.avatarURL() || target.user.defaultAvatarURL
-      };
+      const author = target instanceof GuildMember
+        ? { name: target.displayName, iconURL: target.user.avatarURL() || target.user.defaultAvatarURL }
+        : { name: target.username, iconURL: target.avatarURL() || target.defaultAvatarURL };
 
       // `!job @Member` → Display all jobs for the single user
       // `!job` → Display all jobs for self
@@ -108,7 +106,7 @@ export default class JobCommand extends Command {
           });
         }
 
-        if (!fields.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, target.displayName));
+        if (!fields.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, author.name));
         fields = fields.sort((a, b) => a.job.localeCompare(b.job));
 
         return this.embed(message, {
@@ -130,14 +128,11 @@ export default class JobCommand extends Command {
         level = Math.min(level, 200);
         level = Math.max(level, 0);
         jobs[name] = level;
-        if (!member) void this.set(message.member!, 'jobs', jobs);
+        if (!member) void provider.create(message.member?.id || message.author.id, { jobs });
       }
 
       return this.embed(message, {
-        author: {
-          name: target.displayName,
-          iconURL: target.user.avatarURL() || target.user.defaultAvatarURL
-        },
+        author,
         thumbnail: { url: icons[name] },
         fields: [
           {

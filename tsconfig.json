@@ -55,8 +55,7 @@
             "mongoose",
             "common-tags",
             "cheerio",
-            "axios",
-            "xml2js"
+            "axios"
         ]
     },
     "include": [

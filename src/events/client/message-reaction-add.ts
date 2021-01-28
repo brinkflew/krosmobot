@@ -1,6 +1,7 @@
 import { Listener } from 'discord-akairo';
 import { MessageReaction, User } from 'discord.js';
 import { pollReactions } from '@/constants';
+import { PollDocument } from 'types';
 
 /**
  * Emitted whenever a reaction is added to an existing message.
@@ -20,22 +21,22 @@ export default class extends Listener {
   public exec(reaction: MessageReaction, user: User) {
     if (user.id === this.client.user?.id) return;
     const { polls } = this.client.providers;
-    if (!polls.items.has(reaction.message.id)) return;
+
+    const fetched = <PollDocument> polls.fetch(reaction.message.id);
+    if (!fetched) return;
 
     let index = pollReactions.indexOf(reaction.emoji.name);
     if (index < 0) return;
     if (index === 0) {
-      const author: string = polls.get(reaction.message.id, 'author');
-      if (author !== user.id) return;
+      if (fetched.author !== user.id) return;
       this.client.emit('pollClose', reaction.message);
       return;
     }
 
-    const answers: string[][] = polls.get(reaction.message.id, 'answers');
-    const multi: boolean = polls.get(reaction.message.id, 'multi', true);
+    const { answers } = fetched;
     index -= 1;
 
-    if (!multi) {
+    if (!fetched.multi) {
       answers.forEach((answer, ind) => {
         const position = answer.indexOf(user.id);
         if (position < 0) return;
@@ -52,7 +53,7 @@ export default class extends Listener {
     if (answers[index].includes(user.id)) return;
     answers[index] = new Array(...answers[index]);
     answers[index].push(user.id);
-    void polls.set(reaction.message.id, ['answers'], [answers], false);
+    void polls.update(reaction.message.id, { answers });
   }
 
 }

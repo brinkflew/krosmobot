@@ -1,7 +1,8 @@
 import { TextChannel, MessageEmbed } from 'discord.js';
-import { XmlEntities } from 'html-entities';
+import { safeHtml } from 'common-tags';
 import { Task } from '@/structures';
 import { twitter as icons } from '@/constants/pictures';
+import { GuildDocument } from 'types';
 
 /**
  * Check the state of the Twitter stream and ensure it stays alive.
@@ -12,11 +13,9 @@ export default class TwitterTask extends Task {
   private color = '#1DA1F2';
   private query = 'from:krosmobot OR from:DOFUSfr OR from:AnkamaGames -is:retweet -is:quote';
   private lastTweetID?: string;
-  private entities: XmlEntities;
 
   public constructor() {
     super('twitter', { interval: 5 });
-    this.entities = new XmlEntities();
   }
 
   /**
@@ -47,14 +46,14 @@ export default class TwitterTask extends Task {
     try {
       const tweets = await twitter.get('tweets/search/recent', params);
       if (!tweets.meta.result_count) return;
-      result.fetched = `${(<number>tweets.meta.result_count)} tweets`;
+      result.fetched = `${(<number> tweets.meta.result_count)} tweets`;
       this.lastTweetID = tweets.meta.newest_id;
 
       for (const guild of this.client.guilds.cache.array()) {
-        const config = this.client.providers.guilds.get(guild.id, 'settings', {});
-        if (!config.tasks?.news || !config.channels?.news) continue;
+        const doc = <GuildDocument> this.client.providers.guilds.get(guild.id);
+        if (!doc?.channels?.news) continue;
 
-        const channel = this.client.util.resolveChannel(config.channels?.news, guild.channels.cache);
+        const channel = this.client.util.resolveChannel(doc.channels.news, guild.channels.cache);
         if (!(channel instanceof TextChannel)) continue;
 
         /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -63,7 +62,7 @@ export default class TwitterTask extends Task {
           const author = (<any[]> tweets.includes.users).find(user => user.id === tweet.author_id);
           const authorURL = `https://www.twitter.com/${author.username}`;
 
-          let description = this.entities.decode(tweet.text);
+          let description = safeHtml(tweet.text);
 
           if (tweet.entities?.urls) {
             for (const entity of tweet.entities.urls) {

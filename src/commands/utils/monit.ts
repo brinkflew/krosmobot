@@ -28,12 +28,8 @@ export default class MonitCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message) {
-    const target = message.guild || message.author;
-    const language = this.get(target, 'settings', {}).locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
-    const locale = this.client.locales.get(language);
-
     const processUptime = process.uptime();
-    const uptime = format(processUptime * 1000, 'relative', locale);
+    const uptime = format(processUptime * 1000, 'relative', this.getLocale(message));
     const nodeVersion = process.version;
     const { arch, pid, platform } = process;
     const { rss } = process.memoryUsage();

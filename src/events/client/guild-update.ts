@@ -23,9 +23,6 @@ export default class extends Listener {
       'guild-updated',
       { guild: `${oldGuild.id} -> ${newGuild.id}` }
     ));
-
-    if (oldGuild.id === newGuild.id) return;
-    void this.client.providers.guilds.set(oldGuild.id, 'id', newGuild.id);
   }
 
 }

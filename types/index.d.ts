@@ -1,6 +1,7 @@
 import { AkairoModuleOptions } from 'discord-akairo';
 import { Document } from 'mongoose';
 import { AxiosResponse } from 'axios';
+import { TextChannel } from 'discord.js';
 
 export type LocaleString = string | ((...args: any[]) => string);
 
@@ -10,6 +11,51 @@ export interface LocaleOptions extends AkairoModuleOptions {
 
 export interface MongooseProviderDocument extends Document {
   [key: string]: any;
+}
+
+export interface AlmanaxDocument extends MongooseProviderDocument {
+  url: string;
+  title: string;
+  offering: string;
+  meryde: string;
+  description: string;
+  day: string;
+  month: string;
+  bonus: { title: string; description: string };
+  images: { meryde: string; item: string };
+}
+
+export interface DocumentSettings {
+  prefix?: string;
+  locale?: string;
+  color?: string;
+}
+
+export interface GuildDocument extends MongooseProviderDocument {
+  dofus: { server: { id?: string; name?: string } };
+  channels: { almanax?: string; news?: string };
+  settings: DocumentSettings;
+}
+
+export interface UserDocument extends MongooseProviderDocument {
+  settings: DocumentSettings;
+}
+
+export interface PollDocument extends MongooseProviderDocument {
+  guild: string;
+  author: string;
+  channel: string;
+  title: string;
+  propositions: string[];
+  answers: string[][];
+  timestamp: number;
+  multi: boolean;
+}
+
+export interface SetGetCommandArguments {
+  'channels.almanax'?: TextChannel;
+  'channels.twitter'?: TextChannel;
+  'dofus.server'?: string;
 }
 
 export interface LoggerOptions {

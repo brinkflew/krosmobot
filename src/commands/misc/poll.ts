@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { MS_PER_DAY, pollReactions, ARGUMENT_TYPE_BOOLEAN, DEFAULT_LOCALE } from '@/constants';
+import { MS_PER_DAY, pollReactions, ARGUMENT_TYPE_BOOLEAN } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
@@ -23,14 +23,16 @@ export default class PollCommand extends Command {
           'match': 'option',
           'flag': 'time:',
           'type': 'duration',
-          'default': MS_PER_DAY
+          'default': MS_PER_DAY,
+          'unordered': true
         },
         {
           'id': 'multi',
           'match': 'option',
           'flag': 'multi:',
           'type': ARGUMENT_TYPE_BOOLEAN,
-          'default': 'true'
+          'default': 'true',
+          'unordered': true
         },
         {
           id: 'text',
@@ -46,17 +48,18 @@ export default class PollCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, args: { time: number; text: string[]; multi: string }) {
-    const time = Date.now() + args.time;
     const title = args.text.shift();
     if (!title) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NO_TITLE', message));
+
     if (args.text.length === 1) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS', message));
     if (Math.max(...args.text.map(t => t.length)) > 96) return this.error(message, this.t('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG', message));
     if (!args.text.length) args.text = [this.t('YES', message), this.t('NO', message)];
 
-    const settings = this.client.providers.guilds.get(message.guild!.id, 'settings', {});
-    const locale = settings.locale || DEFAULT_LOCALE;
+    const time = Date.now() + args.time;
+    const locale = this.getLocale(message);
     const propositions = args.text.map((prop, index) => `${pollReactions[index + 1]} ${prop}`);
     const reactions = pollReactions.slice(0, propositions.length + 1);
+
     const sent = await this.embed(message, {
       author: {
         name: message.member!.displayName,
@@ -65,7 +68,7 @@ export default class PollCommand extends Command {
       title: this.t('COMMAND_POLL_RESPONSE_TITLE', message, title),
       description: propositions.join('\n'),
       footer: {
-        text: this.t('COMMAND_POLL_RESPONSE_FOOTER', message, reactions, formatDate(time, locale, true, 'both').slice(0, -3))
+        text: this.t('COMMAND_POLL_RESPONSE_FOOTER', message, reactions, formatDate(time, locale.id, true, 'both').slice(0, -3))
       }
     });
 
@@ -82,8 +85,7 @@ export default class PollCommand extends Command {
       multi: args.multi === 'true' ? true : false
     };
 
-    void this.client.providers.polls.set(sent.id, Object.keys(doc), Object.values(doc));
-
+    void this.client.providers.polls.create(sent.id, doc);
     return sent;
   }
 

@@ -23,6 +23,13 @@ export default class extends Listener {
       'messages-delete',
       { deleted: `${messages.size} messages` }
     ));
+
+    const { polls } = this.client.providers;
+
+    for (const message of messages.values()) {
+      if (!polls.cache.has(message.id)) continue;
+      void polls.delete(message.id);
+    }
   }
 
 }

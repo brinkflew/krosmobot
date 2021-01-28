@@ -259,7 +259,7 @@ export default class EnglishLocale extends Locale {
         ${argument('almanax.auto')} Enables the automatic fetching of the almanax; a channel must also be configured (optionnal)
         ${argument('almanax.channel')} Sets the channel in which the almanax must be sent (optionnal)
       `,
-      COMMAND_SET_RESPONSE_MODIFIED: (keys: string[]) => `The following keys where updated :\n\`${keys.join('`\n`')}\``,
+      COMMAND_SET_RESPONSE_MODIFIED: 'Values have been updated.',
       COMMAND_SET_RESPONSE_ERROR: 'An error occured while executing the command',
 
       // PORTAL Command

@@ -23,11 +23,10 @@ export default class PingCommand extends Command {
           type: Argument.union('textChannel', 'string')
         },
         {
-          'id': 'file',
-          'match': 'option',
-          'type': 'url',
-          'flag': 'file:',
-          'default': null
+          id: 'file',
+          match: 'option',
+          type: 'url',
+          flag: 'file:'
         },
         {
           id: 'content',
@@ -45,7 +44,7 @@ export default class PingCommand extends Command {
   public async exec(message: Message, { target, file, content }: { target: TextChannel | string; file: URL; content: string }) {
     if (typeof target === 'string') {
       content = `${target} ${content}`;
-      target = <TextChannel>message.channel;
+      target = <TextChannel> message.channel;
     }
 
     const files = [];

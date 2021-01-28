@@ -1,8 +1,8 @@
 import { Command, Scraper } from '@/structures';
 import { Message } from 'discord.js';
-import { DEFAULT_LOCALE } from '@/constants';
 import { almanax as schema } from '@/scraping-schemas';
-import { AlmanaxData } from 'types';
+import { AlmanaxDocument } from 'types';
+import { MS_PER_HOUR } from '@/constants';
 
 /**
  * Fetches the Dofus almanax for a specific date.
@@ -39,41 +39,33 @@ export default class AlmanaxCommand extends Command {
    */
   public async exec(message: Message, { extended, offset }: { extended: boolean; offset: string }) {
     const { providers } = this.client;
-    const defaultLocale = process.env.KROSMOBOT_LOCALE || DEFAULT_LOCALE;
-    const target = message.guild || message.author;
 
     const date = this.parseDate(offset);
-    if (!date) return this.error(message, this.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', message, target));
+    if (!date) return this.error(message, this.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', message, date));
 
-    const language = <string> this.get(target, 'settings', {}).locale || defaultLocale;
+    const language = this.getLocale(message).id;
     const id = `${language}:${date}`;
-    let almanax: AlmanaxData = providers.almanax.get(id, 'data');
+    let fetched = providers.almanax.fetch(id);
 
-    if (!almanax) {
+    if (!fetched) {
       const url = `http://www.krosmoz.com/${language}/almanax/${date}`;
       const scraped = await Scraper.scrape({ language, url, fields: schema });
 
       if (!scraped.data?.length) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
-      almanax = <AlmanaxData><unknown>scraped.data[0];
-      almanax.url = url;
-      void providers.almanax.set(id, 'data', almanax);
-
-      Object.assign(almanax, {
-        bonus: { title: almanax['bonus.title'], description: almanax['bonus.description'] },
-        images: { meryde: almanax['images.meryde'], item: almanax['images.item'] }
-      });
+      fetched = await providers.almanax.create(id, { ...scraped.data[0], url });
     }
 
+    const almanax = <AlmanaxDocument> fetched;
     const embed = this.craftEmbed(message, {
       author: {
         name: this.t('COMMAND_ALMANAX_RESPONSE_ALMANAX', message, almanax.day, almanax.month),
         url: almanax.url,
-        iconURL: almanax.images?.meryde
+        iconURL: almanax.images.meryde
       },
-      thumbnail: { url: almanax.images?.item },
+      thumbnail: { url: almanax.images.item },
       fields: [
         { name: almanax.title, value: almanax.offering, inline: true },
-        { name: almanax.bonus?.title, value: almanax.bonus?.description, inline: true }
+        { name: almanax.bonus.title, value: almanax.bonus.description, inline: true }
       ]
     });
 
@@ -104,7 +96,7 @@ export default class AlmanaxCommand extends Command {
 
     const offset = parseInt(input, 10);
     if (isNaN(offset)) return null;
-    const date = new Date();
+    const date = new Date(Date.now() + MS_PER_HOUR);
     return this.formatDate(date.setDate(date.getDate() + offset));
   }
 
@@ -112,8 +104,8 @@ export default class AlmanaxCommand extends Command {
    * Format a date to the standard format to use on the almanax' website.
    * @param date Date to format
    */
-  private formatDate(date: Date | number = new Date()): string {
-    if (typeof date === 'number') date = new Date(date);
+  private formatDate(date: Date | number = Date.now()): string {
+    if (typeof date === 'number') date = new Date(date + MS_PER_HOUR);
     return date.toISOString().split('T')[0];
   }
 

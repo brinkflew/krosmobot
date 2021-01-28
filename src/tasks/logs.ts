@@ -7,7 +7,7 @@ import { Task } from '@/structures';
 export default class LogsPruneTask extends Task {
 
   public constructor() {
-    super('prune-logs', { at: '03:00' });
+    super('logs', { at: '03:00' });
   }
 
   /**

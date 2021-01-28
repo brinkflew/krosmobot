@@ -28,6 +28,12 @@ export const dimensions = [
 ];
 
 export const boolean = [
-  ['true', 'yes', 'y', 'oui', 'o'],
-  ['false', 'no', 'n', 'non']
+  [
+    'true', 'yes', 'y',
+    'vrai', 'oui', 'o'
+  ],
+  [
+    'false', 'no', 'n',
+    'faux', 'non'
+  ]
 ];

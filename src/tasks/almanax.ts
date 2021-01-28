@@ -1,6 +1,7 @@
 import { TextChannel } from 'discord.js';
 import { Task } from '@/structures';
 import { dummyMessage } from '@/utils';
+import { GuildDocument } from 'types';
 
 /**
  * Sends the almanax every day at midnight.
@@ -18,10 +19,10 @@ export default class AlmanaxTask extends Task {
     const command = this.client.commands.findCommand('almanax');
 
     for (const guild of this.client.guilds.cache.array()) {
-      const config = this.client.providers.guilds.get(guild.id, 'settings', {});
-      if (!config.tasks?.almanax || !config.channels?.almanax) continue;
+      const doc = <GuildDocument> this.client.providers.guilds.get(guild.id);
+      if (!doc?.channels?.almanax) continue;
 
-      const channel = this.client.util.resolveChannel(config.channels.almanax, guild.channels.cache);
+      const channel = this.client.util.resolveChannel(doc.channels.almanax, guild.channels.cache);
       if (!(channel instanceof TextChannel)) continue;
 
       const message = dummyMessage(this.client, channel);

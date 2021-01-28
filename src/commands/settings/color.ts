@@ -25,25 +25,28 @@ export default class ColorCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { color }: { color: string | null }): Promise<Message> {
+  public async exec(message: Message, args: { [key: string]: string | null }): Promise<Message> {
     try {
+      const provider = this.getProvider(message);
+      const id = this.getID(message);
+
       // Reset the default color
-      if (!color) {
-        await this.set(message.guild!, 'settings', { color: EMBED_COLOR_DEFAULT });
+      if (!args.color) {
+        await provider.update(id, { settings: { color: EMBED_COLOR_DEFAULT } });
         return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_RESET', message, EMBED_COLOR_DEFAULT) });
       }
 
-      color = color.toUpperCase();
+      args.color = args.color.toUpperCase();
 
       // Check if the color actually changes
-      const settings = this.get(message.guild!, 'settings', { color: EMBED_COLOR_DEFAULT });
-      if (settings.color === color) {
+      const settings = provider.fetch(id)?.settings;
+      if (settings?.color === args.color) {
         return this.warning(message, this.t('COMMAND_COLOR_RESPONSE_IDENTICAL', message));
       }
 
       // Save the new color
-      await this.set(message.guild!, 'settings', { color });
-      return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_MODIFIED', message, color) });
+      await provider.update(id, { settings: { color: args.color } });
+      return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_MODIFIED', message, args.color) });
     } catch (error) {
       return this.error(message, this.t('COMMAND_COLOR_RESPONSE_ERROR', message));
     }

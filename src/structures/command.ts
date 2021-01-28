@@ -1,22 +1,21 @@
 import { Command as AkairoCommand, CommandOptions } from 'discord-akairo';
 import {
-  Guild,
-  TextChannel,
-  User,
   Message,
   MessageEmbed,
-  MessageEmbedOptions,
-  GuildMember
+  MessageEmbedOptions
 } from 'discord.js';
+import { Locale } from '@/structures';
 import MongooseProvider from '@/providers/mongoose';
 import {
   EMBED_COLOR_GREEN,
   EMBED_COLOR_RED,
   EMBED_COLOR_YELLOW,
   EMBED_COLOR_DEFAULT,
-  DEFAULT_PREFIX
+  DEFAULT_PREFIX,
+  DEFAULT_LOCALE
 } from '@/constants';
 import { code } from '@/utils/message';
+import { GuildDocument, UserDocument } from 'types';
 
 /**
  * Represents a command.
@@ -84,10 +83,9 @@ export class Command extends AkairoCommand {
    */
   public craftEmbed(message: Message, content: MessageEmbedOptions | MessageEmbed): MessageEmbed {
     if (!(content instanceof MessageEmbed)) content = new MessageEmbed(content);
-    const target = message.guild || message.author;
-    const color = this.get(target, 'settings', {}).color || EMBED_COLOR_DEFAULT;
-    if (!content.color) content.setColor(color);
-    return content;
+    if (content.color) return content;
+    const color = this.getDocument(message)?.settings?.color || EMBED_COLOR_DEFAULT;
+    return content.setColor(color);
   }
 
   /**
@@ -100,49 +98,15 @@ export class Command extends AkairoCommand {
   }
 
   /**
-   * Stores a value in the datastore.
-   * @param guild Guild for which data needs to be updated
-   * @param key Key to update
-   * @param value Value to set
-   * @param merge Whether to merge the values into the existing ones or overwrite them
-   */
-  public async set(holder: Guild | TextChannel | User | GuildMember, key: string, value: any, merge = true): Promise<any> {
-    const settings = this.getProvider(holder);
-    return settings.set(this.getID(holder), key, value, merge);
-  }
-
-  /**
-   * Fetches a value from the datastore.
-   * @param guild Guild for which data needs to be updated
-   * @param key Key to update
-   * @param defaultValue Default value if none is find
-   */
-  public get(holder: Guild | TextChannel | User | GuildMember, key: string, defaultValue: any): any {
-    const settings = this.getProvider(holder);
-    return settings.get(this.getID(holder), key, defaultValue);
-  }
-
-  /**
-   * Removes a value from the datastore.
-   * @param guild Guild from which data needs to be removed
-   * @param key Key to remove
-   */
-  public async delete(holder: Guild | TextChannel | User | GuildMember, key: string) {
-    const settings = this.getProvider(holder);
-    return settings.delete(this.getID(holder), key);
-  }
-
-  /**
    * Fetches the correct translation for this message.
    * @param key Key for the translation to fetch
    * @param message Message which triggered the command
    * @param args Parameters to pass to the translation
    */
   public translate(key: string, message: Message, ...args: any[]): string {
-    const target = message.guild || message.author;
-    const language = this.get(target, 'settings', {}).locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || 'en';
-    const locale = this.client.locales.get(language);
-    return locale.translate(key, ...args);
+    return this
+      .getLocale(message)
+      .translate(key, ...args);
   }
 
   /**
@@ -162,30 +126,44 @@ export class Command extends AkairoCommand {
    */
   public getPrefix(message?: Message): string {
     if (!message?.guild) return DEFAULT_PREFIX;
-    return this.get(message.guild, 'settings', {}).prefix || DEFAULT_PREFIX;
+    return this.getDocument(message)?.settings?.prefix || DEFAULT_PREFIX;
   }
 
   /**
    * Gets the correct provider depending on the type of the object for
    * which data will be fetched or modified.
-   * @param holder Instance to find the correct provider for
+   * @param message Message to find the provider for
    */
-  private getProvider(holder: Guild | TextChannel | User | GuildMember): MongooseProvider {
-    const { providers } = this.client;
-    if (holder instanceof Guild) return providers.guilds;
-    if (holder instanceof TextChannel) return providers.channels;
-    if (holder instanceof GuildMember) return providers.members;
-    /* if (holder instanceof User) */ return providers.users;
+  public getProvider(message: Message): MongooseProvider {
+    return message.guild
+      ? this.client.providers.guilds
+      : this.client.providers.users;
   }
 
   /**
    * Gets the correct ID depending on the type of the object for
    * which data will be fetched or modified.
-   * @param holder Instance to find the correct ID for
+   * @param message Message to find the ID for
    */
-  private getID(holder: Guild | TextChannel | User | GuildMember): string {
-    if (holder instanceof GuildMember) return `${holder.guild.id}:${holder.id}`;
-    return holder.id;
+  public getID(message: Message): string {
+    return message.guild ? message.guild.id : message.author.id;
+  }
+
+  /**
+   * Finds the document to save to and fetch from based on the message that triggered the command.
+   * @param message Message to find the document for
+   */
+  public getDocument(message: Message): GuildDocument | UserDocument | undefined {
+    return <GuildDocument | UserDocument | undefined> this.getProvider(message).fetch(this.getID(message));
+  }
+
+  /**
+   * Finds the correct locale for the given message
+   * @param message Message to find the current locale for
+   */
+  public getLocale(message: Message): Locale {
+    const language = this.getDocument(message)?.settings?.locale || process.env.KROSMOBOT_DEFAULT_LANGUAGE || DEFAULT_LOCALE;
+    return this.client.locales.get(language);
   }
 
   /**

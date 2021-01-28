@@ -151,11 +151,7 @@ export class Logger {
       description = description.stack ? `${description.message}\n${description.stack}` : description.message;
     }
 
-    return this.client.logs.set(
-      nanoid(24),
-      ['level', 'message', 'timestamp'],
-      [Logger.level(level), description, timestamp]
-    );
+    return this.client.logs.create(nanoid(24), { level: Logger.level(level), message: description, timestamp });
   }
 
   public static COLORS = {

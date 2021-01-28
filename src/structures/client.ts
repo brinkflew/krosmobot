@@ -20,7 +20,15 @@ import { DEFAULT_PREFIX } from '@/constants';
 import { argumentTypes } from '@/arguments';
 
 // Import models for the provider
-import { models, logs } from '@/models';
+import {
+  almanax,
+  guilds,
+  logs,
+  members,
+  polls,
+  reminders,
+  users
+} from '@/models';
 
 /**
  * Client connecting to the Discord gateway.
@@ -36,7 +44,14 @@ export class Client extends AkairoClient {
   public logger: Logger;
   public logs: MongooseProvider;
   public application?: Application | null;
-  public providers: { [key: string]: MongooseProvider } = {};
+  public providers: {
+    almanax: MongooseProvider;
+    guilds: MongooseProvider;
+    members: MongooseProvider;
+    polls: MongooseProvider;
+    reminders: MongooseProvider;
+    users: MongooseProvider;
+  };
 
 
   /**
@@ -53,9 +68,14 @@ export class Client extends AkairoClient {
 
     /** Providers */
 
-    for (const [key, model] of Object.entries(models)) {
-      this.providers[key] = new MongooseProvider(model);
-    }
+    this.providers = {
+      almanax: new MongooseProvider(almanax),
+      guilds: new MongooseProvider(guilds),
+      members: new MongooseProvider(members),
+      polls: new MongooseProvider(polls),
+      reminders: new MongooseProvider(reminders),
+      users: new MongooseProvider(users)
+    };
 
     /** Handlers */
 
@@ -64,7 +84,7 @@ export class Client extends AkairoClient {
       prefix: (message: Message) => {
         const prefix = process.env.KROSMOBOT_PREFIX || DEFAULT_PREFIX;
         return message.guild
-          ? this.providers.guilds.get(message.guild.id, 'settings', {}).prefix || prefix
+          ? this.providers.guilds.fetch(message.guild.id)?.settings?.prefix || prefix
           : prefix;
       },
       aliasReplacement: /-/g,

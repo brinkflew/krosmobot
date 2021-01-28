@@ -12,7 +12,14 @@ declare module 'discord-akairo' {
     twitter: Twitter;
     logger: Logger;
     logs: CustomMongooseProvider;
-    providers: { [key: string]: CustomMongooseProvider };
+    providers: {
+      almanax: CustomMongooseProvider;
+      guilds: CustomMongooseProvider;
+      members: CustomMongooseProvider;
+      polls: CustomMongooseProvider;
+      reminders: CustomMongooseProvider;
+      users: CustomMongooseProvider;
+    };
     invite: string | null;
     userCount: number;
   }

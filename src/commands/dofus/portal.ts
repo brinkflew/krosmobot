@@ -16,22 +16,7 @@ export default class PortalCommand extends Command {
         'extended': 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
         'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
         'usage': 'COMMAND_PORTAL_DESCRIPTION_USAGE'
-      } // ,
-      // args: [
-      //   {
-      //     id: 'dimension',
-      //     type: [
-      //       ['enutrosor', 'enu', 'enutrof'],
-      //       ['ecaflipus', 'eca', 'ecaflip'],
-      //       ['srambad', 'sram'],
-      //       ['xelorium', 'xel', 'xelor']
-      //     ]
-      //   },
-      //   {
-      //     id: 'server',
-      //     type: 'lowercase'
-      //   }
-      // ]
+      }
     });
   }
 
@@ -107,8 +92,8 @@ export default class PortalCommand extends Command {
     };
 
     if (!args.server && message.guild) {
-      const settings = this.get(message.guild, 'settings', {});
-      if (settings.dofus?.server?.id) args.server = settings.dofus?.server;
+      const doc = this.getDocument(message);
+      if (doc?.dofus?.server?.id) args.server = doc?.dofus?.server;
     }
 
     return args;
