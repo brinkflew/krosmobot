@@ -253,10 +253,13 @@ export default class FrenchLocale extends Locale {
       COMMAND_SET_DESCRIPTION_EXTENDED: stripIndent`
         Configure le serveur pour activer ou désactiver des fonctions de ce bot. Plusieurs clés peuvent être
         configurées à la fois, mais au moins une clé doit être indiquée.
+        Si une valeur contient un ou plusieurs espaces, elle devra être entourée de guillemets.
       `,
       COMMAND_SET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Active l'almanax automatique dans le salon '\#almanax' :
         ${usage(prefix, 'set almanax \#almanax')}
+        Configure le serveur par défaut comme étant Oto Mustam :
+        ${usage(prefix, 'set server "oto mustam"')}
       `,
       COMMAND_SET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'set <key> <value> [<key> <value>,...]')}
@@ -507,7 +510,54 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'Le rappel nécessite un contenu à envoyer.',
       COMMAND_REMIND_RESPONSE_SUCCESS: (date: string) => `Un rappel sera envoyé ici le ${date}`,
-      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`,
+
+      // ABOUT Command
+      COMMAND_ABOUT_DESCRIPTION_SHORT: `A propos du bot.'`,
+      COMMAND_ABOUT_DESCRIPTION_EXTENDED: 'Affiche des informations à propos de ce bot et de son utilité.',
+      COMMAND_ABOUT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Affiche les informations du bot :
+        ${usage(prefix, 'about')}
+      `,
+      COMMAND_ABOUT_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'about')}
+      `,
+      COMMAND_ABOUT_RESPONSE_TITLE: (name: string) => `A propos de ${name}`.toUpperCase(),
+      COMMAND_ABOUT_RESPONSE_DESCRIPTION: (name: string, url: string) => stripIndent`
+        ${oneLine`
+          [${name}](${url}) est un bot Discord à but semi-générique visant à faciliter la gestion
+          des guildes Dofus en proposant une suite d'outils et de commandes à ses utilisateurs.
+        `}
+      `,
+      COMMAND_ABOUT_RESPONSE_FEATURES_TITLE: 'Fonctionnalités',
+      COMMAND_ABOUT_RESPONSE_FEATURES_CONTENT: stripIndent`
+        \u2022 Customisez le préfixe et les couleurs du bot
+        \u2022 Profitez d'une expérience multilingue
+        \u2022 Recevez les tweets en direct d'Ankama
+        \u2022 Affichez l'almanax du jour automatiquement
+        \u2022 Trouvez la position des portails grâce à [Dofus-Portals](https://dofus-portals.fr/)
+        \u2022 Listez et partagez vos métiers en guilde
+        \u2022 Participez à des events et mini-jeux sur Discord
+        \u2022 Créez des sondages, programmez des rappels automatiques
+        \u2022 Et bien d'autres choses...
+      `,
+      COMMAND_ABOUT_RESPONSE_INVITE_TITLE: 'Ajoutez-moi à votre serveur',
+      COMMAND_ABOUT_RESPONSE_INVITE_CONTENT: (invite: string) => oneLine`
+        Je peut être invité sur n'importe quel serveur Discord au moyen de ce [lien](${invite}).
+      `,
+      COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE: 'Vous m\'offrez un café ?',
+      COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT: oneLine`
+        L'utilisation de ce bot est gratuite et le restera à jamais. Cependant, le faire
+        fonctionner coûte du temps et l'argent à son auteur...
+        Vous appréciez ce projet ?
+        Pourquoi ne pas montrer votre support avec une petite [donation](https://www.paypal.com/donate?hosted_button_id=2XHYFQDDDNT84) ? :heart:
+
+      `,
+      COMMAND_ABOUT_RESPONSE_UPTIME: (version: string, uptime: string, author: string) => oneLine`
+        Version ${version}
+        \u2022 En ligne depuis ${uptime}
+        \u2022 \u00A9 ${new Date().getFullYear()} ${author}
+      `
     };
   }
 

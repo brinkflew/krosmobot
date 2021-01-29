@@ -4,7 +4,7 @@
   "private": false,
   "description": "A stupid Discord bot for a stupid Dofus guild...",
   "repository": "https://github.com/brinkflew/krosmobot.git",
-  "author": "Antoine van Serveyt <avs+krosmobot@avanserv.com>",
+  "author": "Brinkflew <avs+krosmobot@avanserv.com>",
   "license": "MPL-2.0",
   "main": "dist/client.js",
   "engines": {

@@ -249,10 +249,13 @@ export default class EnglishLocale extends Locale {
       COMMAND_SET_DESCRIPTION_EXTENDED: stripIndent`
         Configures this guild to enable or disable features of the bot. Multiple keys may be configured
         at once, but at least one key must be set.
+        A value containing white-spaces must be enclosed between quotes.
       `,
       COMMAND_SET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Enables auto-almanax in the '\#almanax' channel:
         ${usage(prefix, 'set almanax \#almanax')}
+        Set the default server as Oto Mustam:
+        ${usage(prefix, 'set server "oto mustam"')}
       `,
       COMMAND_SET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'set <key> <value> [<key> <value>,...]')}
@@ -505,7 +508,54 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'The reminder requires content to send.',
       COMMAND_REMIND_RESPONSE_SUCCESS: (date: string) => `A reminder will be sent here on ${date}`,
-      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`,
+
+      // ABOUT Command
+      COMMAND_ABOUT_DESCRIPTION_SHORT: 'About this bot.',
+      COMMAND_ABOUT_DESCRIPTION_EXTENDED: 'Displays information about the client and its purpose.',
+      COMMAND_ABOUT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Display information about this client:
+        ${usage(prefix, 'about')}
+      `,
+      COMMAND_ABOUT_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
+        ${usage(prefix, 'about')}
+      `,
+      COMMAND_ABOUT_RESPONSE_TITLE: (name: string) => `About ${name}`.toUpperCase(),
+      COMMAND_ABOUT_RESPONSE_DESCRIPTION: (name: string, url: string) => stripIndent`
+        ${oneLine`
+          [${name}](${url}) is a semi-general-purpose Discord bot aimed at facilitating the management
+          of Dofus guilds by providing a suite of tools and commands to its users.
+        `}
+      `,
+      COMMAND_ABOUT_RESPONSE_FEATURES_TITLE: 'Features',
+      COMMAND_ABOUT_RESPONSE_FEATURES_CONTENT: stripIndent`
+        \u2022 Customize the prefix and colors of the bot
+        \u2022 Benefit from a multilingual experience
+        \u2022 Receive tweet directly from Ankama
+        \u2022 Display the almanax of the day automatically
+        \u2022 Find portals position thanks to [Dofus-Portals](https://dofus-portals.fr/)
+        \u2022 List and share your jobs with other guild members
+        \u2022 Join events and minigames on Discord
+        \u2022 Create polls, setup automatic reminders
+        \u2022 And many more...
+      `,
+      COMMAND_ABOUT_RESPONSE_INVITE_TITLE: 'Invite me to your server',
+      COMMAND_ABOUT_RESPONSE_INVITE_CONTENT: (invite: string) => oneLine`
+        You can invite me to any Discord guild using the following [link](${invite}).
+      `,
+      COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE: 'Would you buy me a coffee?',
+      COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT: oneLine`
+        Using this bot is free and will remain that way forever. However, making it
+        work costs both time and money to its author...
+        Do you like this project?
+        Why not show your support with a small [donation](https://www.paypal.com/donate?hosted_button_id=2XHYFQDDDNT84)? :heart:
+
+      `,
+      COMMAND_ABOUT_RESPONSE_UPTIME: (version: string, uptime: string, author: string) => oneLine`
+        Version ${version}
+        \u2022 Online for ${uptime}
+        \u2022 \u00A9 ${new Date().getFullYear()} ${author}
+      `
     };
   }
 

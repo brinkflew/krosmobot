@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Command `get` to see the currently configured parameters
+- Command `about` to get information about the bot
 
 ### Modified
 

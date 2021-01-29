@@ -1,22 +1,47 @@
 # Krosmobot
 
-An extensive Discord bot for not-too-serious Dofus guilds.
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/brinkflew/krosmobot?label=Version)
+![GitHub](https://img.shields.io/github/license/brinkflew/krosmobot?label=License)
+![Node JS Version](https://img.shields.io/badge/Node%20JS-14.15.0-%236dbe4b)
+
+
+![GitHub issues](https://img.shields.io/github/issues-raw/brinkflew/krosmobot?label=Issues&logo=GitHub)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/brinkflew/krosmobot?label=Pull%20Requests)
+![GitHub all releases](https://img.shields.io/github/downloads/brinkflew/krosmobot/total?label=Downloads)
+![GitHub contributors](https://img.shields.io/github/contributors/brinkflew/krosmobot?label=Contributors)
+
+![GitHub last commit](https://img.shields.io/github/last-commit/brinkflew/krosmobot?label=Last%20Commit)
+![GitHub Release Date](https://img.shields.io/github/release-date/brinkflew/krosmobot?label=Realease%20Date)
+
+![Discord](https://img.shields.io/discord/399609103137112078?color=%237289DA&label=Discord&logo=Discord)
+
+
+
+KrosmoBot is a semi-general-purpose [Discord](https://discord.com/)
+bot aimed at facilitating the management of [Dofus](https://www.dofus.com/en)
+guilds by providing a suite of tools and commands to its users.
+
+---
 
 ## Key Features
 
-- A few util commands that allow to personnalize the bot for your own guild
-- Automatic notification for the Almanax. Every day at midnight
-- Get a notification when an official Dofus-related tweet is posted (updates, lives, maintenances, etc.)
-- Multilang support (currently only French and partial English are supported)
-- Track the jobs of your character in Dofus or find someone in your guild who can craft something for you
-- Find the last known location of a portal to one of the divine dimensions
+- Customize the prefix and colors of the bot
+- Benefit from a multilingual experience
+- Receive tweet directly from Ankama
+- Display the almanax of the day automatically
+- Find portals position thanks to [Dofus-Portals](https://dofus-portals.fr/)
+- List and share your jobs with other guild members
+- Join events and minigames on Discord
+- Create polls, setup automatic reminders
+- And many more...
+
 
 ## In the Future
 
-- Events-related commands (dice roll, cards, etc.)
-- Improve portals localizations (closest zaap, best route, etc.)
-- [In Discussion] Integration with Metamob: track and organize your quest for the mighty Ocre Dofus
-- More!
+- More minigames
+- Improve portals localization (closest zaap, best route, etc.)
+- [In Discussion] Integration with [Metamob](https://www.metamob.fr/)
+- And more...
 
 ---
 
@@ -41,22 +66,23 @@ When in doubt, type `!help` to get a recap of all available commands.
 
 - `!poll` → Create polls and compare answers.
 - `!remind` → Set an automatic reminder in the future.
+- `!about`→ About this bot.
 
 ### Settings
 
 - `!color` → Change the color used for embeds' borders in this guild.
-- `!locale` → Modifies the language for the current guild.
-- `!prefix` → Modifies the prefix in this guild.
-- `!set` → Assigns a value to a parameter.
+- `!locale` → Change the language for the current guild.
+- `!prefix` → Change the prefix for the current guild.
+- `!set` → Configure a parameter.
 - `!get` → Display values assigned to parameters.
 
 ### Utils
 
-- `!echo` → Repeats a message.
-- `!help` → Displays help about commands.
-- `!invite` → Generates an invite to add the bot to another Discord guild.
-- `!monit` → Statistics about the bot and its process (owner only).
-- `!ping` → Latency between this bot and Discord.
+- `!echo` → Repeat a message in another channel.
+- `!help` → Display help about commands.
+- `!invite` → Generate an invite to add the bot to another Discord guild.
+- `!monit` → Get statistics about the bot and its processes (owner only).
+- `!ping` → Show the latency between this bot and Discord.
 
 ## Twitter
 
@@ -69,10 +95,12 @@ it follows the following accounts:
 
 The bot needs a channel to send the news to, see the [news setup](#News) for more details.
 
-## Install
+---
 
-To run the bot on your own server, you'll need [NodeJS](https://nodejs.org/en/)
-version 14.15.0 or above.
+## Installation
+
+To run the bot on your own server, you'll need [NodeJS](https://nodejs.org/en)
+version *14.15.0* or above and the [yarn](https://yarnpkg.com/) package manager.
 
 Some commands make use of [canvas](https://www.npmjs.com/package/canvas)
 which itself requires a few dependencies to be installed on your system.
@@ -80,11 +108,32 @@ To see the list of dependencies and how to install them
 on your operating system, please refer to
 [the official canvas documentation](https://github.com/Automattic/node-canvas#compiling).
 
-Once there, clone this repository to your machine and navigate
+### Before You Begin
+
+Open the [Discord Developer Portal](https://discord.com/developers/applications) and create a new bot application.
+
+Login to the [Twitter Developer Portal](https://developer.twitter.com/en) and create a new app.
+
+### Download the Latest Stable Version
+
+Clone this repository to your machine and navigate
 to the `krosmobot` folder:
 
 ```sh
-git clone --branch stable git@github.com:brinkflew/krosmobot.git && cd krosmobot
+git clone --branch stable git@github.com:brinkflew/krosmobot.git
+cd krosmobot.git
+```
+
+### Configure
+
+Copy the `.env.example` file to `.env` and open that new file with your favorite text editor. Fill-in the required parameters. You'll need a least
+the Discord and Twitter credentials from the apps created earlier on their developer portals.
+
+> **NOTE:** Make sure to __never__ share those credentials with anyone else. Those are yours and yours only.
+
+```sh
+cp .env.example .env
+vim .env
 ```
 
 Run the client with the provided startup script:
@@ -94,6 +143,8 @@ yarn start
 ```
 
 That's it!
+
+---
 
 ## Setup
 
