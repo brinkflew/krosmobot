@@ -14,6 +14,9 @@ guilds by providing a suite of tools and commands to its users.
 ![Badge: GitHub all releases]
 ![Badge: GitHub contributors]
 
+[![Build Status](https://travis-ci.org/brinkflew/krosmobot.svg?branch=main)](https://travis-ci.org/brinkflew/krosmobot)
+
+
 ![Badge: Discord]
 
 </div>
