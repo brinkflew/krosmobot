@@ -26,6 +26,7 @@ export default class JobCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, { name, level, member }: { name: string; level: number; member: GuildMember }): Promise<Message> {
+    member = member || message.member;
     const provider = this.client.providers.members;
 
     // `!job tailor` → Display the single job for all users
@@ -79,12 +80,8 @@ export default class JobCommand extends Command {
       });
     }
 
-    const target = member ? member : message.author;
-    const jobs: { [key: string]: number } = provider.fetch(target.id)?.jobs || {};
-
-    const author = target instanceof GuildMember
-      ? { name: target.displayName, iconURL: target.user.avatarURL() || target.user.defaultAvatarURL }
-      : { name: target.username, iconURL: target.avatarURL() || target.defaultAvatarURL };
+    const jobs: { [key: string]: number } = provider.fetch(member.id)?.jobs || {};
+    const author = { name: member.displayName, iconURL: member.user.avatarURL() || member.user.defaultAvatarURL };
 
     // `!job @Member` → Display all jobs for the single user
     // `!job` → Display all jobs for self
