@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2021-02-05
+
 ### Added
 
 - Command `get` to see the currently configured parameters
 - Command `about` to get information about the bot
+- Unit testing
 
 ### Modified
 
@@ -18,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dofus-related arguments parsing
 - Harmonize constants and default values
 - Refactor settings' provider: return docs instead of single key-value
+- Minor corrections in localizations
+- Command `job` implements fuzzy search for jobnames
 
 ### Removed
 
@@ -69,7 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Get news from twitter in real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...HEAD
+[0.1.4]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/brinkflew/krosmobot/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/brinkflew/krosmobot/compare/0.1.1...v0.1.2
 [0.1.1]: https://github.com/brinkflew/krosmobot/compare/0.1.0...0.1.1
