@@ -1,7 +1,6 @@
 # Krosmobot
 
-<div style="text-align: center">
-
+<div align="center">
 
 KrosmoBot is a semi-generic-purpose [Discord](https://discord.com/)
 bot aimed at facilitating the management of [Dofus](https://www.dofus.com/en)
@@ -15,15 +14,9 @@ guilds by providing a suite of tools and commands to its users.
 ![Badge: GitHub all releases]
 ![Badge: GitHub contributors]
 
-![Badge: Statements Coverage](./coverage/badge-statements.svg?raw=true)
-![Badge: Branches Coverage](./coverage/badge-branches.svg?raw=true)
-![Badge: Functions Coverage](./coverage/badge-functions.svg?raw=true)
-![Badge: Lines Coverage](./coverage/badge-lines.svg?raw=true)
-
 ![Badge: Discord]
 
 </div>
-
 
 ---
 
