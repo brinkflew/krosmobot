@@ -15,7 +15,7 @@ guilds by providing a suite of tools and commands to its users.
 ![Badge: GitHub contributors]
 
 [![Build Status](https://travis-ci.org/brinkflew/krosmobot.svg?branch=main)](https://travis-ci.org/brinkflew/krosmobot)
-
+[![Coverage Status](https://coveralls.io/repos/github/brinkflew/krosmobot/badge.svg?branch=main)](https://coveralls.io/github/brinkflew/krosmobot?branch=main)
 
 ![Badge: Discord]
 
@@ -197,10 +197,10 @@ Set a default Dofus server to use when unspecified in some commands (almanax, et
 !set server Jahash
 ```
 
-[Badge: GitHub release (latest SemVer)]: https://img.shields.io/github/v/release/brinkflew/krosmobot?label=Version
-[Badge: GitHub license]: https://img.shields.io/github/license/brinkflew/krosmobot?label=License
-[Badge: GitHub issues]: https://img.shields.io/github/issues-raw/brinkflew/krosmobot?label=Issues&logo=GitHub
-[Badge: GitHub pull requests]: https://img.shields.io/github/issues-pr-raw/brinkflew/krosmobot?label=Pull%20Requests
-[Badge: GitHub all releases]: https://img.shields.io/github/downloads/brinkflew/krosmobot/total?label=Downloads
-[Badge: GitHub contributors]: https://img.shields.io/github/contributors/brinkflew/krosmobot?label=Contributors
-[Badge: Discord]: https://img.shields.io/discord/399609103137112078?color=%237289DA&label=Discord&logo=Discord
+[Badge: GitHub release (latest SemVer)]: https://img.shields.io/github/v/release/brinkflew/krosmobot?label=version
+[Badge: GitHub license]: https://img.shields.io/github/license/brinkflew/krosmobot?label=license
+[Badge: GitHub issues]: https://img.shields.io/github/issues-raw/brinkflew/krosmobot?label=issues&logo=GitHub
+[Badge: GitHub pull requests]: https://img.shields.io/github/issues-pr-raw/brinkflew/krosmobot?label=pull%20requests
+[Badge: GitHub all releases]: https://img.shields.io/github/downloads/brinkflew/krosmobot/total?label=downloads
+[Badge: GitHub contributors]: https://img.shields.io/github/contributors/brinkflew/krosmobot?label=contributors
+[Badge: Discord]: https://img.shields.io/discord/399609103137112078?color=%237289DA&label=discord&logo=discord
