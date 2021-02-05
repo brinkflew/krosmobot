@@ -1,4 +1,5 @@
-sudo: false
+os: linux
+dist: xenial
 arch: amd64
 
 before_install:
@@ -6,6 +7,6 @@ before_install:
 
 language: node_js
 node_js:
-  - 14
+  - v14.15.0
 
 script: yarn build
