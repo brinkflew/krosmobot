@@ -1,3 +1,3 @@
 export * from './boolean';
-export * from './dofusDimensions';
-export * from './dofusJobs';
+export * from './dimensions';
+export * from './jobs';

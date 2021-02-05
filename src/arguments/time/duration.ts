@@ -1,24 +1,26 @@
 import { Message } from 'discord.js';
 import { TIME } from '@/constants';
 
-const parser = /([0-9.,]*)\s?([a-z]*)/i;
+/**
+ * Matches the format of the duration argument.
+ */
+export const matcher = /([0-9.,]*)(d|j|h|m|s)?/i;
 
 /**
  * Converts a string to a timestamp (in ms)
  * @example
  * '2d' => 1000 * 60 * 60 * 24 * 2
- * '30m' => 1000 * 60 * 60 * 30
- * '45s' => 1000 * 60 * 45
+ * '10h' => 1000 * 60 * 60 * 10
+ * '45m' => 1000 * 60 * 45
+ * '15s' => 1000 * 15
  * @param _message Message from which the content is parsed
  * @param phrase Phrase to try to parse
  */
 export const duration = (_message: Message, phrase: string) => {
-  if (!phrase) return null;
-  const parsed = parser.exec(phrase);
-  if (!parsed) return null;
-  const time = parseInt(parsed[1].replace(',', '.'), 10) || 1;
-  if (isNaN(time)) return null;
-  const unit = parsed[2][0].toLowerCase() || 'd';
+  if (!phrase.length) return null;
+  const parsed = matcher.exec(phrase)!;
+  const time = parsed[1] ? parseFloat(parsed[1].replace(',', '.')) : 1;
+  const unit = parsed[2] ? parsed[2][0].toLowerCase() : 'd';
 
   switch (unit) {
     case 's':

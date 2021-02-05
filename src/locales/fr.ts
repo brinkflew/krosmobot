@@ -212,6 +212,7 @@ export default class FrenchLocale extends Locale {
         ${argument('file:url')} \`file:\ suivit de l'URL d'un fichier ou d'une image à joindre (optionnel)
         ${argument('message')} Contenu du message à envoyer (optionnel)
       `,
+      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'Veuillez soumettre du texte à répéter',
       COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message envoyé dans le channel \#${channel}`,
 
       // ALMANAX Command
@@ -272,8 +273,12 @@ export default class FrenchLocale extends Locale {
         ${pairs.length > 1 ? 'Les clés suivantes ont été mises' : 'La clé suivante a été mise'} à jour :
         ${code(pairs.join('\n'))}
       `,
-      COMMAND_SET_RESPONSE_NO_KEYS: 'Aucune valeur valide n\'a été indiquée.',
-      COMMAND_SET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
+      COMMAND_SET_RESPONSE_NO_KEYS: 'Au moins une paire clé-valeur doit être indiquée.',
+      COMMAND_SET_RESPONSE_INVALID_PAIRS: 'Le nombre de clés et de valeurs est différent.',
+      COMMAND_SET_RESPONSE_INVALID_VALUES: (keys: string[]) => stripIndent`
+        ${keys.length > 1 ? 'Les valeurs des clés suivantes sont invalides' : 'La valeur de la clé suivante est invalide'} :
+        ${code(keys.join('\n'))}
+      `,
 
       // GET Command
       COMMAND_GET_DESCRIPTION_SHORT: 'Affiche la valeur d\'un paramètre.',
@@ -298,6 +303,11 @@ export default class FrenchLocale extends Locale {
         Les clés suivantes sont configurées :
         ${code(pairs.join('\n'))}
       `,
+      COMMAND_GET_RESPONSE_INVALID_KEYS: (keys: string[]) => stripIndent`
+        Les clés demandées sont invalides, veuillez vérifier leur orthographe et réessayer :
+        ${code(keys.join('\n'))}
+      `,
+      COMMAND_GET_RESPONSE_NO_KEYS: 'Aucune clé à afficher.',
       COMMAND_GET_RESPONSE_ERROR: 'Une erreur est survenue durant l\'exécution de la commande...',
 
       // PORTAL Command
@@ -509,7 +519,7 @@ export default class FrenchLocale extends Locale {
         ${argument('contenu')} Contenu à envoyer dans le rappel
       `,
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'Le rappel nécessite un contenu à envoyer.',
-      COMMAND_REMIND_RESPONSE_SUCCESS: (date: string) => `Un rappel sera envoyé ici le ${date}`,
+      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `Un rappel sera envoyé dans ${time}`,
       COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`,
 
       // ABOUT Command

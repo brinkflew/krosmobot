@@ -1,7 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
 import { format } from '@/utils';
-import metrics from '@/metrics';
 
 /**
  * Get the latency between the user and the client,
@@ -35,7 +34,8 @@ export default class MonitCommand extends Command {
     const { rss } = process.memoryUsage();
     const { userCPUTime, systemCPUTime } = process.resourceUsage();
     const load = (userCPUTime + systemCPUTime) / (processUptime * 10e6) * 100;
-    const { heartbeat, shards } = metrics.discord;
+    const latency = Math.ceil(this.client.metrics.get('discord.latency').value || 0);
+    const shards = this.client.metrics.get('discord.shards').last;
 
     /* eslint-disable @typescript-eslint/naming-convention */
     const {
@@ -45,7 +45,7 @@ export default class MonitCommand extends Command {
     } = process.env;
     /* eslint-enable @typescript-eslint/naming-convention */
 
-    return this.embed(message, {
+    const embed = this.craftEmbed(message, {
       author: {
         name: this.t('COMMAND_MONIT_RESPONSE_TITLE', message, (<string> this.client.user?.username), (<string> npm_package_version)),
         iconURL: this.client.user?.avatarURL() || this.client.user?.defaultAvatarURL,
@@ -68,7 +68,7 @@ export default class MonitCommand extends Command {
         },
         {
           name: this.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE', message),
-          value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, Math.ceil(heartbeat.val()), shards.val()),
+          value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, latency, shards),
           inline: true
         }
       ],
@@ -76,6 +76,8 @@ export default class MonitCommand extends Command {
         text: this.t('COMMAND_MONIT_RESPONSE_UPTIME', message, uptime)
       }
     });
+
+    return message.channel.send(embed);
   }
 
 }

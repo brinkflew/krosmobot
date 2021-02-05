@@ -21,7 +21,7 @@ export default class PollCommand extends Command {
         {
           'id': 'time',
           'match': 'option',
-          'flag': 'time:',
+          'flag': '--close-in',
           'type': 'duration',
           'default': TIME.MS_PER_DAY,
           'unordered': true
@@ -29,7 +29,7 @@ export default class PollCommand extends Command {
         {
           'id': 'multi',
           'match': 'option',
-          'flag': 'multi:',
+          'flag': '--allow-mutli',
           'type': ARGUMENTS.BOOLEAN,
           'default': 'true',
           'unordered': true
@@ -47,9 +47,9 @@ export default class PollCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { time: number; text: string[]; multi: string }) {
+  public async exec(message: Message, args: { time: number; text: string[] | null; multi: string }) {
+    if (!args.text?.length) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NO_TITLE', message));
     const title = args.text.shift();
-    if (!title) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NO_TITLE', message));
 
     if (args.text.length === 1) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS', message));
     if (Math.max(...args.text.map(t => t.length)) > 96) return this.error(message, this.t('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG', message));

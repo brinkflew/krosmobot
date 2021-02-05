@@ -77,7 +77,7 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_PREFIX_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'prefix [prefix]')}
-        ${argument('prefix')} New prefix (optionnal)
+        ${argument('prefix')} New prefix (optional)
       `,
       COMMAND_PREFIX_RESPONSE_MODIFIED: (prefix: string) => `The prefix has been modified to \`${prefix}\`.`,
       COMMAND_PREFIX_RESPONSE_IDENTICAL: 'The old and new prefixes are identical.',
@@ -103,7 +103,7 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_LOCALE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'locale [language]')}
-        ${argument('language')} Code (two letters) of the language to use (optionnal)
+        ${argument('language')} Code (two letters) of the language to use (optional)
       `,
       COMMAND_LOCALE_RESPONSE_MODIFIED: (locale: string) => `The language has been set to ${locale}.`,
       COMMAND_LOCALE_RESPONSE_IDENTICAL: (locale: string) => `The current language is already ${locale}.`,
@@ -126,7 +126,7 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_COLOR_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'color [color]')}
-        ${argument('color')} New color (optionnal)
+        ${argument('color')} New color (optional)
       `,
       COMMAND_COLOR_RESPONSE_MODIFIED: (color: string) => `The embed color has been modified to \`${color}\`.`,
       COMMAND_COLOR_RESPONSE_IDENTICAL: 'The old and new embed color are identical.',
@@ -164,14 +164,14 @@ export default class EnglishLocale extends Locale {
         Use \`<prefix>help <command>\` for more information on a specific command.
       `,
       COMMAND_HELP_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
-        Display a general help message:
+        Display a generic help message:
         ${usage(prefix, 'help')}
         Display extended help for the \`${prefix}ping\` command:
         ${usage(prefix, 'help ping')}
       `,
       COMMAND_HELP_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'help [command]')}
-        ${argument('command')} Name of a command to display the extended help for (optionnal)
+        ${argument('command')} Name of a command to display the extended help for (optional)
       `,
       COMMAND_HELP_CATEGORY_SETTINGS: 'Settings',
       COMMAND_HELP_CATEGORY_UTILS: 'Utils',
@@ -205,11 +205,12 @@ export default class EnglishLocale extends Locale {
         ${usage(prefix, 'echo #general file:https://www.thissitedoesnotexist.com/image.jpg <message>')}
       `,
       COMMAND_ECHO_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'echo [channel] [file:url] [message]')}
-        ${argument('channel')} *Mention* of the channel to which the message should be copied (optionnal)
-        ${argument('file:url')} \`file:\ followed by the url of the file to join (optionnal)
-        ${argument('message')} Content to repeat (optionnal)
+        ${usage(prefix, 'echo [channel] [--file url] [message]')}
+        ${argument('channel')} *Mention* of the channel to which the message should be copied (optional)
+        ${argument('--file url')} \`--file\ followed by the url of the file to join (optional)
+        ${argument('message')} Content to repeat (optional)
       `,
+      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'Please provide some text to echo.',
       COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message sent to the channel \#${channel}`,
 
       // ALMANAX Command
@@ -234,10 +235,10 @@ export default class EnglishLocale extends Locale {
         ${usage(prefix, 'almanax details +7')}
       `,
       COMMAND_ALMANAX_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'almanax [--details] [date|offset]')}
-        ${argument('details')} Display the detailed version (optionnal)
-        ${argument('date')} Date for the almanax to fetch (optionnal)
-        ${argument('offset')} Number of days to add/substract to the current date (optionnal)
+        ${usage(prefix, 'almanax [--detail] [date|offset]')}
+        ${argument('--detail')} Display the detailed version (optional)
+        ${argument('date')} Date for the almanax to fetch (optional)
+        ${argument('offset')} Number of days to add/substract to the current date (optional)
       `,
       COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR: 'Cannot fetch the almanax for now',
       COMMAND_ALMANAX_RESPONSE_DATE_ERROR: (input: string) => `Value \`${input}\` is not a valid date.`,
@@ -268,8 +269,12 @@ export default class EnglishLocale extends Locale {
         The following ${pairs.length > 1 ? 'keys were' : 'key was'} updated:
         ${code(pairs.join('\n'))}
       `,
-      COMMAND_SET_RESPONSE_NO_KEYS: 'No valid value provided.',
-      COMMAND_SET_RESPONSE_ERROR: 'An error occured while executing the command.',
+      COMMAND_SET_RESPONSE_NO_KEYS: 'You need to provide at least on key-value pair to configure.',
+      COMMAND_SET_RESPONSE_INVALID_PAIRS: 'Different number of keys and values.',
+      COMMAND_SET_RESPONSE_INVALID_VALUES: (keys: string[]) => stripIndent`
+        The following ${keys.length > 1 ? 'keys were' : 'key was'} provided an incorrect value:
+        ${code(keys.join('\n'))}
+      `,
 
       // GET Command
       COMMAND_GET_DESCRIPTION_SHORT: 'Display the value of a parameter.',
@@ -294,6 +299,11 @@ export default class EnglishLocale extends Locale {
         The following keys are configured:
         ${code(pairs.join('\n'))}
       `,
+      COMMAND_GET_RESPONSE_INVALID_KEYS: (keys: string[]) => stripIndent`
+        The following keys you requested are invalid, please check them and try again:
+        ${code(keys.join('\n'))}
+      `,
+      COMMAND_GET_RESPONSE_NO_KEYS: 'No keys to display.',
       COMMAND_GET_RESPONSE_ERROR: 'An error occured while executing the command',
 
       // PORTAL Command
@@ -323,8 +333,8 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_PORTAL_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'portal [dimension] [server]')}
-        ${argument('dimension')} Dimension to search for a portal to (optionnal)
-        ${argument('serveur')} Server for which to search a portal (optionnal)
+        ${argument('dimension')} Dimension to search for a portal to (optional)
+        ${argument('serveur')} Server for which to search a portal (optional)
       `,
       COMMAND_PORTAL_RESPONSE_NOSERVER: 'No Dofus server was specified, or its name is incorrect.',
 
@@ -368,9 +378,9 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_JOB_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'job [job] [level] [member]')}
-        ${argument('job')} Job to display or update (optionnal)
+        ${argument('job')} Job to display or update (optional)
         ${argument('level')} New level for a job to update (optionnel)
-        ${argument('membre')} Mention of a member to display the jobs of (optionnal)
+        ${argument('membre')} Mention of a member to display the jobs of (optional)
       `,
       COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number, corrected: number) => oneLine`
         The job level ${level} is not included between the allowed margins
@@ -507,7 +517,7 @@ export default class EnglishLocale extends Locale {
         ${argument('content')} Content to send in the reminder
       `,
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'The reminder requires content to send.',
-      COMMAND_REMIND_RESPONSE_SUCCESS: (date: string) => `A reminder will be sent here on ${date}`,
+      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `A reminder will be sent in ${time}`,
       COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`,
 
       // ABOUT Command
@@ -523,7 +533,7 @@ export default class EnglishLocale extends Locale {
       COMMAND_ABOUT_RESPONSE_TITLE: (name: string) => `About ${name}`.toUpperCase(),
       COMMAND_ABOUT_RESPONSE_DESCRIPTION: (name: string, url: string) => stripIndent`
         ${oneLine`
-          [${name}](${url}) is a semi-general-purpose Discord bot aimed at facilitating the management
+          [${name}](${url}) is a semi-generic-purpose Discord bot aimed at facilitating the management
           of Dofus guilds by providing a suite of tools and commands to its users.
         `}
       `,

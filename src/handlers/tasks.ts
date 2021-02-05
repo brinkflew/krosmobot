@@ -50,7 +50,8 @@ export class TaskHandler extends AkairoHandler {
    * Initializes the scheduler.
    */
   public init() {
-    setInterval(() => void this.execTasks(), this.interval * 1000);
+    const cron = setInterval(() => void this.execTasks(), this.interval * 1000);
+    this.client.crons.add(cron);
   }
 
   /**

@@ -5,7 +5,7 @@ import { Argument } from 'discord-akairo';
 /**
  * Repeat a message, possibly in another channel.
  */
-export default class PingCommand extends Command {
+export default class EchoCommand extends Command {
 
   public constructor() {
     super('echo', {
@@ -26,7 +26,7 @@ export default class PingCommand extends Command {
           id: 'file',
           match: 'option',
           type: 'url',
-          flag: 'file:'
+          flag: '--file'
         },
         {
           id: 'content',
@@ -43,15 +43,17 @@ export default class PingCommand extends Command {
    */
   public async exec(message: Message, { target, file, content }: { target: TextChannel | string; file: URL; content: string }) {
     if (typeof target === 'string') {
-      content = `${target} ${content}`;
+      content = content ? `${target} ${content}` : target;
       target = <TextChannel> message.channel;
     }
+
+    if (!content) return this.warning(message, this.t('COMMAND_ECHO_RESPONSE_NO_CONTENT', message));
 
     const files = [];
     if (file) files.push(file.href);
 
-    void target.send(content, { files });
-    return this.success(message, this.t('COMMAND_ECHO_RESPONSE_SENT', message, target.name));
+    if (target.id !== message.channel.id) void this.success(message, this.t('COMMAND_ECHO_RESPONSE_SENT', message, target.name));
+    return target.send(content, { files });
   }
 
 }

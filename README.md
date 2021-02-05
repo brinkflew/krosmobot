@@ -1,25 +1,29 @@
 # Krosmobot
 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/brinkflew/krosmobot?label=Version)
-![GitHub](https://img.shields.io/github/license/brinkflew/krosmobot?label=License)
-![Node JS Version](https://img.shields.io/badge/Node%20JS-14.15.0-%236dbe4b)
+<div style="text-align: center">
 
 
-![GitHub issues](https://img.shields.io/github/issues-raw/brinkflew/krosmobot?label=Issues&logo=GitHub)
-![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/brinkflew/krosmobot?label=Pull%20Requests)
-![GitHub all releases](https://img.shields.io/github/downloads/brinkflew/krosmobot/total?label=Downloads)
-![GitHub contributors](https://img.shields.io/github/contributors/brinkflew/krosmobot?label=Contributors)
-
-![GitHub last commit](https://img.shields.io/github/last-commit/brinkflew/krosmobot?label=Last%20Commit)
-![GitHub Release Date](https://img.shields.io/github/release-date/brinkflew/krosmobot?label=Realease%20Date)
-
-![Discord](https://img.shields.io/discord/399609103137112078?color=%237289DA&label=Discord&logo=Discord)
-
-
-
-KrosmoBot is a semi-general-purpose [Discord](https://discord.com/)
+KrosmoBot is a semi-generic-purpose [Discord](https://discord.com/)
 bot aimed at facilitating the management of [Dofus](https://www.dofus.com/en)
 guilds by providing a suite of tools and commands to its users.
+
+![Badge: GitHub release (latest SemVer)]
+![Badge: GitHub license]
+
+![Badge: GitHub issues]
+![Badge: GitHub pull requests]
+![Badge: GitHub all releases]
+![Badge: GitHub contributors]
+
+![Badge: Coverage](./coverage/badge-statements.svg)
+![Badge: Coverage](./coverage/badge-branches.svg)
+![Badge: Coverage](./coverage/badge-functions.svg)
+![Badge: Coverage](./coverage/badge-lines.svg)
+
+![Badge: Discord]
+
+</div>
+
 
 ---
 
@@ -196,3 +200,11 @@ Set a default Dofus server to use when unspecified in some commands (almanax, et
 ```
 !set server Jahash
 ```
+
+[Badge: GitHub release (latest SemVer)]: https://img.shields.io/github/v/release/brinkflew/krosmobot?label=Version
+[Badge: GitHub license]: https://img.shields.io/github/license/brinkflew/krosmobot?label=License
+[Badge: GitHub issues]: https://img.shields.io/github/issues-raw/brinkflew/krosmobot?label=Issues&logo=GitHub
+[Badge: GitHub pull requests]: https://img.shields.io/github/issues-pr-raw/brinkflew/krosmobot?label=Pull%20Requests
+[Badge: GitHub all releases]: https://img.shields.io/github/downloads/brinkflew/krosmobot/total?label=Downloads
+[Badge: GitHub contributors]: https://img.shields.io/github/contributors/brinkflew/krosmobot?label=Contributors
+[Badge: Discord]: https://img.shields.io/discord/399609103137112078?color=%237289DA&label=Discord&logo=Discord

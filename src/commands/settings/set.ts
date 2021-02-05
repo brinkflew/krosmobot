@@ -1,7 +1,7 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { findPortalServer } from '@/utils';
-import { GuildDocument, SetCommandArguments } from 'types';
+import { GuildDocument } from 'types';
+import { Argument } from 'discord-akairo';
 
 /**
  * Change the color used in embed borders for the current guild.
@@ -20,25 +20,9 @@ export default class SetCommand extends Command {
       },
       args: [
         {
-          id: 'channels.almanax',
-          match: 'option',
-          flag: 'almanax',
-          type: 'textChannel',
-          unordered: true
-        },
-        {
-          id: 'channels.twitter',
-          match: 'option',
-          flag: 'twitter',
-          type: 'textChannel',
-          unordered: true
-        },
-        {
-          id: 'dofus.server',
-          match: 'option',
-          flag: 'server',
-          type: 'lowercase',
-          unordered: true
+          id: 'keys',
+          match: 'separate',
+          type: 'lowercase'
         }
       ]
     });
@@ -48,43 +32,71 @@ export default class SetCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: SetCommandArguments): Promise<Message> {
-    try {
-      if (!Object.values(args).find(val => val !== null)) {
-        return this.warning(message, this.t('COMMAND_SET_RESPONSE_NO_KEYS', message));
+  public async exec(message: Message, args: { keys: string[] | null }): Promise<Message> {
+    args.keys = args.keys || [];
+    const hasFlags = Boolean(args.keys.length);
+
+    if (!hasFlags) return this.error(message, this.t('COMMAND_SET_RESPONSE_NO_KEYS', message));
+    if (args.keys.length % 2 !== 0) return this.error(message, this.t('COMMAND_SET_RESPONSE_INVALID_PAIRS', message));
+
+    const { resolver } = this.client.commands;
+    const doc = <GuildDocument> this.getDocument(message) || {};
+    doc.settings = doc.settings || {};
+    doc.channels = doc.channels || {};
+    doc.dofus = doc.dofus || {};
+    const pairs: string[] = [];
+    const invalids: string[] = [];
+
+    while (args.keys.length >= 2) {
+      const [key, value] = args.keys.splice(0, 2);
+
+      if (key === 'almanax') {
+        const channel = await Argument.cast('textChannel', resolver, message, value);
+
+        if (!channel) {
+          invalids.push(key);
+          continue;
+        }
+
+        doc.channels.almanax = channel.id;
+        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, `#${channel.name as string}`));
+        continue;
       }
 
-      const doc = <GuildDocument> this.getDocument(message) || {};
+      if (key === 'twitter') {
+        const channel = await Argument.cast('textChannel', resolver, message, value);
 
-      doc.settings = doc.settings || {};
-      doc.channels = doc.channels || {};
-      doc.dofus = doc.dofus || {};
-      const pairs: string[] = [];
+        if (!channel) {
+          invalids.push(key);
+          continue;
+        }
 
-      // Configure channels
-      if (args['channels.almanax']) {
-        doc.channels.almanax = args['channels.almanax'].id;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, 'almanax', `#${args['channels.almanax'].name}`));
+        doc.channels.news = channel.id;
+        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, `#${channel.name as string}`));
+        continue;
       }
 
-      if (args['channels.twitter']) {
-        doc.channels.news = args['channels.twitter'].id;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, 'twitter', `#${args['channels.twitter'].name}`));
-      }
+      if (key === 'dofus-server') {
+        const server = await Argument.cast('dofusServer', resolver, message, value);
 
-      // Configure the Dofus server
-      if (args['dofus.server']) {
-        const server = await findPortalServer(args['dofus.server']);
-        if (!server) throw new Error(`Unknown Dofus server: ${args['dofus.server']}`);
+        if (!server) {
+          invalids.push(key);
+          continue;
+        }
+
         doc.dofus.server = server;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, 'dofus server', server.name));
+        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, server.name));
+        continue;
       }
 
-      await this.getProvider(message).update(message.guild!.id, doc);
-      return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, pairs));
-    } catch (error) {
-      return this.error(message, this.t('COMMAND_SET_RESPONSE_ERROR', message));
+      invalids.push(key);
     }
+
+    if (invalids.length) void this.warning(message, this.t('COMMAND_SET_RESPONSE_INVALID_VALUES', message, invalids));
+    if (!pairs.length) return this.error(message, this.t('COMMAND_SET_RESPONSE_NO_KEYS', message));
+
+    await this.getProvider(message).update(message.guild!.id, doc);
+    return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, pairs));
   }
 
 }

@@ -19,13 +19,13 @@ export default class AlmanaxTask extends Task {
     const command = this.client.commands.findCommand('almanax');
 
     for (const guild of this.client.guilds.cache.array()) {
-      const doc = <GuildDocument> this.client.providers.guilds.get(guild.id);
+      const doc = <GuildDocument> this.client.providers.guilds.fetch(guild.id);
       if (!doc?.channels?.almanax) continue;
 
       const channel = this.client.util.resolveChannel(doc.channels.almanax, guild.channels.cache);
-      if (!(channel instanceof TextChannel)) continue;
+      if (channel?.type !== 'text') continue;
 
-      const message = dummyMessage(this.client, channel);
+      const message = dummyMessage(this.client, channel as TextChannel);
       command.exec(message, { extended: false, offset: '+1' });
     }
   }

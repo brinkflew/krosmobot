@@ -3,9 +3,7 @@ import { findPortalServer } from '@/utils';
 import { Client } from '@/structures';
 
 export const dofusServer = async (message: Message, phrase: string) => {
-  if (!phrase && !message.guild) return null;
-
-  if (phrase) {
+  if (phrase.length) {
     const server = await findPortalServer(phrase);
     if (!server) return null;
     return { id: <string> server.id, name: <string> server.name };
@@ -13,5 +11,6 @@ export const dofusServer = async (message: Message, phrase: string) => {
 
   if (!message.guild) return null;
   const doc = (<Client> message.client).providers.guilds.fetch(message.guild.id);
-  if (doc?.dofus?.server?.id) return doc.dofus.server;
+  if (!doc?.dofus?.server?.id) return null;
+  return doc.dofus.server;
 };

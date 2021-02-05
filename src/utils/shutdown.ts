@@ -14,6 +14,9 @@ export const shutdown = async (client: AkairoClient, code = 0) => {
   process.removeAllListeners();
   client.logger.debug(Logger.format('process', 'listeners-removed'));
 
+  // Remove intervals and timeouts
+  client.crons.forEach(cron => clearInterval(cron));
+
   // Set exit code
   process.exitCode = code;
 

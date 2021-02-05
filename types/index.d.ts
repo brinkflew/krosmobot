@@ -89,31 +89,16 @@ export interface ScraperPage {
   fields: ScraperSchema[];
 }
 
-export interface AlmanaxData {
-  url: string;
-  title: string;
-  offering: string;
-  meryde: string;
-  description: string;
-  'bonus.title'?: string;
-  'bonus.description'?: string;
-  bonus?: {
-    title: string;
-    description: string;
-  };
-  'images.meryde'?: string;
-  'images.item'?: string;
-  images?: {
-    meryde: string;
-    item: string;
-  };
-  month: string;
-  day: string;
-}
-
 export interface TaskOptions extends AkairoModuleOptions {
   interval?: number;
   timestamp?: number;
   at?: string;
   enabled?: boolean;
+}
+
+export interface MetricOptions extends AkairoModuleOptions {
+  type: 'value' | 'average' | 'frequency';
+  unit?: string;
+  interval?: number;
+  default?: number;
 }

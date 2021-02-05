@@ -55,12 +55,14 @@
             "mongoose",
             "common-tags",
             "cheerio",
-            "axios"
+            "axios",
+            "jest"
         ]
     },
     "include": [
         "src/**/*.ts",
-        "types/*.d.ts"
+        "types/**/*.d.ts",
+        "tests/**/*.ts"
     ],
     "exclude": [
         "node_modules/",

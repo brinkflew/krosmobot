@@ -13,8 +13,8 @@ import {
 } from 'discord.js';
 import Twitter from 'twitter-lite-v2';
 import { resolve, join } from 'path';
-import MongooseProvider from '@/providers/mongoose';
-import { LocaleHandler, TaskHandler } from '@/handlers';
+import { MongooseCachedProvider, MongooseProvider } from '@/providers';
+import { LocaleHandler, TaskHandler, MetricHandler } from '@/handlers';
 import { Logger } from '@/structures';
 import { DEFAULTS } from '@/constants';
 import { argumentTypes } from '@/arguments';
@@ -36,21 +36,23 @@ import {
  */
 export class Client extends AkairoClient {
 
+  public crons: Set<NodeJS.Timeout>;
   public commands: CommandHandler;
   public events: ListenerHandler;
   public locales: LocaleHandler;
   public scheduler: TaskHandler;
+  public metrics: MetricHandler;
   public twitter: Twitter;
   public logger: Logger;
-  public logs: MongooseProvider;
   public application?: Application | null;
   public providers: {
-    almanax: MongooseProvider;
-    guilds: MongooseProvider;
-    members: MongooseProvider;
-    polls: MongooseProvider;
-    reminders: MongooseProvider;
-    users: MongooseProvider;
+    logs: MongooseProvider;
+    almanax: MongooseCachedProvider;
+    guilds: MongooseCachedProvider;
+    members: MongooseCachedProvider;
+    polls: MongooseCachedProvider;
+    reminders: MongooseCachedProvider;
+    users: MongooseCachedProvider;
   };
 
 
@@ -60,22 +62,23 @@ export class Client extends AkairoClient {
    */
   public constructor(akairoOptions: AkairoOptions, discordOptions: ClientOptions) {
     super(akairoOptions, discordOptions);
-
-    /** Logger */
-
-    this.logs = new MongooseProvider(logs);
-    this.logger = new Logger(this);
+    this.crons = new Set();
 
     /** Providers */
 
     this.providers = {
-      almanax: new MongooseProvider(almanax),
-      guilds: new MongooseProvider(guilds),
-      members: new MongooseProvider(members),
-      polls: new MongooseProvider(polls),
-      reminders: new MongooseProvider(reminders),
-      users: new MongooseProvider(users)
+      logs: new MongooseProvider(this, logs),
+      almanax: new MongooseCachedProvider(this, almanax),
+      guilds: new MongooseCachedProvider(this, guilds),
+      members: new MongooseCachedProvider(this, members),
+      polls: new MongooseCachedProvider(this, polls),
+      reminders: new MongooseCachedProvider(this, reminders),
+      users: new MongooseCachedProvider(this, users)
     };
+
+    /** Logger */
+
+    this.logger = new Logger(this);
 
     /** Handlers */
 
@@ -102,6 +105,10 @@ export class Client extends AkairoClient {
 
     this.locales = new LocaleHandler(this, {
       directory: resolve(join(__dirname, '..', 'locales'))
+    });
+
+    this.metrics = new MetricHandler(this, {
+      directory: resolve(join(__dirname, '..', 'metrics'))
     });
 
     /** Scheduler */
@@ -131,6 +138,9 @@ export class Client extends AkairoClient {
 
     this.events.loadAll();
     this.locales.loadAll();
+    this.metrics
+      .loadAll()
+      .init();
 
     this.scheduler
       .loadAll()
@@ -168,7 +178,7 @@ export class Client extends AkairoClient {
       }
 
       if (['string', 'number'].includes(typeof command.clientPermissions)) {
-        return permissions.add(<number | PermissionResolvable>command.clientPermissions);
+        return permissions.add(<number | PermissionResolvable> command.clientPermissions);
       }
 
       return null;

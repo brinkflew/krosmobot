@@ -1,5 +1,4 @@
 import { Listener } from 'discord-akairo';
-import metrics from '@/metrics';
 import { Logger } from '@/structures';
 
 const heartbeatRegExp = /^\[WS => Shard ([0-9]+)\] Heartbeat acknowledged, latency of ([0-9]+)ms.$/;
@@ -24,12 +23,12 @@ export default class extends Listener {
     if (!heartbeat) return;
 
     const latency = parseInt(heartbeat[2], 10);
+    this.client.metrics.update('discord.latency', latency);
     this.client.logger.debug(Logger.format(
       `discord: shard ${heartbeat[1]}`,
       'heartbeat',
       { latency: `${latency}ms` }
     ));
-    metrics.discord.heartbeat.set(latency);
   }
 
 }

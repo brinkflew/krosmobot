@@ -32,53 +32,49 @@ export default class HelpCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { command }: { command: Command }) {
-    try {
-      const prefix = this.getPrefix(message);
+  public async exec(message: Message, { command }: { command: Command | null }) {
+    const prefix = this.getPrefix(message);
 
-      if (command) {
-        const { description } = command;
-        const aliases = command.aliases.filter(alias => alias !== command.id);
-        return this.embed(message, {
-          title: command.id.toUpperCase(),
-          description: this.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message),
-          fields: [
-            {
-              name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE', message),
-              value: this.t(command.description.usage || 'COMMAND_HELP_RESPONSE_FIELD_NO_USAGE', message, prefix)
-            },
-            {
-              name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES', message),
-              value: aliases.length
-                ? `\`${aliases.join('`, `')}\``
-                : this.t('COMMAND_HELP_RESPONSE_FIELD_NO_ALIAS', message)
-            },
-            {
-              name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE', message),
-              value: this.t(description.example || 'COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE', message, prefix)
-            }
-          ],
-          footer: {
-            text: this.t(`COMMAND_HELP_CATEGORY_${command.category.id.toUpperCase()}`, message)
+    if (command) {
+      const { description } = command;
+      const aliases = command.aliases.filter(alias => alias !== command.id);
+      return this.embed(message, {
+        title: command.id.toUpperCase(),
+        description: this.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message),
+        fields: [
+          {
+            name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE', message),
+            value: this.t(command.description.usage || 'COMMAND_HELP_RESPONSE_FIELD_NO_USAGE', message, prefix)
+          },
+          {
+            name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES', message),
+            value: aliases.length
+              ? `\`${aliases.join('`, `')}\``
+              : this.t('COMMAND_HELP_RESPONSE_FIELD_NO_ALIAS', message)
+          },
+          {
+            name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE', message),
+            value: this.t(description.example || 'COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE', message, prefix)
           }
-        });
-      }
-
-      const embed = this.craftEmbed(message, {
-        title: this.t('COMMAND_HELP_RESPONSE_TITLE', message),
-        description: this.t('COMMAND_HELP_DESCRIPTION_EXTENDED', message),
-        fields: this.generateCommandsHelp(message)
+        ],
+        footer: {
+          text: this.t(`COMMAND_HELP_CATEGORY_${command.category.id.toUpperCase()}`, message)
+        }
       });
-
-      if (message.channel.type !== 'dm') {
-        void this.success(message, this.t('COMMAND_HELP_RESPONSE_DM', message));
-        embed.setFooter(this.t('COMMAND_HELP_RESPONSE_FROMGUILD', message, message.guild?.name));
-      }
-
-      return message.author.send(embed);
-    } catch (error) {
-      return this.error(message, this.t('COMMAND_HELP_RESPONSE_ERROR', message));
     }
+
+    const embed = this.craftEmbed(message, {
+      title: this.t('COMMAND_HELP_RESPONSE_TITLE', message),
+      description: this.t('COMMAND_HELP_DESCRIPTION_EXTENDED', message),
+      fields: this.generateCommandsHelp(message)
+    });
+
+    if (message.channel.type !== 'dm') {
+      void this.success(message, this.t('COMMAND_HELP_RESPONSE_DM', message));
+      embed.setFooter(this.t('COMMAND_HELP_RESPONSE_FROMGUILD', message, message.guild?.name));
+    }
+
+    return message.author.send(embed);
   }
 
   /**
@@ -118,14 +114,14 @@ export default class HelpCommand extends Command {
   private getCommands(message: Message, ids?: string | string[] | null): Map<string, Set<Command>> {
     if (typeof ids === 'string') ids = [ids];
     const store = this.client.commands.modules;
-    const conditions = async (command: Command) => [
+
+    const conditions = (command: Command) => [
       !command.channel || (command.channel === 'guild' && Boolean(message.guild)) || (command.channel === 'dm' && !message.guild),
-      !command.ownerOnly || (command.ownerOnly && (this.client.ownerID === message.author.id || this.client.ownerID.includes(message.author.id))),
-      await this.client.commands.runPermissionChecks(message, command)
+      !command.ownerOnly || (command.ownerOnly && (this.client.ownerID === message.author.id || this.client.ownerID.includes(message.author.id)))
     ];
 
     const commands = ([...store.values()] as Command[])
-      .filter(async command => (await conditions(command)).every(condition => condition));
+      .filter(command => (conditions(command)).every(condition => condition));
 
 
     const categories: Map<string, Set<Command>> = new Map();

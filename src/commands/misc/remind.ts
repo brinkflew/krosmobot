@@ -1,7 +1,8 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
 import { TIME } from '@/constants';
-import { formatDate } from '@/utils';
+import { matcher } from '@/arguments/time/duration';
+import { formatRelative } from '@/utils';
 
 /**
  * Creates a new reminder.
@@ -21,7 +22,8 @@ export default class RemindCommand extends Command {
         {
           'id': 'time',
           'type': 'duration',
-          'default': TIME.MS_PER_DAY
+          'default': TIME.MS_PER_DAY,
+          'unordered': true
         },
         {
           id: 'text',
@@ -36,23 +38,22 @@ export default class RemindCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { time: number; text: string[] }) {
-    if (!args.text) return this.error(message, this.t('COMMAND_REMIND_RESPONSE_NO_CONTENT', message));
+  public async exec(message: Message, args: { time: number; text: string }) {
+    if (typeof args.text !== 'string') return this.error(message, this.t('COMMAND_REMIND_RESPONSE_NO_CONTENT', message));
+    args.text = args.text.replace(matcher, '').trim();
 
-    const locale = this.getLocale(message).id;
-    const time = Date.now() + args.time;
-
+    const locale = this.getLocale(message);
     const doc = {
       guild: message.guild?.id,
       author: message.author.id,
       channel: message.channel.id,
       content: args.text,
-      locale,
-      timestamp: time
+      locale: locale.id,
+      timestamp: Date.now() + args.time
     };
 
     void this.client.providers.reminders.update(message.id, doc);
-    return this.success(message, this.t('COMMAND_REMIND_RESPONSE_SUCCESS', message, formatDate(time, locale, true, 'both').slice(0, -3)));
+    return this.success(message, this.t('COMMAND_REMIND_RESPONSE_SUCCESS', message, formatRelative(args.time, locale)));
   }
 
 }

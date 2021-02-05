@@ -1,7 +1,6 @@
 import { Provider } from 'discord-akairo';
-import { Collection } from 'discord.js';
 import { Model } from 'mongoose';
-import metrics from '@/metrics';
+import { Client } from '@/structures';
 import { clone } from '@/utils';
 
 // Typings
@@ -9,69 +8,62 @@ import { MongooseProviderDocument } from 'types';
 
 /**
 * Custom provider using the mongoose library.
+* @param client Client the provider is attached to
 * @param model Model to register with this provider
 */
 export default class MongooseProvider extends Provider {
 
   public model: Model<MongooseProviderDocument, Record<string, unknown>>;
-  public cache: Collection<string, MongooseProviderDocument>;
+  public client: Client;
 
-  public constructor(model: Model<MongooseProviderDocument, Record<string, unknown>>) {
+  public constructor(client: Client, model: Model<MongooseProviderDocument, Record<string, unknown>>) {
     super();
+    this.client = client;
     this.model = model;
-    this.cache = new Collection();
-    this.items = this.cache;
   }
 
   /**
    * Initializes the provider.
-   * Fetches records from the database and caches them.
+   * Does nothing as there is no cache to fill-in.
+   * This method is only define to content the abstract definition
+   * of the provider.
    */
-  public async init(): Promise<void> {
-    const records = await this.model.find();
-    metrics.mongodb.requests.mark();
-
-    for (const record of records) {
-      this.cache.set(record.id, record);
-      metrics.mongodb.cache.mark();
-    }
+  public init(): void {
+    void 0;
   }
 
   /**
-   * Gets a record from the cache.
+   * Gets a record from the database.
    * @param id ID of the record
    */
-  public get(id: string): MongooseProviderDocument | undefined {
-    const value = this.cache.get(id);
-    metrics.mongodb.cache.mark();
+  public async get(id: string): Promise<MongooseProviderDocument | undefined> {
+    const value = await this.model.findOne({ id });
+    this.client.metrics.update('provider.db.read.frequency');
     if (!value) return;
     return value;
   }
 
   /**
-   * Gets a record from the cache.
+   * Gets a record from the database.
    * @param id ID of the record
    */
-  public fetch(id: string): MongooseProviderDocument | undefined {
+  public fetch(id: string): Promise<MongooseProviderDocument | undefined> {
     return this.get(id);
   }
 
   /**
-   * Creates a new record on the database and saves it to the cache.
+   * Creates a new record in the database.
    * If the record already exists, updates it.
    * @param id ID of the record to insert
    * @param record Data to save to the database
    */
   public async create(id: string, record: Record<string, unknown>): Promise<MongooseProviderDocument> {
-    const cached = this.cache.get(id);
-    metrics.mongodb.cache.mark();
-    if (cached) return this.update(id, record);
+    const existing = await this.get(id);
+    if (existing) return this.update(id, record);
 
     record.id = id;
     const doc = await new this.model(record).save();
-    metrics.mongodb.requests.mark();
-    metrics.mongodb.cache.mark();
-    this.cache.set(id, doc);
+    this.client.metrics.update('provider.db.write.frequency');
     return doc;
   }
 
@@ -81,22 +73,19 @@ export default class MongooseProvider extends Provider {
    * @param record Data to save to the database
    */
   public async update(id: string, record: Record<string, unknown>): Promise<MongooseProviderDocument> {
-    const cached = this.cache.get(id);
-    metrics.mongodb.cache.mark();
-    if (!cached) return this.create(id, record);
+    const existing = await this.get(id);
+    if (!existing) return this.create(id, record);
 
     for (const [key, value] of Object.entries(record)) {
-      cached[key] = typeof cached[key] === 'object' && !Array.isArray(cached[key]) && typeof value === 'object' && !Array.isArray(value)
-        ? { ...cached[key], ...value }
+      existing[key] = typeof existing[key] === 'object' && !Array.isArray(existing[key]) && typeof value === 'object' && !Array.isArray(value)
+        ? { ...existing[key], ...value }
         : clone(value);
-      cached.markModified(key);
+      existing.markModified(key);
     }
 
-    cached.id = cached.id || id;
-    const saved = await cached.save(record);
-    metrics.mongodb.requests.mark();
-    metrics.mongodb.cache.mark();
-    this.cache.set(id, saved);
+    existing.id = existing.id || id;
+    const saved = await existing.save(record);
+    this.client.metrics.update('provider.db.write.frequency');
     return saved;
   }
 
@@ -113,10 +102,8 @@ export default class MongooseProvider extends Provider {
    * @param id ID of the record
    */
   public async delete(id: string): Promise<void> {
-    this.cache.delete(id);
-    metrics.mongodb.cache.mark();
-    metrics.mongodb.requests.mark();
     await this.model.deleteOne({ id });
+    this.client.metrics.update('provider.db.write.frequency');
   }
 
   /**

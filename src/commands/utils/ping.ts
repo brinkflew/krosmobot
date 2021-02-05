@@ -27,7 +27,7 @@ export default class PingCommand extends Command {
     const embed = { title: this.t('COMMAND_PING_RESPONSE_TITLE', message) };
     const sent = await this.embed(message, embed);
 
-    const diff = (sent.editedAt || sent.createdAt).getTime() - (message.editedAt || message.createdAt).getTime();
+    const diff = (sent.editedTimestamp || sent.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp);
     const ping = Math.round(this.client.ws.ping);
 
     return this.embed(message, {

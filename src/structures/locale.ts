@@ -7,7 +7,7 @@ import { LocaleOptions, LocaleString } from 'types';
 export class Locale extends AkairoModule {
 
   public language: string;
-  protected strings: { [key: string]: LocaleString };
+  public strings: { [key: string]: LocaleString };
 
   public constructor(id: string, options: LocaleOptions = {}) {
     super(id, options);

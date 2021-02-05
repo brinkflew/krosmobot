@@ -1,6 +1,5 @@
 import { Listener } from 'discord-akairo';
 import { Message } from 'discord.js';
-import metrics from '@/metrics';
 import { Logger } from '@/structures';
 
 /**
@@ -28,8 +27,6 @@ export default class extends Listener {
       `message-${message.author.id === this.client.user?.id ? 'sent' : 'received'}`,
       params
     ));
-
-    metrics.discord.messages.mark();
   }
 
 }

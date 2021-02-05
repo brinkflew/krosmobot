@@ -1,6 +1,5 @@
 import { Listener } from 'discord-akairo';
 import { GuildMember } from 'discord.js';
-import metrics from '@/metrics';
 import { Logger } from '@/structures';
 
 /**
@@ -19,8 +18,7 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(member: GuildMember) {
-    const { users } = metrics.discord;
-    users.set(users.val() + 1);
+    this.client.metrics.inc('discord.users');
     this.client.logger.debug(Logger.format(
       'discord',
       'member-joined',

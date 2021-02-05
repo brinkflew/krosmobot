@@ -5,7 +5,7 @@ import {
   MessageEmbedOptions
 } from 'discord.js';
 import { Locale } from '@/structures';
-import MongooseProvider from '@/providers/mongoose';
+import MongooseCachedProvider from '@/providers/mongoose-cached';
 import { EMBEDS, DEFAULTS } from '@/constants';
 import { code } from '@/utils/message';
 import { GuildDocument, UserDocument } from 'types';
@@ -127,7 +127,7 @@ export class Command extends AkairoCommand {
    * which data will be fetched or modified.
    * @param message Message to find the provider for
    */
-  public getProvider(message: Message): MongooseProvider {
+  public getProvider(message: Message): MongooseCachedProvider {
     return message.guild
       ? this.client.providers.guilds
       : this.client.providers.users;

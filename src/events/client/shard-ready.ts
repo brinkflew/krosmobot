@@ -1,6 +1,5 @@
 import { Guild } from 'discord.js';
 import { Listener } from 'discord-akairo';
-import metrics from '@/metrics';
 import { Logger } from '@/structures';
 
 /**
@@ -19,13 +18,13 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(id: number, unavailable: Set<Guild>) {
+    this.client.metrics.inc('discord.shards');
     const available = Math.max(this.client.guilds.cache.size - (unavailable?.size || 0), 0);
     this.client.logger.success(Logger.format(
       `discord: shard ${id}`,
       'shard-ready',
       { 'guilds available': available }
     ));
-    metrics.discord.shards.inc();
   }
 
 }

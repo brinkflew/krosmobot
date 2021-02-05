@@ -25,26 +25,22 @@ export default class PrefixCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, args: { [key: string]: string | null }): Promise<Message> {
-    try {
-      const provider = this.getProvider(message);
-      const id = this.getID(message);
+    const provider = this.getProvider(message);
+    const id = this.getID(message);
 
-      // Reset the default prefix
-      if (!args.prefix) {
-        await provider.update(id, { settings: { prefix: DEFAULTS.PREFIX } });
-        return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_RESET', message, DEFAULTS.PREFIX));
-      }
-
-      // Check if the prefix actually changes
-      const settings = provider.fetch(id)?.settings;
-      if (settings?.prefix === args.prefix) return this.warning(message, this.t('COMMAND_PREFIX_RESPONSE_IDENTICAL', message));
-
-      // Save the new prefix
-      await provider.update(id, { settings: { prefix: args.prefix } });
-      return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_MODIFIED', message, args.prefix));
-    } catch (error) {
-      return this.error(message, this.t('COMMAND_PREFIX_RESPONSE_ERROR', message));
+    // Reset the default prefix
+    if (!args.prefix) {
+      await provider.update(id, { settings: { prefix: DEFAULTS.PREFIX } });
+      return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_RESET', message, DEFAULTS.PREFIX));
     }
+
+    // Check if the prefix actually changes
+    const settings = provider.fetch(id)?.settings;
+    if (settings?.prefix === args.prefix) return this.warning(message, this.t('COMMAND_PREFIX_RESPONSE_IDENTICAL', message));
+
+    // Save the new prefix
+    await provider.update(id, { settings: { prefix: args.prefix } });
+    return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_MODIFIED', message, args.prefix));
   }
 
 }

@@ -25,10 +25,7 @@ export default class DiceCommand extends Command {
       args: [
         {
           id: 'match',
-          type: (_message: Message, phrase: string) => {
-            if (!phrase) return null;
-            return /([0-9]*)d([0-9]+)/i.exec(phrase);
-          }
+          type: (_message: Message, phrase: string) => /([0-9]*)d([0-9]+)/i.exec(phrase)
         }
       ]
     });
@@ -39,7 +36,7 @@ export default class DiceCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, args: any) {
-    if (!args?.match || args.match.length < 3) args = { match: [null, '1', '6'] };
+    args.match = args.match || [];
 
     let rolls = parseInt(args.match[1], 10);
     if (isNaN(rolls)) rolls = 1;

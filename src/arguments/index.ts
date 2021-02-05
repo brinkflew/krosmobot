@@ -1,8 +1,8 @@
-import { dofusDimension } from './dofusDimension';
-import { dofusJob } from './dofusJob';
-import { dofusServer } from './dofusServer';
-import { duration } from './duration';
-import { line } from './line';
+import { dofusDimension } from './dofus/dimension';
+import { dofusJob } from './dofus/job';
+import { dofusServer } from './dofus/server';
+import { duration } from './time/duration';
+import { line } from './text/line';
 
 export const argumentTypes = {
   dofusDimension,

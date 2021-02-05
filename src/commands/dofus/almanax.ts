@@ -22,7 +22,7 @@ export default class AlmanaxCommand extends Command {
         {
           id: 'extended',
           match: 'flag',
-          flag: 'details'
+          flag: '--detail'
         },
         {
           id: 'offset',
@@ -90,14 +90,12 @@ export default class AlmanaxCommand extends Command {
     const matches = /^(([0-2]?[0-9])|(3[0-1]))([/.\s-])((1[0-2])|(0?[0-9]))/i.exec(input);
     if (matches) {
       const date = Date.parse(`${new Date().getFullYear()}-${this.pad(matches[5])}-${this.pad(matches[1])}`);
-      if (!date) return null;
       return this.formatDate(date);
     }
 
     const offset = parseInt(input, 10);
     if (isNaN(offset)) return null;
-    const date = new Date(Date.now() + TIME.MS_PER_HOUR);
-    return this.formatDate(date.setDate(date.getDate() + offset));
+    return this.formatDate(Date.now() + TIME.MS_PER_HOUR + (offset * TIME.MS_PER_DAY));
   }
 
   /**

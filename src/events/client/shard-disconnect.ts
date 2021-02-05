@@ -1,6 +1,5 @@
 import { Listener } from 'discord-akairo';
 import { CloseEvent } from 'discord.js';
-import metrics from '@/metrics';
 import { Logger } from '@/structures';
 
 /**
@@ -19,13 +18,12 @@ export default class extends Listener {
    * Executes when the event is fired.
    */
   public exec(event: CloseEvent, id: number) {
-    this.client.logger.warning(`[DISCORD: shard ${id}] SHARD-DISCONNECTED - Code ${event.code}: ${event.reason}`);
+    this.client.metrics.dec('discord.shards');
     this.client.logger.warning(Logger.format(
       `discord: shard ${id}`,
       'shard-disconnect',
       { code: event.code, reason: event.reason }
     ));
-    metrics.discord.shards.dec();
   }
 
 }
