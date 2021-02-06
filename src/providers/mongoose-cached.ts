@@ -12,13 +12,13 @@ import { MongooseProviderDocument } from 'types';
 * @param client Client the provider is attached to
 * @param model Model to register with this provider
 */
-export default class MongooseCachedProvider extends Provider {
+export default class MongooseCachedProvider<D extends MongooseProviderDocument> extends Provider {
 
   public model: Model<MongooseProviderDocument, Record<string, unknown>>;
-  public cache: Collection<string, MongooseProviderDocument>;
+  public cache: Collection<string, D>;
   public client: Client;
 
-  public constructor(client: Client, model: Model<MongooseProviderDocument, Record<string, unknown>>) {
+  public constructor(client: Client, model: Model<D, Record<string, unknown>>) {
     super();
     this.client = client;
     this.model = model;
@@ -31,7 +31,7 @@ export default class MongooseCachedProvider extends Provider {
    * Fetches records from the database and caches them.
    */
   public async init(): Promise<void> {
-    const records = await this.model.find();
+    const records = await this.model.find() as D[];
     this.client.metrics.update('provider.db.read.frequency');
 
     for (const record of records) {
@@ -44,7 +44,7 @@ export default class MongooseCachedProvider extends Provider {
    * Gets a record from the cache.
    * @param id ID of the record
    */
-  public get(id: string): MongooseProviderDocument | undefined {
+  public get(id: string): D | undefined {
     const value = this.cache.get(id);
     this.client.metrics.update('provider.cache.read.frequency');
     if (!value) return;
@@ -55,8 +55,16 @@ export default class MongooseCachedProvider extends Provider {
    * Gets a record from the cache.
    * @param id ID of the record
    */
-  public fetch(id: string): MongooseProviderDocument | undefined {
+  public fetch(id: string): D | undefined {
     return this.get(id);
+  }
+
+  /**
+   * Fetches all documents that satisfy the predicate.
+   * @param predicate Filtering method to apply to the collection
+   */
+  public filter(predicate: (value: D, index: number, array: D[]) => boolean) {
+    return this.cache.array().filter(predicate);
   }
 
   /**
@@ -65,12 +73,12 @@ export default class MongooseCachedProvider extends Provider {
    * @param id ID of the record to insert
    * @param record Data to save to the database
    */
-  public async create(id: string, record: Record<string, unknown>): Promise<MongooseProviderDocument> {
+  public async create(id: string, record: Record<string, unknown>): Promise<D> {
     const cached = this.get(id);
     if (cached) return this.update(id, record);
 
     record.id = id;
-    const doc = await new this.model(record).save();
+    const doc = await new this.model(record).save() as D;
     this.client.metrics.update('provider.db.write.frequency');
     this.cache.set(id, doc);
     this.client.metrics.update('provider.cache.write.frequency');
@@ -82,8 +90,8 @@ export default class MongooseCachedProvider extends Provider {
    * @param id ID of the record to update
    * @param record Data to save to the database
    */
-  public async update(id: string, record: Record<string, unknown>): Promise<MongooseProviderDocument> {
-    const cached = this.get(id);
+  public async update(id: string, record: Record<string, unknown>): Promise<D> {
+    const cached = this.get(id) as MongooseProviderDocument;
     if (!cached) return this.create(id, record);
 
     for (const [key, value] of Object.entries(record)) {
@@ -94,7 +102,7 @@ export default class MongooseCachedProvider extends Provider {
     }
 
     cached.id = cached.id || id;
-    const saved = await cached.save(record);
+    const saved = await cached.save(record) as D;
     this.client.metrics.update('provider.db.write.frequency');
     this.cache.set(id, saved);
     this.client.metrics.update('provider.cache.write.frequency');

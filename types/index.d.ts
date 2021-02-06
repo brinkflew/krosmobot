@@ -13,6 +13,12 @@ export interface MongooseProviderDocument extends Document {
   [key: string]: any;
 }
 
+export interface DocumentSettings {
+  prefix?: string;
+  locale?: string;
+  color?: string;
+}
+
 export interface AlmanaxDocument extends MongooseProviderDocument {
   url: string;
   title: string;
@@ -25,16 +31,31 @@ export interface AlmanaxDocument extends MongooseProviderDocument {
   images: { meryde: string; item: string };
 }
 
-export interface DocumentSettings {
-  prefix?: string;
-  locale?: string;
-  color?: string;
+export type DofusJob = 'alchemist' | 'jeweller' | 'handyman' | 'lumberjack' | 'hunter' | 'shoemagus' | 'shoemaker' | 'costumagus' | 'craftmagus' | 'artificer' | 'smithmagus' | 'smith' | 'jewelmagus' | 'miner' | 'farmer' | 'fisherman' | 'carvmagus' | 'carver' | 'tailor';
+
+export interface MemberDocument extends MongooseProviderDocument {
+  jobs: { [key in DofusJob]: number };
+}
+
+export interface ReminderDocument extends MongooseProviderDocument {
+  guild: string;
+  author: string;
+  channel: string;
+  content: string;
+  timestamp: number;
+  locale: string;
 }
 
 export interface GuildDocument extends MongooseProviderDocument {
   dofus: { server: { id?: string; name?: string } };
   channels: { almanax?: string; news?: string };
   settings: DocumentSettings;
+}
+
+export interface LogDocument extends MongooseProviderDocument {
+  level: string;
+  message: string;
+  timestamp: number;
 }
 
 export interface UserDocument extends MongooseProviderDocument {

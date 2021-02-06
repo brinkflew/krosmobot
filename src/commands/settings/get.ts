@@ -35,7 +35,7 @@ export default class SetCommand extends Command {
     args.keys = args.keys || [];
     const hasFlags = Boolean(args.keys.length);
     const pairs: string[] = [];
-    const doc = <GuildDocument> this.getDocument(message) || {};
+    const doc = this.client.providers.guilds.get(message.guild!.id) || {} as GuildDocument;
 
     const consume = (key: string, value: any) => {
       pairs.push(this.t('COMMAND_GET_RESPONSE_PAIR', message, key, value));
@@ -43,23 +43,23 @@ export default class SetCommand extends Command {
     };
 
     if (!hasFlags || args.keys.includes('almanax')) {
-      const channel = doc?.channels?.almanax
-        ? message.guild?.channels.cache.get(doc?.channels?.almanax)?.name
+      const channel = doc.channels?.almanax
+        ? message.guild?.channels.cache.get(doc.channels?.almanax)?.name
         : undefined;
       consume('almanax', channel ? `#${channel}` : channel);
     }
 
     if (!hasFlags || args.keys.includes('twitter')) {
-      const channel = doc?.channels?.news
-        ? message.guild?.channels.cache.get(doc?.channels?.news)?.name
+      const channel = doc.channels?.news
+        ? message.guild?.channels.cache.get(doc.channels?.news)?.name
         : undefined;
       consume('twitter', channel ? `#${channel}` : channel);
     }
 
-    if (!hasFlags || args.keys.includes('dofus-server')) consume('dofus-server', doc?.dofus?.server?.name);
-    if (!hasFlags || args.keys.includes('prefix')) consume('prefix', doc?.settings?.prefix);
-    if (!hasFlags || args.keys.includes('color')) consume('color', doc?.settings?.color);
-    if (!hasFlags || args.keys.includes('locale')) consume('locale', doc?.settings?.locale);
+    if (!hasFlags || args.keys.includes('dofus-server')) consume('dofus-server', doc.dofus?.server?.name);
+    if (!hasFlags || args.keys.includes('prefix')) consume('prefix', doc.settings?.prefix);
+    if (!hasFlags || args.keys.includes('color')) consume('color', doc.settings?.color);
+    if (!hasFlags || args.keys.includes('locale')) consume('locale', doc.settings?.locale);
 
     if (args.keys.length) void this.warning(message, this.t('COMMAND_GET_RESPONSE_INVALID_KEYS', message, args.keys));
     if (!pairs.length) return this.warning(message, this.t('COMMAND_GET_RESPONSE_NO_KEYS', message));

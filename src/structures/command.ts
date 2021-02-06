@@ -5,10 +5,8 @@ import {
   MessageEmbedOptions
 } from 'discord.js';
 import { Locale } from '@/structures';
-import MongooseCachedProvider from '@/providers/mongoose-cached';
 import { EMBEDS, DEFAULTS } from '@/constants';
 import { code } from '@/utils/message';
-import { GuildDocument, UserDocument } from 'types';
 
 /**
  * Represents a command.
@@ -127,7 +125,7 @@ export class Command extends AkairoCommand {
    * which data will be fetched or modified.
    * @param message Message to find the provider for
    */
-  public getProvider(message: Message): MongooseCachedProvider {
+  public getProvider(message: Message) {
     return message.guild
       ? this.client.providers.guilds
       : this.client.providers.users;
@@ -146,8 +144,8 @@ export class Command extends AkairoCommand {
    * Finds the document to save to and fetch from based on the message that triggered the command.
    * @param message Message to find the document for
    */
-  public getDocument(message: Message): GuildDocument | UserDocument | undefined {
-    return <GuildDocument | UserDocument | undefined> this.getProvider(message).fetch(this.getID(message));
+  public getDocument(message: Message) {
+    return this.getProvider(message).fetch(this.getID(message));
   }
 
   /**

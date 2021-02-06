@@ -40,7 +40,7 @@ export default class SetCommand extends Command {
     if (args.keys.length % 2 !== 0) return this.error(message, this.t('COMMAND_SET_RESPONSE_INVALID_PAIRS', message));
 
     const { resolver } = this.client.commands;
-    const doc = <GuildDocument> this.getDocument(message) || {};
+    const doc = this.client.providers.guilds.fetch(message.guild!.id) || {} as GuildDocument;
     doc.settings = doc.settings || {};
     doc.channels = doc.channels || {};
     doc.dofus = doc.dofus || {};

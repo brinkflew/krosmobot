@@ -11,7 +11,7 @@ import { MongooseProviderDocument } from 'types';
 * @param client Client the provider is attached to
 * @param model Model to register with this provider
 */
-export default class MongooseProvider extends Provider {
+export default class MongooseProvider<D extends MongooseProviderDocument> extends Provider {
 
   public model: Model<MongooseProviderDocument, Record<string, unknown>>;
   public client: Client;
@@ -36,8 +36,8 @@ export default class MongooseProvider extends Provider {
    * Gets a record from the database.
    * @param id ID of the record
    */
-  public async get(id: string): Promise<MongooseProviderDocument | undefined> {
-    const value = await this.model.findOne({ id });
+  public async get(id: string): Promise<D | undefined> {
+    const value = await this.model.findOne({ id }) as D;
     this.client.metrics.update('provider.db.read.frequency');
     if (!value) return;
     return value;
@@ -47,7 +47,7 @@ export default class MongooseProvider extends Provider {
    * Gets a record from the database.
    * @param id ID of the record
    */
-  public fetch(id: string): Promise<MongooseProviderDocument | undefined> {
+  public fetch(id: string): Promise<D | undefined> {
     return this.get(id);
   }
 
@@ -57,12 +57,12 @@ export default class MongooseProvider extends Provider {
    * @param id ID of the record to insert
    * @param record Data to save to the database
    */
-  public async create(id: string, record: Record<string, unknown>): Promise<MongooseProviderDocument> {
+  public async create(id: string, record: Record<string, unknown>): Promise<D> {
     const existing = await this.get(id);
     if (existing) return this.update(id, record);
 
     record.id = id;
-    const doc = await new this.model(record).save();
+    const doc = await new this.model(record).save() as D;
     this.client.metrics.update('provider.db.write.frequency');
     return doc;
   }
@@ -72,8 +72,8 @@ export default class MongooseProvider extends Provider {
    * @param id ID of the record to update
    * @param record Data to save to the database
    */
-  public async update(id: string, record: Record<string, unknown>): Promise<MongooseProviderDocument> {
-    const existing = await this.get(id);
+  public async update(id: string, record: Record<string, unknown>): Promise<D> {
+    const existing = await this.get(id) as MongooseProviderDocument;
     if (!existing) return this.create(id, record);
 
     for (const [key, value] of Object.entries(record)) {
@@ -84,7 +84,7 @@ export default class MongooseProvider extends Provider {
     }
 
     existing.id = existing.id || id;
-    const saved = await existing.save(record);
+    const saved = await existing.save(record) as D;
     this.client.metrics.update('provider.db.write.frequency');
     return saved;
   }
