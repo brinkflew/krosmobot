@@ -361,10 +361,14 @@ export default class FrenchLocale extends Locale {
       COMMAND_JOB_RESPONSE_JOB_CARVER: 'Sculpteur',
       COMMAND_JOB_RESPONSE_JOB_TAILOR: 'Tailleur',
       COMMAND_JOB_RESPONSE_NOJOBS: (member: string) => `Il n'y a pas encore de métier référencé pour ${member}.`,
+      COMMAND_JOB_RESPONSE_NOJOB: (member: string, job: string) => `${member} ne possède pas encore le métier ${job}.`,
       COMMAND_JOB_RESPONSE_NOBODY: (job: string) => `Personne ne possède le métier ${job}.`,
       COMMAND_JOB_RESPONSE_TITLE_ALL: 'Métiers',
       COMMAND_JOB_RESPONSE_TITLE_SINGLE: 'Métier',
-      COMMAND_JOB_RESPONSE_ERROR: 'Une erreur est survenue au moment de récupérer les informations sur les métiers...',
+      COMMAND_JOBS_RESPONSE_INVALID_COMBINATION: (args: Record<string, string | number>) => stripIndent`
+        La combinaison d'options suivante ne peut pas être utilisée :
+        ${code(Object.entries(args).map(([key, value]) => `${key} → ${value}`).join('\n'))}
+      `,
       COMMAND_JOB_DESCRIPTION_SHORT: 'Informations sur les métiers des membres.',
       COMMAND_JOB_DESCRIPTION_EXTENDED: oneLine`
         Permet de référencer le niveau de ses propres métiers ou d'afficher les métiers
@@ -384,14 +388,10 @@ export default class FrenchLocale extends Locale {
         ${argument('niveau')} Nouveau niveau du métier dans le cas d'une mise à jour (optionnel)
         ${argument('membre')} Mention d'un membre pour qui afficher le(s) métier(s) (optionnel)
       `,
-      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number, corrected: number) => oneLine`
-        Le niveau de métier ${level} n'est pas compris entre les marges autorisées
-        et sera corrigé en ${corrected}.
-      `,
-      COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
-        Certaines options n'ont pas pu être interprétées...
-        Commande exécutée :
-        ${code(`${prefix}${id} ${parsed.join(' ')}`)}
+      COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED: 'Un niveau a été indiqué sans métier, il sera ignoré.',
+      COMMAND_JOBS_ARGUMENTS_UNKNOWN: (args: (string | number)[]) => stripIndent`
+        Le options suivantes n'ont pas pu être traitées :
+        ${code(args.join('\n'))}
       `,
 
       // MONIT Command

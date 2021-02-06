@@ -14,9 +14,9 @@ export const createDirectMessage = (client: Client, data: any = {}) => {
 };
 
 export const createGuildMessage = (client: Client, data: any = {}) => {
-  const user = new MockUser(client, { id: SnowflakeUtil.generate() });
+  const user = new MockUser(client, { id: SnowflakeUtil.generate(), username: 'TestUser' });
   const guild = new MockGuild(client, { id: SnowflakeUtil.generate() });
-  const member = new MockGuildMember(client, { id: SnowflakeUtil.generate(), displayName: 'Test User' }, guild);
+  const member = new MockGuildMember(client, { id: SnowflakeUtil.generate(), displayName: 'Test User', user }, guild);
   const channel = new MockTextChannel(guild, { id: SnowflakeUtil.generate() });
   const message = new MockMessage(client, {
     ...data,

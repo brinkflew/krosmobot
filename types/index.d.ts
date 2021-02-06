@@ -34,7 +34,7 @@ export interface AlmanaxDocument extends MongooseProviderDocument {
 export type DofusJob = 'alchemist' | 'jeweller' | 'handyman' | 'lumberjack' | 'hunter' | 'shoemagus' | 'shoemaker' | 'costumagus' | 'craftmagus' | 'artificer' | 'smithmagus' | 'smith' | 'jewelmagus' | 'miner' | 'farmer' | 'fisherman' | 'carvmagus' | 'carver' | 'tailor';
 
 export interface MemberDocument extends MongooseProviderDocument {
-  jobs: { [key in DofusJob]: number };
+  jobs: { [key in DofusJob]?: number };
 }
 
 export interface ReminderDocument extends MongooseProviderDocument {

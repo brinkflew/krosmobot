@@ -359,10 +359,14 @@ export default class EnglishLocale extends Locale {
       COMMAND_JOB_RESPONSE_JOB_CARVER: 'Carver',
       COMMAND_JOB_RESPONSE_JOB_TAILOR: 'Tailor',
       COMMAND_JOB_RESPONSE_NOJOBS: (member: string) => `There are no jobs referenced for ${member} yet.`,
+      COMMAND_JOB_RESPONSE_NOJOB: (member: string, job: string) => `${member} does not have the job ${job} yet.`,
       COMMAND_JOB_RESPONSE_NOBODY: (job: string) => `Nobody has the job ${job}.`,
       COMMAND_JOB_RESPONSE_TITLE_ALL: 'Jobs',
       COMMAND_JOB_RESPONSE_TITLE_SINGLE: 'Job',
-      COMMAND_JOB_RESPONSE_ERROR: 'An error occured while fetching information about jobs...',
+      COMMAND_JOBS_RESPONSE_INVALID_COMBINATION: (args: Record<string, string | number>) => stripIndent`
+        The following combination of options cannot be used:
+        ${code(Object.entries(args).map(([key, value]) => `${key} → ${value}`).join('\n'))}
+      `,
       COMMAND_JOB_DESCRIPTION_SHORT: 'Information about members\' jobs.',
       COMMAND_JOB_DESCRIPTION_EXTENDED: oneLine`
         Allow referencing the level of self-owned jobs or displaying levels of other
@@ -382,14 +386,10 @@ export default class EnglishLocale extends Locale {
         ${argument('level')} New level for a job to update (optionnel)
         ${argument('membre')} Mention of a member to display the jobs of (optional)
       `,
-      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number, corrected: number) => oneLine`
-        The job level ${level} is not included between the allowed margins
-        and will be corrected to ${corrected}.
-      `,
-      COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
-        Some options could not be interpreted...
-        Executed command:
-        ${code(`${prefix}${id} ${parsed.join(' ')}`)}
+      COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED: 'A level was provided without a job name, it will be ignored.',
+      COMMAND_JOBS_ARGUMENTS_UNKNOWN: (args: (string | number)[]) => stripIndent`
+        The following options could not be parsed:
+        ${code(args.join('\n'))}
       `,
 
       // MONIT Command
