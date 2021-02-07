@@ -1,6 +1,6 @@
-import { MongooseProviderDocument } from 'types';
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
+import { AlmanaxDocument } from 'types';
 
 export const almanax = (client: Client) => describe('Almanax', () => {
   const message = createGuildMessage(client);
@@ -9,10 +9,10 @@ export const almanax = (client: Client) => describe('Almanax', () => {
   let command: Command; // eslint-disable-line @typescript-eslint/init-declarations
   let args: any = {};   // eslint-disable-line @typescript-eslint/init-declarations
 
-  provider.fetch = jest.fn((id: string) => client.providers.guilds.cache.get(id));
+  provider.fetch = jest.fn((id: string) => client.providers.almanax.cache.get(id));
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  provider.create = jest.fn(async (id: string, doc: Record<string, unknown>) => {
+  provider.create = jest.fn(async (id: string, doc: AlmanaxDocument) => {
     doc = {
       ...doc,
       images: {
@@ -23,10 +23,10 @@ export const almanax = (client: Client) => describe('Almanax', () => {
         title: doc['bonus.title'],
         description: doc['bonus.description']
       }
-    };
+    } as AlmanaxDocument;
 
-    provider.cache.set(id, doc as MongooseProviderDocument);
-    return doc as MongooseProviderDocument;
+    provider.cache.set(id, doc);
+    return doc;
   });
 
   const setup = async (content: string) => {

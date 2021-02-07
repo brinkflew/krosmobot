@@ -2,7 +2,7 @@ import { Collection, SnowflakeUtil, MessageEmbed } from 'discord.js';
 import { MockTextChannel } from 'jest-discordjs-mocks';
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
-import { MongooseProviderDocument } from 'types';
+import { GuildDocument } from 'types';
 
 export const set = (client: Client) => describe('Set', () => {
   const message = createGuildMessage(client);
@@ -41,12 +41,12 @@ export const set = (client: Client) => describe('Set', () => {
     command = <Command> client.commands.modules.get(name!);
     if (command && rest.length) args = await command.parse(message, rest);
 
-    provider = command.getProvider(message);
+    provider = client.providers.guilds;
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    provider.update = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      provider.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    provider.update = jest.fn(async (id: string, doc: GuildDocument) => {
+      provider.cache.set(id, doc);
+      return doc;
     });
 
     spies.success = jest.spyOn(command, 'success');

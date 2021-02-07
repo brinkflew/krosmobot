@@ -1,6 +1,6 @@
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
-import { MongooseProviderDocument } from 'types';
+import { ReminderDocument } from 'types';
 
 export const remind = (client: Client) => describe('Remind', () => {
   const message = createGuildMessage(client);
@@ -16,9 +16,9 @@ export const remind = (client: Client) => describe('Remind', () => {
     const rest = split.join(' ');
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    provider.update = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      provider.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    provider.update = jest.fn(async (id: string, doc: ReminderDocument) => {
+      provider.cache.set(id, doc);
+      return doc;
     });
 
     command = <Command> client.commands.modules.get(name!);

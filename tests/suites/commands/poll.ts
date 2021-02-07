@@ -1,6 +1,6 @@
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
-import { MongooseProviderDocument } from 'types';
+import { PollDocument } from 'types';
 
 export const poll = (client: Client) => describe('Poll', () => {
   const message = createGuildMessage(client);
@@ -10,9 +10,10 @@ export const poll = (client: Client) => describe('Poll', () => {
   let args: any = {};   // eslint-disable-line @typescript-eslint/init-declarations
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  provider.create = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-    provider.cache.set(id, doc as MongooseProviderDocument);
-    return doc as MongooseProviderDocument;
+  provider.create = jest.fn(async (id: string, doc: PollDocument) => {
+    doc.id = id;
+    provider.cache.set(id, doc);
+    return doc;
   });
 
   const setup = async (content: string) => {
