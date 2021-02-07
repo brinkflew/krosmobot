@@ -1,6 +1,7 @@
 import { Command } from '@/structures';
 import { Message } from 'discord.js';
 import { Argument } from 'discord-akairo';
+import { code } from '@/utils/message';
 
 /**
  * Display help about the available commands.
@@ -14,15 +15,14 @@ export default class HelpCommand extends Command {
       description: {
         'short': 'COMMAND_HELP_DESCRIPTION_SHORT',
         'extended': 'COMMAND_HELP_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_HELP_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_HELP_DESCRIPTION_USAGE'
+        'example': 'COMMAND_HELP_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           'id': 'command',
           'default': null,
           'type': Argument.compose('lowercase', 'commandAlias'),
-          'description': 'COMMAND_HELP_ARGUMENT_COMMAND_DESCRIPTION'
+          'description': 'COMMAND_HELP_DESCRIPTION_ARGUMENT_COMMAND'
         }
       ]
     });
@@ -44,7 +44,7 @@ export default class HelpCommand extends Command {
         fields: [
           {
             name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE', message),
-            value: this.t(command.description.usage || 'COMMAND_HELP_RESPONSE_FIELD_NO_USAGE', message, prefix)
+            value: `${code(command.usage(message))}\n${command.formatArgs(message)}`
           },
           {
             name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES', message),

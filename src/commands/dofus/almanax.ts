@@ -14,19 +14,20 @@ export default class AlmanaxCommand extends Command {
       description: {
         'short': 'COMMAND_ALMANAX_DESCRIPTION_SHORT',
         'extended': 'COMMAND_ALMANAX_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_ALMANAX_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_ALMANAX_DESCRIPTION_USAGE'
+        'example': 'COMMAND_ALMANAX_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           id: 'extended',
           match: 'flag',
-          flag: '--detail'
+          flag: '--detail',
+          description: 'COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_EXTENDED'
         },
         {
           id: 'offset',
           match: 'phrase',
-          type: 'string'
+          type: 'string',
+          description: 'COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_OFFSET'
         }
       ]
     });

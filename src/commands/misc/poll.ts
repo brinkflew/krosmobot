@@ -13,8 +13,7 @@ export default class PollCommand extends Command {
       description: {
         'short': 'COMMAND_POLL_DESCRIPTION_SHORT',
         'extended': 'COMMAND_POLL_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_POLL_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_POLL_DESCRIPTION_USAGE'
+        'example': 'COMMAND_POLL_DESCRIPTION_EXAMPLE'
       },
       channel: 'guild',
       args: [
@@ -23,20 +22,23 @@ export default class PollCommand extends Command {
           match: 'option',
           flag: ['--close-in', '--close', '--end', '--time'],
           type: 'duration',
-          unordered: true
+          unordered: true,
+          description: 'COMMAND_POLL_DESCRIPTION_ARGUMENT_TIME'
         },
         {
           'id': 'multi',
           'match': 'option',
-          'flag': '--allow-mutli',
+          'flag': ['--multi', '--allow-multi'],
           'type': ARGUMENTS.BOOLEAN,
           'default': 'true',
-          'unordered': true
+          'unordered': true,
+          'description': 'COMMAND_POLL_DESCRIPTION_ARGUMENT_MULTI'
         },
         {
           id: 'text',
           match: 'rest',
-          type: 'line'
+          type: 'line',
+          description: 'COMMAND_POLL_DESCRIPTION_ARGUMENT_TEXT'
         }
       ]
     });

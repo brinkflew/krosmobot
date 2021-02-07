@@ -14,8 +14,7 @@ export default class RemindCommand extends Command {
       description: {
         'short': 'COMMAND_REMIND_DESCRIPTION_SHORT',
         'extended': 'COMMAND_REMIND_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_REMIND_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_REMIND_DESCRIPTION_USAGE'
+        'example': 'COMMAND_REMIND_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
@@ -23,12 +22,14 @@ export default class RemindCommand extends Command {
           match: 'option',
           flag: ['--time', '--in'],
           type: 'duration',
-          unordered: true
+          unordered: true,
+          description: 'COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME'
         },
         {
           id: 'text',
           match: 'rest',
-          type: 'string'
+          type: 'string',
+          description: 'COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT'
         }
       ]
     });

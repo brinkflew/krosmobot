@@ -14,21 +14,22 @@ export default class PortalCommand extends Command {
       description: {
         'short': 'COMMAND_PORTAL_DESCRIPTION_SHORT',
         'extended': 'COMMAND_PORTAL_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_PORTAL_DESCRIPTION_USAGE'
+        'example': 'COMMAND_PORTAL_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           id: 'dimension',
           type: 'dofusDimension',
           match: 'phrase',
-          unordered: true
+          unordered: true,
+          description: 'COMMAND_PORTAL_DESCRIPTION_ARGUMENT_DIMENSION'
         },
         {
           id: 'server',
           type: 'dofusServer',
           match: 'phrase',
-          unordered: true
+          unordered: true,
+          description: 'COMMAND_PORTAL_DESCRIPTION_ARGUMENT_SERVER'
         }
       ]
     });

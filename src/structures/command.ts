@@ -1,4 +1,8 @@
-import { Command as AkairoCommand, CommandOptions } from 'discord-akairo';
+import {
+  Command as AkairoCommand,
+  CommandOptions,
+  ArgumentOptions
+} from 'discord-akairo';
 import {
   Message,
   MessageEmbed,
@@ -13,10 +17,15 @@ import { code } from '@/utils/message';
  */
 export class Command extends AkairoCommand {
 
+  public argumentsUsage: ArgumentOptions[];
+
   public constructor(id: string, options: CommandOptions = {}) {
     if (!options.aliases) options.aliases = [];
     if (!options.aliases.includes(id)) options.aliases.push(id);
+
     super(id, options);
+
+    this.argumentsUsage = options.usage || (Array.isArray(options.args) ? options.args : []);
   }
 
   /**
@@ -155,6 +164,34 @@ export class Command extends AkairoCommand {
   public getLocale(message: Message): Locale {
     const language = this.getDocument(message)?.settings?.locale || DEFAULTS.LOCALE;
     return this.client.locales.get(language);
+  }
+
+  public usage(message: Message) {
+    const args: string[] = [];
+
+    for (const arg of this.argumentsUsage) {
+      const required = arg.required && !arg.default && !arg.prompt;
+      const flag = Array.isArray(arg.flag) ? arg.flag[0] : arg.flag;
+      const usage = flag ? (arg.match === 'option' ? `${flag} <${arg.id!}>` : flag) : arg.id!;
+      args.push(required ? `<${usage}>` : `[${usage}]`);
+    }
+
+    return `${this.getPrefix(message)}${this.id} ${args.join(' ')}`;
+  }
+
+  public formatArgs(message: Message) {
+    const args: string[] = [];
+
+    for (const arg of this.argumentsUsage) {
+      const required = arg.required && !arg.default && !arg.prompt;
+      const flag = Array.isArray(arg.flag) ? arg.flag[0] : arg.flag;
+      const usage = flag ? (arg.match === 'option' ? `${flag} <${arg.id!}>` : flag) : arg.id!;
+      const description = this.t(typeof arg.description === 'string' ? arg.description : 'ARGUMENT_NO_DESCRIPTION', message);
+      const argument = `\`${usage}\` → ${description}${required ? ` (${this.t('ARGUMENT_OPTIONAL', message)})` : ''}`;
+      args.push(argument);
+    }
+
+    return args.join('\n');
   }
 
   /**

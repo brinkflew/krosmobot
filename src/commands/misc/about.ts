@@ -13,8 +13,7 @@ export default class AboutCommand extends Command {
       description: {
         'short': 'COMMAND_ABOUT_DESCRIPTION_SHORT',
         'extended': 'COMMAND_ABOUT_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_ABOUT_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_ABOUT_DESCRIPTION_USAGE'
+        'example': 'COMMAND_ABOUT_DESCRIPTION_EXAMPLE'
       }
     });
   }

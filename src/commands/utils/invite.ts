@@ -15,8 +15,7 @@ export default class InviteCommand extends Command {
       description: {
         'short': 'COMMAND_INVITE_DESCRIPTION_SHORT',
         'extended': 'COMMAND_INVITE_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_INVITE_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_INVITE_DESCRIPTION_USAGE'
+        'example': 'COMMAND_INVITE_DESCRIPTION_EXAMPLE'
       }
     });
   }

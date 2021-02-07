@@ -15,14 +15,14 @@ export default class SetCommand extends Command {
       description: {
         'short': 'COMMAND_SET_DESCRIPTION_SHORT',
         'extended': 'COMMAND_SET_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_SET_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_SET_DESCRIPTION_USAGE'
+        'example': 'COMMAND_SET_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           id: 'keys',
           match: 'separate',
-          type: 'lowercase'
+          type: 'lowercase',
+          description: 'COMMAND_SET_DESCRIPTION_ARGUMENT_KEYS'
         }
       ]
     });

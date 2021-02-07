@@ -35,4 +35,12 @@ declare module 'discord-akairo' {
     invite: string | null;
     userCount: number;
   }
+
+  export interface CommandOptions {
+    usage?: ArgumentOptions[];
+  }
+
+  export interface ArgumentOptions {
+    required?: boolean;
+  }
 }

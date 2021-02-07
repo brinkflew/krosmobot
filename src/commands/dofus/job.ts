@@ -17,9 +17,22 @@ export default class JobCommand extends Command {
       description: {
         'short': 'COMMAND_JOB_DESCRIPTION_SHORT',
         'extended': 'COMMAND_JOB_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_JOB_DESCRIPTION_USAGE'
-      }
+        'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE'
+      },
+      usage: [
+        {
+          id: 'job',
+          description: 'COMMAND_JOB_DESCRIPTION_ARGUMENT_JOB'
+        },
+        {
+          id: 'level',
+          description: 'COMMAND_JOB_DESCRIPTION_ARGUMENT_LEVEL'
+        },
+        {
+          id: 'member',
+          description: 'COMMAND_JOB_DESCRIPTION_ARGUMENT_MEMBER'
+        }
+      ]
     });
   }
 

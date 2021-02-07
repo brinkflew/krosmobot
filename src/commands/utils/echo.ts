@@ -14,24 +14,26 @@ export default class EchoCommand extends Command {
       description: {
         'short': 'COMMAND_ECHO_DESCRIPTION_SHORT',
         'extended': 'COMMAND_ECHO_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_ECHO_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_ECHO_DESCRIPTION_USAGE'
+        'example': 'COMMAND_ECHO_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           id: 'target',
-          type: Argument.union('textChannel', 'string')
+          type: Argument.union('textChannel', 'string'),
+          description: 'COMMAND_ECHO_DESCRIPTION_ARGUMENT_TARGET'
         },
         {
           id: 'file',
           match: 'option',
           type: 'url',
-          flag: '--file'
+          flag: '--file',
+          description: 'COMMAND_ECHO_DESCRIPTION_ARGUMENT_FILE'
         },
         {
           id: 'content',
           match: 'rest',
-          type: 'string'
+          type: 'string',
+          description: 'COMMAND_ECHO_DESCRIPTION_ARGUMENT_CONTENT'
         }
       ]
     });

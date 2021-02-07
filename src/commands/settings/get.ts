@@ -14,14 +14,14 @@ export default class SetCommand extends Command {
       description: {
         'short': 'COMMAND_GET_DESCRIPTION_SHORT',
         'extended': 'COMMAND_GET_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_GET_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_GET_DESCRIPTION_USAGE'
+        'example': 'COMMAND_GET_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           id: 'keys',
           match: 'separate',
-          type: 'lowercase'
+          type: 'lowercase',
+          description: 'COMMAND_GET_DESCRIPTION_ARGUMENT_KEYS'
         }
       ]
     });

@@ -15,9 +15,14 @@ export default class LocaleCommand extends Command {
       description: {
         'short': 'COMMAND_LOCALE_DESCRIPTION_SHORT',
         'extended': 'COMMAND_LOCALE_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_LOCALE_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_LOCALE_DESCRIPTION_USAGE'
-      }
+        'example': 'COMMAND_LOCALE_DESCRIPTION_EXAMPLE'
+      },
+      usage: [
+        {
+          id: 'locale',
+          description: 'COMMAND_LOCALE_DESCRIPTION_ARGUMENT_LOCALE'
+        }
+      ]
     });
   }
 

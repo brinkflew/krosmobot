@@ -18,14 +18,14 @@ export default class DiceCommand extends Command {
       description: {
         'short': 'COMMAND_DICE_DESCRIPTION_SHORT',
         'extended': 'COMMAND_DICE_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_DICE_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_DICE_DESCRIPTION_USAGE'
+        'example': 'COMMAND_DICE_DESCRIPTION_EXAMPLE'
       },
       regex: (message: Message) => this.getRegex(message),
       args: [
         {
-          id: 'match',
-          type: (_message: Message, phrase: string) => /([0-9]*)d([0-9]+)/i.exec(phrase)
+          id: 'rolls',
+          type: (_message: Message, phrase: string) => /([0-9]*)d([0-9]+)/i.exec(phrase),
+          description: 'COMMAND_DICE_DESCRIPTION_ARGUMENT_ROLLS'
         }
       ]
     });
@@ -36,13 +36,13 @@ export default class DiceCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, args: any) {
-    args.match = args.match || [];
+    args.rolls = args.rolls || [];
 
-    let rolls = parseInt(args.match[1], 10);
+    let rolls = parseInt(args.rolls[1], 10);
     if (isNaN(rolls)) rolls = 1;
     if (rolls >= 10e3) return this.error(message, this.t('COMMAND_DICE_ERROR_ROLLS', message, 10e3 - 1));
 
-    let size = parseInt(args.match[2], 10);
+    let size = parseInt(args.rolls[2], 10);
     if (isNaN(size)) size = 6;
     if (size >= 10e5) return this.error(message, this.t('COMMAND_DICE_ERROR_SIZE', message, 10e5 - 1));
 

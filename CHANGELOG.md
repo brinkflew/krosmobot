@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Command `job`: refactor the `exec` method to better handle arguments and errors
+- Command `job`: refactored the `exec` method to better handle arguments and errors
+- Command `help`: refactored the generation of usage and arguments description
 
 ### Fixed
 

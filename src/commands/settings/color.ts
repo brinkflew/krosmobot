@@ -15,9 +15,14 @@ export default class ColorCommand extends Command {
       description: {
         'short': 'COMMAND_COLOR_DESCRIPTION_SHORT',
         'extended': 'COMMAND_COLOR_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_COLOR_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_COLOR_DESCRIPTION_USAGE'
-      }
+        'example': 'COMMAND_COLOR_DESCRIPTION_EXAMPLE'
+      },
+      usage: [
+        {
+          id: 'color',
+          description: 'COMMAND_COLOR_DESCRIPTION_ARGUMENT_COLOR'
+        }
+      ]
     });
   }
 
