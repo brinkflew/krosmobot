@@ -7,72 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Providers: added type binding for documents
+- Tests: added document typings for providers
+
+### Changed
+
+- Command `job`: refactor the `exec` method to better handle arguments and errors
+
+### Fixed
+
+- Task `almanax`: Remove doubled offset
+- Command `job`: Display name of members instead of global user
+
 ## [0.1.4] - 2021-02-05
 
 ### Added
 
-- Command `get` to see the currently configured parameters
-- Command `about` to get information about the bot
-- Unit testing
+- Command `get`: see the currently configured parameters
+- Command `about`: get information about the bot
+- Tests: basic unit testing to cover locales, commands and arguments
 
-### Modified
+### Changed
 
-- Simplify command `set`'s usage
-- Dofus-related arguments parsing
-- Harmonize constants and default values
-- Refactor settings' provider: return docs instead of single key-value
-- Minor corrections in localizations
-- Command `job` implements fuzzy search for jobnames
+- Command `set`: simplify usage
+- Command `job`: implements fuzzy search for job names
+- Arguments: Dofus-related arguments parsing (`dofusServer`, `dofusDimension`, `dofusJob`)
+- Providers: return docs instead of single key-value
+- Misc: Minor corrections in localizations
+- Misc: Harmonize constants and default values
 
 ### Removed
 
-- RSS feed reading from [Dofus](https://www.dofus.fr/rss): blocked by CloudFlare
+- Task `news`: RSS feed reading from [Dofus](https://www.dofus.fr/rss): blocked by CloudFlare
 
 ## [0.1.3] - 2021-01-27
 
 ### Added
 
-- Command `poll` to create polls
-- Command `remind` to set automatic reminders
-- Do not cache logs in memory and prune older logs from the database
-- Log tasks results
-- Fix Discord metrics collection
-- Refactor settings
+- Command `poll`: create polls
+- Command `remind`: set automatic reminders
+- Providers: disable caching of logs in memory
+- Task `logs`: prune older logs from the database
+- Tasks: Log tasks results
+
+### Changed
+
+- Providers: refactor settings storage
+
+### Fixed
+
+- Metrics: Discord metrics collection
 
 ## [0.1.2] - 2021-01-18
 
 ### Added
 
-- Monitoring with PM2-IO and Keymetrics
-- Command `monit` to check statistics on the process
-- Roll dices and get a score
+- Metrics: Monitoring with PM2-IO and Keymetrics
+- Command `monit`: check statistics about the current process
+- Command `dice`: roll dices and get a score
 
 ### Changed
 
-- Commands' status messages are friendlier
-- More and better deployment/development scripts 
-- Better arguments parsing for `portal` and job `commands`
+- Commands: friendlier status messages
+- Project: improved deployment and development scripts 
+- Commands: improved arguments parsing for `portal` and `job` commands
 
 ### Fixed
 
-- Typo in sample DOTENV file prevents mapping the correct client owners
-- Typos in localizations
+- Project: typo in sample DOTENV file preventing mapping the correct client owners
+- Locales: typos in translations
 
 ## [0.1.1] - 2021-01-14
 
 ### Changed
 
-- Filter out tweets that are replies when fetching news
-- Improve argument parsing for jobs and enable handling of invalid arguments
+- Task `twitter`: filter out tweets that are replies when fetching news
+- Command `job`: improved argument parsing and handling of invalid arguments
 
 ## [0.1.0] - 2021-01-14
 
 ### Added
 
-- Project structure and configuration
-- Basic [commands](./README.md#Commands) to use within Discord
-- Automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
-- Get news from twitter in real-time
+- Project: base structure and configuration
+- Commands: Basic [commands](./README.md#Commands) to use within Discord
+- Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
+- Task `twitter`: fetch news from twitter in (almost) real-time
 
 [unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...HEAD
 [0.1.4]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...v0.1.4
