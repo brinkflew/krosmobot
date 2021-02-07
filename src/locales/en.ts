@@ -484,7 +484,7 @@ export default class EnglishLocale extends Locale {
         ${usage(prefix, 'poll multi:false Question ?')}
       `,
       COMMAND_POLL_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'poll <question> [answer 1, answer 2, [...]] [time:<duration>]')}
+        ${usage(prefix, 'poll <question> [answer 1, answer 2, [...]] [--time <duration>]')}
         ${argument('question')} Title of the poll
         ${argument('answers')} Propositions for the poll: either one, either 2 or more (optional)
         ${argument('time')} Duration of the poll, number followed by a suffixe (d = days, h = hours, m = minutes)
@@ -493,6 +493,7 @@ export default class EnglishLocale extends Locale {
       COMMAND_POLL_RESPONSE_NO_TITLE: 'No question were asked.',
       COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS: 'A poll cannot have a songle proposition.',
       COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG: 'One or more propositions are too long (max. 96 characters allowed).',
+      COMMAND_POLL_RESPONSE_TIME_TOO_LOW: 'The time to automatic closing cannot be lesser than 1 minute.',
       COMMAND_POLL_RESPONSE_TITLE: (title: string) => `Poll : ${title}`,
       COMMAND_POLL_RESPONSE_RESULTS: (title: string) => `Results: ${title}`,
       COMMAND_POLL_RESPONSE_FOOTER: (reactions: string[], time: string) => stripIndent`
@@ -517,6 +518,7 @@ export default class EnglishLocale extends Locale {
         ${argument('content')} Content to send in the reminder
       `,
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'The reminder requires content to send.',
+      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'The time before sending the reminder cannot be lesser than 1 minute.',
       COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `A reminder will be sent in ${time}`,
       COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`,
 

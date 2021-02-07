@@ -495,6 +495,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_POLL_RESPONSE_NO_TITLE: 'Aucune question n\'a été posée.',
       COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS: 'Un sondage ne peut pas avoir qu\'une seule proposition.',
       COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG: 'Une ou plusieurs propositions sont trop longues (max. 96 caractères autorisés).',
+      COMMAND_POLL_RESPONSE_TIME_TOO_LOW: 'Le temps avant fermeture automatique ne peut pas être plus petit que 1 minute.',
       COMMAND_POLL_RESPONSE_TITLE: (title: string) => `Sondage : ${title}`,
       COMMAND_POLL_RESPONSE_RESULTS: (title: string) => `Résultats : ${title}`,
       COMMAND_POLL_RESPONSE_FOOTER: (reactions: string[], time: string) => stripIndent`
@@ -519,6 +520,7 @@ export default class FrenchLocale extends Locale {
         ${argument('contenu')} Contenu à envoyer dans le rappel
       `,
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'Le rappel nécessite un contenu à envoyer.',
+      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'Le temps avant l\'envoi du rappel ne peut pas être plus petit que 1 minute.',
       COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `Un rappel sera envoyé dans ${time}`,
       COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`,
 

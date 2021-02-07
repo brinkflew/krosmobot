@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { TIME, EMOJIS, ARGUMENTS } from '@/constants';
+import { EMOJIS, ARGUMENTS, TIME } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
@@ -19,12 +19,11 @@ export default class PollCommand extends Command {
       channel: 'guild',
       args: [
         {
-          'id': 'time',
-          'match': 'option',
-          'flag': '--close-in',
-          'type': 'duration',
-          'default': TIME.MS_PER_DAY,
-          'unordered': true
+          id: 'time',
+          match: 'option',
+          flag: ['--close-in', '--close', '--end', '--time'],
+          type: 'duration',
+          unordered: true
         },
         {
           'id': 'multi',
@@ -47,7 +46,10 @@ export default class PollCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { time: number; text: string[] | null; multi: string }) {
+  public async exec(message: Message, args: { time: number | null; text: string[] | null; multi: string }) {
+    if (typeof args.time !== 'number') args.time = TIME.MS_PER_DAY;
+    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, this.t('COMMAND_POLL_RESPONSE_TIME_TOO_LOW', message));
+
     if (!args.text?.length) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NO_TITLE', message));
     const title = args.text.shift();
 

@@ -1,8 +1,7 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { TIME } from '@/constants';
-import { matcher } from '@/arguments/time/duration';
 import { formatRelative } from '@/utils';
+import { TIME } from '@/constants';
 
 /**
  * Creates a new reminder.
@@ -20,10 +19,11 @@ export default class RemindCommand extends Command {
       },
       args: [
         {
-          'id': 'time',
-          'type': 'duration',
-          'default': TIME.MS_PER_DAY,
-          'unordered': true
+          id: 'time',
+          match: 'option',
+          flag: ['--time', '--in'],
+          type: 'duration',
+          unordered: true
         },
         {
           id: 'text',
@@ -38,9 +38,10 @@ export default class RemindCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { time: number; text: string }) {
+  public async exec(message: Message, args: { time: number | null; text: string }) {
     if (typeof args.text !== 'string') return this.error(message, this.t('COMMAND_REMIND_RESPONSE_NO_CONTENT', message));
-    args.text = args.text.replace(matcher, '').trim();
+    if (typeof args.time !== 'number') args.time = TIME.MS_PER_DAY;
+    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, this.t('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW', message));
 
     const locale = this.getLocale(message);
     const doc = {
