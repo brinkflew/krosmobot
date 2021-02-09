@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { client, destroy } from './utils/client';
 import * as suites from './suites/arguments';
-import { MongooseProviderDocument } from 'types';
+import { GuildDocument } from 'types';
 
 dotenv.config({ path: '.env.test' });
 
@@ -16,9 +16,9 @@ describe('Arguments', () => {
     client.providers.guilds.fetch = jest.fn((id: string) => client.providers.guilds.cache.get(id));
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    client.providers.guilds.create = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      client.providers.guilds.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    client.providers.guilds.create = jest.fn(async (id: string, doc: GuildDocument) => {
+      client.providers.guilds.cache.set(id, doc);
+      return doc;
     });
 
     client.events.setEmitters({
