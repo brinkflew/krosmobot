@@ -1,12 +1,14 @@
 import { Client, Command } from '../../../src/structures';
 import { EMBEDS } from '../../../src/constants';
 import { createGuildMessage } from '../../utils/message';
+import { GuildDocument } from 'types';
 
 export const color = (client: Client) => describe('Color', () => {
   const spies: { [key: string]: jest.SpyInstance } = {};
   const message = createGuildMessage(client);
   let command: Command; // eslint-disable-line @typescript-eslint/init-declarations
   let args: any = {};   // eslint-disable-line @typescript-eslint/init-declarations
+  let provider = client.providers.guilds;
 
   const setup = async (content: string) => {
     message.content = content;
@@ -17,8 +19,13 @@ export const color = (client: Client) => describe('Color', () => {
     command = <Command> client.commands.modules.get(name!);
     if (command && rest.length) args = await command.parse(message, rest);
 
-    const provider = command.getProvider(message);
-    provider.update = jest.fn();
+    provider = client.providers.guilds;
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    provider.update = jest.fn(async (id: string, doc: GuildDocument) => {
+      provider.cache.set(id, doc);
+      return doc;
+    });
 
     spies.embed = jest.spyOn(command, 'embed');
     spies.warning = jest.spyOn(command, 'warning');
@@ -37,9 +44,8 @@ export const color = (client: Client) => describe('Color', () => {
   });
 
   it('should warn if previous and new colors are identical', async () => {
+    await provider.update(message.guild!.id, { settings: { color: EMBEDS.COLORS.DEFAULT } });
     await setup(`!color ${EMBEDS.COLORS.DEFAULT}`);
-    const provider = command.getProvider(message);
-    provider.cache.set(command.getID(message), new provider.model({ settings: { color: EMBEDS.COLORS.DEFAULT } }));
     await command.exec(message, args);
     expect(spies.warning).toBeCalledTimes(1);
     expect(spies.update).toBeCalledTimes(0);
