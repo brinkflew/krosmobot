@@ -17,7 +17,7 @@ export const job = (client: Client) => describe('Job', () => {
 
   message.guild!.members.cache.set(member.id, member);
   provider.cache.set(member.id, {
-    id: member.id,
+    id: `${message.guild!.id}:${member.id}`,
     jobs: {
       tailor: 100,
       smith: 50
@@ -122,7 +122,8 @@ export const job = (client: Client) => describe('Job', () => {
     await setup('!job tailor 100');
     await command.exec(message, args);
     expect(spies.update).toBeCalledTimes(1);
-    expect(spies.update).toBeCalledWith(message.member?.id, { id: message.member!.id, jobs: { tailor: 100 } });
+    const id = `${message.guild!.id}:${message.member!.id}`;
+    expect(spies.update).toBeCalledWith(id, { id, jobs: { tailor: 100 } });
     expect(spies.embed).toBeCalledTimes(1);
     expect(spies.t).toBeCalledWith('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message);
   });

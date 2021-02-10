@@ -1,4 +1,4 @@
-import { Message, GuildMember } from 'discord.js';
+import { Message, GuildMember, Guild } from 'discord.js';
 import { Command } from '@/structures';
 import { Argument } from 'discord-akairo';
 import { PICTURES } from '@/constants';
@@ -47,7 +47,7 @@ export default class JobCommand extends Command {
     if (args.job && args.level && !args.member) {
       const jobs: { [key: string]: number } = {};
       jobs[args.job] = args.level;
-      void provider.update(message.member!.id, { jobs });
+      void provider.update(this.memberID(message.guild!, message.member!), { jobs });
       const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
 
       return this.embed(message, {
@@ -78,7 +78,8 @@ export default class JobCommand extends Command {
 
       let length = 0;
       const pairs: [string, number][] = members.map(member => {
-        const resolved = this.client.util.resolveMember(member.id, message.guild!.members.cache);
+        const id = (member.id as string).split(':');
+        const resolved = this.client.util.resolveMember(id[1], message.guild!.members.cache);
         length = Math.max(length, resolved.displayName.length);
         return [resolved.displayName, member.jobs[job] || 1];
       });
@@ -108,7 +109,7 @@ export default class JobCommand extends Command {
     // `!job member` → Display all jobs for the selected user
     if (!args.job && !args.level && args.member) {
       const translated = this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, args.member.displayName);
-      const cached = provider.get(args.member.id);
+      const cached = provider.get(this.memberID(message.guild!, args.member));
 
       if (!cached) return this.warning(message, translated);
 
@@ -146,7 +147,7 @@ export default class JobCommand extends Command {
     // `!job job member` → Display the selected job for the selected member
     if (args.job && !args.level && args.member) {
       const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
-      const cached = provider.get(args.member.id);
+      const cached = provider.get(this.memberID(message.guild!, args.member));
 
       if (!cached) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOB', message, args.member.displayName, translated));
 
@@ -180,6 +181,16 @@ export default class JobCommand extends Command {
   private format(name: string, level: number, maxLength = 15): string {
     const fixed = level.toFixed(0);
     return `${name} ${' '.repeat(maxLength - name.length - fixed.length + 3)} ${fixed}`;
+  }
+
+  /**
+   * Format the ID of a member for use with the members provider.
+   * @param guild Guild the member is linked to
+   * @param member Member within the aforementionned guild
+   */
+  private memberID(guild: Guild, member: GuildMember) {
+    if (!guild) return member.id;
+    return `${guild.id}:${member.id}`;
   }
 
   /**
