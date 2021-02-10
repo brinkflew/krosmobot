@@ -71,6 +71,14 @@ export const set = (client: Client) => describe('Set', () => {
     expect(spies.update).toBeCalledTimes(0);
   });
 
+  it('should error if no valid key-value pair is provided', async () => {
+    await setup('!set almanax invalid-channel dofus-server invalid-server');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.success).toBeCalledTimes(0);
+    expect(spies.update).toBeCalledTimes(0);
+  });
+
   it('should warn if an invalid key is provided', async () => {
     await setup('!set test value');
     await command.exec(message, args);
@@ -97,14 +105,6 @@ export const set = (client: Client) => describe('Set', () => {
     expect(spies.update).toBeCalledTimes(1);
   });
 
-  it('should error if no valid key-value pair is provided', async () => {
-    await setup('!set dofus-server invalid almanax invalid-channel dofus-server invalid-server');
-    await command.exec(message, args);
-    expect(spies.error).toBeCalledTimes(1);
-    expect(spies.success).toBeCalledTimes(0);
-    expect(spies.update).toBeCalledTimes(0);
-  });
-
   it('should save the value if a valid key-value pair is provided', async () => {
     await setup('!set dofus-server jahash');
     await command.exec(message, args);
@@ -114,7 +114,7 @@ export const set = (client: Client) => describe('Set', () => {
     expect(spies.update).toBeCalledWith(command.getID(message), expect.anything());
   });
 
-  it('should save the value if of multiple keys', async () => {
+  it('should save the value if multiple keys are provided', async () => {
     message.guild?.channels.cache.set(channel.id, channel);
     await setup(`!set dofus-server jahash almanax #${channel.name} twitter <#${channel.id}>`);
     await command.exec(message, args);
