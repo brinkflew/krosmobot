@@ -190,13 +190,15 @@ export default class EnglishLocale extends Locale {
         Send a message in the current channel:
         ${usage(prefix, 'echo <message>')}
         Send a message in the '\#general' channel and join an image:
-        ${usage(prefix, 'echo #general file:https://www.thissitedoesnotexist.com/image.jpg <message>')}
+        ${usage(prefix, 'echo #general --file https://www.thissitedoesnotexist.com/image.jpg <message>')}
       `,
       COMMAND_ECHO_DESCRIPTION_ARGUMENT_TARGET: 'Channel to which the message should be sent',
       COMMAND_ECHO_DESCRIPTION_ARGUMENT_FILE: 'URL of a file to join',
       COMMAND_ECHO_DESCRIPTION_ARGUMENT_CONTENT: 'Content of the message to send',
-      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'Please provide some text to echo.',
-      COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message sent to the channel \#${channel}`,
+      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'I cannot echo back an empty message...',
+      COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT: (channel: string) => `I do not have the required permissions to write to **#${channel}**`,
+      COMMAND_ECHO_RESPONSE_NO_PERMISSION_USER: (channel: string) => `You do not have the required permissions to write to **#${channel}**`,
+      COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message sent to the channel **#${channel}**`,
 
       // ALMANAX Command
       COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Fetches the almanax of the day.',

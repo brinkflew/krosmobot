@@ -1,4 +1,4 @@
-import { SnowflakeUtil, MessageEmbed } from 'discord.js';
+import { SnowflakeUtil, MessageEmbed, GuildMember } from 'discord.js';
 import { MockTextChannel } from 'jest-discordjs-mocks';
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
@@ -6,12 +6,15 @@ import { createGuildMessage } from '../../utils/message';
 export const echo = (client: Client) => describe('Echo', () => {
   const message = createGuildMessage(client);
   const spies: { [key: string]: jest.SpyInstance } = {};
+  const permissions: Record<string, Set<string>> = {};
   let command: Command; // eslint-disable-line @typescript-eslint/init-declarations
   let args: any = {};   // eslint-disable-line @typescript-eslint/init-declarations
 
   const channel = new MockTextChannel(message.guild, { id: SnowflakeUtil.generate(), name: 'test-channel' });
+
   Object.assign(channel, {
     type: 'text',
+    permissionsFor: jest.fn((member: GuildMember) => permissions[member.id]),
     send: jest.fn((content: string | MessageEmbed, options: any = {}) => {
       const data: { [key: string]: any } = {
         id: SnowflakeUtil.generate(),
@@ -28,7 +31,14 @@ export const echo = (client: Client) => describe('Echo', () => {
     })
   });
 
+  Object.assign(message.channel, {
+    permissionsFor: jest.fn((member: GuildMember) => permissions[member.id])
+  });
+
   message.guild?.channels.cache.set(channel.id, channel);
+
+  permissions[client.user!.id] = new Set();
+  permissions[message.member!.id] = new Set();
 
   const setup = async (content: string) => {
     message.content = content;
@@ -40,15 +50,29 @@ export const echo = (client: Client) => describe('Echo', () => {
     if (command && rest.length) args = await command.parse(message, rest);
 
     spies.success = jest.spyOn(command, 'success');
-    spies.warning = jest.spyOn(command, 'warning');
+    spies.error = jest.spyOn(command, 'error');
     spies.sendSameChannel = jest.spyOn(message.channel, 'send');
     spies.sendOtherChannel = jest.spyOn(channel, 'send');
   };
 
-  it('should reply with warning if no content provided', async () => {
+  it('should error if no content provided', async () => {
     await setup('!echo');
     await command.exec(message, args);
-    expect(spies.warning).toBeCalledTimes(1);
+    expect(spies.error).toBeCalledTimes(1);
+  });
+
+  it('should error if the client has no rights to send messages', async () => {
+    await setup(`!echo <#${channel.id}> content`);
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    permissions[client.user!.id].add('SEND_MESSAGES');
+  });
+
+  it('should error if the author has no rights to send messages', async () => {
+    await setup(`!echo <#${channel.id}> content`);
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    permissions[message.member!.id].add('SEND_MESSAGES');
   });
 
   it('should reply with content in same channel if only one word provided', async () => {

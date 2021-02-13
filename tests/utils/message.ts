@@ -14,9 +14,9 @@ export const createDirectMessage = (client: Client, data: any = {}) => {
 };
 
 export const createGuildMessage = (client: Client, data: any = {}) => {
-  const user = new MockUser(client, { id: SnowflakeUtil.generate(), username: 'TestUser' });
+  const user = new MockUser(client, { id: SnowflakeUtil.generate(), username: 'OtherUser' });
   const guild = new MockGuild(client, { id: SnowflakeUtil.generate() });
-  const member = new MockGuildMember(client, { id: SnowflakeUtil.generate(), displayName: 'Test User', user }, guild);
+  const member = new MockGuildMember(client, { id: user.id, displayName: 'Test User', user }, guild);
   const channel = new MockTextChannel(guild, { id: SnowflakeUtil.generate() });
   const message = new MockMessage(client, {
     ...data,
@@ -24,6 +24,14 @@ export const createGuildMessage = (client: Client, data: any = {}) => {
     id: SnowflakeUtil.generate(),
     member
   }, channel);
+
+  client.user!.username = 'ClientUser';
+  const clientMember = new MockGuildMember(client, { id: client.user!.id, displayName: 'Client User', user: client.user }, guild);
+  guild.members.cache.set(clientMember.id, clientMember);
+
+  Object.assign(message.guild!.members, {
+    fetch: jest.fn((options: string) => message.guild!.members.cache.get(options))
+  });
 
   Object.assign(message.channel, {
     send: jest.fn((content: string | MessageEmbed, options: any = {}) => {

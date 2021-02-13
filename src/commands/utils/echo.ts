@@ -1,5 +1,5 @@
 import { Command } from '@/structures';
-import { Message, TextChannel } from 'discord.js';
+import { GuildMember, Message, TextChannel } from 'discord.js';
 import { Argument } from 'discord-akairo';
 
 /**
@@ -49,13 +49,30 @@ export default class EchoCommand extends Command {
       target = <TextChannel> message.channel;
     }
 
-    if (!content) return this.warning(message, this.t('COMMAND_ECHO_RESPONSE_NO_CONTENT', message));
+    if (!content) return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_CONTENT', message));
+
+    if (!this.hasPermissions(message.guild!.me!, target)) {
+      return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT', message, target.name));
+    }
+
+    if (!this.hasPermissions(message.member!, target)) {
+      return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_USER', message, target.name));
+    }
 
     const files = [];
     if (file) files.push(file.href);
 
     if (target.id !== message.channel.id) void this.success(message, this.t('COMMAND_ECHO_RESPONSE_SENT', message, target.name));
     return target.send(content, { files });
+  }
+
+  /**
+   * Checks whether a guild member has the rights to send messages in a channel.
+   * @param member Member to check the permissions for
+   * @param channel Channel to check the permissions of the member in
+   */
+  private hasPermissions(member: GuildMember, channel: TextChannel) {
+    return Boolean(channel.permissionsFor(member)?.has('SEND_MESSAGES'));
   }
 
 }

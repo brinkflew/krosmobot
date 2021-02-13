@@ -192,13 +192,15 @@ export default class FrenchLocale extends Locale {
         Envoyer un message dans le salon courant :
         ${usage(prefix, 'echo <message>')}
         Envoyer un message dans le salon '\#general' et y joindre une image :
-        ${usage(prefix, 'echo #general file:https://www.cesitenexistepas.com/image.jpg <message>')}
+        ${usage(prefix, 'echo #general --file https://www.cesitenexistepas.com/image.jpg <message>')}
       `,
       COMMAND_ECHO_DESCRIPTION_ARGUMENT_TARGET: 'Salon dans lequel envoyer le message',
       COMMAND_ECHO_DESCRIPTION_ARGUMENT_FILE: 'URL d\'un fichier à joindre',
       COMMAND_ECHO_DESCRIPTION_ARGUMENT_CONTENT: 'Contenu du message à envoyer',
-      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'Veuillez soumettre du texte à répéter',
-      COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message envoyé dans le channel \#${channel}`,
+      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'Je ne peux pas répéter un message vide...',
+      COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT: (channel: string) => `Je ne possède pas les permissions nécéssaires pour écrire dans **#${channel}**`,
+      COMMAND_ECHO_RESPONSE_NO_PERMISSION_USER: (channel: string) => `Vous ne possédez pas les permissions nécéssaires pour écrire dans **#${channel}**`,
+      COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message envoyé dans le channel **#${channel}**`,
 
       // ALMANAX Command
       COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Récupères l\'almanax du jour.',
