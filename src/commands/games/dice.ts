@@ -6,6 +6,7 @@ import { formatNumber } from '@/utils';
 
 const font = 'px serif';
 const target = { width: 130, height: 84 };
+const diceRegExpString = `(-?[0-9.,]*)d(-?[0-9.,]+)`;
 
 /**
  * Roll one or multiple dices.
@@ -24,7 +25,7 @@ export default class DiceCommand extends Command {
       args: [
         {
           id: 'rolls',
-          type: (_message: Message, phrase: string) => /([0-9]*)d([0-9]+)/i.exec(phrase),
+          type: (_message: Message, phrase: string) => this.expressions.dice.exec(phrase),
           description: 'COMMAND_DICE_DESCRIPTION_ARGUMENT_ROLLS'
         }
       ]
@@ -32,18 +33,35 @@ export default class DiceCommand extends Command {
   }
 
   /**
+   * Helper regular expressions.
+   */
+  private get expressions() {
+    return {
+      dice: new RegExp(diceRegExpString, 'i'),
+      aliases: new RegExp(`^(${this.aliases.join('|')})`, 'i')
+    };
+  }
+
+  /**
    * Run the command
    * @param message Message received from Discord
    */
   public async exec(message: Message, args: any) {
-    args.rolls = args.rolls || [];
+    if (!args.rolls) {
+      const toParse = message.util?.parsed?.afterPrefix?.replace(this.expressions.aliases, '').trim();
+      args.rolls = this.expressions.dice.exec(toParse?.length ? toParse : '1d6');
+    }
+
+    if (this.isFloat(args.rolls[1]) || this.isFloat(args.rolls[2])) return this.error(message, this.t('COMMAND_DICE_ERROR_FLOAT', message));
 
     let rolls = parseInt(args.rolls[1], 10);
     if (isNaN(rolls)) rolls = 1;
+    if (rolls < 1) return this.error(message, this.t('COMMAND_DICE_ERROR_ROLLS_ZERO', message));
     if (rolls >= 10e3) return this.error(message, this.t('COMMAND_DICE_ERROR_ROLLS', message, 10e3 - 1));
 
     let size = parseInt(args.rolls[2], 10);
     if (isNaN(size)) size = 6;
+    if (size < 1) return this.error(message, this.t('COMMAND_DICE_ERROR_SIZE_ZERO', message));
     if (size >= 10e5) return this.error(message, this.t('COMMAND_DICE_ERROR_SIZE', message, 10e5 - 1));
 
     const scores: number[] = [];
@@ -80,6 +98,7 @@ export default class DiceCommand extends Command {
     return this.embed(message, {
       author: { name: this.t('COMMAND_DICE_RESPONSE_EXPLAIN', message, rolls, size) },
       title: this.t('COMMAND_DICE_RESPONSE_TOTAL', message, total),
+      description: this.t('COMMAND_DICE_RESPONSE_DETAIL', message, scores),
       files: [attachment],
       thumbnail: { url: `attachment://dice.png` }
     });
@@ -91,7 +110,16 @@ export default class DiceCommand extends Command {
    */
   private getRegex(message: Message): RegExp {
     const prefix = this.getPrefix(message);
-    return new RegExp(`^${prefix}(?:${this.aliases.join('|\s')})?\s*([0-9]*)d([0-9]+)`, 'i');
+    return new RegExp(`^${prefix}(?:${this.aliases.join('|\s')})?\s*${diceRegExpString}`, 'i');
+  }
+
+  /**
+   * Check whether the string representation of a value contains decimal spacing
+   * characaters (dot or comma).
+   * @param value Numeric value to check
+   */
+  private isFloat(value: string): boolean {
+    return Boolean(/(?:\.|\,)/.exec(value));
   }
 
 }

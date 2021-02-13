@@ -33,6 +33,34 @@ export const dice = (client: Client) => describe('Dice', () => {
     expect(sent.embeds[0].thumbnail.url).toBeDefined();
   });
 
+  it('should error if the number of rolls is not an integer', async () => {
+    await setup('!dice 1.5d6');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.embed).toBeCalledTimes(0);
+  });
+
+  it('should error if the number of faces is not an integer', async () => {
+    await setup('!dice 2d1.5');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.embed).toBeCalledTimes(0);
+  });
+
+  it('should error if the number of rolls is equal to 0', async () => {
+    await setup('!dice 0d6');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.embed).toBeCalledTimes(0);
+  });
+
+  it('should error if the number of faces is equal to 0', async () => {
+    await setup('!dice 2d0');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.embed).toBeCalledTimes(0);
+  });
+
   it('should roll two 10-faced dices', async () => {
     await setup('!dice 2d10');
     const sent = await command.exec(message, args);

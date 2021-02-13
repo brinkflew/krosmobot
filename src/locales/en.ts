@@ -438,8 +438,15 @@ export default class EnglishLocale extends Locale {
       COMMAND_DICE_DESCRIPTION_ARGUMENT_ROLLS: `Amount of dices to run, and the number of faces on each dice, in the format \`<rolls>d<faces>\``,
       COMMAND_DICE_ERROR_ROLLS: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
       COMMAND_DICE_ERROR_SIZE: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
+      COMMAND_DICE_ERROR_FLOAT: 'Number of rolls and faces must be integers.',
+      COMMAND_DICE_ERROR_ROLLS_ZERO: 'The number of rolls cannot be lesser than `1`.',
+      COMMAND_DICE_ERROR_SIZE_ZERO: 'The number of faces cannot be lesser than `1`.',
       COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Rolling ${formatNumber(rolls, ',')} ${formatNumber(faces, ',')}-faced dice${rolls > 1 ? 's' : ''}`,
       COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total, ',')}`,
+      COMMAND_DICE_RESPONSE_DETAIL: (scores: number[]) => {
+        const joined = code(scores.join(' + '));
+        return joined.length < 2048 ? joined : 'Detail is too long to be displayed.';
+      },
 
       // POLL Command
       COMMAND_POLL_DESCRIPTION_SHORT: 'Polls.',

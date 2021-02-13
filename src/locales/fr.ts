@@ -440,8 +440,15 @@ export default class FrenchLocale extends Locale {
       COMMAND_DICE_DESCRIPTION_ARGUMENT_ROLLS: `Quantité de dés à lancer, et nombre de faces sur chaque dé, dans le format \`<lancés>d<faces>\``,
       COMMAND_DICE_ERROR_ROLLS: (max: number) => `Le nombre de jets est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
       COMMAND_DICE_ERROR_SIZE: (max: number) => `Le nombre de faces est trop élevé. Le maximum autorisé est ${formatNumber(max)}.`,
+      COMMAND_DICE_ERROR_FLOAT: 'Le nombre de jets et le nombre de faces doivent être des nombres entiers.',
+      COMMAND_DICE_ERROR_ROLLS_ZERO: 'Le nombre de jets ne peut pas être plus petit que `1`.',
+      COMMAND_DICE_ERROR_SIZE_ZERO: 'Le nombre de faces ne peut pas être plus petit que `1`.',
       COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Lancé de ${formatNumber(rolls)} dé${rolls > 1 ? 's' : ''} à ${formatNumber(faces)} faces`,
       COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score : ${formatNumber(total)}`,
+      COMMAND_DICE_RESPONSE_DETAIL: (scores: number[]) => {
+        const joined = code(scores.join(' + '));
+        return joined.length < 2048 ? joined : 'Le détail est trop long pour être affiché.';
+      },
 
       // POLL Command
       COMMAND_POLL_DESCRIPTION_SHORT: 'Sondages.',
