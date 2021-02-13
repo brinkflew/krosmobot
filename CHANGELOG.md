@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5] - 2021-02-13
+
 ### Added
 
 - Providers: added type binding for documents
@@ -16,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Command `job`: refactored the `exec` method to better handle arguments and errors
 - Command `help`: refactored the generation of usage and arguments description
+- Command `dice`: added checks on rolls and faces values
+- Command `echo`: added checks on permissions of targeted channel
 
 ### Fixed
 
@@ -96,7 +100,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Task `twitter`: fetch news from twitter in (almost) real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.5...HEAD
+[0.1.5]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...v0.1.4
 [0.1.3]: https://github.com/brinkflew/krosmobot/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/brinkflew/krosmobot/compare/0.1.1...v0.1.2
