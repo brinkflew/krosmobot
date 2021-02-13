@@ -15,7 +15,7 @@ guilds by providing a suite of tools and commands to its users.
 ![Badge: GitHub contributors]
 
 [![Build Status](https://travis-ci.org/brinkflew/krosmobot.svg?branch=stable)](https://travis-ci.org/brinkflew/krosmobot)
-[![Coverage Status](https://coveralls.io/repos/github/brinkflew/krosmobot/badge.svg?branch=stable)](https://coveralls.io/github/brinkflew/krosmobot?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/brinkflew/krosmobot/badge.svg?branch=stable)](https://coveralls.io/github/brinkflew/krosmobot?branch=stable)
 
 ![Badge: Discord]
 
