@@ -35,6 +35,10 @@ export default class EnglishLocale extends Locale {
       MESSAGE_STATUS_ERROR: 'Ouch!',
       MESSAGE_STATUS_WARNING: 'Hmmm...',
 
+      // Arguments
+      ARGUMENT_OPTIONAL: 'optional',
+      ARGUMENT_NO_DESCRIPTION: 'No description for this argument',
+
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Open original',
       TASK_TWITTER_FOOTER: 'Seen on Twitter',
@@ -57,7 +61,6 @@ export default class EnglishLocale extends Locale {
         Display the current latency:
         ${usage(prefix, 'ping')}
       `,
-      COMMAND_PING_DESCRIPTION_USAGE: (prefix: string) => usage(prefix, 'ping'),
       COMMAND_PING_RESPONSE_TITLE: 'Pong!',
       COMMAND_PING_RESPONSE_RTT: 'Round-Trip Time',
       COMMAND_PING_RESPONSE_HEARTBEAT: 'Heartbeat',
@@ -75,10 +78,7 @@ export default class EnglishLocale extends Locale {
         Reset the default prefix:
         ${usage(prefix, 'prefix')}
       `,
-      COMMAND_PREFIX_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'prefix [prefix]')}
-        ${argument('prefix')} New prefix (optional)
-      `,
+      COMMAND_PREFIX_DESCRIPTION_ARGUMENT_PREFIX: 'New prefix',
       COMMAND_PREFIX_RESPONSE_MODIFIED: (prefix: string) => `The prefix has been modified to \`${prefix}\`.`,
       COMMAND_PREFIX_RESPONSE_IDENTICAL: 'The old and new prefixes are identical.',
       COMMAND_PREFIX_RESPONSE_RESET: (prefix: string) => `The prefix has been reset to \`${prefix}\`.`,
@@ -101,10 +101,7 @@ export default class EnglishLocale extends Locale {
         Reset the language to its default value:
         ${usage(prefix, 'locale')}
       `,
-      COMMAND_LOCALE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'locale [language]')}
-        ${argument('language')} Code (two letters) of the language to use (optional)
-      `,
+      COMMAND_LOCALE_DESCRIPTION_ARGUMENT_LOCALE: '2-letter code of the language to apply',
       COMMAND_LOCALE_RESPONSE_MODIFIED: (locale: string) => `The language has been set to ${locale}.`,
       COMMAND_LOCALE_RESPONSE_IDENTICAL: (locale: string) => `The current language is already ${locale}.`,
       COMMAND_LOCALE_RESPONSE_RESET: (locale: string) => `The language has been reset to ${locale}.`,
@@ -124,10 +121,7 @@ export default class EnglishLocale extends Locale {
         Reset the color to its default value:
         ${usage(prefix, 'color')}
       `,
-      COMMAND_COLOR_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'color [color]')}
-        ${argument('color')} New color (optional)
-      `,
+      COMMAND_COLOR_DESCRIPTION_ARGUMENT_COLOR: 'New color to apply',
       COMMAND_COLOR_RESPONSE_MODIFIED: (color: string) => `The embed color has been modified to \`${color}\`.`,
       COMMAND_COLOR_RESPONSE_IDENTICAL: 'The old and new embed color are identical.',
       COMMAND_COLOR_RESPONSE_RESET: (color: string) => `The embed color has been reset to \`${color}\`.`,
@@ -143,9 +137,6 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_INVITE_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Generate the bot's invite link:
-        ${usage(prefix, 'invite')}
-      `,
-      COMMAND_INVITE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'invite')}
       `,
       COMMAND_INVITE_RESPONSE_NOLINK: 'Cannot generate the invite link, please try again later.',
@@ -169,10 +160,7 @@ export default class EnglishLocale extends Locale {
         Display extended help for the \`${prefix}ping\` command:
         ${usage(prefix, 'help ping')}
       `,
-      COMMAND_HELP_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'help [command]')}
-        ${argument('command')} Name of a command to display the extended help for (optional)
-      `,
+      COMMAND_HELP_DESCRIPTION_ARGUMENT_COMMAND: 'Command to display the extended help for',
       COMMAND_HELP_CATEGORY_SETTINGS: 'Settings',
       COMMAND_HELP_CATEGORY_UTILS: 'Utils',
       COMMAND_HELP_CATEGORY_DOFUS: 'Dofus',
@@ -184,7 +172,7 @@ export default class EnglishLocale extends Locale {
       COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION: 'No description for this command.',
       COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE: 'No example for this command.',
       COMMAND_HELP_RESPONSE_FIELD_NO_USAGE: 'No usage definition for this command.',
-      COMMAND_HELP_RESPONSE_FIELD_NO_ALIAS: 'no alias for this command.',
+      COMMAND_HELP_RESPONSE_FIELD_NO_ALIAS: 'No alias for this command.',
       COMMAND_HELP_RESPONSE_TITLE: 'Available Commands',
       COMMAND_HELP_RESPONSE_DM: 'Help about commands has been sent to your DMs.',
       COMMAND_HELP_RESPONSE_FROMGUILD: (guildname: string) => `Help asked in ${guildname}`,
@@ -202,16 +190,15 @@ export default class EnglishLocale extends Locale {
         Send a message in the current channel:
         ${usage(prefix, 'echo <message>')}
         Send a message in the '\#general' channel and join an image:
-        ${usage(prefix, 'echo #general file:https://www.thissitedoesnotexist.com/image.jpg <message>')}
+        ${usage(prefix, 'echo #general --file https://www.thissitedoesnotexist.com/image.jpg <message>')}
       `,
-      COMMAND_ECHO_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'echo [channel] [--file url] [message]')}
-        ${argument('channel')} *Mention* of the channel to which the message should be copied (optional)
-        ${argument('--file url')} \`--file\ followed by the url of the file to join (optional)
-        ${argument('message')} Content to repeat (optional)
-      `,
-      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'Please provide some text to echo.',
-      COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message sent to the channel \#${channel}`,
+      COMMAND_ECHO_DESCRIPTION_ARGUMENT_TARGET: 'Channel to which the message should be sent',
+      COMMAND_ECHO_DESCRIPTION_ARGUMENT_FILE: 'URL of a file to join',
+      COMMAND_ECHO_DESCRIPTION_ARGUMENT_CONTENT: 'Content of the message to send',
+      COMMAND_ECHO_RESPONSE_NO_CONTENT: 'I cannot echo back an empty message...',
+      COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT: (channel: string) => `I do not have the required permissions to write to **#${channel}**`,
+      COMMAND_ECHO_RESPONSE_NO_PERMISSION_USER: (channel: string) => `You do not have the required permissions to write to **#${channel}**`,
+      COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message sent to the channel **#${channel}**`,
 
       // ALMANAX Command
       COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Fetches the almanax of the day.',
@@ -234,12 +221,8 @@ export default class EnglishLocale extends Locale {
         display details of the almanax for next week:
         ${usage(prefix, 'almanax details +7')}
       `,
-      COMMAND_ALMANAX_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'almanax [--detail] [date|offset]')}
-        ${argument('--detail')} Display the detailed version (optional)
-        ${argument('date')} Date for the almanax to fetch (optional)
-        ${argument('offset')} Number of days to add/substract to the current date (optional)
-      `,
+      COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_EXTENDED: 'Display the extended version',
+      COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_OFFSET: 'Date or number of days to add to the current date',
       COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR: 'Cannot fetch the almanax for now',
       COMMAND_ALMANAX_RESPONSE_DATE_ERROR: (input: string) => `Value \`${input}\` is not a valid date.`,
       COMMAND_ALMANAX_RESPONSE_ALMANAX: (day: string, month: string) => `Almanax for ${day} ${month}`,
@@ -248,8 +231,10 @@ export default class EnglishLocale extends Locale {
       // SET Command
       COMMAND_SET_DESCRIPTION_SHORT: 'Assigns a value to a parameter.',
       COMMAND_SET_DESCRIPTION_EXTENDED: stripIndent`
-        Configures this guild to enable or disable features of the bot. Multiple keys may be configured
-        at once, but at least one key must be set.
+        ${oneLine`
+          Configures this guild to enable or disable features of the bot. Multiple keys may be configured
+          at once, but at least one key must be set.
+        `}
         A value containing white-spaces must be enclosed between quotes.
       `,
       COMMAND_SET_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
@@ -258,11 +243,11 @@ export default class EnglishLocale extends Locale {
         Set the default server as Oto Mustam:
         ${usage(prefix, 'set server "oto mustam"')}
       `,
-      COMMAND_SET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'set <key> <value> [<key> <value>,...]')}
-        ${argument('almanax')} Enables automatically fetching the almanax and sends it to the configured channel (optional)
-        ${argument('twitter')} Enables fetching tweets and sends them in the configured channel (optional)
-        ${argument('server')} Configures the Dofus server to use by default in commands (optional)
+      COMMAND_SET_DESCRIPTION_ARGUMENT_KEYS: stripIndent`
+        List of key-value pairs to configure; valid keys are:
+        \u2022 \`almanax\` enables fetching the almanax automatically and send it to the configured channel
+        \u2022 \`twitter\` enables fetching tweets and sends them in the configured channel
+        \u2022 \`dofus-server\` configures the Dofus server to use by default in applicable commands
       `,
       COMMAND_SET_RESPONSE_PAIR: (key: string, value?: string) => `${key} → ${value || 'None'}`,
       COMMAND_SET_RESPONSE_MODIFIED: (pairs: string[]) => stripIndent`
@@ -288,11 +273,14 @@ export default class EnglishLocale extends Locale {
         Display all configured parameters:
         ${usage(prefix, 'get')}
       `,
-      COMMAND_GET_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'get <key> [<key>,...]')}
-        ${argument('almanax')} Channel to which the almanax will be sent (optional)
-        ${argument('twitter')} Channel to which tweets will be sent (optional)
-        ${argument('server')} Dofus server ti use by default with other commands (optional)
+      COMMAND_GET_DESCRIPTION_ARGUMENT_KEYS: stripIndent`
+        List of keys to fetch the configured value of; valid keys are:
+        \u2022 \`almanax\` channel to which the almanax will be sent automatically every day
+        \u2022 \`twitter\` channel to which tweets of followed accounts will be sent
+        \u2022 \`dofus-server\` Dofus server used by default in applicable commands
+        \u2022 \`prefix\` prefix configured to trigger commands
+        \u2022 \`color\` color code used for rendering embeds
+        \u2022 \`locale\` language used by the bot to reply
       `,
       COMMAND_GET_RESPONSE_PAIR: (key: string, value?: string) => `${key} → ${value || 'Aucun'}`,
       COMMAND_GET_RESPONSE_PAIRS: (pairs: string[]) => stripIndent`
@@ -331,11 +319,8 @@ export default class EnglishLocale extends Locale {
         Display the position of the portal to Ecaflipus on the Echo server:
         ${usage(prefix, 'portals xel echo')}
       `,
-      COMMAND_PORTAL_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'portal [dimension] [server]')}
-        ${argument('dimension')} Dimension to search for a portal to (optional)
-        ${argument('serveur')} Server for which to search a portal (optional)
-      `,
+      COMMAND_PORTAL_DESCRIPTION_ARGUMENT_DIMENSION: 'Dimension to search for a portal to',
+      COMMAND_PORTAL_DESCRIPTION_ARGUMENT_SERVER: 'Server for which to search a portal',
       COMMAND_PORTAL_RESPONSE_NOSERVER: 'No Dofus server was specified, or its name is incorrect.',
 
       // JOB Command
@@ -359,10 +344,14 @@ export default class EnglishLocale extends Locale {
       COMMAND_JOB_RESPONSE_JOB_CARVER: 'Carver',
       COMMAND_JOB_RESPONSE_JOB_TAILOR: 'Tailor',
       COMMAND_JOB_RESPONSE_NOJOBS: (member: string) => `There are no jobs referenced for ${member} yet.`,
+      COMMAND_JOB_RESPONSE_NOJOB: (member: string, job: string) => `${member} does not have the job ${job} yet.`,
       COMMAND_JOB_RESPONSE_NOBODY: (job: string) => `Nobody has the job ${job}.`,
       COMMAND_JOB_RESPONSE_TITLE_ALL: 'Jobs',
       COMMAND_JOB_RESPONSE_TITLE_SINGLE: 'Job',
-      COMMAND_JOB_RESPONSE_ERROR: 'An error occured while fetching information about jobs...',
+      COMMAND_JOBS_RESPONSE_INVALID_COMBINATION: (args: Record<string, string | number>) => stripIndent`
+        The following combination of options cannot be used:
+        ${code(Object.entries(args).map(([key, value]) => `${key} → ${value}`).join('\n'))}
+      `,
       COMMAND_JOB_DESCRIPTION_SHORT: 'Information about members\' jobs.',
       COMMAND_JOB_DESCRIPTION_EXTENDED: oneLine`
         Allow referencing the level of self-owned jobs or displaying levels of other
@@ -376,20 +365,13 @@ export default class EnglishLocale extends Locale {
         Check all jobs' level for a member:
         ${usage(prefix, 'job @Member')}
       `,
-      COMMAND_JOB_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'job [job] [level] [member]')}
-        ${argument('job')} Job to display or update (optional)
-        ${argument('level')} New level for a job to update (optionnel)
-        ${argument('membre')} Mention of a member to display the jobs of (optional)
-      `,
-      COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE: (level: number, corrected: number) => oneLine`
-        The job level ${level} is not included between the allowed margins
-        and will be corrected to ${corrected}.
-      `,
-      COMMAND_JOBS_ARGUMENTS_PARSED_AS: (prefix: string, id: string, parsed: any[]) => stripIndent`
-        Some options could not be interpreted...
-        Executed command:
-        ${code(`${prefix}${id} ${parsed.join(' ')}`)}
+      COMMAND_JOB_DESCRIPTION_ARGUMENT_JOB: 'Job to display or update',
+      COMMAND_JOB_DESCRIPTION_ARGUMENT_LEVEL: 'New level for a job to update',
+      COMMAND_JOB_DESCRIPTION_ARGUMENT_MEMBER: 'Mention of a member to display the jobs of',
+      COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED: 'A level was provided without a job name, it will be ignored.',
+      COMMAND_JOBS_ARGUMENTS_UNKNOWN: (args: (string | number)[]) => stripIndent`
+        The following options could not be parsed:
+        ${code(args.join('\n'))}
       `,
 
       // MONIT Command
@@ -401,9 +383,6 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_MONIT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Get detailed statistics:
-        ${usage(prefix, 'monit')}
-      `,
-      COMMAND_MONIT_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'monit')}
       `,
       COMMAND_MONIT_RESPONSE_TITLE: (name: string, version: string) => oneLine`
@@ -456,15 +435,18 @@ export default class EnglishLocale extends Locale {
         Roll 2 dices with 2 faces each:
         ${usage(prefix, '2d100')}
       `,
-      COMMAND_DICE_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'roll [rolls]d<faces>')}
-        ${argument('rolls')} Amount of rolls to run (optional)
-        ${argument('faces')} Amount of faces on each dice
-      `,
+      COMMAND_DICE_DESCRIPTION_ARGUMENT_ROLLS: `Amount of dices to run, and the number of faces on each dice, in the format \`<rolls>d<faces>\``,
       COMMAND_DICE_ERROR_ROLLS: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
       COMMAND_DICE_ERROR_SIZE: (max: number) => `The amount of rolls is too high. The maximum allowed is ${formatNumber(max, ',')}.`,
+      COMMAND_DICE_ERROR_FLOAT: 'Number of rolls and faces must be integers.',
+      COMMAND_DICE_ERROR_ROLLS_ZERO: 'The number of rolls cannot be lesser than `1`.',
+      COMMAND_DICE_ERROR_SIZE_ZERO: 'The number of faces cannot be lesser than `1`.',
       COMMAND_DICE_RESPONSE_EXPLAIN: (rolls: number, faces: number) => `🎲 Rolling ${formatNumber(rolls, ',')} ${formatNumber(faces, ',')}-faced dice${rolls > 1 ? 's' : ''}`,
       COMMAND_DICE_RESPONSE_TOTAL: (total: number) => `Score: ${formatNumber(total, ',')}`,
+      COMMAND_DICE_RESPONSE_DETAIL: (scores: number[]) => {
+        const joined = code(scores.join(' + '));
+        return joined.length < 2048 ? joined : 'Detail is too long to be displayed.';
+      },
 
       // POLL Command
       COMMAND_POLL_DESCRIPTION_SHORT: 'Polls.',
@@ -483,16 +465,13 @@ export default class EnglishLocale extends Locale {
         Create a poll to which responses are "Yes" and "No" and on which users can only select one answer:
         ${usage(prefix, 'poll multi:false Question ?')}
       `,
-      COMMAND_POLL_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'poll <question> [answer 1, answer 2, [...]] [time:<duration>]')}
-        ${argument('question')} Title of the poll
-        ${argument('answers')} Propositions for the poll: either one, either 2 or more (optional)
-        ${argument('time')} Duration of the poll, number followed by a suffixe (d = days, h = hours, m = minutes)
-        ${argument('multi')} Whether the user can vote for multiple answers at once ('yes' ou 'no')
-      `,
+      COMMAND_POLL_DESCRIPTION_ARGUMENT_TIME: 'Duration of the poll, number followed by a suffix (d = days, h = hours, m = minutes)',
+      COMMAND_POLL_DESCRIPTION_ARGUMENT_MULTI: 'Whether the user can vote for multiple answers at once (\'yes\' ou \'no\')',
+      COMMAND_POLL_DESCRIPTION_ARGUMENT_TEXT: 'Title and propositions for the poll, each on a new line',
       COMMAND_POLL_RESPONSE_NO_TITLE: 'No question were asked.',
       COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS: 'A poll cannot have a songle proposition.',
       COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG: 'One or more propositions are too long (max. 96 characters allowed).',
+      COMMAND_POLL_RESPONSE_TIME_TOO_LOW: 'The time to automatic closing cannot be lesser than 1 minute.',
       COMMAND_POLL_RESPONSE_TITLE: (title: string) => `Poll : ${title}`,
       COMMAND_POLL_RESPONSE_RESULTS: (title: string) => `Results: ${title}`,
       COMMAND_POLL_RESPONSE_FOOTER: (reactions: string[], time: string) => stripIndent`
@@ -511,12 +490,10 @@ export default class EnglishLocale extends Locale {
         Sends a reminder containing 'Test' in 24 hours:
         ${usage(prefix, 'remind 1d Test')}
       `,
-      COMMAND_REMIND_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
-        ${usage(prefix, 'remind [duration] <content>')}
-        ${argument('duration')} Duration after which the reminder will be sent, number followed by a suffix (d = days, h = hours, m = minutes)
-        ${argument('content')} Content to send in the reminder
-      `,
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME: 'Duration after which the reminder will be sent, number followed by a suffix (d = days, h = hours, m = minutes)',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'text to send in the reminder',
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'The reminder requires content to send.',
+      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'The time before sending the reminder cannot be lesser than 1 minute.',
       COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `A reminder will be sent in ${time}`,
       COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`,
 
@@ -525,9 +502,6 @@ export default class EnglishLocale extends Locale {
       COMMAND_ABOUT_DESCRIPTION_EXTENDED: 'Displays information about the client and its purpose.',
       COMMAND_ABOUT_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Display information about this client:
-        ${usage(prefix, 'about')}
-      `,
-      COMMAND_ABOUT_DESCRIPTION_USAGE: (prefix: string) => stripIndent`
         ${usage(prefix, 'about')}
       `,
       COMMAND_ABOUT_RESPONSE_TITLE: (name: string) => `About ${name}`.toUpperCase(),

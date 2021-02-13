@@ -13,8 +13,7 @@ export default class PingCommand extends Command {
       description: {
         'short': 'COMMAND_PING_DESCRIPTION_SHORT',
         'extended': 'COMMAND_PING_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_PING_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_PING_DESCRIPTION_USAGE'
+        'example': 'COMMAND_PING_DESCRIPTION_EXAMPLE'
       }
     });
   }

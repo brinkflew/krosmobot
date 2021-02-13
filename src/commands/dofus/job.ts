@@ -1,7 +1,9 @@
-import { Message, GuildMember } from 'discord.js';
+import { Message, GuildMember, Guild } from 'discord.js';
 import { Command } from '@/structures';
+import { Argument } from 'discord-akairo';
 import { PICTURES } from '@/constants';
 import { code } from '@/utils/message';
+import { DofusJob } from 'types';
 
 /**
  * Updates or shows the current jobs of a member.
@@ -15,9 +17,22 @@ export default class JobCommand extends Command {
       description: {
         'short': 'COMMAND_JOB_DESCRIPTION_SHORT',
         'extended': 'COMMAND_JOB_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_JOB_DESCRIPTION_USAGE'
-      }
+        'example': 'COMMAND_JOB_DESCRIPTION_EXAMPLE'
+      },
+      usage: [
+        {
+          id: 'job',
+          description: 'COMMAND_JOB_DESCRIPTION_ARGUMENT_JOB'
+        },
+        {
+          id: 'level',
+          description: 'COMMAND_JOB_DESCRIPTION_ARGUMENT_LEVEL'
+        },
+        {
+          id: 'member',
+          description: 'COMMAND_JOB_DESCRIPTION_ARGUMENT_MEMBER'
+        }
+      ]
     });
   }
 
@@ -25,53 +40,62 @@ export default class JobCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, { name, level, member }: { name: string; level: number; member: GuildMember }): Promise<Message> {
+  public async exec(message: Message, args: { job: DofusJob | null; level: number | null; member: GuildMember | null }): Promise<Message> {
     const provider = this.client.providers.members;
 
-    // `!job tailor` → Display the single job for all users
-    // `!job tailor @Member` → Display the single job for the single user
+    // `!job job level` → Update level for the selected job
+    if (args.job && args.level && !args.member) {
+      const jobs: { [key: string]: number } = {};
+      jobs[args.job] = args.level;
+      void provider.update(this.memberID(message.guild!, message.member!), { jobs });
+      const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
 
-    if (name && !member && !level) {
-      const fetched: { [key: string]: number }[] = [];
-      const members: string[] = [];
-      const cachedMembers = message.guild!.members.cache
-        .array()
-        .filter(member => !member.user.bot);
+      return this.embed(message, {
+        author: {
+          name: message.member!.displayName,
+          iconURL: message.author.avatarURL() || message.author.defaultAvatarURL
+        },
+        thumbnail: { url: PICTURES.DOFUS_JOBS[`${args.job.toUpperCase()}`] },
+        fields: [
+          {
+            name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
+            value: code(this.format(translated, jobs[args.job], translated.length))
+          }
+        ]
+      });
+    }
 
-      for (const member of cachedMembers) {
-        fetched.push(provider.fetch(member.id)?.jobs || {});
-        members.push(member.displayName);
-      }
+    // `!job job` → Display all users with the selected job
+    if (args.job && !args.level && !args.member) {
+      const { job } = args;
+      const translatedJob = this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message);
 
-      const jobs = fetched.map(list => list[name] || 0);
-      const ordered = jobs
-        .map((job, id) => ({ member: members[id], level: job }))
-        .filter(job => job.level > 0)
-        .sort((a, b) => b.level - a.level);
+      const members = provider
+        .filter(member => Boolean(member.jobs[job]))
+        .sort((a, b) => (b.jobs[job] || 1) - (a.jobs[job] || 1));
 
-      if (!ordered.length) {
-        return this.warning(
-          message,
-          this.t(
-            'COMMAND_JOB_RESPONSE_NOBODY',
-            message,
-            this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message)
-          )
-        );
-      }
+      if (!members.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
+
+      let length = 0;
+      const pairs: [string, number][] = members.map(member => {
+        const id = (member.id as string).split(':');
+        const resolved = this.client.util.resolveMember(id[1], message.guild!.members.cache);
+        length = Math.max(length, resolved.displayName.length);
+        return [resolved.displayName, member.jobs[job] || 1];
+      });
 
       return this.embed(message, {
         author: {
           name: message.guild!.name,
           iconURL: message.guild!.iconURL() || undefined
         },
-        thumbnail: { url: PICTURES.DOFUS_JOBS[`${name.toUpperCase()}`] },
+        thumbnail: { url: PICTURES.DOFUS_JOBS[`${job.toUpperCase()}`] },
         fields: [
           {
-            name: this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message),
+            name: translatedJob,
             value: code(
-              ordered
-                .map(field => this.padLevel(field.member, field.level))
+              pairs
+                .map(pair => this.format(pair[0], pair[1], length))
                 .join('\n')
             )
           }
@@ -79,43 +103,40 @@ export default class JobCommand extends Command {
       });
     }
 
-    const target = member ? member : message.author;
-    const jobs: { [key: string]: number } = provider.fetch(target.id)?.jobs || {};
+    // `!job` → Display all jobs for the current user
+    if (!args.job && !args.level && !args.member) args.member = this.client.util.resolveMember(message.author.id, message.guild!.members.cache);
 
-    const author = target instanceof GuildMember
-      ? { name: target.displayName, iconURL: target.user.avatarURL() || target.user.defaultAvatarURL }
-      : { name: target.username, iconURL: target.avatarURL() || target.defaultAvatarURL };
+    // `!job member` → Display all jobs for the selected user
+    if (!args.job && !args.level && args.member) {
+      const translated = this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, args.member.displayName);
+      const cached = provider.get(this.memberID(message.guild!, args.member));
 
-    // `!job @Member` → Display all jobs for the single user
-    // `!job` → Display all jobs for self
-    // `!job tailor 125` → Update level for the selected job
+      if (!cached) return this.warning(message, translated);
 
-    if (!name) {
-      let fields: { job: string; level: number }[] = [];
-      const ordered = Object
-        .entries(jobs)
+      const jobs = Object.entries(cached.jobs)
+        .filter(job => !job[0].startsWith('$') && (job[1] || 0) > 0)
+        .map(job => {
+          job[0] = this.t(`COMMAND_JOB_RESPONSE_JOB_${job[0].toUpperCase()}`, message);
+          return job;
+        })
         .sort((a, b) => a[0].localeCompare(b[0]));
 
-      for (const [job, level] of ordered) {
-        if (!Object.prototype.hasOwnProperty.call(jobs, job) || !level || typeof level != 'number') continue;
+      if (!jobs) return this.warning(message, translated);
 
-        fields.push({
-          job: this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message),
-          level
-        });
-      }
-
-      if (!fields.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, author.name));
-      fields = fields.sort((a, b) => a.job.localeCompare(b.job));
+      let length = 0;
+      jobs.forEach(job => length = Math.max(length, job[0].length));
 
       return this.embed(message, {
-        author,
+        author: {
+          name: args.member.displayName,
+          iconURL: args.member.user.displayAvatarURL() || args.member.user.defaultAvatarURL
+        },
         fields: [
           {
             name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
             value: code(
-              fields
-                .map(field => this.padLevel(field.job, field.level))
+              jobs
+                .map(pair => this.format(pair[0], pair[1] || 1, length))
                 .join('\n')
             )
           }
@@ -123,23 +144,31 @@ export default class JobCommand extends Command {
       });
     }
 
-    if (level) {
-      level = Math.min(level, 200);
-      level = Math.max(level, 0);
-      jobs[name] = level;
-      if (!member) void provider.create(message.author.id, { jobs });
+    // `!job job member` → Display the selected job for the selected member
+    if (args.job && !args.level && args.member) {
+      const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
+      const cached = provider.get(this.memberID(message.guild!, args.member));
+
+      if (!cached) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOB', message, args.member.displayName, translated));
+
+      const level = cached.jobs[args.job] || 1;
+
+      return this.embed(message, {
+        author: {
+          name: message.member!.displayName,
+          iconURL: message.author.avatarURL() || message.author.defaultAvatarURL
+        },
+        thumbnail: { url: PICTURES.DOFUS_JOBS[`${args.job.toUpperCase()}`] },
+        fields: [
+          {
+            name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
+            value: code(this.format(translated, level, translated.length))
+          }
+        ]
+      });
     }
 
-    return this.embed(message, {
-      author,
-      thumbnail: { url: PICTURES.DOFUS_JOBS[`${name.toUpperCase()}`] },
-      fields: [
-        {
-          name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
-          value: code(this.padLevel(this.t(`COMMAND_JOB_RESPONSE_JOB_${name.toUpperCase()}`, message), jobs[name]))
-        }
-      ]
-    });
+    return this.error(message, this.t('COMMAND_JOBS_RESPONSE_INVALID_COMBINATION', message, args));
   }
 
   /**
@@ -149,9 +178,19 @@ export default class JobCommand extends Command {
    * @param level Level for this job and member
    * @param maxLength Max length for the generated line
    */
-  private padLevel(name: string, level: number, maxLength = 15): string {
+  private format(name: string, level: number, maxLength = 15): string {
     const fixed = level.toFixed(0);
-    return `${name} ${' '.repeat(maxLength - name.length - fixed.length)} ${fixed}`;
+    return `${name} ${' '.repeat(maxLength - name.length - fixed.length + 3)} ${fixed}`;
+  }
+
+  /**
+   * Format the ID of a member for use with the members provider.
+   * @param guild Guild the member is linked to
+   * @param member Member within the aforementionned guild
+   */
+  private memberID(guild: Guild, member: GuildMember) {
+    if (!guild) return member.id;
+    return `${guild.id}:${member.id}`;
   }
 
   /**
@@ -160,28 +199,24 @@ export default class JobCommand extends Command {
   // @ts-ignore unused-declaration
   private *args(message: Message) {
     const args = {
-      name: yield { type: 'dofusJob', unordered: true },
+      job: yield { type: 'dofusJob', unordered: true },
       level: yield { type: 'integer', unordered: true },
       member: yield { type: 'member', unordered: true }
     };
 
-    if (!args.name) args.level = null;
+    let unknown: any[] = yield { type: Argument.union('dofusJob', 'integer', 'member', 'string'), match: 'separate', unordered: true };
+    unknown = unknown?.filter(value => !Object.values(args).includes(value));
 
-    if (typeof args.level === 'number' && (args.level < 1 || args.level > 200)) {
-      const corrected = Math.min(200, Math.max(1, args.level));
-      void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_RANGE', message, args.level, corrected));
-      args.level = corrected;
+    if (args.level) {
+      if (!args.job) {
+        void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED', message));
+        args.level = null;
+      } else if (args.level < 1 || args.level > 200) {
+        args.level = Math.min(200, Math.max(1, args.level));
+      }
     }
 
-    const rest: string[] = yield { type: 'string', match: 'separate' };
-    const parsed: any[] = Object.values(args)
-      .filter(value => Boolean(value));
-
-    if (rest && rest.length !== parsed.length) {
-      const prefix = this.getPrefix(message);
-      parsed.map((value, index) => parsed[index] = value instanceof GuildMember ? value.displayName : value);
-      void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_PARSED_AS', message, prefix, this.id, parsed));
-    }
+    if (unknown?.length) void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_UNKNOWN', message, unknown));
 
     return args;
   }

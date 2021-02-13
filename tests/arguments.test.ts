@@ -1,7 +1,9 @@
 import dotenv from 'dotenv';
+import { SnowflakeUtil } from 'discord.js';
 import { client, destroy } from './utils/client';
 import * as suites from './suites/arguments';
-import { MongooseProviderDocument } from 'types';
+import { GuildDocument } from 'types';
+import { MoockClientUser } from 'jest-discordjs-mocks';
 
 dotenv.config({ path: '.env.test' });
 
@@ -11,14 +13,15 @@ dotenv.config({ path: '.env.test' });
  * are run in parrallel.
  */
 describe('Arguments', () => {
+  client.user = new MoockClientUser(client, { id: SnowflakeUtil.generate() });
 
   beforeAll(() => {
     client.providers.guilds.fetch = jest.fn((id: string) => client.providers.guilds.cache.get(id));
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    client.providers.guilds.create = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      client.providers.guilds.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    client.providers.guilds.create = jest.fn(async (id: string, doc: GuildDocument) => {
+      client.providers.guilds.cache.set(id, doc);
+      return doc;
     });
 
     client.events.setEmitters({

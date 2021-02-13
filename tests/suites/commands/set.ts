@@ -2,7 +2,7 @@ import { Collection, SnowflakeUtil, MessageEmbed } from 'discord.js';
 import { MockTextChannel } from 'jest-discordjs-mocks';
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
-import { MongooseProviderDocument } from 'types';
+import { GuildDocument } from 'types';
 
 export const set = (client: Client) => describe('Set', () => {
   const message = createGuildMessage(client);
@@ -41,12 +41,12 @@ export const set = (client: Client) => describe('Set', () => {
     command = <Command> client.commands.modules.get(name!);
     if (command && rest.length) args = await command.parse(message, rest);
 
-    provider = command.getProvider(message);
+    provider = client.providers.guilds;
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    provider.update = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      provider.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    provider.update = jest.fn(async (id: string, doc: GuildDocument) => {
+      provider.cache.set(id, doc);
+      return doc;
     });
 
     spies.success = jest.spyOn(command, 'success');
@@ -65,6 +65,14 @@ export const set = (client: Client) => describe('Set', () => {
 
   it('should error if the number of keys and values provided is different', async () => {
     await setup('!set test');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.success).toBeCalledTimes(0);
+    expect(spies.update).toBeCalledTimes(0);
+  });
+
+  it('should error if no valid key-value pair is provided', async () => {
+    await setup('!set almanax invalid-channel dofus-server invalid-server');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
     expect(spies.success).toBeCalledTimes(0);
@@ -97,14 +105,6 @@ export const set = (client: Client) => describe('Set', () => {
     expect(spies.update).toBeCalledTimes(1);
   });
 
-  it('should error if no valid key-value pair is provided', async () => {
-    await setup('!set dofus-server invalid almanax invalid-channel dofus-server invalid-server');
-    await command.exec(message, args);
-    expect(spies.error).toBeCalledTimes(1);
-    expect(spies.success).toBeCalledTimes(0);
-    expect(spies.update).toBeCalledTimes(0);
-  });
-
   it('should save the value if a valid key-value pair is provided', async () => {
     await setup('!set dofus-server jahash');
     await command.exec(message, args);
@@ -114,7 +114,7 @@ export const set = (client: Client) => describe('Set', () => {
     expect(spies.update).toBeCalledWith(command.getID(message), expect.anything());
   });
 
-  it('should save the value if of multiple keys', async () => {
+  it('should save the value if multiple keys are provided', async () => {
     message.guild?.channels.cache.set(channel.id, channel);
     await setup(`!set dofus-server jahash almanax #${channel.name} twitter <#${channel.id}>`);
     await command.exec(message, args);

@@ -10,13 +10,18 @@ export default class PrefixCommand extends Command {
   public constructor() {
     super('prefix', {
       userPermissions: ['MANAGE_GUILD'],
-      args: [{ id: 'prefix', type: 'string' }],
       description: {
         'short': 'COMMAND_PREFIX_DESCRIPTION_SHORT',
         'extended': 'COMMAND_PREFIX_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_PREFIX_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_PREFIX_DESCRIPTION_USAGE'
-      }
+        'example': 'COMMAND_PREFIX_DESCRIPTION_EXAMPLE'
+      },
+      args: [
+        {
+          id: 'prefix',
+          type: 'string',
+          description: 'COMMAND_PREFIX_DESCRIPTION_ARGUMENT_PREFIX'
+        }
+      ]
     });
   }
 

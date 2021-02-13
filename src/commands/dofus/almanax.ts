@@ -1,7 +1,6 @@
 import { Command, Scraper } from '@/structures';
 import { Message } from 'discord.js';
 import { almanax as schema } from '@/scraping-schemas';
-import { AlmanaxDocument } from 'types';
 import { TIME } from '@/constants';
 
 /**
@@ -15,19 +14,20 @@ export default class AlmanaxCommand extends Command {
       description: {
         'short': 'COMMAND_ALMANAX_DESCRIPTION_SHORT',
         'extended': 'COMMAND_ALMANAX_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_ALMANAX_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_ALMANAX_DESCRIPTION_USAGE'
+        'example': 'COMMAND_ALMANAX_DESCRIPTION_EXAMPLE'
       },
       args: [
         {
           id: 'extended',
           match: 'flag',
-          flag: '--detail'
+          flag: '--detail',
+          description: 'COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_EXTENDED'
         },
         {
           id: 'offset',
           match: 'phrase',
-          type: 'string'
+          type: 'string',
+          description: 'COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_OFFSET'
         }
       ]
     });
@@ -45,17 +45,16 @@ export default class AlmanaxCommand extends Command {
 
     const language = this.getLocale(message).id;
     const id = `${language}:${date}`;
-    let fetched = providers.almanax.fetch(id);
+    let almanax = providers.almanax.fetch(id);
 
-    if (!fetched) {
+    if (!almanax) {
       const url = `http://www.krosmoz.com/${language}/almanax/${date}`;
       const scraped = await Scraper.scrape({ language, url, fields: schema });
 
       if (!scraped.data?.length) return this.error(message, 'COMMAND_ALMANAX_RESPONSE_SCRAPE_ERROR');
-      fetched = await providers.almanax.create(id, { ...scraped.data[0], url });
+      almanax = await providers.almanax.create(id, { ...scraped.data[0], url });
     }
 
-    const almanax = <AlmanaxDocument> fetched;
     const embed = this.craftEmbed(message, {
       author: {
         name: this.t('COMMAND_ALMANAX_RESPONSE_ALMANAX', message, almanax.day, almanax.month),

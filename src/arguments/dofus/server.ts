@@ -1,12 +1,18 @@
 import { Message } from 'discord.js';
-import { findPortalServer } from '@/utils';
-import { Client } from '@/structures';
+import { Client, Scraper } from '@/structures';
+import { URLS } from '@/constants';
+import { servers } from '@/scraping-schemas';
 
 export const dofusServer = async (message: Message, phrase: string) => {
   if (phrase.length) {
-    const server = await findPortalServer(phrase);
-    if (!server) return null;
-    return { id: <string> server.id, name: <string> server.name };
+
+    const scraped = await Scraper.scrape({
+      language: 'fr',
+      url: URLS.DOFUS_PORTALS_SERVEURS,
+      fields: servers
+    });
+    const server = scraped.data?.find(server => (<string> server.name).toLowerCase() === phrase);
+    return server || null;
   }
 
   if (!message.guild) return null;

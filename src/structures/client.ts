@@ -11,6 +11,7 @@ import {
   Permissions,
   PermissionResolvable
 } from 'discord.js';
+import { Model } from 'mongoose';
 import Twitter from 'twitter-lite-v2';
 import { resolve, join } from 'path';
 import { MongooseCachedProvider, MongooseProvider } from '@/providers';
@@ -30,6 +31,16 @@ import {
   users
 } from '@/models';
 
+import {
+  AlmanaxDocument,
+  GuildDocument,
+  LogDocument,
+  MemberDocument,
+  PollDocument,
+  ReminderDocument,
+  UserDocument
+} from 'types';
+
 /**
  * Client connecting to the Discord gateway.
  * Creates the handlers and sets them up.
@@ -46,13 +57,13 @@ export class Client extends AkairoClient {
   public logger: Logger;
   public application?: Application | null;
   public providers: {
-    logs: MongooseProvider;
-    almanax: MongooseCachedProvider;
-    guilds: MongooseCachedProvider;
-    members: MongooseCachedProvider;
-    polls: MongooseCachedProvider;
-    reminders: MongooseCachedProvider;
-    users: MongooseCachedProvider;
+    almanax: MongooseCachedProvider<AlmanaxDocument>;
+    guilds: MongooseCachedProvider<GuildDocument>;
+    logs: MongooseProvider<LogDocument>;
+    members: MongooseCachedProvider<MemberDocument>;
+    polls: MongooseCachedProvider<PollDocument>;
+    reminders: MongooseCachedProvider<ReminderDocument>;
+    users: MongooseCachedProvider<UserDocument>;
   };
 
 
@@ -67,13 +78,13 @@ export class Client extends AkairoClient {
     /** Providers */
 
     this.providers = {
+      almanax: new MongooseCachedProvider(this, almanax as Model<AlmanaxDocument, Record<string, unknown>>),
+      guilds: new MongooseCachedProvider(this, guilds as Model<GuildDocument, Record<string, unknown>>),
       logs: new MongooseProvider(this, logs),
-      almanax: new MongooseCachedProvider(this, almanax),
-      guilds: new MongooseCachedProvider(this, guilds),
-      members: new MongooseCachedProvider(this, members),
-      polls: new MongooseCachedProvider(this, polls),
-      reminders: new MongooseCachedProvider(this, reminders),
-      users: new MongooseCachedProvider(this, users)
+      members: new MongooseCachedProvider(this, members as Model<MemberDocument, Record<string, unknown>>),
+      polls: new MongooseCachedProvider(this, polls as Model<PollDocument, Record<string, unknown>>),
+      reminders: new MongooseCachedProvider(this, reminders as Model<ReminderDocument, Record<string, unknown>>),
+      users: new MongooseCachedProvider(this, users as Model<UserDocument, Record<string, unknown>>)
     };
 
     /** Logger */

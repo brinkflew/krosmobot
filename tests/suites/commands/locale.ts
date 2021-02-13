@@ -1,7 +1,7 @@
 import { Client, Command } from '../../../src/structures';
 import { DEFAULTS } from '../../../src/constants';
 import { createGuildMessage } from '../../utils/message';
-import { MongooseProviderDocument } from 'types';
+import { GuildDocument } from 'types';
 
 export const locale = (client: Client) => describe('Locale', () => {
   const message = createGuildMessage(client);
@@ -19,12 +19,13 @@ export const locale = (client: Client) => describe('Locale', () => {
     command = <Command> client.commands.modules.get(name!);
     if (command && rest.length) args = await command.parse(message, rest);
 
-    provider = command.getProvider(message);
+    provider = client.providers.guilds;
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    provider.update = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      provider.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    provider.update = jest.fn(async (id: string, doc: GuildDocument) => {
+      doc.id = id;
+      provider.cache.set(id, doc);
+      return doc;
     });
 
     spies.success = jest.spyOn(command, 'success');
@@ -47,7 +48,7 @@ export const locale = (client: Client) => describe('Locale', () => {
   it('should warn if previous and new locales are identical', async () => {
     await setup(`!locale ${DEFAULTS.LOCALE}`);
     const provider = command.getProvider(message);
-    provider.cache.set(command.getID(message), new provider.model({ settings: { locale: DEFAULTS.LOCALE } }));
+    provider.cache.set(command.getID(message), new provider.model({ settings: { locale: DEFAULTS.LOCALE } }) as GuildDocument);
     await command.exec(message, args);
     expect(spies.warning).toBeCalledTimes(1);
     expect(spies.update).toBeCalledTimes(0);

@@ -1,6 +1,6 @@
 import { Client, Command } from '../../../src/structures';
 import { createGuildMessage } from '../../utils/message';
-import { MongooseProviderDocument } from 'types';
+import { ReminderDocument } from 'types';
 
 export const remind = (client: Client) => describe('Remind', () => {
   const message = createGuildMessage(client);
@@ -16,16 +16,18 @@ export const remind = (client: Client) => describe('Remind', () => {
     const rest = split.join(' ');
 
     // eslint-disable-next-line @typescript-eslint/require-await
-    provider.update = jest.fn(async (id: string, doc: Record<string, unknown>) => {
-      provider.cache.set(id, doc as MongooseProviderDocument);
-      return doc as MongooseProviderDocument;
+    provider.update = jest.fn(async (id: string, doc: ReminderDocument) => {
+      provider.cache.set(id, doc);
+      return doc;
     });
 
     command = <Command> client.commands.modules.get(name!);
     if (command && rest.length) args = await command.parse(message, rest);
 
     spies.success = jest.spyOn(command, 'success');
+    spies.warning = jest.spyOn(command, 'warning');
     spies.error = jest.spyOn(command, 'error');
+    spies.t = jest.spyOn(command, 't');
     spies.update = jest.spyOn(provider, 'update');
   };
 
@@ -33,6 +35,15 @@ export const remind = (client: Client) => describe('Remind', () => {
     await setup('!remind');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
+    expect(spies.t).toBeCalledWith('COMMAND_REMIND_RESPONSE_NO_CONTENT', message);
+    expect(spies.update).toBeCalledTimes(0);
+  });
+
+  it('should error if timing is below 1 minute', async () => {
+    await setup('!remind --in 5s test content');
+    await command.exec(message, args);
+    expect(spies.error).toBeCalledTimes(1);
+    expect(spies.t).toBeCalledWith('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW', message);
     expect(spies.update).toBeCalledTimes(0);
   });
 
@@ -57,7 +68,7 @@ export const remind = (client: Client) => describe('Remind', () => {
   });
 
   it('should set a reminder in 1 minute', async () => {
-    await setup('!remind 1m test content');
+    await setup('!remind --in 1m test content');
     const sent = await command.exec(message, args);
     expect(spies.success).toBeCalledTimes(1);
     expect(spies.update).toBeCalledTimes(1);

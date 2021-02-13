@@ -16,8 +16,7 @@ export default class MonitCommand extends Command {
       description: {
         'short': 'COMMAND_MONIT_DESCRIPTION_SHORT',
         'extended': 'COMMAND_MONIT_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_MONIT_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_MONIT_DESCRIPTION_USAGE'
+        'example': 'COMMAND_MONIT_DESCRIPTION_EXAMPLE'
       }
     });
   }

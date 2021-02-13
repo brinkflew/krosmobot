@@ -1,24 +1,31 @@
-import { Command as AkairoCommand, CommandOptions } from 'discord-akairo';
+import {
+  Command as AkairoCommand,
+  CommandOptions,
+  ArgumentOptions
+} from 'discord-akairo';
 import {
   Message,
   MessageEmbed,
   MessageEmbedOptions
 } from 'discord.js';
 import { Locale } from '@/structures';
-import MongooseCachedProvider from '@/providers/mongoose-cached';
 import { EMBEDS, DEFAULTS } from '@/constants';
 import { code } from '@/utils/message';
-import { GuildDocument, UserDocument } from 'types';
 
 /**
  * Represents a command.
  */
 export class Command extends AkairoCommand {
 
+  public argumentsUsage: ArgumentOptions[];
+
   public constructor(id: string, options: CommandOptions = {}) {
     if (!options.aliases) options.aliases = [];
     if (!options.aliases.includes(id)) options.aliases.push(id);
+
     super(id, options);
+
+    this.argumentsUsage = options.usage || (Array.isArray(options.args) ? options.args : []);
   }
 
   /**
@@ -127,7 +134,7 @@ export class Command extends AkairoCommand {
    * which data will be fetched or modified.
    * @param message Message to find the provider for
    */
-  public getProvider(message: Message): MongooseCachedProvider {
+  public getProvider(message: Message) {
     return message.guild
       ? this.client.providers.guilds
       : this.client.providers.users;
@@ -146,8 +153,8 @@ export class Command extends AkairoCommand {
    * Finds the document to save to and fetch from based on the message that triggered the command.
    * @param message Message to find the document for
    */
-  public getDocument(message: Message): GuildDocument | UserDocument | undefined {
-    return <GuildDocument | UserDocument | undefined> this.getProvider(message).fetch(this.getID(message));
+  public getDocument(message: Message) {
+    return this.getProvider(message).fetch(this.getID(message));
   }
 
   /**
@@ -157,6 +164,34 @@ export class Command extends AkairoCommand {
   public getLocale(message: Message): Locale {
     const language = this.getDocument(message)?.settings?.locale || DEFAULTS.LOCALE;
     return this.client.locales.get(language);
+  }
+
+  public usage(message: Message) {
+    const args: string[] = [];
+
+    for (const arg of this.argumentsUsage) {
+      const required = arg.required && !arg.default && !arg.prompt;
+      const flag = Array.isArray(arg.flag) ? arg.flag[0] : arg.flag;
+      const usage = flag ? (arg.match === 'option' ? `${flag} <${arg.id!}>` : flag) : arg.id!;
+      args.push(required ? `<${usage}>` : `[${usage}]`);
+    }
+
+    return `${this.getPrefix(message)}${this.id} ${args.join(' ')}`;
+  }
+
+  public formatArgs(message: Message) {
+    const args: string[] = [];
+
+    for (const arg of this.argumentsUsage) {
+      const required = arg.required && !arg.default && !arg.prompt;
+      const flag = Array.isArray(arg.flag) ? arg.flag[0] : arg.flag;
+      const usage = flag ? (arg.match === 'option' ? `${flag} <${arg.id!}>` : flag) : arg.id!;
+      const description = this.t(typeof arg.description === 'string' ? arg.description : 'ARGUMENT_NO_DESCRIPTION', message);
+      const argument = `\`${usage}\` → ${description}${required ? ` (${this.t('ARGUMENT_OPTIONAL', message)})` : ''}`;
+      args.push(argument);
+    }
+
+    return args.join('\n');
   }
 
   /**

@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { TIME, EMOJIS, ARGUMENTS } from '@/constants';
+import { EMOJIS, ARGUMENTS, TIME } from '@/constants';
 import { formatDate } from '@/utils';
 
 /**
@@ -13,31 +13,32 @@ export default class PollCommand extends Command {
       description: {
         'short': 'COMMAND_POLL_DESCRIPTION_SHORT',
         'extended': 'COMMAND_POLL_DESCRIPTION_EXTENDED',
-        'example': 'COMMAND_POLL_DESCRIPTION_EXAMPLE',
-        'usage': 'COMMAND_POLL_DESCRIPTION_USAGE'
+        'example': 'COMMAND_POLL_DESCRIPTION_EXAMPLE'
       },
       channel: 'guild',
       args: [
         {
-          'id': 'time',
-          'match': 'option',
-          'flag': '--close-in',
-          'type': 'duration',
-          'default': TIME.MS_PER_DAY,
-          'unordered': true
+          id: 'time',
+          match: 'option',
+          flag: ['--close-in', '--close', '--end', '--time'],
+          type: 'duration',
+          unordered: true,
+          description: 'COMMAND_POLL_DESCRIPTION_ARGUMENT_TIME'
         },
         {
           'id': 'multi',
           'match': 'option',
-          'flag': '--allow-mutli',
+          'flag': ['--multi', '--allow-multi'],
           'type': ARGUMENTS.BOOLEAN,
           'default': 'true',
-          'unordered': true
+          'unordered': true,
+          'description': 'COMMAND_POLL_DESCRIPTION_ARGUMENT_MULTI'
         },
         {
           id: 'text',
           match: 'rest',
-          type: 'line'
+          type: 'line',
+          description: 'COMMAND_POLL_DESCRIPTION_ARGUMENT_TEXT'
         }
       ]
     });
@@ -47,7 +48,10 @@ export default class PollCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { time: number; text: string[] | null; multi: string }) {
+  public async exec(message: Message, args: { time: number | null; text: string[] | null; multi: string }) {
+    if (typeof args.time !== 'number') args.time = TIME.MS_PER_DAY;
+    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, this.t('COMMAND_POLL_RESPONSE_TIME_TOO_LOW', message));
+
     if (!args.text?.length) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NO_TITLE', message));
     const title = args.text.shift();
 
