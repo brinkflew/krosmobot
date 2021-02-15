@@ -75,15 +75,18 @@ export default class JobCommand extends Command {
         .filter(member => (member.id as string).startsWith(guildID) && Boolean(member.jobs[job]))
         .sort((a, b) => (b.jobs[job] || 1) - (a.jobs[job] || 1));
 
-      if (!members.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
-
       let length = 0;
-      const pairs: [string, number][] = members.map(member => {
+      let pairs: [string, number][] = members.map(member => {
         const id = (member.id as string).replace(guildID, '');
         const resolved = this.client.util.resolveMember(id, message.guild!.members.cache);
+        if (!resolved) return [id, 0];
         length = Math.max(length, resolved.displayName.length);
         return [resolved.displayName, member.jobs[job] || 1];
       });
+
+      pairs = pairs.filter(pair => pair[1] > 0);
+
+      if (!pairs.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
 
       return this.embed(message, {
         author: {

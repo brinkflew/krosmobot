@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+<<<<<<< HEAD
+=======
+## [0.1.7] - 2021-02-15
+
+### Fixed
+
+- Command `job`: filter out cached members that cannot be resolved
+
+>>>>>>> main
 ## [0.1.6] - 2021-02-15
 
 ### Changed
@@ -110,7 +119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Task `twitter`: fetch news from twitter in (almost) real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.6...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.7...HEAD
+[0.1.7]: https://github.com/brinkflew/krosmobot/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/brinkflew/krosmobot/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...v0.1.5
 [0.1.4]: https://github.com/brinkflew/krosmobot/compare/v0.1.3...v0.1.4
