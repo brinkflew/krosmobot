@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Command `job`: was fetching members from other guilds as well
+
 ## [0.1.5] - 2021-02-13
 
 ### Added
