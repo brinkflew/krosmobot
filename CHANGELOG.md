@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Command `job`: fetch non-cached members from Discord, ignore missing members and remove duplicates
+
 ## [0.1.7] - 2021-02-15
 
 ### Fixed

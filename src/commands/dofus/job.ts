@@ -75,18 +75,27 @@ export default class JobCommand extends Command {
         .filter(member => (member.id as string).startsWith(guildID) && Boolean(member.jobs[job]))
         .sort((a, b) => (b.jobs[job] || 1) - (a.jobs[job] || 1));
 
-      let length = 0;
-      let pairs: [string, number][] = members.map(member => {
+      const resolving = members.map(member => {
         const id = (member.id as string).replace(guildID, '');
         const resolved = this.client.util.resolveMember(id, message.guild!.members.cache);
-        if (!resolved) return [id, 0];
-        length = Math.max(length, resolved.displayName.length);
-        return [resolved.displayName, member.jobs[job] || 1];
+        if (!resolved) return message.guild!.members.fetch(id);
+        return resolved;
       });
 
-      pairs = pairs.filter(pair => pair[1] > 0);
+      const resolved = await Promise.allSettled(resolving);
+      const pairs: Map<string, number> = new Map();
+      let length = 0;
 
-      if (!pairs.length) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
+      await Promise.all(
+        resolved.map(async settled => {
+          if (settled.status !== 'fulfilled') return;
+          const member = await settled.value;
+          length = Math.max(length, member.displayName.length);
+          pairs.set(member.displayName, members.find(m => m.id === `${guildID}${member.id}`)?.jobs[job] || 1);
+        })
+      );
+
+      if (!pairs.size) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
 
       return this.embed(message, {
         author: {
@@ -98,8 +107,8 @@ export default class JobCommand extends Command {
           {
             name: translatedJob,
             value: code(
-              pairs
-                .map(pair => this.format(pair[0], pair[1], length))
+              Array.from(pairs)
+                .map(([member, level]) => this.format(member, level, length))
                 .join('\n')
             )
           }
