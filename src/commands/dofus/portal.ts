@@ -2,6 +2,7 @@ import { Command, Scraper } from '@/structures';
 import { Message, MessageEmbed } from 'discord.js';
 import { portal as schema } from '@/scraping-schemas';
 import { URLS } from '@/constants';
+import ZaapCommand from '@/commands/dofus/zaap';
 
 /**
  * Fetches the Dofus portal position for a dimension on a server.
@@ -45,44 +46,64 @@ export default class PortalCommand extends Command {
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
     if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message, server));
 
-    const generateEmbed = (data: any): MessageEmbed => this.craftEmbed(message, {
-      author: {
+    const generateEmbed = (data: any): MessageEmbed => {
+      const embed = this.craftEmbed(message, {
+        author: {
+          url,
+          name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
+          iconURL: `${URLS.DOFUS_PORTALS}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
+        },
         url,
-        name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
-        iconURL: `${URLS.DOFUS_PORTALS}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
-      },
-      url,
-      thumbnail: { url: `${URLS.DOFUS_PORTALS}/${(<string>data[`images.dimension`]).replace('../', '')}` },
-      fields: [
-        {
-          name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),
-          value: data.position
-            ? data.position
-            : this.t('COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN', message),
-          inline: true
-        },
-        {
-          name: this.t('COMMAND_PORTAL_REPONSE_USES', message),
-          value: this.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', message, data.uses || 0),
-          inline: true
-        },
-        {
-          name: this.t('COMMAND_PORTAL_RESPONSE_CYCLE', message, data['cycle.title']),
-          value: data['cycle.description']
+        thumbnail: { url: `${URLS.DOFUS_PORTALS}/${(<string>data[`images.dimension`]).replace('../', '')}` },
+        fields: [
+          {
+            name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),
+            value: data.position
+              ? data.position
+              : this.t('COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN', message),
+            inline: true
+          },
+          {
+            name: this.t('COMMAND_PORTAL_REPONSE_USES', message),
+            value: this.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', message, data.uses || 0),
+            inline: true
+          },
+          {
+            name: this.t('COMMAND_PORTAL_RESPONSE_CYCLE', message, data['cycle.title']),
+            value: data['cycle.description']
+          }
+        ],
+        footer: {
+          text: data.update
+            ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, server.name)
+            : undefined
         }
-      ],
-      footer: {
-        text: data.update
-          ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, server.name)
-          : undefined
-      }
-    });
+      });
+
+      if (data.transports) embed.fields.push(data.transports);
+      return embed;
+    };
 
     const getDimensionData = (name: string) => {
       const data: { [key: string]: unknown } = {};
       Object.entries(scraped.data![0])
         .filter(([key]) => key.startsWith(name))
         .map(([key, value]) => data[key.replace(`${name}.`, '')] = value);
+
+      if (typeof data.position !== 'string') return data;
+
+      const coords: { x: number; y: number; world: string } | null = this.client.commands.resolver.type('dofusCoordinates')(message, data.position);
+      if (!coords) return data;
+
+      const command = this.client.commands.findCommand('zaap') as ZaapCommand;
+      if (!command) return data;
+
+      const transports = command.distance(message, coords);
+      data.transports = {
+        name: this.t('COMMAND_PORTAL_RESPONSE_TRANSPORTS', message),
+        value: transports.join('\n')
+      };
+
       return data;
     };
 

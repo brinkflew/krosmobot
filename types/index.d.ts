@@ -123,3 +123,12 @@ export interface MetricOptions extends AkairoModuleOptions {
   interval?: number;
   default?: number;
 }
+
+export interface DofusTransport {
+  x: number;
+  y: number;
+  zone: string;
+  world: string;
+  distance: number;
+  type: string;
+}

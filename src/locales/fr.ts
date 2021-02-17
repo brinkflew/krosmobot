@@ -39,6 +39,88 @@ export default class FrenchLocale extends Locale {
       ARGUMENT_OPTIONAL: 'optionnel',
       ARGUMENT_NO_DESCRIPTION: 'Pas de description disponnible pour cette option',
 
+      // Dofus Transport Types
+      DOFUS_TRANSPORT_BOAT: 'Bateau',
+      DOFUS_TRANSPORT_FRIGOSTIAN_CARRIER: 'Transporteur Frigostien',
+      DOFUS_TRANSPORT_FRIGOSTIAN_SKI: 'Skis',
+      DOFUS_TRANSPORT_IMP_CARRIER: 'Transporteur Brigandin',
+      DOFUS_TRANSPORT_SAND_YACHT: 'Char à Voile',
+      DOFUS_TRANSPORT_SCARPLANES: 'Scaéroplane',
+      DOFUS_TRANSPORT_STAGECOACH: 'Diligence',
+      DOFUS_TRANSPORT_ZAAP: 'Zaap',
+
+      // Dofus Zones
+      DOFUS_ZONE_HAKAM_TREE_CANOPY_VILLAGE: 'Village de la Canopée',
+      DOFUS_ZONE_HAKAM_TREE_ZOTH_VILLAGE: 'Village des Zoth',
+      DOFUS_ZONE_INCARNAM_CEMETERY: 'Cimetière',
+      DOFUS_ZONE_INCARNAM_PASTURES: 'Pâturages',
+      DOFUS_ZONE_INCARNAM_WAY_OF_SOULS: 'Route des Âmes',
+      DOFUS_ZONE_MAIN_ABANDONED_LABOWATOWIES: 'Laboratoires Abandonnés',
+      DOFUS_ZONE_MAIN_AERDALA: 'Aerdala',
+      DOFUS_ZONE_MAIN_ALBATROCIOUS_ROCK: 'Roc des Salbatroces',
+      DOFUS_ZONE_MAIN_ALLIANCE_TEMPLE: 'Temple des Alliances',
+      DOFUS_ZONE_MAIN_ALMAS_CRADLE: 'Berceau d\'Alma',
+      DOFUS_ZONE_MAIN_AMAKNA_CASTLE: 'Château d\'Amakna',
+      DOFUS_ZONE_MAIN_AMAKNA_VILLAGE: 'Village d\'Amakna',
+      DOFUS_ZONE_MAIN_ASPARAH_GORGE: 'Crevasse Perge',
+      DOFUS_ZONE_MAIN_ASTRUB_CITY: 'Cité d\'Astrub',
+      DOFUS_ZONE_MAIN_BONTA_CITY_CENTER: 'Bonta - Centre-ville',
+      DOFUS_ZONE_MAIN_BRAKMAR_CITY_CENTER: 'Brâkmar - Centre-ville',
+      DOFUS_ZONE_MAIN_BRAKMAR_CITY_WALLS: 'Bordure de Brâkmar',
+      DOFUS_ZONE_MAIN_BREEDER_VILLAGE: 'Village des Éleveurs',
+      DOFUS_ZONE_MAIN_CANIA_BAY: 'Baie de Cania',
+      DOFUS_ZONE_MAIN_CANIA_FIELDS: 'Champs de Cania',
+      DOFUS_ZONE_MAIN_CANIA_LAKE: 'lac de Cania',
+      DOFUS_ZONE_MAIN_CANIA_MASSIF: 'Massif de Cania',
+      DOFUS_ZONE_MAIN_CARAVAN_ALLEY: 'Route des Roulottes',
+      DOFUS_ZONE_MAIN_CASTUC_TERRITORY: 'Territoire Cactère',
+      DOFUS_ZONE_MAIN_CAWWOT_ISLAND: 'Île de la Cawotte',
+      DOFUS_ZONE_MAIN_COASTAL_VILLAGE: 'Village Côtier',
+      DOFUS_ZONE_MAIN_CORAL_BEACH: 'Plage de Corail',
+      DOFUS_ZONE_MAIN_CRACKLER_MOUNTAIN: 'Montagne des Craqueleurs',
+      DOFUS_ZONE_MAIN_CRADLE: 'Tainéla',
+      DOFUS_ZONE_MAIN_CROCUZKO: 'Crocuzko',
+      DOFUS_ZONE_MAIN_DESECRATED_HIGHLANDS: 'Terres Désacrées',
+      DOFUS_ZONE_MAIN_DOPPLE_VILLAGE: 'Village des Dopeuls',
+      DOFUS_ZONE_MAIN_DREGGON_PENINSULA: 'Presqu\'île des Dragoeufs',
+      DOFUS_ZONE_MAIN_DUNES_OF_BONES: 'Dunes des Ossements',
+      DOFUS_ZONE_MAIN_EDGE_OF_THE_EVIL_FOREST: 'Bord de la Forêt Maléfique',
+      DOFUS_ZONE_MAIN_ENTRANCE_TO_HAREBOURGS_CASTLE: 'Entrée du Château de Harebourg',
+      DOFUS_ZONE_MAIN_FANGS_OF_GLASS: 'Crocs de Verre',
+      DOFUS_ZONE_MAIN_FRIGOST_VILLAGE: 'La Bourgade',
+      DOFUS_ZONE_MAIN_FROZEN_LAKE: 'Lac Gelé',
+      DOFUS_ZONE_MAIN_FUNGUS_DOMAIN: 'Domaine des Fungus',
+      DOFUS_ZONE_MAIN_GOBBALL_CORNER: 'Coin des Bouftous',
+      DOFUS_ZONE_MAIN_GORGE_OF_HOWLING_WINDS: 'Gorge des Vents Hurlants',
+      DOFUS_ZONE_MAIN_GRASSY_PLAINS: 'Plaines Herbeuses',
+      DOFUS_ZONE_MAIN_NOLIFIS_CEMETERY: 'Cimetière de Grobe',
+      DOFUS_ZONE_MAIN_HEROES_CEMETERY: 'Cimetière des Héros',
+      DOFUS_ZONE_MAIN_ICEFIELDS: 'Champs de Glace',
+      DOFUS_ZONE_MAIN_IMP_VILLAGE: 'Village des Brigandins',
+      DOFUS_ZONE_MAIN_JELLY_PENINSULA: 'Péninsule des Gelées',
+      DOFUS_ZONE_MAIN_KANIG_VILLAGE: 'Village des Kanigs',
+      DOFUS_ZONE_MAIN_KAWAII_RIVER: 'Rivière Kawaii',
+      DOFUS_ZONE_MAIN_KWISMAS_HAVEN: 'Havre de Nowel',
+      DOFUS_ZONE_MAIN_LOUSY_PIG_PLAIN: 'Plaine des Porkass',
+      DOFUS_ZONE_MAIN_LOW_CRACKLER_MOUNTAIN: 'Montagne Basse des Craqueleurs',
+      DOFUS_ZONE_MAIN_MADRESTAM_HARBOUR: 'Port de Madrestam',
+      DOFUS_ZONE_MAIN_MINOTOROR_ISLAND: 'île du Minotoror',
+      DOFUS_ZONE_MAIN_MOUNT_SCAULDRON: 'Mont Torrideau',
+      DOFUS_ZONE_MAIN_PANDALA_VILLAGE: 'Village de Pandala',
+      DOFUS_ZONE_MAIN_PETRIFIED_FOREST: 'Forêt Pétrifiée',
+      DOFUS_ZONE_MAIN_ROCKY_PLAINS: 'Plaines Rocheuses',
+      DOFUS_ZONE_MAIN_ROCKY_ROADS: 'Routes Rocailleuses',
+      DOFUS_ZONE_MAIN_SAKAI_HARBOUR: 'Port de Sakaï',
+      DOFUS_ZONE_MAIN_SAKAI_PLAIN: 'Plaine de Sakaï',
+      DOFUS_ZONE_MAIN_SARAKECH_PORT: 'Port de Sarakech',
+      DOFUS_ZONE_MAIN_SCARALEAF_PLAIN: 'Plaine des Scarafeuilles',
+      DOFUS_ZONE_MAIN_SNOWBOUND_VILLAGE: 'Village Enseveli',
+      DOFUS_ZONE_MAIN_SUFOKIA: 'Sufokia',
+      DOFUS_ZONE_MAIN_SUFOKIAN_SHORELINE: 'Rivage Sufokien',
+      DOFUS_ZONE_MAIN_TEARS_OF_OURONIGRIDE: 'Larmes d\'Ouronigride',
+      DOFUS_ZONE_MAIN_TURTLE_BEACH: 'Plage de la Tortue',
+      DOFUS_ZONE_MAIN_VULKANIA_VILLAGE: 'Village de Vulkania',
+
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Ouvrir l\'original',
       TASK_TWITTER_FOOTER: 'Vu sur Twitter',
@@ -307,6 +389,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_PORTAL_REPONSE_USES: 'Utilisations',
       COMMAND_PORTAL_RESPONSE_USES_REMAINING: (uses: string) => `${uses} utilisations restantes`,
       COMMAND_PORTAL_RESPONSE_UPDATED: (time: string, server: string) => `Mis à jour il y a ${time} pour le serveur ${server}.`,
+      COMMAND_PORTAL_RESPONSE_TRANSPORTS: 'Moyens de Transports Proches',
       COMMAND_PORTAL_DESCRIPTION_SHORT: 'Affiche la position d\'un portail.',
       COMMAND_PORTAL_DESCRIPTION_EXTENDED: stripIndent`
         Récupères la position d'un portail sur le serveur de la guilde, ou sur un serveur particulier si indiqué.
@@ -541,7 +624,30 @@ export default class FrenchLocale extends Locale {
         Version ${version}
         \u2022 En ligne depuis ${uptime}
         \u2022 \u00A9 ${new Date().getFullYear()} ${author}
-      `
+      `,
+
+      // ZAAP Command
+      COMMAND_ZAAP_DESCRIPTION_SHORT: 'Moyens de transport proches de coordonnées.',
+      COMMAND_ZAAP_DESCRIPTION_EXTENDED: oneLine`
+        Liste la distance entre les coordonnées d'une map en jeu et les moyens de transport
+        les plus proches. Les transports sont listés du plus proche peut importe son type
+        jusqu'au zaap le plus proche, avec la distance exprimée à vol d'oiseau.
+        Des imprécisions sont à attendre puisqu'aucune simulation n'est effectuée pour trouver
+        un chemin viable. De ce fait, certaines distances calculées peuvent nécessiter
+        un détour ou peuvent même être injoignables depuis le transport listé. 
+      `,
+      COMMAND_ZAAP_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Trouve les moyens de transport les plus proches de la map située en [-21,2] :
+        ${usage(prefix, 'zaap -21,2')}
+      `,
+      COMMAND_ZAAP_DESCRIPTION_ARGUMENT_COORDINATES: 'Coordonnées de la map visée en jeu.',
+      COMMAND_ZAAP_RESPONSE_NO_COORDINATES: 'Vous devez indiquer les coordonnées d\'une map pour lister les transports proches de celle-ci.',
+      COMMAND_ZAAP_RESPONSE_TITLE: (coords: { x: number; y: number; world: string }) => oneLine`
+        Moyens de transport proches de [${coords.x},${coords.y}]
+      `,
+      COMMAND_ZAAP_RESPONSE_DESCRIPTION: (icon: string, type: string, zone: string, x: number, y: number, distance: number) =>
+        `${icon} **[${x},${y}]** ${type} vers **${zone}** → ${distance} map${distance > 1 ? 's' : ''}`,
+      COMMAND_ZAAP_RESPONSE_FOOTER: `Les distances sont indiquées à vol d'oiseau et peuvent être imprécises`
     };
   }
 

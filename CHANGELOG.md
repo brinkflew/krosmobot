@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Command `zaap`: find the closest tramports to a coordinate
+- Argument `dofusCoordinates`: parse Dofus maps' coordinates
+- Tests: `zaap`command and `dofusCoordinates` type
+
+### Modified
+
+- Command `portal`: Display closest transports to the portal
+
 ### Fixed
 
 - Command `job`: fetch non-cached members from Discord, ignore missing members and remove duplicates
