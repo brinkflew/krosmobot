@@ -541,7 +541,54 @@ export default class FrenchLocale extends Locale {
         Version ${version}
         \u2022 En ligne depuis ${uptime}
         \u2022 \u00A9 ${new Date().getFullYear()} ${author}
-      `
+      `,
+
+      // ISSUE Command
+      COMMAND_ISSUE_DESCRIPTION_SHORT: 'Bugs et améliorations.',
+      COMMAND_ISSUE_DESCRIPTION_EXTENDED: 'Rapportez un bug ou demandez une nouvelle fonctionalité.',
+      COMMAND_ISSUE_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Rapporter un nouveau bug :
+        ${usage(prefix, 'bug')}
+        Demander une nouvelle fonctionalité :
+        ${usage(prefix, 'request')}
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TITLE: 'Un titre pour le bug à rapporter ou la fonctionalité à demander',
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_DESCRIPTION: oneLine`
+        Dans le cas d'un rapport de bug, une description exhaustive des étapes à reproduire,
+        le résultat obtenu et le résultat attendu;
+        pour une demande d'amélioration, une description de ce qui est attendu
+        et une brève explication des besoins que cela couvrirait
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_STATE: stripIndent`
+        Le nouveau statut du ticket; peut seulement être modifié par les développeurs du bot; un parmi:
+        \u2022 \`pending\` → En Attente d'Approbation
+        \u2022 \`cancel\` → Annulé
+        \u2022 \`dev\` → En Cours de Développement
+        \u2022 \`test\` → En Phase de Test
+        \u2022 \`deploy\` → Déployé
+        \u2022 \`block\` → Blocké
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE: 'Type du ticket : soit `bug`, soit `feature`',
+      COMMAND_ISSUE_PROMPT_START_TITLE: 'Veuillez fournir un titre court pour ce ticket.',
+      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Veuillez fournir une description pour ce ticket.',
+      COMMAND_ISSUE_PROMPT_RETRY_STATE: 'Statut invalide, veuillez réessayer.',
+      COMMAND_ISSUE_PROMPT_RETRY_TYPE: 'Type invalide, veuillez réessayer.',
+      COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY: 'Seuls les développeurs peuvent modifier le statut d\'un ticket.',
+      COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY: 'Seuls les développeurs peuvent modifier le type d\'un ticket.',
+      COMMAND_ISSUE_RESPONSE_TYPE_BUG: 'Bug',
+      COMMAND_ISSUE_RESPONSE_TYPE_FEATURE: 'Fonctionalité',
+      COMMAND_ISSUE_RESPONSE_TYPE_UNKNOWN: 'Inconnu',
+      COMMAND_ISSUE_RESPONSE_STATE_PENDING: 'En Attente d\'Approbation',
+      COMMAND_ISSUE_RESPONSE_STATE_CANCEL: 'Annulé',
+      COMMAND_ISSUE_RESPONSE_STATE_DEV: 'En Cours de Développement',
+      COMMAND_ISSUE_RESPONSE_STATE_TEST: 'En Phase de Test',
+      COMMAND_ISSUE_RESPONSE_STATE_DEPLOY: 'Déployé',
+      COMMAND_ISSUE_RESPONSE_STATE_BLOCK: 'Blocké',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS: 'Commentaires',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Statut',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Type de Ticket',
+      COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Mis à jour le ${date}*`,
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Votre ticket ${ref} a été mis à jour.`
     };
   }
 
