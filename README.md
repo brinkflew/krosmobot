@@ -30,6 +30,7 @@ guilds by providing a suite of tools and commands to its users.
 - Receive tweet directly from Ankama
 - Display the almanax of the day automatically
 - Find portals position thanks to [Dofus-Portals](https://dofus-portals.fr/)
+- Find the closest transport to a given position
 - List and share your jobs with other guild members
 - Join events and minigames on Discord
 - Create polls, setup automatic reminders
@@ -39,7 +40,7 @@ guilds by providing a suite of tools and commands to its users.
 ## In the Future
 
 - More minigames
-- Improve portals localization (closest zaap, best route, etc.)
+- Improve portals localization (best route, etc.)
 - [In Discussion] Integration with [Metamob](https://www.metamob.fr/)
 - And more...
 
@@ -57,6 +58,7 @@ When in doubt, type `!help` to get a recap of all available commands.
 - `!almanax` → Fetches the almanax of the day.
 - `!job` → Information about members' jobs.
 - `!portal` → Display the position of a portal.
+- `!zaap` → Closest transport to coordinates.
 
 ### MiniGames
 
