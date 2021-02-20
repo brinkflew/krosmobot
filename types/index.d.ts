@@ -52,6 +52,17 @@ export interface GuildDocument extends MongooseProviderDocument {
   settings: DocumentSettings;
 }
 
+export interface IssueDocument extends MongooseProviderDocument {
+  messages: string[];
+  channels: string[];
+  guilds: string[];
+  title: string;
+  description: string;
+  status: string;
+  type: string;
+  locale: string;
+}
+
 export interface LogDocument extends MongooseProviderDocument {
   level: string;
   message: string;
