@@ -170,6 +170,7 @@ export class Command extends AkairoCommand {
     const args: string[] = [];
 
     for (const arg of this.argumentsUsage) {
+      if (arg.match === 'none') continue;
       const required = arg.required && !arg.default && !arg.prompt;
       const flag = Array.isArray(arg.flag) ? arg.flag[0] : arg.flag;
       const usage = flag ? (arg.match === 'option' ? `${flag} <${arg.id!}>` : flag) : arg.id!;
