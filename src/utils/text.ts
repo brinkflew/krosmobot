@@ -5,6 +5,22 @@
 export const formatNumber = (number: number, separator = ' ') => number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, separator);
 
 /**
+ * Pads a number of string with a character to obtain a fixed length string.
+ * @param number Number to pad
+ * @param length Total length to achieve
+ * @param padding Character to use for padding
+ */
+export const padNumber = (number: number | string, length: number, padding = '0') => {
+  if (typeof number === 'number') number = number.toString();
+
+  while (number.length < length) {
+    number = `${padding}${number}`;
+  }
+
+  return number;
+};
+
+/**
  * Split a single string to an array of strings each not exceeding
  * the length defined in width.
  * @param text Text to split
