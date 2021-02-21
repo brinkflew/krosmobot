@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2021-02-21
+
 ### Added
 
 - Command `zaap`: find the closest tramports to a coordinate
@@ -136,7 +138,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Task `twitter`: fetch news from twitter in (almost) real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.1.7...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.0...HEAD
+[0.1.7]: https://github.com/brinkflew/krosmobot/compare/v0.1.7...v0.2.0
 [0.1.7]: https://github.com/brinkflew/krosmobot/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/brinkflew/krosmobot/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...v0.1.5
