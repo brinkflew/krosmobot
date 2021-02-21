@@ -34,6 +34,7 @@ guilds by providing a suite of tools and commands to its users.
 - List and share your jobs with other guild members
 - Join events and minigames on Discord
 - Create polls, setup automatic reminders
+- Track bugs, ask for new features
 - And many more...
 
 
@@ -83,6 +84,7 @@ When in doubt, type `!help` to get a recap of all available commands.
 - `!echo` → Repeat a message in another channel.
 - `!help` → Display help about commands.
 - `!invite` → Generate an invite to add the bot to another Discord guild.
+- `!issue` → Bugs and features.
 - `!monit` → Get statistics about the bot and its processes (owner only).
 - `!ping` → Show the latency between this bot and Discord.
 

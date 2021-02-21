@@ -645,7 +645,54 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_ZAAP_RESPONSE_DESCRIPTION: (icon: string, type: string, zone: string, x: number, y: number, distance: number) =>
         `${icon} **[${x},${y}]** ${type} to **${zone}** → ${distance} map${distance > 1 ? 's' : ''}`,
-      COMMAND_ZAAP_RESPONSE_FOOTER: `Distance is indicated 'as the crow flies' and may be inaccurate`
+      COMMAND_ZAAP_RESPONSE_FOOTER: `Distance is indicated 'as the crow flies' and may be inaccurate`,
+
+      // ISSUE Command
+      COMMAND_ISSUE_DESCRIPTION_SHORT: 'Bugs and features.',
+      COMMAND_ISSUE_DESCRIPTION_EXTENDED: 'Report a bug or request a feature.',
+      COMMAND_ISSUE_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Report a new bug:
+        ${usage(prefix, 'bug')}
+        Request a new feature:
+        ${usage(prefix, 'request')}
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TITLE: 'A title for the bug to report or feature to request',
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_DESCRIPTION: oneLine`
+        In case of a bug report, an exhaustive description of the steps to reproduce,
+        the response received and the expected result;
+        if a request for a new feature, a description of what is expected and
+        an explanation of the needs this would cover
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_STATE: stripIndent`
+        The new state fot the issue; can only be set by the owners of the bot, one of:
+        \u2022 \`pending\` → Pending Approval
+        \u2022 \`cancel\` → Canceled
+        \u2022 \`dev\` → Ongoing Development
+        \u2022 \`test\` → Testing
+        \u2022 \`deploy\` → Deployed
+        \u2022 \`block\` → Blocked
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE: 'Type of issue, either `bug` or `feature`',
+      COMMAND_ISSUE_PROMPT_START_TITLE: 'Please provide a short title for this bug/feature request.',
+      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Please provide a description to explain your enquiry.',
+      COMMAND_ISSUE_PROMPT_RETRY_STATE: 'Invalid state name, please try again.',
+      COMMAND_ISSUE_PROMPT_RETRY_TYPE: 'Invalid type name, please try again.',
+      COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY: 'Only developpers can change the state of an issue.',
+      COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY: 'Only developpers can change the type of an issue.',
+      COMMAND_ISSUE_RESPONSE_TYPE_BUG: 'Bug',
+      COMMAND_ISSUE_RESPONSE_TYPE_FEATURE: 'Feature',
+      COMMAND_ISSUE_RESPONSE_TYPE_UNKNOWN: 'Unknown',
+      COMMAND_ISSUE_RESPONSE_STATE_PENDING: 'Pending Approval',
+      COMMAND_ISSUE_RESPONSE_STATE_CANCEL: 'Canceled',
+      COMMAND_ISSUE_RESPONSE_STATE_DEV: 'Ongoing Development',
+      COMMAND_ISSUE_RESPONSE_STATE_TEST: 'Testing',
+      COMMAND_ISSUE_RESPONSE_STATE_DEPLOY: 'Deployed',
+      COMMAND_ISSUE_RESPONSE_STATE_BLOCK: 'Blocked',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS: 'Note',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Status',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Issue Type',
+      COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Updated on ${date}*`,
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Your issue ${ref} has been updated.`
     };
   }
 

@@ -12,15 +12,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Command `zaap`: find the closest tramports to a coordinate
 - Argument `dofusCoordinates`: parse Dofus maps' coordinates
 - Tests: `zaap`command and `dofusCoordinates` type
+- Providers: new provider for tracking issues
+- Commands `issue`: report bugs, ask for features and track tasks
+- Arguments `oneline`: match the first line of a message only
+- Utils: pad a string with repeating characaters
 
-### Modified
+### Changed
 
 - Command `portal`: Display closest transports to the portal
+- Providers `mongoose-cached`: find the first document that satisfies requirements
+- Commands `help`: do not list never-matching arguments in the usage
 
 ### Fixed
 
 - Command `job`: fetch non-cached members from Discord, ignore missing members and remove duplicates
-
+- Command `locale`: display the new language in the correct language
 ## [0.1.7] - 2021-02-15
 
 ### Fixed
