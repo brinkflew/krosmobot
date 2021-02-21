@@ -2,6 +2,7 @@
 
 export * as ARGUMENTS from './arguments';
 export * as CHARTS from './charts';
+export * as DOFUS from './dofus';
 export * from './defaults';
 export * as EMBEDS from './embeds';
 export * as EMOJIS from './emojis';

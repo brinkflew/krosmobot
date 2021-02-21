@@ -24,6 +24,7 @@ import { argumentTypes } from '@/arguments';
 import {
   almanax,
   guilds,
+  issues,
   logs,
   members,
   polls,
@@ -34,6 +35,7 @@ import {
 import {
   AlmanaxDocument,
   GuildDocument,
+  IssueDocument,
   LogDocument,
   MemberDocument,
   PollDocument,
@@ -59,6 +61,7 @@ export class Client extends AkairoClient {
   public providers: {
     almanax: MongooseCachedProvider<AlmanaxDocument>;
     guilds: MongooseCachedProvider<GuildDocument>;
+    issues: MongooseCachedProvider<IssueDocument>;
     logs: MongooseProvider<LogDocument>;
     members: MongooseCachedProvider<MemberDocument>;
     polls: MongooseCachedProvider<PollDocument>;
@@ -80,6 +83,7 @@ export class Client extends AkairoClient {
     this.providers = {
       almanax: new MongooseCachedProvider(this, almanax as Model<AlmanaxDocument, Record<string, unknown>>),
       guilds: new MongooseCachedProvider(this, guilds as Model<GuildDocument, Record<string, unknown>>),
+      issues: new MongooseCachedProvider(this, issues as Model<IssueDocument, Record<string, unknown>>),
       logs: new MongooseProvider(this, logs),
       members: new MongooseCachedProvider(this, members as Model<MemberDocument, Record<string, unknown>>),
       polls: new MongooseCachedProvider(this, polls as Model<PollDocument, Record<string, unknown>>),

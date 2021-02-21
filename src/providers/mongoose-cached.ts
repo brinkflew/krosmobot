@@ -68,6 +68,14 @@ export default class MongooseCachedProvider<D extends MongooseProviderDocument> 
   }
 
   /**
+   * Find the first document that satisfies the predicate.
+   * @param predicate Filtering method to apply to the collection
+   */
+  public find(predicate: (value: D, index: number, array: D[]) => boolean) {
+    return this.cache.array().find(predicate);
+  }
+
+  /**
    * Creates a new record in the database and saves it to the cache.
    * If the record already exists, updates it.
    * @param id ID of the record to insert

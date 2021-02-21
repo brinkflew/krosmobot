@@ -46,13 +46,15 @@ export default class LocaleCommand extends Command {
       return this.error(message, this.t('COMMAND_LOCALE_RESPONSE_UNKNOWN', message, args.locale));
     }
 
-    const languageName = this.t(`LANG_${args.locale.toUpperCase()}`, message);
+    const languageKey = `LANG_${args.locale.toUpperCase()}`;
+    let languageName = this.t(languageKey, message);
 
     // Check if the locale actually changes
     const language = <string> provider.fetch(id)?.settings?.locale;
     if (language === args.locale) return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, languageName));
 
     // Save the new locale
+    languageName = this.client.locales.get(args.locale).translate(languageKey);
     await provider.update(id, { settings: { locale: args.locale } });
     return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_MODIFIED', message, languageName));
   }

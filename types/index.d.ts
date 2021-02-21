@@ -52,6 +52,17 @@ export interface GuildDocument extends MongooseProviderDocument {
   settings: DocumentSettings;
 }
 
+export interface IssueDocument extends MongooseProviderDocument {
+  messages: string[];
+  channels: string[];
+  guilds: string[];
+  title: string;
+  description: string;
+  status: string;
+  type: string;
+  locale: string;
+}
+
 export interface LogDocument extends MongooseProviderDocument {
   level: string;
   message: string;
@@ -122,4 +133,13 @@ export interface MetricOptions extends AkairoModuleOptions {
   unit?: string;
   interval?: number;
   default?: number;
+}
+
+export interface DofusTransport {
+  x: number;
+  y: number;
+  zone: string;
+  world: string;
+  distance: number;
+  type: string;
 }

@@ -15,3 +15,4 @@ export * from './portal';
 export * from './prefix';
 export * from './remind';
 export * from './set';
+export * from './zaap';

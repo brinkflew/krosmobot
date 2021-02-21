@@ -6,6 +6,7 @@ import CustomMongooseProvider from '@/providers/mongoose';
 import {
   AlmanaxDocument,
   GuildDocument,
+  IssueDocument,
   LogDocument,
   MemberDocument,
   PollDocument,
@@ -26,6 +27,7 @@ declare module 'discord-akairo' {
     providers: {
       almanax: CustomMongooseCachedProvider<AlmanaxDocument>;
       guilds: CustomMongooseCachedProvider<GuildDocument>;
+      issues: CustomMongooseCachedProvider<IssueDocument>;
       logs: CustomMongooseProvider<LogDocument>;
       members: CustomMongooseCachedProvider<MemberDocument>;
       polls: CustomMongooseCachedProvider<PollDocument>;

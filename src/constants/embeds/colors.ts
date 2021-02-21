@@ -7,7 +7,8 @@ export enum COLORS {
   GREEN = '#B8DB7B',
   MAGENTA = '#BD6F9C',
   RED = '#FF7777',
-  YELLOW = '#EBC06C'
+  YELLOW = '#EBC06C',
+  GREY = '#B8B8B8'
 }
 
 /* eslint-enable @typescript-eslint/naming-convention */

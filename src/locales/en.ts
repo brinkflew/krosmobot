@@ -39,6 +39,88 @@ export default class EnglishLocale extends Locale {
       ARGUMENT_OPTIONAL: 'optional',
       ARGUMENT_NO_DESCRIPTION: 'No description for this argument',
 
+      // Dofus Transport Types
+      DOFUS_TRANSPORT_BOAT: 'Boat',
+      DOFUS_TRANSPORT_FRIGOSTIAN_CARRIER: 'Frigostian Carrier',
+      DOFUS_TRANSPORT_FRIGOSTIAN_SKI: 'Skis',
+      DOFUS_TRANSPORT_IMP_CARRIER: 'Imp Carrier',
+      DOFUS_TRANSPORT_SAND_YACHT: 'Sand Yacht',
+      DOFUS_TRANSPORT_SCARPLANES: 'Scarplanes',
+      DOFUS_TRANSPORT_STAGECOACH: 'Stagecoach',
+      DOFUS_TRANSPORT_ZAAP: 'Zaap',
+
+      // Dofus Zones
+      DOFUS_ZONE_HAKAM_TREE_CANOPY_VILLAGE: 'Canopy Village',
+      DOFUS_ZONE_HAKAM_TREE_ZOTH_VILLAGE: 'Zoth Village',
+      DOFUS_ZONE_INCARNAM_CEMETERY: 'Cemetery',
+      DOFUS_ZONE_INCARNAM_PASTURES: 'Pastures',
+      DOFUS_ZONE_INCARNAM_WAY_OF_SOULS: 'Way of Souls',
+      DOFUS_ZONE_MAIN_ABANDONED_LABOWATOWIES: 'Abandoned Labowatowies',
+      DOFUS_ZONE_MAIN_AERDALA: 'Aerdala',
+      DOFUS_ZONE_MAIN_ALBATROCIOUS_ROCK: 'Albatrocious Rock',
+      DOFUS_ZONE_MAIN_ALLIANCE_TEMPLE: 'Alliance Temple',
+      DOFUS_ZONE_MAIN_ALMAS_CRADLE: 'Alma\'s Cradle',
+      DOFUS_ZONE_MAIN_AMAKNA_CASTLE: 'Amakna Castle',
+      DOFUS_ZONE_MAIN_AMAKNA_VILLAGE: 'Amakna Village',
+      DOFUS_ZONE_MAIN_ASPARAH_GORGE: 'Asparah Gorge',
+      DOFUS_ZONE_MAIN_ASTRUB_CITY: 'Astrub City',
+      DOFUS_ZONE_MAIN_BONTA_CITY_CENTER: 'Bonta - City Center',
+      DOFUS_ZONE_MAIN_BRAKMAR_CITY_CENTER: 'Brakmar - City Center',
+      DOFUS_ZONE_MAIN_BRAKMAR_CITY_WALLS: 'Brakmar - City Walls',
+      DOFUS_ZONE_MAIN_BREEDER_VILLAGE: 'Breeder Village',
+      DOFUS_ZONE_MAIN_CANIA_BAY: 'Cania bay',
+      DOFUS_ZONE_MAIN_CANIA_FIELDS: 'Cania Fields',
+      DOFUS_ZONE_MAIN_CANIA_LAKE: 'Cania lake',
+      DOFUS_ZONE_MAIN_CANIA_MASSIF: 'Cania Massif',
+      DOFUS_ZONE_MAIN_CARAVAN_ALLEY: 'Caravan Alley',
+      DOFUS_ZONE_MAIN_CASTUC_TERRITORY: 'Castuc Territory',
+      DOFUS_ZONE_MAIN_CAWWOT_ISLAND: 'Cawwot Island',
+      DOFUS_ZONE_MAIN_COASTAL_VILLAGE: 'Coastal Village',
+      DOFUS_ZONE_MAIN_CORAL_BEACH: 'Coral Beach',
+      DOFUS_ZONE_MAIN_CRACKLER_MOUNTAIN: 'Crackler Mountain',
+      DOFUS_ZONE_MAIN_CRADLE: 'Cradle',
+      DOFUS_ZONE_MAIN_CROCUZKO: 'Crocuzko',
+      DOFUS_ZONE_MAIN_DESECRATED_HIGHLANDS: 'Desecrated Highlands',
+      DOFUS_ZONE_MAIN_DOPPLE_VILLAGE: 'Dopple Village',
+      DOFUS_ZONE_MAIN_DREGGON_PENINSULA: 'Dreggon Peninsula',
+      DOFUS_ZONE_MAIN_DUNES_OF_BONES: 'Dunes of Bones',
+      DOFUS_ZONE_MAIN_EDGE_OF_THE_EVIL_FOREST: 'Edge of the Evil Forest',
+      DOFUS_ZONE_MAIN_ENTRANCE_TO_HAREBOURGS_CASTLE: 'Entrance to Harebourg\'s Castle',
+      DOFUS_ZONE_MAIN_FANGS_OF_GLASS: 'Fangs of Glass',
+      DOFUS_ZONE_MAIN_FRIGOST_VILLAGE: 'Frigost Village',
+      DOFUS_ZONE_MAIN_FROZEN_LAKE: 'Frozen Lake',
+      DOFUS_ZONE_MAIN_FUNGUS_DOMAIN: 'Fungus Domain',
+      DOFUS_ZONE_MAIN_GOBBALL_CORNER: 'Gobbal Corner',
+      DOFUS_ZONE_MAIN_GORGE_OF_HOWLING_WINDS: 'Gorge of Howling Winds',
+      DOFUS_ZONE_MAIN_GRASSY_PLAINS: 'Grassy Plains',
+      DOFUS_ZONE_MAIN_NOLIFIS_CEMETERY: 'Nolifis Cemetery',
+      DOFUS_ZONE_MAIN_HEROES_CEMETERY: 'Heroes\' Cemetery',
+      DOFUS_ZONE_MAIN_ICEFIELDS: 'Icefields',
+      DOFUS_ZONE_MAIN_IMP_VILLAGE: 'Imp Village',
+      DOFUS_ZONE_MAIN_JELLY_PENINSULA: 'Jelly Peninsula',
+      DOFUS_ZONE_MAIN_KANIG_VILLAGE: 'Kanig Village',
+      DOFUS_ZONE_MAIN_KAWAII_RIVER: 'Kawaii River',
+      DOFUS_ZONE_MAIN_KWISMAS_HAVEN: 'Kwismas Haven',
+      DOFUS_ZONE_MAIN_LOUSY_PIG_PLAIN: 'Lousy Pig Plain',
+      DOFUS_ZONE_MAIN_LOW_CRACKLER_MOUNTAIN: 'Low Crackler Mountain',
+      DOFUS_ZONE_MAIN_MADRESTAM_HARBOUR: 'Madrestam Harbour',
+      DOFUS_ZONE_MAIN_MINOTOROR_ISLAND: 'Minotoror Island',
+      DOFUS_ZONE_MAIN_MOUNT_SCAULDRON: 'Mount Scauldron',
+      DOFUS_ZONE_MAIN_PANDALA_VILLAGE: 'Pandala Village',
+      DOFUS_ZONE_MAIN_PETRIFIED_FOREST: 'Petrified Forest',
+      DOFUS_ZONE_MAIN_ROCKY_PLAINS: 'Rocky Plains',
+      DOFUS_ZONE_MAIN_ROCKY_ROADS: 'Rocky Roads',
+      DOFUS_ZONE_MAIN_SAKAI_HARBOUR: 'Sakaï Harbour',
+      DOFUS_ZONE_MAIN_SAKAI_PLAIN: 'Sakaï Plain',
+      DOFUS_ZONE_MAIN_SARAKECH_PORT: 'Sarakech Port',
+      DOFUS_ZONE_MAIN_SCARALEAF_PLAIN: 'Scaraleaf Plain',
+      DOFUS_ZONE_MAIN_SNOWBOUND_VILLAGE: 'Snowbound Village',
+      DOFUS_ZONE_MAIN_SUFOKIA: 'Sufokia',
+      DOFUS_ZONE_MAIN_SUFOKIAN_SHORELINE: 'Sufokian Shoreline',
+      DOFUS_ZONE_MAIN_TEARS_OF_OURONIGRIDE: 'Tears of Ouronigride',
+      DOFUS_ZONE_MAIN_TURTLE_BEACH: 'Turtle Beach',
+      DOFUS_ZONE_MAIN_VULKANIA_VILLAGE: 'Vulkania Village',
+
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Open original',
       TASK_TWITTER_FOOTER: 'Seen on Twitter',
@@ -303,6 +385,7 @@ export default class EnglishLocale extends Locale {
       COMMAND_PORTAL_REPONSE_USES: 'Usages',
       COMMAND_PORTAL_RESPONSE_USES_REMAINING: (uses: string) => `${uses} usages remaining`,
       COMMAND_PORTAL_RESPONSE_UPDATED: (time: string, server: string) => `Updated ${time} ago for the ${server} server.`,
+      COMMAND_PORTAL_RESPONSE_TRANSPORTS: 'Closest Transports',
       COMMAND_PORTAL_DESCRIPTION_SHORT: 'Display the position of a portal.',
       COMMAND_PORTAL_DESCRIPTION_EXTENDED: stripIndent`
         Fetches the position of a portal for the guild's configured server, or for a specific server.
@@ -539,7 +622,77 @@ export default class EnglishLocale extends Locale {
         Version ${version}
         \u2022 Online for ${uptime}
         \u2022 \u00A9 ${new Date().getFullYear()} ${author}
-      `
+      `,
+
+      // ZAAP Command
+      COMMAND_ZAAP_DESCRIPTION_SHORT: 'Closest transport to coordinates.',
+      COMMAND_ZAAP_DESCRIPTION_EXTENDED: oneLine`
+        List the distance to the closest transports to a given map
+        coordinate in-game. Transports are listed from the closest of any type
+        to the closest zaap, with distance expressed 'as the crow flies'.
+        Innacuracy is to be excepted as pathfinding is not simulated. Some
+        calculated distances may require a detour or may even be unreachable from
+        the listed transport. 
+      `,
+      COMMAND_ZAAP_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Find the closest transports to the map located in [-21,2]:
+        ${usage(prefix, 'zaap -21,2')}
+      `,
+      COMMAND_ZAAP_DESCRIPTION_ARGUMENT_COORDINATES: 'Coordinates of the map to target in-game.',
+      COMMAND_ZAAP_RESPONSE_NO_COORDINATES: 'You must supply coordinates to find the closest transport to.',
+      COMMAND_ZAAP_RESPONSE_TITLE: (coords: { x: number; y: number; world: string }) => oneLine`
+        Closest transports to [${coords.x},${coords.y}]
+      `,
+      COMMAND_ZAAP_RESPONSE_DESCRIPTION: (icon: string, type: string, zone: string, x: number, y: number, distance: number) =>
+        `${icon} **[${x},${y}]** ${type} to **${zone}** → ${distance} map${distance > 1 ? 's' : ''}`,
+      COMMAND_ZAAP_RESPONSE_FOOTER: `Distance is indicated 'as the crow flies' and may be inaccurate`,
+
+      // ISSUE Command
+      COMMAND_ISSUE_DESCRIPTION_SHORT: 'Bugs and features.',
+      COMMAND_ISSUE_DESCRIPTION_EXTENDED: 'Report a bug or request a feature.',
+      COMMAND_ISSUE_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Report a new bug:
+        ${usage(prefix, 'bug')}
+        Request a new feature:
+        ${usage(prefix, 'request')}
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TITLE: 'A title for the bug to report or feature to request',
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_DESCRIPTION: oneLine`
+        In case of a bug report, an exhaustive description of the steps to reproduce,
+        the response received and the expected result;
+        if a request for a new feature, a description of what is expected and
+        an explanation of the needs this would cover
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_STATE: stripIndent`
+        The new state fot the issue; can only be set by the owners of the bot, one of:
+        \u2022 \`pending\` → Pending Approval
+        \u2022 \`cancel\` → Canceled
+        \u2022 \`dev\` → Ongoing Development
+        \u2022 \`test\` → Testing
+        \u2022 \`deploy\` → Deployed
+        \u2022 \`block\` → Blocked
+      `,
+      COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE: 'Type of issue, either `bug` or `feature`',
+      COMMAND_ISSUE_PROMPT_START_TITLE: 'Please provide a short title for this bug/feature request.',
+      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Please provide a description to explain your enquiry.',
+      COMMAND_ISSUE_PROMPT_RETRY_STATE: 'Invalid state name, please try again.',
+      COMMAND_ISSUE_PROMPT_RETRY_TYPE: 'Invalid type name, please try again.',
+      COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY: 'Only developpers can change the state of an issue.',
+      COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY: 'Only developpers can change the type of an issue.',
+      COMMAND_ISSUE_RESPONSE_TYPE_BUG: 'Bug',
+      COMMAND_ISSUE_RESPONSE_TYPE_FEATURE: 'Feature',
+      COMMAND_ISSUE_RESPONSE_TYPE_UNKNOWN: 'Unknown',
+      COMMAND_ISSUE_RESPONSE_STATE_PENDING: 'Pending Approval',
+      COMMAND_ISSUE_RESPONSE_STATE_CANCEL: 'Canceled',
+      COMMAND_ISSUE_RESPONSE_STATE_DEV: 'Ongoing Development',
+      COMMAND_ISSUE_RESPONSE_STATE_TEST: 'Testing',
+      COMMAND_ISSUE_RESPONSE_STATE_DEPLOY: 'Deployed',
+      COMMAND_ISSUE_RESPONSE_STATE_BLOCK: 'Blocked',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS: 'Note',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Status',
+      COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Issue Type',
+      COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Updated on ${date}*`,
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Your issue ${ref} has been updated.`
     };
   }
 
