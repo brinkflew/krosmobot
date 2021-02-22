@@ -35,6 +35,17 @@ export default class EnglishLocale extends Locale {
       MESSAGE_STATUS_ERROR: 'Ouch!',
       MESSAGE_STATUS_WARNING: 'Hmmm...',
 
+      // Prompting
+      MODIFY_PROMPT_CANCEL_OR_TIMEOUT: (time: string) => oneLine`
+        Type \`cancel\` to cancel this action.
+        The command will be automatically cancelled in ${time}
+        if you didn't provide an answer by that time.
+      `,
+      DEFAULT_PROMPT_TIMEOUT: 'No answer was supplied in time, the command has been cancelled.',
+      DEFAULT_PROMPT_CANCEL: 'The command has been cancelled.',
+      DEFAULT_PROMPT_ENDED: 'Maximum number of retries reached, the command has been cancelled.',
+      DEFAULT_PROMPT_RETRY: 'Invalid value provided, please retry.',
+
       // Arguments
       ARGUMENT_OPTIONAL: 'optional',
       ARGUMENT_NO_DESCRIPTION: 'No description for this argument',

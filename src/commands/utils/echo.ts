@@ -49,7 +49,7 @@ export default class EchoCommand extends Command {
       target = <TextChannel> message.channel;
     }
 
-    if (!content) return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_CONTENT', message));
+    if (!content) return this.error(message, message.t('COMMAND_ECHO_RESPONSE_NO_CONTENT'));
 
     if (!this.hasPermissions(message.guild!.me!, target)) {
       return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT', message, target.name));

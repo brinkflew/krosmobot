@@ -35,6 +35,17 @@ export default class FrenchLocale extends Locale {
       MESSAGE_STATUS_ERROR: 'Aïe !',
       MESSAGE_STATUS_WARNING: 'Hmmm...',
 
+      // Prompting
+      MODIFY_PROMPT_CANCEL_OR_TIMEOUT: (time: string) => oneLine`
+        Tapez \`cancel\` pour annuler cette action.
+        La commande sera annulée automatiquement dans ${time}
+        si vous n'avez pas fourni de réponse dans le temps imparti.
+      `,
+      DEFAULT_PROMPT_TIMEOUT: 'Aucune réponse n\'a été fournie dans les temps, la commande a été annulée.',
+      DEFAULT_PROMPT_CANCEL: 'La commande a été annulée.',
+      DEFAULT_PROMPT_ENDED: 'Nombre maximum d\'essais atteint, la commande a été annulée.',
+      DEFAULT_PROMPT_RETRY: 'Valeur invalide, veuillez réessayer.',
+
       // Arguments
       ARGUMENT_OPTIONAL: 'optionnel',
       ARGUMENT_NO_DESCRIPTION: 'Pas de description disponnible pour cette option',

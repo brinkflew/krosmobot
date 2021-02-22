@@ -40,7 +40,7 @@ export default class PortalCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, { dimension, server }: { dimension: string; server: { id: string; name: string } | null }) {
-    if (!server) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
+    if (!server) return this.error(message, message.t('COMMAND_PORTAL_RESPONSE_NOSERVER'));
     const url = `${URLS.DOFUS_PORTALS}/portails/${server.id}`;
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
     if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message, server));
@@ -55,14 +55,14 @@ export default class PortalCommand extends Command {
       thumbnail: { url: `${URLS.DOFUS_PORTALS}/${(<string>data[`images.dimension`]).replace('../', '')}` },
       fields: [
         {
-          name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),
+          name: message.t('COMMAND_PORTAL_REPONSE_POSITION'),
           value: data.position
             ? data.position
-            : this.t('COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN', message),
+            : message.t('COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN'),
           inline: true
         },
         {
-          name: this.t('COMMAND_PORTAL_REPONSE_USES', message),
+          name: message.t('COMMAND_PORTAL_REPONSE_USES'),
           value: this.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', message, data.uses || 0),
           inline: true
         },

@@ -45,7 +45,7 @@ export default class IssueCommand extends Command {
           'description': 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_STATE',
           'default': 'pending',
           'prompt': {
-            retry: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_RETRY_STATE', message),
+            retry: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_RETRY_STATE'),
             optional: true
           }
         },
@@ -57,7 +57,7 @@ export default class IssueCommand extends Command {
           'description': 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE',
           'default': 'unknown',
           'prompt': {
-            retry: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_RETRY_TYPE', message),
+            retry: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_RETRY_TYPE'),
             optional: true
           }
         },
@@ -67,7 +67,7 @@ export default class IssueCommand extends Command {
           match: 'text',
           description: 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TITLE',
           prompt: {
-            start: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_START_TITLE', message)
+            start: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_START_TITLE')
           }
         },
         {
@@ -76,7 +76,7 @@ export default class IssueCommand extends Command {
           match: 'none',
           description: 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_DESCRIPTION',
           prompt: {
-            start: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_START_DESCRIPTION', message)
+            start: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_START_DESCRIPTION')
           }
         }
       ]
@@ -97,11 +97,11 @@ export default class IssueCommand extends Command {
     const issue = this.client.providers.issues.find(issue => issue.id === sanitized);
 
     if (args.state && !this.client.isOwner(message.author)) {
-      return this.error(message, this.t('COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY', message));
+      return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY'));
     }
 
     if (args.type && !this.client.isOwner(message.author)) {
-      return this.error(message, this.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY', message));
+      return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY'));
     }
 
     if (!issue) return this.createIssue(message, args.title, args.description, args.state, args.type);

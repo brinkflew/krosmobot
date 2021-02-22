@@ -50,14 +50,14 @@ export default class PollCommand extends Command {
    */
   public async exec(message: Message, args: { time: number | null; text: string[] | null; multi: string }) {
     if (typeof args.time !== 'number') args.time = TIME.MS_PER_DAY;
-    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, this.t('COMMAND_POLL_RESPONSE_TIME_TOO_LOW', message));
+    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, message.t('COMMAND_POLL_RESPONSE_TIME_TOO_LOW'));
 
-    if (!args.text?.length) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NO_TITLE', message));
+    if (!args.text?.length) return this.error(message, message.t('COMMAND_POLL_RESPONSE_NO_TITLE'));
     const title = args.text.shift();
 
-    if (args.text.length === 1) return this.error(message, this.t('COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS', message));
-    if (Math.max(...args.text.map(t => t.length)) > 96) return this.error(message, this.t('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG', message));
-    if (!args.text.length) args.text = [this.t('YES', message), this.t('NO', message)];
+    if (args.text.length === 1) return this.error(message, message.t('COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS'));
+    if (Math.max(...args.text.map(t => t.length)) > 96) return this.error(message, message.t('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG'));
+    if (!args.text.length) args.text = [message.t('YES'), message.t('NO')];
 
     const time = Date.now() + args.time;
     const locale = this.getLocale(message);

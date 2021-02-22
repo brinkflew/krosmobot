@@ -70,7 +70,7 @@ export default class AlmanaxCommand extends Command {
 
     if (extended) {
       embed.setDescription(almanax.meryde);
-      embed.addField(this.t('COMMAND_ALMANAX_RESPONSE_DESCRIPTION', message), almanax.description);
+      embed.addField(message.t('COMMAND_ALMANAX_RESPONSE_DESCRIPTION'), almanax.description);
     }
 
     return this.embed(message, embed);

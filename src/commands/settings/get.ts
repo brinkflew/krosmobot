@@ -62,7 +62,7 @@ export default class SetCommand extends Command {
     if (!hasFlags || args.keys.includes('locale')) consume('locale', doc.settings?.locale);
 
     if (args.keys.length) void this.warning(message, this.t('COMMAND_GET_RESPONSE_INVALID_KEYS', message, args.keys));
-    if (!pairs.length) return this.warning(message, this.t('COMMAND_GET_RESPONSE_NO_KEYS', message));
+    if (!pairs.length) return this.warning(message, message.t('COMMAND_GET_RESPONSE_NO_KEYS'));
 
     return this.embed(message, {
       author: {

@@ -45,7 +45,7 @@ export default class ColorCommand extends Command {
     // Check if the color actually changes
     const settings = provider.fetch(id)?.settings;
     if (settings?.color === args.color) {
-      return this.warning(message, this.t('COMMAND_COLOR_RESPONSE_IDENTICAL', message));
+      return this.warning(message, message.t('COMMAND_COLOR_RESPONSE_IDENTICAL'));
     }
 
     // Save the new color

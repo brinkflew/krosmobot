@@ -43,17 +43,17 @@ export default class HelpCommand extends Command {
         description: this.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message),
         fields: [
           {
-            name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE', message),
+            name: message.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE'),
             value: `${code(command.usage(message))}\n${command.formatArgs(message)}`
           },
           {
-            name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES', message),
+            name: message.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_ALIASES'),
             value: aliases.length
               ? `\`${aliases.join('`, `')}\``
-              : this.t('COMMAND_HELP_RESPONSE_FIELD_NO_ALIAS', message)
+              : message.t('COMMAND_HELP_RESPONSE_FIELD_NO_ALIAS')
           },
           {
-            name: this.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE', message),
+            name: message.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE'),
             value: this.t(description.example || 'COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE', message, prefix)
           }
         ],
@@ -64,13 +64,13 @@ export default class HelpCommand extends Command {
     }
 
     const embed = this.craftEmbed(message, {
-      title: this.t('COMMAND_HELP_RESPONSE_TITLE', message),
-      description: this.t('COMMAND_HELP_DESCRIPTION_EXTENDED', message),
+      title: message.t('COMMAND_HELP_RESPONSE_TITLE'),
+      description: message.t('COMMAND_HELP_DESCRIPTION_EXTENDED'),
       fields: this.generateCommandsHelp(message)
     });
 
     if (message.channel.type !== 'dm') {
-      void this.success(message, this.t('COMMAND_HELP_RESPONSE_DM', message));
+      void this.success(message, message.t('COMMAND_HELP_RESPONSE_DM'));
       embed.setFooter(this.t('COMMAND_HELP_RESPONSE_FROMGUILD', message, message.guild?.name));
     }
 

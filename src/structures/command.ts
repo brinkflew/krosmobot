@@ -37,7 +37,7 @@ export class Command extends AkairoCommand {
     this.handler.emit('command-success', this, message);
     const embed = new MessageEmbed({
       color: EMBEDS.COLORS.GREEN,
-      author: { name: this.t('MESSAGE_STATUS_SUCCESS', message) },
+      author: { name: message.t('MESSAGE_STATUS_SUCCESS') },
       description
     });
     return this.sendUtil(message, embed);
@@ -55,7 +55,7 @@ export class Command extends AkairoCommand {
     if (typeof error === 'string') description = `${description} ${code(error)}`;
     const embed = new MessageEmbed({
       color: EMBEDS.COLORS.RED,
-      author: { name: this.t('MESSAGE_STATUS_ERROR', message) },
+      author: { name: message.t('MESSAGE_STATUS_ERROR') },
       description
     });
     return this.sendUtil(message, embed);
@@ -70,7 +70,7 @@ export class Command extends AkairoCommand {
     this.handler.emit('command-warning', this, message);
     const embed = new MessageEmbed({
       color: EMBEDS.COLORS.YELLOW,
-      author: { name: this.t('MESSAGE_STATUS_WARNING', message) },
+      author: { name: message.t('MESSAGE_STATUS_WARNING') },
       description
     });
     return this.sendUtil(message, embed);
@@ -188,7 +188,7 @@ export class Command extends AkairoCommand {
       const flag = Array.isArray(arg.flag) ? arg.flag[0] : arg.flag;
       const usage = flag ? (arg.match === 'option' ? `${flag} <${arg.id!}>` : flag) : arg.id!;
       const description = this.t(typeof arg.description === 'string' ? arg.description : 'ARGUMENT_NO_DESCRIPTION', message);
-      const argument = `\`${usage}\` → ${description}${required ? ` (${this.t('ARGUMENT_OPTIONAL', message)})` : ''}`;
+      const argument = `\`${usage}\` → ${description}${required ? ` (${message.t('ARGUMENT_OPTIONAL')})` : ''}`;
       args.push(argument);
     }
 

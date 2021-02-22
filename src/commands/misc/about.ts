@@ -37,16 +37,16 @@ export default class AboutCommand extends Command {
       description: this.t('COMMAND_ABOUT_RESPONSE_DESCRIPTION', message, name, url),
       fields: [
         {
-          name: this.t('COMMAND_ABOUT_RESPONSE_FEATURES_TITLE', message),
+          name: message.t('COMMAND_ABOUT_RESPONSE_FEATURES_TITLE'),
           value: this.t('COMMAND_ABOUT_RESPONSE_FEATURES_CONTENT', message, invite)
         },
         {
-          name: this.t('COMMAND_ABOUT_RESPONSE_INVITE_TITLE', message),
+          name: message.t('COMMAND_ABOUT_RESPONSE_INVITE_TITLE'),
           value: this.t('COMMAND_ABOUT_RESPONSE_INVITE_CONTENT', message, invite)
         },
         {
-          name: this.t('COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE', message),
-          value: this.t('COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT', message)
+          name: message.t('COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE'),
+          value: message.t('COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT')
         }
       ],
       footer: {

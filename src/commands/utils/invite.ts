@@ -27,12 +27,12 @@ export default class InviteCommand extends Command {
   public async exec(message: Message) {
     const { invite } = this.client;
 
-    if (!invite) return this.error(message, this.t('COMMAND_INVITE_RESPONSE_NOLINK', message));
+    if (!invite) return this.error(message, message.t('COMMAND_INVITE_RESPONSE_NOLINK'));
 
     return this.embed(message, {
       title: this.t('COMMAND_INVITE_RESPONSE_TITLE', message, this.client.user?.username || DEFAULTS.CLIENTNAME),
       url: invite,
-      footer: { text: this.t('COMMAND_INVITE_RESPONSE_FOOTER', message) }
+      footer: { text: message.t('COMMAND_INVITE_RESPONSE_FOOTER') }
     });
   }
 

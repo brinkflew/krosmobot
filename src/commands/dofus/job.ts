@@ -58,7 +58,7 @@ export default class JobCommand extends Command {
         thumbnail: { url: PICTURES.DOFUS_JOBS[`${args.job.toUpperCase()}`] },
         fields: [
           {
-            name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
+            name: message.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE'),
             value: code(this.format(translated, jobs[args.job], translated.length))
           }
         ]
@@ -146,7 +146,7 @@ export default class JobCommand extends Command {
         },
         fields: [
           {
-            name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
+            name: message.t('COMMAND_JOB_RESPONSE_TITLE_ALL'),
             value: code(
               jobs
                 .map(pair => this.format(pair[0], pair[1] || 1, length))
@@ -174,7 +174,7 @@ export default class JobCommand extends Command {
         thumbnail: { url: PICTURES.DOFUS_JOBS[`${args.job.toUpperCase()}`] },
         fields: [
           {
-            name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
+            name: message.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE'),
             value: code(this.format(translated, level, translated.length))
           }
         ]
@@ -222,7 +222,7 @@ export default class JobCommand extends Command {
 
     if (args.level) {
       if (!args.job) {
-        void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED', message));
+        void this.warning(message, message.t('COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED'));
         args.level = null;
       } else if (args.level < 1 || args.level > 200) {
         args.level = Math.min(200, Math.max(1, args.level));

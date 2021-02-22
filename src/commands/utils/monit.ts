@@ -52,21 +52,21 @@ export default class MonitCommand extends Command {
       },
       fields: [
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_ARCH_TITLE', message),
+          name: message.t('COMMAND_MONIT_RESPONSE_ARCH_TITLE'),
           value: this.t('COMMAND_MONIT_RESPONSE_ARCH_VALUE', message, nodeVersion, platform, arch)
         },
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_PROCESS_TITLE', message),
+          name: message.t('COMMAND_MONIT_RESPONSE_PROCESS_TITLE'),
           value: this.t('COMMAND_MONIT_RESPONSE_PROCESS_VALUE', message, npm_package_name, pid),
           inline: true
         },
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_RESOURCES_TITLE', message),
+          name: message.t('COMMAND_MONIT_RESPONSE_RESOURCES_TITLE'),
           value: this.t('COMMAND_MONIT_RESPONSE_RESOURCES_VALUE', message, load.toFixed(2), (rss / 1e6).toFixed(2)),
           inline: true
         },
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE', message),
+          name: message.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE'),
           value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, latency, shards),
           inline: true
         }
