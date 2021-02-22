@@ -265,21 +265,21 @@ export const ZAAPS = [
     x: -57,
     y: 4,
     world: 'main',
-    type: 'scraplanes'
+    type: 'scarplanes'
   },
   {
     zone: 'grassy_plains',
     x: -49,
     y: 14,
     world: 'main',
-    type: 'scraplanes'
+    type: 'scarplanes'
   },
   {
     zone: 'grassy_plains',
     x: -56,
     y: 22,
     world: 'main',
-    type: 'scraplanes'
+    type: 'scarplanes'
   },
   {
     zone: 'coral_beach',
