@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Messages extension: add translation on message object
+
+### Changed
+
+- Tests: use message translations instead of commands translations
+- Commands: use message translations instead of commands translations
+
+## [0.2.0] - 2021-02-21
+### Added
+
 - Providers `mongoose-cached`: find the first document that satisfies requirements
 - Providers: new provider for tracking issues
 - Commands `issue`: report bugs, ask for features and track tasks
