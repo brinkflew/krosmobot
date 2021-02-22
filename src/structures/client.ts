@@ -14,11 +14,13 @@ import {
 import { Model } from 'mongoose';
 import Twitter from 'twitter-lite-v2';
 import { resolve, join } from 'path';
+import '@/extensions';
 import { MongooseCachedProvider, MongooseProvider } from '@/providers';
 import { LocaleHandler, TaskHandler, MetricHandler } from '@/handlers';
 import { Logger } from '@/structures';
-import { DEFAULTS } from '@/constants';
+import { DEFAULTS, TIME } from '@/constants';
 import { argumentTypes } from '@/arguments';
+import { formatRelative } from '@/utils';
 
 // Import models for the provider
 import {
@@ -42,6 +44,9 @@ import {
   ReminderDocument,
   UserDocument
 } from 'types';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const PROMPT_TIME_LIMIT = TIME.MS_PER_MINUTE * 5;
 
 /**
  * Client connecting to the Discord gateway.
@@ -107,7 +112,19 @@ export class Client extends AkairoClient {
       handleEdits: true,
       storeMessages: true,
       defaultCooldown: 2000,
-      automateCategories: true
+      automateCategories: true,
+      argumentDefaults: {
+        prompt: {
+          time: PROMPT_TIME_LIMIT,
+          retries: 1,
+          modifyStart: (message: Message, text: string) =>
+            `${text}\n${message.t('MODIFY_PROMPT_CANCEL_OR_TIMEOUT', formatRelative(PROMPT_TIME_LIMIT, message.locale))}`,
+          timeout: (message: Message) => message.t('DEFAULT_PROMPT_TIMEOUT'),
+          cancel: (message: Message) => message.t('DEFAULT_PROMPT_CANCEL'),
+          ended: (message: Message) => message.t('DEFAULT_PROMPT_ENDED'),
+          retry: (message: Message) => message.t('DEFAULT_PROMPT_RETRY')
+        }
+      }
     });
 
     for (const [key, type] of Object.entries(argumentTypes)) {

@@ -32,25 +32,25 @@ export default class AboutCommand extends Command {
     const { invite } = this.client;
 
     return this.embed(message, {
-      title: this.t('COMMAND_ABOUT_RESPONSE_TITLE', message, name),
+      title: message.t('COMMAND_ABOUT_RESPONSE_TITLE', name),
       thumbnail: { url: this.client.user?.avatarURL() || this.client.user?.defaultAvatarURL },
-      description: this.t('COMMAND_ABOUT_RESPONSE_DESCRIPTION', message, name, url),
+      description: message.t('COMMAND_ABOUT_RESPONSE_DESCRIPTION', name, url),
       fields: [
         {
-          name: this.t('COMMAND_ABOUT_RESPONSE_FEATURES_TITLE', message),
-          value: this.t('COMMAND_ABOUT_RESPONSE_FEATURES_CONTENT', message, invite)
+          name: message.t('COMMAND_ABOUT_RESPONSE_FEATURES_TITLE'),
+          value: message.t('COMMAND_ABOUT_RESPONSE_FEATURES_CONTENT', invite)
         },
         {
-          name: this.t('COMMAND_ABOUT_RESPONSE_INVITE_TITLE', message),
-          value: this.t('COMMAND_ABOUT_RESPONSE_INVITE_CONTENT', message, invite)
+          name: message.t('COMMAND_ABOUT_RESPONSE_INVITE_TITLE'),
+          value: message.t('COMMAND_ABOUT_RESPONSE_INVITE_CONTENT', invite)
         },
         {
-          name: this.t('COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE', message),
-          value: this.t('COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT', message)
+          name: message.t('COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE'),
+          value: message.t('COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT')
         }
       ],
       footer: {
-        text: this.t('COMMAND_ABOUT_RESPONSE_UPTIME', message, version, uptime, author)
+        text: message.t('COMMAND_ABOUT_RESPONSE_UPTIME', version, uptime, author)
       }
     });
   }

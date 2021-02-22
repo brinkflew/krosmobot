@@ -36,8 +36,8 @@ export default class SetCommand extends Command {
     args.keys = args.keys || [];
     const hasFlags = Boolean(args.keys.length);
 
-    if (!hasFlags) return this.error(message, this.t('COMMAND_SET_RESPONSE_NO_KEYS', message));
-    if (args.keys.length % 2 !== 0) return this.error(message, this.t('COMMAND_SET_RESPONSE_INVALID_PAIRS', message));
+    if (!hasFlags) return this.error(message, message.t('COMMAND_SET_RESPONSE_NO_KEYS'));
+    if (args.keys.length % 2 !== 0) return this.error(message, message.t('COMMAND_SET_RESPONSE_INVALID_PAIRS'));
 
     const { resolver } = this.client.commands;
     const doc = this.client.providers.guilds.fetch(message.guild!.id) || {} as GuildDocument;
@@ -59,7 +59,7 @@ export default class SetCommand extends Command {
         }
 
         doc.channels.almanax = channel.id;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, `#${channel.name as string}`));
+        pairs.push(message.t('COMMAND_SET_RESPONSE_PAIR', key, `#${channel.name as string}`));
         continue;
       }
 
@@ -72,7 +72,7 @@ export default class SetCommand extends Command {
         }
 
         doc.channels.news = channel.id;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, `#${channel.name as string}`));
+        pairs.push(message.t('COMMAND_SET_RESPONSE_PAIR', key, `#${channel.name as string}`));
         continue;
       }
 
@@ -85,18 +85,18 @@ export default class SetCommand extends Command {
         }
 
         doc.dofus.server = server;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, server.name));
+        pairs.push(message.t('COMMAND_SET_RESPONSE_PAIR', key, server.name));
         continue;
       }
 
       invalids.push(key);
     }
 
-    if (invalids.length) void this.warning(message, this.t('COMMAND_SET_RESPONSE_INVALID_VALUES', message, invalids));
-    if (!pairs.length) return this.error(message, this.t('COMMAND_SET_RESPONSE_NO_KEYS', message));
+    if (invalids.length) void this.warning(message, message.t('COMMAND_SET_RESPONSE_INVALID_VALUES', invalids));
+    if (!pairs.length) return this.error(message, message.t('COMMAND_SET_RESPONSE_NO_KEYS'));
 
     await this.getProvider(message).update(message.guild!.id, doc);
-    return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, pairs));
+    return this.success(message, message.t('COMMAND_SET_RESPONSE_MODIFIED', pairs));
   }
 
 }

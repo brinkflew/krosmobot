@@ -46,33 +46,33 @@ export default class MonitCommand extends Command {
 
     const embed = this.craftEmbed(message, {
       author: {
-        name: this.t('COMMAND_MONIT_RESPONSE_TITLE', message, (<string> this.client.user?.username), (<string> npm_package_version)),
+        name: message.t('COMMAND_MONIT_RESPONSE_TITLE', (<string> this.client.user?.username), (<string> npm_package_version)),
         iconURL: this.client.user?.avatarURL() || this.client.user?.defaultAvatarURL,
         url: npm_package_repository_url
       },
       fields: [
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_ARCH_TITLE', message),
-          value: this.t('COMMAND_MONIT_RESPONSE_ARCH_VALUE', message, nodeVersion, platform, arch)
+          name: message.t('COMMAND_MONIT_RESPONSE_ARCH_TITLE'),
+          value: message.t('COMMAND_MONIT_RESPONSE_ARCH_VALUE', nodeVersion, platform, arch)
         },
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_PROCESS_TITLE', message),
-          value: this.t('COMMAND_MONIT_RESPONSE_PROCESS_VALUE', message, npm_package_name, pid),
+          name: message.t('COMMAND_MONIT_RESPONSE_PROCESS_TITLE'),
+          value: message.t('COMMAND_MONIT_RESPONSE_PROCESS_VALUE', npm_package_name, pid),
           inline: true
         },
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_RESOURCES_TITLE', message),
-          value: this.t('COMMAND_MONIT_RESPONSE_RESOURCES_VALUE', message, load.toFixed(2), (rss / 1e6).toFixed(2)),
+          name: message.t('COMMAND_MONIT_RESPONSE_RESOURCES_TITLE'),
+          value: message.t('COMMAND_MONIT_RESPONSE_RESOURCES_VALUE', load.toFixed(2), (rss / 1e6).toFixed(2)),
           inline: true
         },
         {
-          name: this.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE', message),
-          value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, latency, shards),
+          name: message.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE'),
+          value: message.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', latency, shards),
           inline: true
         }
       ],
       footer: {
-        text: this.t('COMMAND_MONIT_RESPONSE_UPTIME', message, uptime)
+        text: message.t('COMMAND_MONIT_RESPONSE_UPTIME', uptime)
       }
     });
 

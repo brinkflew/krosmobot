@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.3] - 2021-02-22
+
+### Fixed
+
+- Commands `zaap`, `portal`: typo in transport types
+
+## [0.2.2] - 2021-02-22
+
+### Added
+
+- Command `issues`: list current issues
+
+### Changed
+
+- Command `issue`: move icons to constants
+
+## [0.2.1] - 2021-02-22
+
+### Added
+
+- Messages extension: add translation on message object
+
+### Changed
+
+- Tests: use message translations instead of commands translations
+- Commands: use message translations instead of commands translations
+
 ## [0.2.0] - 2021-02-21
 
 ### Added
@@ -140,8 +167,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Task `twitter`: fetch news from twitter in (almost) real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.0...HEAD
-[0.1.7]: https://github.com/brinkflew/krosmobot/compare/v0.1.7...v0.2.0
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.3...HEAD
+[0.2.3]: https://github.com/brinkflew/krosmobot/compare/v0.2.2...v0.2.3
+[0.2.2]: https://github.com/brinkflew/krosmobot/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/brinkflew/krosmobot/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/brinkflew/krosmobot/compare/v0.1.7...v0.2.0
 [0.1.7]: https://github.com/brinkflew/krosmobot/compare/v0.1.6...v0.1.7
 [0.1.6]: https://github.com/brinkflew/krosmobot/compare/v0.1.5...v0.1.6
 [0.1.5]: https://github.com/brinkflew/krosmobot/compare/v0.1.4...v0.1.5

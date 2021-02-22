@@ -41,41 +41,41 @@ export default class PortalCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, { dimension, server }: { dimension: string; server: { id: string; name: string } | null }) {
-    if (!server) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NOSERVER', message));
+    if (!server) return this.error(message, message.t('COMMAND_PORTAL_RESPONSE_NOSERVER'));
     const url = `${URLS.DOFUS_PORTALS}/portails/${server.id}`;
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
-    if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message, server));
+    if (!scraped.data?.length) return this.error(message, message.t('COMMAND_PORTAL_RESPONSE_NODATA', server));
 
     const generateEmbed = (data: any): MessageEmbed => {
       const embed = this.craftEmbed(message, {
         author: {
           url,
-          name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
+          name: message.t('COMMAND_PORTAL_RESPONSE_TO', data.dimension),
           iconURL: `${URLS.DOFUS_PORTALS}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
         },
         url,
         thumbnail: { url: `${URLS.DOFUS_PORTALS}/${(<string>data[`images.dimension`]).replace('../', '')}` },
         fields: [
           {
-            name: this.t('COMMAND_PORTAL_REPONSE_POSITION', message),
+            name: message.t('COMMAND_PORTAL_REPONSE_POSITION'),
             value: data.position
               ? data.position
-              : this.t('COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN', message),
+              : message.t('COMMAND_PORTAL_REPONSE_POSITION_UNKNOWN'),
             inline: true
           },
           {
-            name: this.t('COMMAND_PORTAL_REPONSE_USES', message),
-            value: this.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', message, data.uses || 0),
+            name: message.t('COMMAND_PORTAL_REPONSE_USES'),
+            value: message.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', data.uses || 0),
             inline: true
           },
           {
-            name: this.t('COMMAND_PORTAL_RESPONSE_CYCLE', message, data['cycle.title']),
+            name: message.t('COMMAND_PORTAL_RESPONSE_CYCLE', data['cycle.title']),
             value: data['cycle.description']
           }
         ],
         footer: {
           text: data.update
-            ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, server.name)
+            ? message.t('COMMAND_PORTAL_RESPONSE_UPDATED', data.update, server.name)
             : undefined
         }
       });
@@ -100,7 +100,7 @@ export default class PortalCommand extends Command {
 
       const transports = command.distance(message, coords);
       data.transports = {
-        name: this.t('COMMAND_PORTAL_RESPONSE_TRANSPORTS', message),
+        name: message.t('COMMAND_PORTAL_RESPONSE_TRANSPORTS'),
         value: transports.join('\n')
       };
 

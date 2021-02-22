@@ -48,7 +48,7 @@ export default class JobCommand extends Command {
       const jobs: { [key: string]: number } = {};
       jobs[args.job] = args.level;
       void provider.update(this.memberID(message.guild!, message.member!), { jobs });
-      const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
+      const translated = message.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`);
 
       return this.embed(message, {
         author: {
@@ -58,7 +58,7 @@ export default class JobCommand extends Command {
         thumbnail: { url: PICTURES.DOFUS_JOBS[`${args.job.toUpperCase()}`] },
         fields: [
           {
-            name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
+            name: message.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE'),
             value: code(this.format(translated, jobs[args.job], translated.length))
           }
         ]
@@ -68,7 +68,7 @@ export default class JobCommand extends Command {
     // `!job job` → Display all users with the selected job
     if (args.job && !args.level && !args.member) {
       const { job } = args;
-      const translatedJob = this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message);
+      const translatedJob = message.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`);
       const guildID = `${message.guild!.id}:`;
 
       const members = provider
@@ -95,7 +95,7 @@ export default class JobCommand extends Command {
         })
       );
 
-      if (!pairs.size) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
+      if (!pairs.size) return this.warning(message, message.t('COMMAND_JOB_RESPONSE_NOBODY', translatedJob));
 
       return this.embed(message, {
         author: {
@@ -121,7 +121,7 @@ export default class JobCommand extends Command {
 
     // `!job member` → Display all jobs for the selected user
     if (!args.job && !args.level && args.member) {
-      const translated = this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, args.member.displayName);
+      const translated = message.t('COMMAND_JOB_RESPONSE_NOJOBS', args.member.displayName);
       const cached = provider.get(this.memberID(message.guild!, args.member));
 
       if (!cached) return this.warning(message, translated);
@@ -129,7 +129,7 @@ export default class JobCommand extends Command {
       const jobs = Object.entries(cached.jobs)
         .filter(job => !job[0].startsWith('$') && (job[1] || 0) > 0)
         .map(job => {
-          job[0] = this.t(`COMMAND_JOB_RESPONSE_JOB_${job[0].toUpperCase()}`, message);
+          job[0] = message.t(`COMMAND_JOB_RESPONSE_JOB_${job[0].toUpperCase()}`);
           return job;
         })
         .sort((a, b) => a[0].localeCompare(b[0]));
@@ -146,7 +146,7 @@ export default class JobCommand extends Command {
         },
         fields: [
           {
-            name: this.t('COMMAND_JOB_RESPONSE_TITLE_ALL', message),
+            name: message.t('COMMAND_JOB_RESPONSE_TITLE_ALL'),
             value: code(
               jobs
                 .map(pair => this.format(pair[0], pair[1] || 1, length))
@@ -159,10 +159,10 @@ export default class JobCommand extends Command {
 
     // `!job job member` → Display the selected job for the selected member
     if (args.job && !args.level && args.member) {
-      const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
+      const translated = message.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`);
       const cached = provider.get(this.memberID(message.guild!, args.member));
 
-      if (!cached) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOB', message, args.member.displayName, translated));
+      if (!cached) return this.warning(message, message.t('COMMAND_JOB_RESPONSE_NOJOB', args.member.displayName, translated));
 
       const level = cached.jobs[args.job] || 1;
 
@@ -174,14 +174,14 @@ export default class JobCommand extends Command {
         thumbnail: { url: PICTURES.DOFUS_JOBS[`${args.job.toUpperCase()}`] },
         fields: [
           {
-            name: this.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE', message),
+            name: message.t('COMMAND_JOB_RESPONSE_TITLE_SINGLE'),
             value: code(this.format(translated, level, translated.length))
           }
         ]
       });
     }
 
-    return this.error(message, this.t('COMMAND_JOBS_RESPONSE_INVALID_COMBINATION', message, args));
+    return this.error(message, message.t('COMMAND_JOBS_RESPONSE_INVALID_COMBINATION', args));
   }
 
   /**
@@ -222,14 +222,14 @@ export default class JobCommand extends Command {
 
     if (args.level) {
       if (!args.job) {
-        void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED', message));
+        void this.warning(message, message.t('COMMAND_JOBS_ARGUMENTS_LEVEL_IGNORED'));
         args.level = null;
       } else if (args.level < 1 || args.level > 200) {
         args.level = Math.min(200, Math.max(1, args.level));
       }
     }
 
-    if (unknown?.length) void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_UNKNOWN', message, unknown));
+    if (unknown?.length) void this.warning(message, message.t('COMMAND_JOBS_ARGUMENTS_UNKNOWN', unknown));
 
     return args;
   }
