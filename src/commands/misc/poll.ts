@@ -72,7 +72,7 @@ export default class PollCommand extends Command {
       title: message.t('COMMAND_POLL_RESPONSE_TITLE', title),
       description: propositions.join('\n'),
       footer: {
-        text: this.t('COMMAND_POLL_RESPONSE_FOOTER', message, reactions, formatDate(time, locale.id, true, 'both').slice(0, -3))
+        text: message.t('COMMAND_POLL_RESPONSE_FOOTER', reactions, formatDate(time, locale.id, true, 'both').slice(0, -3))
       }
     });
 

@@ -40,7 +40,7 @@ export default class HelpCommand extends Command {
       const aliases = command.aliases.filter(alias => alias !== command.id);
       return this.embed(message, {
         title: command.id.toUpperCase(),
-        description: this.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message),
+        description: message.t(description.extended || description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION'),
         fields: [
           {
             name: message.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_USAGE'),
@@ -54,11 +54,11 @@ export default class HelpCommand extends Command {
           },
           {
             name: message.t('COMMAND_HELP_RESPONSE_FIELD_TITLE_EXAMPLE'),
-            value: this.t(description.example || 'COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE', message, prefix)
+            value: message.t(description.example || 'COMMAND_HELP_RESPONSE_FIELD_NO_EXAMPLE', prefix)
           }
         ],
         footer: {
-          text: this.t(`COMMAND_HELP_CATEGORY_${command.category.id.toUpperCase()}`, message)
+          text: message.t(`COMMAND_HELP_CATEGORY_${command.category.id.toUpperCase()}`)
         }
       });
     }
@@ -71,7 +71,7 @@ export default class HelpCommand extends Command {
 
     if (message.channel.type !== 'dm') {
       void this.success(message, message.t('COMMAND_HELP_RESPONSE_DM'));
-      embed.setFooter(this.t('COMMAND_HELP_RESPONSE_FROMGUILD', message, message.guild?.name));
+      embed.setFooter(message.t('COMMAND_HELP_RESPONSE_FROMGUILD', message.guild?.name));
     }
 
     return message.author.send(embed);
@@ -87,7 +87,7 @@ export default class HelpCommand extends Command {
 
     for (const [category, commands] of categories) {
       fields.push({
-        name: this.t(`COMMAND_HELP_CATEGORY_${category.toUpperCase()}`, message),
+        name: message.t(`COMMAND_HELP_CATEGORY_${category.toUpperCase()}`),
         value: [...commands].map(command => this.formatCommand(message, command)).join('\n')
       });
     }
@@ -102,7 +102,7 @@ export default class HelpCommand extends Command {
    */
   private formatCommand(message: Message, command: Command): string {
     const prefix = this.getPrefix(message);
-    const description = this.t(command.description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION', message);
+    const description = message.t(command.description.short || 'COMMAND_HELP_RESPONSE_FIELD_NO_DESCRIPTION');
     return `\`${prefix}${command.id}\` → ${description}`;
   }
 

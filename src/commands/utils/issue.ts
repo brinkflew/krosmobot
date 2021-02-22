@@ -148,8 +148,8 @@ export default class IssueCommand extends Command {
     const id = `${this.issueID}`;
     const guild = this.client.util.resolveGuild(DEFAULTS.SUPPORT_GUILD, this.client.guilds.cache);
     const tracker = this.client.util.resolveChannel(DEFAULTS.ISSUES_CHANNEL, guild.channels.cache);
-    const tType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase(), message);
-    const tState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase(), message);
+    const tType = message.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase());
+    const tState = message.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase());
     const embed = this.craftEmbed(message, {
       color: STATE_COLORS[state],
       author: {
@@ -201,21 +201,21 @@ export default class IssueCommand extends Command {
 
     embed.setTimestamp(updated);
 
-    const tState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase(), resolved[0]);
-    const tType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase(), resolved[0]);
-    const tComments = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS', resolved[0]);
+    const tState = resolved[0].t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase());
+    const tType = resolved[0].t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase());
+    const tComments = resolved[0].t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS');
     const fields = description.toLowerCase() === 'skip' ? [] : [{ name: tComments, value: description }];
 
     if (issue.status !== state) {
-      const tStatusTitle = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS', resolved[0]);
-      const tOldState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${issue.status}`.toUpperCase(), resolved[0]);
+      const tStatusTitle = resolved[0].t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS');
+      const tOldState = resolved[0].t(`COMMAND_ISSUE_RESPONSE_STATE_${issue.status}`.toUpperCase());
       fields.unshift({ name: tStatusTitle, value: `${tOldState} → ${tState}` });
       embed.setColor(STATE_COLORS[state]);
     }
 
     if (issue.type !== type) {
-      const tTypeTitle = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE', resolved[0]);
-      const tOldType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${issue.type}`.toUpperCase(), resolved[0]);
+      const tTypeTitle = resolved[0].t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE');
+      const tOldType = resolved[0].t(`COMMAND_ISSUE_RESPONSE_TYPE_${issue.type}`.toUpperCase());
       fields.unshift({ name: tTypeTitle, value: `${tOldType} → ${tType}` });
     }
 
@@ -224,7 +224,7 @@ export default class IssueCommand extends Command {
       .setFooter(`${TYPE_ICONS[type]} ${tType} \u2022 ${tState}`)
       .addField(
         EMBEDS.SEPARATORS.VERTICAL.name,
-        this.t('COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT', message, date.slice(0, date.length - 3))
+        message.t('COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT', date.slice(0, date.length - 3))
       )
       .addFields(fields);
 
@@ -234,7 +234,7 @@ export default class IssueCommand extends Command {
         name: message.author.username,
         iconURL: message.author.displayAvatarURL()
       },
-      description: this.t('COMMAND_ISSUE_RESPONSE_UPDATED', message, `[[\#${padNumber(issue.id, 6)}] ${issue.title}](${resolved[0].url})`),
+      description: message.t('COMMAND_ISSUE_RESPONSE_UPDATED', `[[\#${padNumber(issue.id, 6)}] ${issue.title}](${resolved[0].url})`),
       fields,
       timestamp: updated
     });

@@ -55,7 +55,7 @@ export default class RemindCommand extends Command {
     };
 
     void this.client.providers.reminders.update(message.id, doc);
-    return this.success(message, this.t('COMMAND_REMIND_RESPONSE_SUCCESS', message, formatRelative(args.time, locale)));
+    return this.success(message, message.t('COMMAND_REMIND_RESPONSE_SUCCESS', formatRelative(args.time, locale)));
   }
 
 }

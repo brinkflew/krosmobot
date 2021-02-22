@@ -24,7 +24,7 @@ export const ping = (client: Client) => describe('Ping', () => {
     const sent = await command.exec(message, args);
     expect(spies.embed).toBeCalledTimes(2);
     expect(sent.embeds).toHaveLength(1);
-    expect(sent.embeds[0].title).toEqual('Pong!');
+    expect(sent.embeds[0].title).toEqual('COMMAND_PING_RESPONSE_TITLE');
   });
 
 });

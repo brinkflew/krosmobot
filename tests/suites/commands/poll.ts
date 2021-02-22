@@ -27,7 +27,7 @@ export const poll = (client: Client) => describe('Poll', () => {
 
     spies.embed = jest.spyOn(command, 'embed');
     spies.error = jest.spyOn(command, 'error');
-    spies.t = jest.spyOn(command, 't');
+    spies.t = jest.spyOn(message, 't');
     spies.create = jest.spyOn(provider, 'create');
   };
 
@@ -35,28 +35,28 @@ export const poll = (client: Client) => describe('Poll', () => {
     await setup('!poll');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
-    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_NO_TITLE', message);
+    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_NO_TITLE');
   });
 
   it('should error if timing is below 1 minute', async () => {
     await setup('!poll --close 5s');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
-    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_TIME_TOO_LOW', message);
+    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_TIME_TOO_LOW');
   });
 
   it('should error if only one proposition was provided', async () => {
     await setup('!poll question\nproposition 1');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
-    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS', message);
+    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_NOT_ENOUGH_PROPOSITIONS');
   });
 
   it('should error if one proposition is longer than 96 characters', async () => {
     await setup('!poll question\nproposition 1\nabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
-    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG', message);
+    expect(spies.t).toBeCalledWith('COMMAND_POLL_RESPONSE_PROPOSITION_TOO_LONG');
   });
 
   it('should save the poll to the database', async () => {
@@ -78,8 +78,8 @@ export const poll = (client: Client) => describe('Poll', () => {
     expect(spies.create).toBeCalledTimes(1);
     expect(sent.react).toBeCalledTimes(3);
     expect(sent.embeds).toHaveLength(1);
-    expect(sent.embeds[0].description).toContain('Yes');
-    expect(sent.embeds[0].description).toContain('No');
+    expect(sent.embeds[0].description).toContain('YES');
+    expect(sent.embeds[0].description).toContain('NO');
   });
 
 });

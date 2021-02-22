@@ -63,11 +63,11 @@ export default class PortalCommand extends Command {
         },
         {
           name: message.t('COMMAND_PORTAL_REPONSE_USES'),
-          value: this.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', message, data.uses || 0),
+          value: message.t('COMMAND_PORTAL_RESPONSE_USES_REMAINING', data.uses || 0),
           inline: true
         },
         {
-          name: this.t('COMMAND_PORTAL_RESPONSE_CYCLE', message, data['cycle.title']),
+          name: message.t('COMMAND_PORTAL_RESPONSE_CYCLE', data['cycle.title']),
           value: data['cycle.description']
         }
       ],

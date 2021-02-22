@@ -46,7 +46,7 @@ export default class MonitCommand extends Command {
 
     const embed = this.craftEmbed(message, {
       author: {
-        name: this.t('COMMAND_MONIT_RESPONSE_TITLE', message, (<string> this.client.user?.username), (<string> npm_package_version)),
+        name: message.t('COMMAND_MONIT_RESPONSE_TITLE', (<string> this.client.user?.username), (<string> npm_package_version)),
         iconURL: this.client.user?.avatarURL() || this.client.user?.defaultAvatarURL,
         url: npm_package_repository_url
       },
@@ -57,12 +57,12 @@ export default class MonitCommand extends Command {
         },
         {
           name: message.t('COMMAND_MONIT_RESPONSE_PROCESS_TITLE'),
-          value: this.t('COMMAND_MONIT_RESPONSE_PROCESS_VALUE', message, npm_package_name, pid),
+          value: message.t('COMMAND_MONIT_RESPONSE_PROCESS_VALUE', npm_package_name, pid),
           inline: true
         },
         {
           name: message.t('COMMAND_MONIT_RESPONSE_RESOURCES_TITLE'),
-          value: this.t('COMMAND_MONIT_RESPONSE_RESOURCES_VALUE', message, load.toFixed(2), (rss / 1e6).toFixed(2)),
+          value: message.t('COMMAND_MONIT_RESPONSE_RESOURCES_VALUE', load.toFixed(2), (rss / 1e6).toFixed(2)),
           inline: true
         },
         {

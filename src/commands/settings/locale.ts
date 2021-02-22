@@ -37,7 +37,7 @@ export default class LocaleCommand extends Command {
     // Reset the default locale
     if (!args.locale) {
       await provider.update(id, { settings: { locale: DEFAULTS.LOCALE } });
-      const language = this.t(`LANG_${DEFAULTS.LOCALE.toUpperCase()}`, message);
+      const language = message.t(`LANG_${DEFAULTS.LOCALE.toUpperCase()}`);
       return this.success(message, message.t('COMMAND_LOCALE_RESPONSE_RESET', language));
     }
 
@@ -47,7 +47,7 @@ export default class LocaleCommand extends Command {
     }
 
     const languageKey = `LANG_${args.locale.toUpperCase()}`;
-    let languageName = this.t(languageKey, message);
+    let languageName = message.t(languageKey);
 
     // Check if the locale actually changes
     const language = <string> provider.fetch(id)?.settings?.locale;

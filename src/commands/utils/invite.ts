@@ -30,7 +30,7 @@ export default class InviteCommand extends Command {
     if (!invite) return this.error(message, message.t('COMMAND_INVITE_RESPONSE_NOLINK'));
 
     return this.embed(message, {
-      title: this.t('COMMAND_INVITE_RESPONSE_TITLE', message, this.client.user?.username || DEFAULTS.CLIENTNAME),
+      title: message.t('COMMAND_INVITE_RESPONSE_TITLE', this.client.user?.username || DEFAULTS.CLIENTNAME),
       url: invite,
       footer: { text: message.t('COMMAND_INVITE_RESPONSE_FOOTER') }
     });

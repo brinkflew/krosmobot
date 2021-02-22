@@ -48,7 +48,7 @@ export default class JobCommand extends Command {
       const jobs: { [key: string]: number } = {};
       jobs[args.job] = args.level;
       void provider.update(this.memberID(message.guild!, message.member!), { jobs });
-      const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
+      const translated = message.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`);
 
       return this.embed(message, {
         author: {
@@ -68,7 +68,7 @@ export default class JobCommand extends Command {
     // `!job job` → Display all users with the selected job
     if (args.job && !args.level && !args.member) {
       const { job } = args;
-      const translatedJob = this.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`, message);
+      const translatedJob = message.t(`COMMAND_JOB_RESPONSE_JOB_${job.toUpperCase()}`);
       const guildID = `${message.guild!.id}:`;
 
       const members = provider
@@ -129,7 +129,7 @@ export default class JobCommand extends Command {
       const jobs = Object.entries(cached.jobs)
         .filter(job => !job[0].startsWith('$') && (job[1] || 0) > 0)
         .map(job => {
-          job[0] = this.t(`COMMAND_JOB_RESPONSE_JOB_${job[0].toUpperCase()}`, message);
+          job[0] = message.t(`COMMAND_JOB_RESPONSE_JOB_${job[0].toUpperCase()}`);
           return job;
         })
         .sort((a, b) => a[0].localeCompare(b[0]));
@@ -159,7 +159,7 @@ export default class JobCommand extends Command {
 
     // `!job job member` → Display the selected job for the selected member
     if (args.job && !args.level && args.member) {
-      const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
+      const translated = message.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`);
       const cached = provider.get(this.memberID(message.guild!, args.member));
 
       if (!cached) return this.warning(message, message.t('COMMAND_JOB_RESPONSE_NOJOB', args.member.displayName, translated));

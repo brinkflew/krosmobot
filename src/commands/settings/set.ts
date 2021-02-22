@@ -59,7 +59,7 @@ export default class SetCommand extends Command {
         }
 
         doc.channels.almanax = channel.id;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, `#${channel.name as string}`));
+        pairs.push(message.t('COMMAND_SET_RESPONSE_PAIR', key, `#${channel.name as string}`));
         continue;
       }
 
@@ -72,7 +72,7 @@ export default class SetCommand extends Command {
         }
 
         doc.channels.news = channel.id;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, `#${channel.name as string}`));
+        pairs.push(message.t('COMMAND_SET_RESPONSE_PAIR', key, `#${channel.name as string}`));
         continue;
       }
 

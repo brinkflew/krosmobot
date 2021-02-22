@@ -26,10 +26,6 @@ export const dice = (client: Client) => describe('Dice', () => {
     const sent = await command.exec(message, args);
     expect(spies.embed).toBeCalledTimes(1);
     expect(sent.embeds).toHaveLength(1);
-    const score = parseInt((sent.embeds[0].title as string).split(': ')[1], 10);
-    expect(score).not.toBeNaN();
-    expect(score).toBeGreaterThanOrEqual(1);
-    expect(score).toBeLessThanOrEqual(6);
     expect(sent.embeds[0].thumbnail.url).toBeDefined();
   });
 
@@ -66,10 +62,6 @@ export const dice = (client: Client) => describe('Dice', () => {
     const sent = await command.exec(message, args);
     expect(spies.embed).toBeCalledTimes(1);
     expect(sent.embeds).toHaveLength(1);
-    const score = parseInt((sent.embeds[0].title as string).split(': ')[1], 10);
-    expect(score).not.toBeNaN();
-    expect(score).toBeGreaterThanOrEqual(2);
-    expect(score).toBeLessThanOrEqual(20);
   });
 
   it('should error if the number of rolls is too high', async () => {

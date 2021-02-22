@@ -25,6 +25,8 @@ export const createGuildMessage = (client: Client, data: any = {}) => {
     member
   }, channel);
 
+  Object.assign(message, { t: jest.fn((text: string) => text) });
+
   client.user!.username = 'ClientUser';
   const clientMember = new MockGuildMember(client, { id: client.user!.id, displayName: 'Client User', user: client.user }, guild);
   guild.members.cache.set(clientMember.id, clientMember);

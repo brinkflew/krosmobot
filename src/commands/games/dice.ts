@@ -57,12 +57,12 @@ export default class DiceCommand extends Command {
     let rolls = parseInt(args.rolls[1], 10);
     if (isNaN(rolls)) rolls = 1;
     if (rolls < 1) return this.error(message, message.t('COMMAND_DICE_ERROR_ROLLS_ZERO'));
-    if (rolls >= 10e3) return this.error(message, this.t('COMMAND_DICE_ERROR_ROLLS', message, 10e3 - 1));
+    if (rolls >= 10e3) return this.error(message, message.t('COMMAND_DICE_ERROR_ROLLS', 10e3 - 1));
 
     let size = parseInt(args.rolls[2], 10);
     if (isNaN(size)) size = 6;
     if (size < 1) return this.error(message, message.t('COMMAND_DICE_ERROR_SIZE_ZERO'));
-    if (size >= 10e5) return this.error(message, this.t('COMMAND_DICE_ERROR_SIZE', message, 10e5 - 1));
+    if (size >= 10e5) return this.error(message, message.t('COMMAND_DICE_ERROR_SIZE', 10e5 - 1));
 
     const scores: number[] = [];
 

@@ -26,7 +26,7 @@ export const help = (client: Client) => describe('Help', () => {
     const sent = await command.exec(message, args);
     expect(spies.dm).toBeCalledTimes(1);
     expect(sent.embeds).toHaveLength(1);
-    expect(sent.embeds[0].title).toEqual('Available Commands');
+    expect(sent.embeds[0].title).toEqual('COMMAND_HELP_RESPONSE_TITLE');
   });
 
   it('should reply in DM if no command provided and sent in a guild', async () => {
@@ -35,7 +35,7 @@ export const help = (client: Client) => describe('Help', () => {
     expect(spies.success).toBeCalledTimes(1);
     expect(spies.dm).toBeCalledTimes(1);
     expect(sent.embeds).toHaveLength(1);
-    expect(sent.embeds[0].title).toEqual('Available Commands');
+    expect(sent.embeds[0].title).toEqual('COMMAND_HELP_RESPONSE_TITLE');
   });
 
   it('should reply with specific command if provided', async () => {
