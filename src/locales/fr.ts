@@ -600,7 +600,21 @@ export default class FrenchLocale extends Locale {
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Statut',
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Type de Ticket',
       COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Mis à jour le ${date}*`,
-      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Votre ticket ${ref} a été mis à jour.`
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Votre ticket ${ref} a été mis à jour.`,
+
+      // ISSUES Command
+      COMMAND_ISSUES_DESCRIPTION_SHORT: 'Liste des bugs et améliorations.',
+      COMMAND_ISSUES_DESCRIPTION_EXTENDED: 'Liste les bugs rapportés et les améliorations proposées.',
+      COMMAND_ISSUES_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Liste les tickets actifs :
+        ${usage(prefix, '')}
+        Liste les bugs :
+        ${usage(prefix, '--type bug')}
+        List les tickets déployés :
+        ${usage(prefix, '--state deploy')}
+      `,
+      COMMAND_ISSUES_RESPONSE_LIST_NO_ISSUES: 'Il n\'y a pas de ticket enregistré correspondant au filtre actuel.',
+      COMMAND_ISSUES_RESPONSE_LIST_TITLE: 'Liste des Tickets'
     };
   }
 

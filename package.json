@@ -1,6 +1,6 @@
 {
   "name": "krosmobot",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": false,
   "description": "A stupid Discord bot for a stupid Dofus guild...",
   "repository": "https://github.com/brinkflew/krosmobot.git",

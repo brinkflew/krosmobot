@@ -598,7 +598,21 @@ export default class EnglishLocale extends Locale {
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Status',
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Issue Type',
       COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Updated on ${date}*`,
-      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Your issue ${ref} has been updated.`
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Your issue ${ref} has been updated.`,
+
+      // ISSUES Command
+      COMMAND_ISSUES_DESCRIPTION_SHORT: 'Bugs and features listing.',
+      COMMAND_ISSUES_DESCRIPTION_EXTENDED: 'List reported bugs and feature requests.',
+      COMMAND_ISSUES_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        List all active issues:
+        ${usage(prefix, '')}
+        List bugs:
+        ${usage(prefix, '--type bug')}
+        List deployed issues:
+        ${usage(prefix, '--state deploy')}
+      `,
+      COMMAND_ISSUES_RESPONSE_LIST_NO_ISSUES: 'There is no issue registered for the current filter.',
+      COMMAND_ISSUES_RESPONSE_LIST_TITLE: 'List of Issues'
     };
   }
 

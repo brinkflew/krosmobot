@@ -1,7 +1,7 @@
 import { Message, TextChannel } from 'discord.js';
 import { Command } from '@/structures';
 import { formatDate, padNumber } from '@/utils';
-import { DEFAULTS, EMBEDS } from '@/constants';
+import { DEFAULTS, EMBEDS, EMOJIS } from '@/constants';
 import { IssueDocument, IssueDocumentStatus, IssueDocumentType } from 'types';
 
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -12,12 +12,6 @@ const STATE_COLORS: { [key: string]: string } = {
   deploy: EMBEDS.COLORS.GREEN,
   block: EMBEDS.COLORS.RED,
   pending: EMBEDS.COLORS.MAGENTA
-};
-
-const TYPE_ICONS: { [key: string]: string } = {
-  bug: '🐞',
-  feature: '💡',
-  unknown: '❔'
 };
 /* eslint-enable @typescript-eslint/naming-convention */
 
@@ -87,7 +81,7 @@ export default class IssueCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { title: string; description: string; state: IssueDocumentStatus; type: IssueDocumentType }) {
+  public async exec(message: Message, args: { title: string; description: string; state: IssueDocumentStatus; type: IssueDocumentType; list: boolean }) {
     const sanitized = args.title.replace(/^#?0*/, '');
     const issue = this.client.providers.issues.find(issue => issue.id === sanitized);
 
@@ -101,23 +95,27 @@ export default class IssueCommand extends Command {
       return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY'));
     }
 
-    const stateFlag = this.getFlag('state')!;
-    const state = message.cleanContent.includes(stateFlag) ? args.state : issue.status;
-
-    const typeFlag = this.getFlag('type')!;
-    const type = message.cleanContent.includes(typeFlag) ? args.type : issue.type;
+    const state = this.isFlagSet('state', message) ? args.state : issue.status;
+    const type = this.isFlagSet('type', message) ? args.type : issue.type;
 
     return this.updateIssue(message, issue, args.description, state, type);
   }
 
   /**
-   * Get the flag for a specific argument
-   * @param id ID of the argument to find the flag of
+   * Checks whether a flag was set in the message that triggered the command.
+   * @param id ID of the flag to check for
+   * @param message Message that triggered the command
    */
-  private getFlag(id: string) {
+  private isFlagSet(id: string, message: Message) {
     const flag = this.argumentsUsage.find(arg => arg.id === id)?.flag;
-    if (Array.isArray(flag)) return flag[0];
-    return flag;
+    if (!flag) return false;
+    if (!Array.isArray(flag)) return message.cleanContent.includes(flag);
+
+    for (const f of flag) {
+      if (message.cleanContent.includes(f)) return true;
+    }
+
+    return false;
   }
 
   /**
@@ -158,7 +156,7 @@ export default class IssueCommand extends Command {
       },
       title: `[\#${padNumber(id, 6)}] ${title}`,
       description: description.toLowerCase() === 'skip' ? message.t('COMMAND_ISSUE_RESPONSE_NO_DESCRIPTION') : description,
-      footer: { text: `${TYPE_ICONS[type]} ${tType} \u2022 ${tState}` },
+      footer: { text: `${EMOJIS.ISSUE_TYPE_ICONS[type]} ${tType} \u2022 ${tState}` },
       timestamp: Date.now()
     });
 
@@ -221,7 +219,7 @@ export default class IssueCommand extends Command {
 
     const date = formatDate(updated, issue.locale, true, 'both');
     embed
-      .setFooter(`${TYPE_ICONS[type]} ${tType} \u2022 ${tState}`)
+      .setFooter(`${EMOJIS.ISSUE_TYPE_ICONS[type]} ${tType} \u2022 ${tState}`)
       .addField(
         EMBEDS.SEPARATORS.VERTICAL.name,
         message.t('COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT', date.slice(0, date.length - 3))
