@@ -52,17 +52,17 @@ export default class EchoCommand extends Command {
     if (!content) return this.error(message, message.t('COMMAND_ECHO_RESPONSE_NO_CONTENT'));
 
     if (!this.hasPermissions(message.guild!.me!, target)) {
-      return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT', message, target.name));
+      return this.error(message, message.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_CLIENT', target.name));
     }
 
     if (!this.hasPermissions(message.member!, target)) {
-      return this.error(message, this.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_USER', message, target.name));
+      return this.error(message, message.t('COMMAND_ECHO_RESPONSE_NO_PERMISSION_USER', target.name));
     }
 
     const files = [];
     if (file) files.push(file.href);
 
-    if (target.id !== message.channel.id) void this.success(message, this.t('COMMAND_ECHO_RESPONSE_SENT', message, target.name));
+    if (target.id !== message.channel.id) void this.success(message, message.t('COMMAND_ECHO_RESPONSE_SENT', target.name));
     return target.send(content, { files });
   }
 

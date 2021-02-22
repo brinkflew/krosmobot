@@ -37,7 +37,7 @@ export default class ColorCommand extends Command {
     // Reset the default color
     if (!args.color) {
       await provider.update(id, { settings: { color: EMBEDS.COLORS.DEFAULT } });
-      return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_RESET', message, EMBEDS.COLORS.DEFAULT) });
+      return this.embed(message, { description: message.t('COMMAND_COLOR_RESPONSE_RESET', EMBEDS.COLORS.DEFAULT) });
     }
 
     args.color = args.color.toUpperCase();
@@ -50,7 +50,7 @@ export default class ColorCommand extends Command {
 
     // Save the new color
     await provider.update(id, { settings: { color: args.color } });
-    return this.embed(message, { description: this.t('COMMAND_COLOR_RESPONSE_MODIFIED', message, args.color) });
+    return this.embed(message, { description: message.t('COMMAND_COLOR_RESPONSE_MODIFIED', args.color) });
   }
 
   /**

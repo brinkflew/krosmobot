@@ -38,12 +38,12 @@ export default class LocaleCommand extends Command {
     if (!args.locale) {
       await provider.update(id, { settings: { locale: DEFAULTS.LOCALE } });
       const language = this.t(`LANG_${DEFAULTS.LOCALE.toUpperCase()}`, message);
-      return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_RESET', message, language));
+      return this.success(message, message.t('COMMAND_LOCALE_RESPONSE_RESET', language));
     }
 
     // Chek if the locale actually exists
     if (!this.client.locales.has(args.locale)) {
-      return this.error(message, this.t('COMMAND_LOCALE_RESPONSE_UNKNOWN', message, args.locale));
+      return this.error(message, message.t('COMMAND_LOCALE_RESPONSE_UNKNOWN', args.locale));
     }
 
     const languageKey = `LANG_${args.locale.toUpperCase()}`;
@@ -51,12 +51,12 @@ export default class LocaleCommand extends Command {
 
     // Check if the locale actually changes
     const language = <string> provider.fetch(id)?.settings?.locale;
-    if (language === args.locale) return this.warning(message, this.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', message, languageName));
+    if (language === args.locale) return this.warning(message, message.t('COMMAND_LOCALE_RESPONSE_IDENTICAL', languageName));
 
     // Save the new locale
     languageName = this.client.locales.get(args.locale).translate(languageKey);
     await provider.update(id, { settings: { locale: args.locale } });
-    return this.success(message, this.t('COMMAND_LOCALE_RESPONSE_MODIFIED', message, languageName));
+    return this.success(message, message.t('COMMAND_LOCALE_RESPONSE_MODIFIED', languageName));
   }
 
   /**

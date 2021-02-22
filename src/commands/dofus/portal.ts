@@ -43,12 +43,12 @@ export default class PortalCommand extends Command {
     if (!server) return this.error(message, message.t('COMMAND_PORTAL_RESPONSE_NOSERVER'));
     const url = `${URLS.DOFUS_PORTALS}/portails/${server.id}`;
     const scraped = await Scraper.scrape({ language: 'fr', url, fields: schema });
-    if (!scraped.data?.length) return this.error(message, this.t('COMMAND_PORTAL_RESPONSE_NODATA', message, server));
+    if (!scraped.data?.length) return this.error(message, message.t('COMMAND_PORTAL_RESPONSE_NODATA', server));
 
     const generateEmbed = (data: any): MessageEmbed => this.craftEmbed(message, {
       author: {
         url,
-        name: this.t('COMMAND_PORTAL_RESPONSE_TO', message, data.dimension),
+        name: message.t('COMMAND_PORTAL_RESPONSE_TO', data.dimension),
         iconURL: `${URLS.DOFUS_PORTALS}/images/servers/${server.name.replace(/\s/g, '')}-min.png`
       },
       url,
@@ -73,7 +73,7 @@ export default class PortalCommand extends Command {
       ],
       footer: {
         text: data.update
-          ? this.t('COMMAND_PORTAL_RESPONSE_UPDATED', message, data.update, server.name)
+          ? message.t('COMMAND_PORTAL_RESPONSE_UPDATED', data.update, server.name)
           : undefined
       }
     });

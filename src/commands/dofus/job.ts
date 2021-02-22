@@ -95,7 +95,7 @@ export default class JobCommand extends Command {
         })
       );
 
-      if (!pairs.size) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOBODY', message, translatedJob));
+      if (!pairs.size) return this.warning(message, message.t('COMMAND_JOB_RESPONSE_NOBODY', translatedJob));
 
       return this.embed(message, {
         author: {
@@ -121,7 +121,7 @@ export default class JobCommand extends Command {
 
     // `!job member` → Display all jobs for the selected user
     if (!args.job && !args.level && args.member) {
-      const translated = this.t('COMMAND_JOB_RESPONSE_NOJOBS', message, args.member.displayName);
+      const translated = message.t('COMMAND_JOB_RESPONSE_NOJOBS', args.member.displayName);
       const cached = provider.get(this.memberID(message.guild!, args.member));
 
       if (!cached) return this.warning(message, translated);
@@ -162,7 +162,7 @@ export default class JobCommand extends Command {
       const translated = this.t(`COMMAND_JOB_RESPONSE_JOB_${args.job.toUpperCase()}`, message);
       const cached = provider.get(this.memberID(message.guild!, args.member));
 
-      if (!cached) return this.warning(message, this.t('COMMAND_JOB_RESPONSE_NOJOB', message, args.member.displayName, translated));
+      if (!cached) return this.warning(message, message.t('COMMAND_JOB_RESPONSE_NOJOB', args.member.displayName, translated));
 
       const level = cached.jobs[args.job] || 1;
 
@@ -181,7 +181,7 @@ export default class JobCommand extends Command {
       });
     }
 
-    return this.error(message, this.t('COMMAND_JOBS_RESPONSE_INVALID_COMBINATION', message, args));
+    return this.error(message, message.t('COMMAND_JOBS_RESPONSE_INVALID_COMBINATION', args));
   }
 
   /**
@@ -229,7 +229,7 @@ export default class JobCommand extends Command {
       }
     }
 
-    if (unknown?.length) void this.warning(message, this.t('COMMAND_JOBS_ARGUMENTS_UNKNOWN', message, unknown));
+    if (unknown?.length) void this.warning(message, message.t('COMMAND_JOBS_ARGUMENTS_UNKNOWN', unknown));
 
     return args;
   }

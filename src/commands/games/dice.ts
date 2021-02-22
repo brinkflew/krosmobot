@@ -96,9 +96,9 @@ export default class DiceCommand extends Command {
     const attachment = new MessageAttachment(canvas.toBuffer(), 'dice.png');
 
     return this.embed(message, {
-      author: { name: this.t('COMMAND_DICE_RESPONSE_EXPLAIN', message, rolls, size) },
-      title: this.t('COMMAND_DICE_RESPONSE_TOTAL', message, total),
-      description: this.t('COMMAND_DICE_RESPONSE_DETAIL', message, scores),
+      author: { name: message.t('COMMAND_DICE_RESPONSE_EXPLAIN', rolls, size) },
+      title: message.t('COMMAND_DICE_RESPONSE_TOTAL', total),
+      description: message.t('COMMAND_DICE_RESPONSE_DETAIL', scores),
       files: [attachment],
       thumbnail: { url: `attachment://dice.png` }
     });

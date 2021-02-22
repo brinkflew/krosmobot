@@ -41,7 +41,7 @@ export default class AlmanaxCommand extends Command {
     const { providers } = this.client;
 
     const date = this.parseDate(offset);
-    if (!date) return this.error(message, this.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', message, date));
+    if (!date) return this.error(message, message.t('COMMAND_ALMANAX_RESPONSE_DATE_ERROR', date));
 
     const language = this.getLocale(message).id;
     const id = `${language}:${date}`;
@@ -57,7 +57,7 @@ export default class AlmanaxCommand extends Command {
 
     const embed = this.craftEmbed(message, {
       author: {
-        name: this.t('COMMAND_ALMANAX_RESPONSE_ALMANAX', message, almanax.day, almanax.month),
+        name: message.t('COMMAND_ALMANAX_RESPONSE_ALMANAX', almanax.day, almanax.month),
         url: almanax.url,
         iconURL: almanax.images.meryde
       },

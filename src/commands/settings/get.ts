@@ -38,7 +38,7 @@ export default class SetCommand extends Command {
     const doc = this.client.providers.guilds.get(message.guild!.id) || {} as GuildDocument;
 
     const consume = (key: string, value: any) => {
-      pairs.push(this.t('COMMAND_GET_RESPONSE_PAIR', message, key, value));
+      pairs.push(message.t('COMMAND_GET_RESPONSE_PAIR', key, value));
       args.keys.splice(args.keys.indexOf(key), 1);
     };
 
@@ -61,7 +61,7 @@ export default class SetCommand extends Command {
     if (!hasFlags || args.keys.includes('color')) consume('color', doc.settings?.color);
     if (!hasFlags || args.keys.includes('locale')) consume('locale', doc.settings?.locale);
 
-    if (args.keys.length) void this.warning(message, this.t('COMMAND_GET_RESPONSE_INVALID_KEYS', message, args.keys));
+    if (args.keys.length) void this.warning(message, message.t('COMMAND_GET_RESPONSE_INVALID_KEYS', args.keys));
     if (!pairs.length) return this.warning(message, message.t('COMMAND_GET_RESPONSE_NO_KEYS'));
 
     return this.embed(message, {
@@ -69,7 +69,7 @@ export default class SetCommand extends Command {
         name: message.guild!.name,
         iconURL: message.guild!.iconURL() || undefined
       },
-      description: this.t('COMMAND_GET_RESPONSE_PAIRS', message, pairs)
+      description: message.t('COMMAND_GET_RESPONSE_PAIRS', pairs)
     });
   }
 

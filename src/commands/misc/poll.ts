@@ -69,7 +69,7 @@ export default class PollCommand extends Command {
         name: message.member!.displayName,
         iconURL: message.author.displayAvatarURL() || message.author.defaultAvatarURL
       },
-      title: this.t('COMMAND_POLL_RESPONSE_TITLE', message, title),
+      title: message.t('COMMAND_POLL_RESPONSE_TITLE', title),
       description: propositions.join('\n'),
       footer: {
         text: this.t('COMMAND_POLL_RESPONSE_FOOTER', message, reactions, formatDate(time, locale.id, true, 'both').slice(0, -3))

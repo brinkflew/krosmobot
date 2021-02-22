@@ -53,7 +53,7 @@ export default class MonitCommand extends Command {
       fields: [
         {
           name: message.t('COMMAND_MONIT_RESPONSE_ARCH_TITLE'),
-          value: this.t('COMMAND_MONIT_RESPONSE_ARCH_VALUE', message, nodeVersion, platform, arch)
+          value: message.t('COMMAND_MONIT_RESPONSE_ARCH_VALUE', nodeVersion, platform, arch)
         },
         {
           name: message.t('COMMAND_MONIT_RESPONSE_PROCESS_TITLE'),
@@ -67,12 +67,12 @@ export default class MonitCommand extends Command {
         },
         {
           name: message.t('COMMAND_MONIT_RESPONSE_DISCORD_TITLE'),
-          value: this.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', message, latency, shards),
+          value: message.t('COMMAND_MONIT_RESPONSE_DISCORD_VALUE', latency, shards),
           inline: true
         }
       ],
       footer: {
-        text: this.t('COMMAND_MONIT_RESPONSE_UPTIME', message, uptime)
+        text: message.t('COMMAND_MONIT_RESPONSE_UPTIME', uptime)
       }
     });
 

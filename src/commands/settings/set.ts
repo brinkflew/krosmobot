@@ -85,18 +85,18 @@ export default class SetCommand extends Command {
         }
 
         doc.dofus.server = server;
-        pairs.push(this.t('COMMAND_SET_RESPONSE_PAIR', message, key, server.name));
+        pairs.push(message.t('COMMAND_SET_RESPONSE_PAIR', key, server.name));
         continue;
       }
 
       invalids.push(key);
     }
 
-    if (invalids.length) void this.warning(message, this.t('COMMAND_SET_RESPONSE_INVALID_VALUES', message, invalids));
+    if (invalids.length) void this.warning(message, message.t('COMMAND_SET_RESPONSE_INVALID_VALUES', invalids));
     if (!pairs.length) return this.error(message, message.t('COMMAND_SET_RESPONSE_NO_KEYS'));
 
     await this.getProvider(message).update(message.guild!.id, doc);
-    return this.success(message, this.t('COMMAND_SET_RESPONSE_MODIFIED', message, pairs));
+    return this.success(message, message.t('COMMAND_SET_RESPONSE_MODIFIED', pairs));
   }
 
 }

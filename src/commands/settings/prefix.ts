@@ -36,7 +36,7 @@ export default class PrefixCommand extends Command {
     // Reset the default prefix
     if (!args.prefix) {
       await provider.update(id, { settings: { prefix: DEFAULTS.PREFIX } });
-      return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_RESET', message, DEFAULTS.PREFIX));
+      return this.success(message, message.t('COMMAND_PREFIX_RESPONSE_RESET', DEFAULTS.PREFIX));
     }
 
     // Check if the prefix actually changes
@@ -45,7 +45,7 @@ export default class PrefixCommand extends Command {
 
     // Save the new prefix
     await provider.update(id, { settings: { prefix: args.prefix } });
-    return this.success(message, this.t('COMMAND_PREFIX_RESPONSE_MODIFIED', message, args.prefix));
+    return this.success(message, message.t('COMMAND_PREFIX_RESPONSE_MODIFIED', args.prefix));
   }
 
 }
