@@ -2,7 +2,7 @@ import { Message, TextChannel } from 'discord.js';
 import { Command } from '@/structures';
 import { formatDate, padNumber } from '@/utils';
 import { DEFAULTS, EMBEDS } from '@/constants';
-import { IssueDocument } from 'types';
+import { IssueDocument, IssueDocumentStatus, IssueDocumentType } from 'types';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const STATE_COLORS: { [key: string]: string } = {
@@ -87,12 +87,7 @@ export default class IssueCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: {
-    title: string;
-    description: string;
-    state: 'pending' | 'cancel' | 'dev' | 'block' | 'test' | 'deploy';
-    type: 'bug' | 'feature' | 'unknown';
-  }) {
+  public async exec(message: Message, args: { title: string; description: string; state: IssueDocumentStatus; type: IssueDocumentType }) {
     const sanitized = args.title.replace(/^#?0*/, '');
     const issue = this.client.providers.issues.find(issue => issue.id === sanitized);
 
@@ -100,11 +95,11 @@ export default class IssueCommand extends Command {
       return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY'));
     }
 
+    if (!issue) return this.createIssue(message, args.title, args.description, args.state, args.type);
+
     if (args.type && !this.client.isOwner(message.author)) {
       return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY'));
     }
-
-    if (!issue) return this.createIssue(message, args.title, args.description, args.state, args.type);
 
     const stateFlag = this.getFlag('state')!;
     const state = message.cleanContent.includes(stateFlag) ? args.state : issue.status;
@@ -133,7 +128,23 @@ export default class IssueCommand extends Command {
    * @param state Status of the issue
    * @param type Type of issue (bug or feature request)
    */
-  private async createIssue(message: Message, title: string, description: string, state: string, type: string) {
+  private async createIssue(message: Message, title: string, description: string, state: IssueDocumentStatus, type: IssueDocumentType) {
+    if (type === 'unknown') {
+      switch (message.util?.parsed?.alias) {
+        case 'bug':
+        case 'issue':
+          type = 'bug';
+          break;
+        case 'request':
+        case 'feature':
+        case 'idea':
+          type = 'feature';
+          break;
+        default:
+          break;
+      }
+    }
+
     const id = `${this.issueID}`;
     const guild = this.client.util.resolveGuild(DEFAULTS.SUPPORT_GUILD, this.client.guilds.cache);
     const tracker = this.client.util.resolveChannel(DEFAULTS.ISSUES_CHANNEL, guild.channels.cache);
@@ -177,7 +188,7 @@ export default class IssueCommand extends Command {
    * @param state New state for the issue, if any
    * @param type New type for the issue
    */
-  private async updateIssue(message: Message, issue: IssueDocument, description: string, state: string, type: string) {
+  private async updateIssue(message: Message, issue: IssueDocument, description: string, state: IssueDocumentStatus, type: IssueDocumentType) {
     const messages = issue.messages.map((id, index) => {
       const guild = this.client.util.resolveGuild(issue.guilds[index], this.client.guilds.cache);
       const channel = this.client.util.resolveChannel(issue.channels[index], guild.channels.cache) as TextChannel;
