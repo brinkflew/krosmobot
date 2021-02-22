@@ -41,7 +41,7 @@ export default class IssueCommand extends Command {
           'id': 'state',
           'type': ['pending', 'cancel', 'dev', 'block', 'test', 'deploy'],
           'match': 'option',
-          'flag': '--state',
+          'flag': ['--state', '--status', '-s'],
           'description': 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_STATE',
           'default': 'pending',
           'prompt': {
@@ -53,7 +53,7 @@ export default class IssueCommand extends Command {
           'id': 'type',
           'type': ['bug', 'feature', 'unknown'],
           'match': 'option',
-          'flag': '--type',
+          'flag': ['--type', '-t'],
           'description': 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE',
           'default': 'unknown',
           'prompt': {
@@ -157,7 +157,7 @@ export default class IssueCommand extends Command {
         iconURL: message.author.displayAvatarURL()
       },
       title: `[\#${padNumber(id, 6)}] ${title}`,
-      description,
+      description: description.toLowerCase() === 'skip' ? message.t('COMMAND_ISSUE_RESPONSE_NO_DESCRIPTION') : description,
       footer: { text: `${TYPE_ICONS[type]} ${tType} \u2022 ${tState}` },
       timestamp: Date.now()
     });
@@ -204,7 +204,7 @@ export default class IssueCommand extends Command {
     const tState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase(), resolved[0]);
     const tType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase(), resolved[0]);
     const tComments = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS', resolved[0]);
-    const fields = [{ name: tComments, value: description }];
+    const fields = description.toLowerCase() === 'skip' ? [] : [{ name: tComments, value: description }];
 
     if (issue.status !== state) {
       const tStatusTitle = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS', resolved[0]);
