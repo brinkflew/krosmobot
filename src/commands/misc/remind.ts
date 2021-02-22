@@ -40,9 +40,9 @@ export default class RemindCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message, args: { time: number | null; text: string }) {
-    if (typeof args.text !== 'string') return this.error(message, this.t('COMMAND_REMIND_RESPONSE_NO_CONTENT', message));
+    if (typeof args.text !== 'string') return this.error(message, message.t('COMMAND_REMIND_RESPONSE_NO_CONTENT'));
     if (typeof args.time !== 'number') args.time = TIME.MS_PER_DAY;
-    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, this.t('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW', message));
+    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, message.t('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW'));
 
     const locale = this.getLocale(message);
     const doc = {
@@ -55,7 +55,7 @@ export default class RemindCommand extends Command {
     };
 
     void this.client.providers.reminders.update(message.id, doc);
-    return this.success(message, this.t('COMMAND_REMIND_RESPONSE_SUCCESS', message, formatRelative(args.time, locale)));
+    return this.success(message, message.t('COMMAND_REMIND_RESPONSE_SUCCESS', formatRelative(args.time, locale)));
   }
 
 }

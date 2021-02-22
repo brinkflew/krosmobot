@@ -27,7 +27,7 @@ export const remind = (client: Client) => describe('Remind', () => {
     spies.success = jest.spyOn(command, 'success');
     spies.warning = jest.spyOn(command, 'warning');
     spies.error = jest.spyOn(command, 'error');
-    spies.t = jest.spyOn(command, 't');
+    spies.t = jest.spyOn(message, 't');
     spies.update = jest.spyOn(provider, 'update');
   };
 
@@ -35,7 +35,7 @@ export const remind = (client: Client) => describe('Remind', () => {
     await setup('!remind');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
-    expect(spies.t).toBeCalledWith('COMMAND_REMIND_RESPONSE_NO_CONTENT', message);
+    expect(spies.t).toBeCalledWith('COMMAND_REMIND_RESPONSE_NO_CONTENT');
     expect(spies.update).toBeCalledTimes(0);
   });
 
@@ -43,7 +43,7 @@ export const remind = (client: Client) => describe('Remind', () => {
     await setup('!remind --in 5s test content');
     await command.exec(message, args);
     expect(spies.error).toBeCalledTimes(1);
-    expect(spies.t).toBeCalledWith('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW', message);
+    expect(spies.t).toBeCalledWith('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW');
     expect(spies.update).toBeCalledTimes(0);
   });
 
@@ -64,7 +64,7 @@ export const remind = (client: Client) => describe('Remind', () => {
       })
     );
     expect(sent.embeds).toHaveLength(1);
-    expect(sent.embeds[0].description).toContain('in 1 day');
+    expect(sent.embeds[0].description).toContain('COMMAND_REMIND_RESPONSE_SUCCESS');
   });
 
   it('should set a reminder in 1 minute', async () => {
@@ -84,7 +84,7 @@ export const remind = (client: Client) => describe('Remind', () => {
       })
     );
     expect(sent.embeds).toHaveLength(1);
-    expect(sent.embeds[0].description).toContain('in 1 minute');
+    expect(sent.embeds[0].description).toContain('COMMAND_REMIND_RESPONSE_SUCCESS');
   });
 
 });

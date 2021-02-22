@@ -52,17 +52,17 @@ export default class DiceCommand extends Command {
       args.rolls = this.expressions.dice.exec(toParse?.length ? toParse : '1d6');
     }
 
-    if (this.isFloat(args.rolls[1]) || this.isFloat(args.rolls[2])) return this.error(message, this.t('COMMAND_DICE_ERROR_FLOAT', message));
+    if (this.isFloat(args.rolls[1]) || this.isFloat(args.rolls[2])) return this.error(message, message.t('COMMAND_DICE_ERROR_FLOAT'));
 
     let rolls = parseInt(args.rolls[1], 10);
     if (isNaN(rolls)) rolls = 1;
-    if (rolls < 1) return this.error(message, this.t('COMMAND_DICE_ERROR_ROLLS_ZERO', message));
-    if (rolls >= 10e3) return this.error(message, this.t('COMMAND_DICE_ERROR_ROLLS', message, 10e3 - 1));
+    if (rolls < 1) return this.error(message, message.t('COMMAND_DICE_ERROR_ROLLS_ZERO'));
+    if (rolls >= 10e3) return this.error(message, message.t('COMMAND_DICE_ERROR_ROLLS', 10e3 - 1));
 
     let size = parseInt(args.rolls[2], 10);
     if (isNaN(size)) size = 6;
-    if (size < 1) return this.error(message, this.t('COMMAND_DICE_ERROR_SIZE_ZERO', message));
-    if (size >= 10e5) return this.error(message, this.t('COMMAND_DICE_ERROR_SIZE', message, 10e5 - 1));
+    if (size < 1) return this.error(message, message.t('COMMAND_DICE_ERROR_SIZE_ZERO'));
+    if (size >= 10e5) return this.error(message, message.t('COMMAND_DICE_ERROR_SIZE', 10e5 - 1));
 
     const scores: number[] = [];
 
@@ -96,9 +96,9 @@ export default class DiceCommand extends Command {
     const attachment = new MessageAttachment(canvas.toBuffer(), 'dice.png');
 
     return this.embed(message, {
-      author: { name: this.t('COMMAND_DICE_RESPONSE_EXPLAIN', message, rolls, size) },
-      title: this.t('COMMAND_DICE_RESPONSE_TOTAL', message, total),
-      description: this.t('COMMAND_DICE_RESPONSE_DETAIL', message, scores),
+      author: { name: message.t('COMMAND_DICE_RESPONSE_EXPLAIN', rolls, size) },
+      title: message.t('COMMAND_DICE_RESPONSE_TOTAL', total),
+      description: message.t('COMMAND_DICE_RESPONSE_DETAIL', scores),
       files: [attachment],
       thumbnail: { url: `attachment://dice.png` }
     });

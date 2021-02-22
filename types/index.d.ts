@@ -52,14 +52,17 @@ export interface GuildDocument extends MongooseProviderDocument {
   settings: DocumentSettings;
 }
 
+export type IssueDocumentType = 'bug' | 'feature' | 'unknown';
+export type IssueDocumentStatus = 'pending' | 'cancel' | 'dev' | 'block' | 'test' | 'deploy';
+
 export interface IssueDocument extends MongooseProviderDocument {
   messages: string[];
   channels: string[];
   guilds: string[];
   title: string;
   description: string;
-  status: string;
-  type: string;
+  status: IssueDocumentStatus;
+  type: IssueDocumentType;
   locale: string;
 }
 

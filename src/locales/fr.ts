@@ -35,6 +35,17 @@ export default class FrenchLocale extends Locale {
       MESSAGE_STATUS_ERROR: 'Aïe !',
       MESSAGE_STATUS_WARNING: 'Hmmm...',
 
+      // Prompting
+      MODIFY_PROMPT_CANCEL_OR_TIMEOUT: (time: string) => oneLine`
+        Tapez \`cancel\` pour annuler cette action.
+        La commande sera annulée automatiquement dans ${time}
+        si vous n'avez pas fourni de réponse dans le temps imparti.
+      `,
+      DEFAULT_PROMPT_TIMEOUT: 'Aucune réponse n\'a été fournie dans les temps, la commande a été annulée.',
+      DEFAULT_PROMPT_CANCEL: 'La commande a été annulée.',
+      DEFAULT_PROMPT_ENDED: 'Nombre maximum d\'essais atteint, la commande a été annulée.',
+      DEFAULT_PROMPT_RETRY: 'Valeur invalide, veuillez réessayer.',
+
       // Arguments
       ARGUMENT_OPTIONAL: 'optionnel',
       ARGUMENT_NO_DESCRIPTION: 'Pas de description disponnible pour cette option',
@@ -676,9 +687,10 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE: 'Type du ticket : soit `bug`, soit `feature`',
       COMMAND_ISSUE_PROMPT_START_TITLE: 'Veuillez fournir un titre court pour ce ticket.',
-      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Veuillez fournir une description pour ce ticket.',
+      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Veuillez fournir une description pour ce ticket.\nTapez `skip` pour passer cette étape.',
       COMMAND_ISSUE_PROMPT_RETRY_STATE: 'Statut invalide, veuillez réessayer.',
       COMMAND_ISSUE_PROMPT_RETRY_TYPE: 'Type invalide, veuillez réessayer.',
+      COMMAND_ISSUE_RESPONSE_NO_DESCRIPTION: 'Pas de description pour ce ticket.',
       COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY: 'Seuls les développeurs peuvent modifier le statut d\'un ticket.',
       COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY: 'Seuls les développeurs peuvent modifier le type d\'un ticket.',
       COMMAND_ISSUE_RESPONSE_TYPE_BUG: 'Bug',
@@ -694,7 +706,21 @@ export default class FrenchLocale extends Locale {
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Statut',
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Type de Ticket',
       COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Mis à jour le ${date}*`,
-      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Votre ticket ${ref} a été mis à jour.`
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Votre ticket ${ref} a été mis à jour.`,
+
+      // ISSUES Command
+      COMMAND_ISSUES_DESCRIPTION_SHORT: 'Liste des bugs et améliorations.',
+      COMMAND_ISSUES_DESCRIPTION_EXTENDED: 'Liste les bugs rapportés et les améliorations proposées.',
+      COMMAND_ISSUES_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        Liste les tickets actifs :
+        ${usage(prefix, '')}
+        Liste les bugs :
+        ${usage(prefix, '--type bug')}
+        List les tickets déployés :
+        ${usage(prefix, '--state deploy')}
+      `,
+      COMMAND_ISSUES_RESPONSE_LIST_NO_ISSUES: 'Il n\'y a pas de ticket enregistré correspondant au filtre actuel.',
+      COMMAND_ISSUES_RESPONSE_LIST_TITLE: 'Liste des Tickets'
     };
   }
 

@@ -1,8 +1,8 @@
 import { Message, TextChannel } from 'discord.js';
 import { Command } from '@/structures';
 import { formatDate, padNumber } from '@/utils';
-import { DEFAULTS, EMBEDS } from '@/constants';
-import { IssueDocument } from 'types';
+import { DEFAULTS, EMBEDS, EMOJIS } from '@/constants';
+import { IssueDocument, IssueDocumentStatus, IssueDocumentType } from 'types';
 
 /* eslint-disable @typescript-eslint/naming-convention */
 const STATE_COLORS: { [key: string]: string } = {
@@ -12,12 +12,6 @@ const STATE_COLORS: { [key: string]: string } = {
   deploy: EMBEDS.COLORS.GREEN,
   block: EMBEDS.COLORS.RED,
   pending: EMBEDS.COLORS.MAGENTA
-};
-
-const TYPE_ICONS: { [key: string]: string } = {
-  bug: '🐞',
-  feature: '💡',
-  unknown: '❔'
 };
 /* eslint-enable @typescript-eslint/naming-convention */
 
@@ -41,11 +35,11 @@ export default class IssueCommand extends Command {
           'id': 'state',
           'type': ['pending', 'cancel', 'dev', 'block', 'test', 'deploy'],
           'match': 'option',
-          'flag': '--state',
+          'flag': ['--state', '--status', '-s'],
           'description': 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_STATE',
           'default': 'pending',
           'prompt': {
-            retry: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_RETRY_STATE', message),
+            retry: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_RETRY_STATE'),
             optional: true
           }
         },
@@ -53,11 +47,11 @@ export default class IssueCommand extends Command {
           'id': 'type',
           'type': ['bug', 'feature', 'unknown'],
           'match': 'option',
-          'flag': '--type',
+          'flag': ['--type', '-t'],
           'description': 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE',
           'default': 'unknown',
           'prompt': {
-            retry: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_RETRY_TYPE', message),
+            retry: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_RETRY_TYPE'),
             optional: true
           }
         },
@@ -67,7 +61,7 @@ export default class IssueCommand extends Command {
           match: 'text',
           description: 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TITLE',
           prompt: {
-            start: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_START_TITLE', message)
+            start: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_START_TITLE')
           }
         },
         {
@@ -76,7 +70,7 @@ export default class IssueCommand extends Command {
           match: 'none',
           description: 'COMMAND_ISSUE_DESCRIPTION_ARGUMENT_DESCRIPTION',
           prompt: {
-            start: (message: Message) => this.t('COMMAND_ISSUE_PROMPT_START_DESCRIPTION', message)
+            start: (message: Message) => message.t('COMMAND_ISSUE_PROMPT_START_DESCRIPTION')
           }
         }
       ]
@@ -87,42 +81,41 @@ export default class IssueCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: {
-    title: string;
-    description: string;
-    state: 'pending' | 'cancel' | 'dev' | 'block' | 'test' | 'deploy';
-    type: 'bug' | 'feature' | 'unknown';
-  }) {
+  public async exec(message: Message, args: { title: string; description: string; state: IssueDocumentStatus; type: IssueDocumentType; list: boolean }) {
     const sanitized = args.title.replace(/^#?0*/, '');
     const issue = this.client.providers.issues.find(issue => issue.id === sanitized);
 
     if (args.state && !this.client.isOwner(message.author)) {
-      return this.error(message, this.t('COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY', message));
-    }
-
-    if (args.type && !this.client.isOwner(message.author)) {
-      return this.error(message, this.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY', message));
+      return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY'));
     }
 
     if (!issue) return this.createIssue(message, args.title, args.description, args.state, args.type);
 
-    const stateFlag = this.getFlag('state')!;
-    const state = message.cleanContent.includes(stateFlag) ? args.state : issue.status;
+    if (args.type && !this.client.isOwner(message.author)) {
+      return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY'));
+    }
 
-    const typeFlag = this.getFlag('type')!;
-    const type = message.cleanContent.includes(typeFlag) ? args.type : issue.type;
+    const state = this.isFlagSet('state', message) ? args.state : issue.status;
+    const type = this.isFlagSet('type', message) ? args.type : issue.type;
 
     return this.updateIssue(message, issue, args.description, state, type);
   }
 
   /**
-   * Get the flag for a specific argument
-   * @param id ID of the argument to find the flag of
+   * Checks whether a flag was set in the message that triggered the command.
+   * @param id ID of the flag to check for
+   * @param message Message that triggered the command
    */
-  private getFlag(id: string) {
+  private isFlagSet(id: string, message: Message) {
     const flag = this.argumentsUsage.find(arg => arg.id === id)?.flag;
-    if (Array.isArray(flag)) return flag[0];
-    return flag;
+    if (!flag) return false;
+    if (!Array.isArray(flag)) return message.cleanContent.includes(flag);
+
+    for (const f of flag) {
+      if (message.cleanContent.includes(f)) return true;
+    }
+
+    return false;
   }
 
   /**
@@ -133,12 +126,28 @@ export default class IssueCommand extends Command {
    * @param state Status of the issue
    * @param type Type of issue (bug or feature request)
    */
-  private async createIssue(message: Message, title: string, description: string, state: string, type: string) {
+  private async createIssue(message: Message, title: string, description: string, state: IssueDocumentStatus, type: IssueDocumentType) {
+    if (type === 'unknown') {
+      switch (message.util?.parsed?.alias) {
+        case 'bug':
+        case 'issue':
+          type = 'bug';
+          break;
+        case 'request':
+        case 'feature':
+        case 'idea':
+          type = 'feature';
+          break;
+        default:
+          break;
+      }
+    }
+
     const id = `${this.issueID}`;
     const guild = this.client.util.resolveGuild(DEFAULTS.SUPPORT_GUILD, this.client.guilds.cache);
     const tracker = this.client.util.resolveChannel(DEFAULTS.ISSUES_CHANNEL, guild.channels.cache);
-    const tType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase(), message);
-    const tState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase(), message);
+    const tType = message.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase());
+    const tState = message.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase());
     const embed = this.craftEmbed(message, {
       color: STATE_COLORS[state],
       author: {
@@ -146,8 +155,8 @@ export default class IssueCommand extends Command {
         iconURL: message.author.displayAvatarURL()
       },
       title: `[\#${padNumber(id, 6)}] ${title}`,
-      description,
-      footer: { text: `${TYPE_ICONS[type]} ${tType} \u2022 ${tState}` },
+      description: description.toLowerCase() === 'skip' ? message.t('COMMAND_ISSUE_RESPONSE_NO_DESCRIPTION') : description,
+      footer: { text: `${EMOJIS.ISSUE_TYPE_ICONS[type]} ${tType} \u2022 ${tState}` },
       timestamp: Date.now()
     });
 
@@ -177,7 +186,7 @@ export default class IssueCommand extends Command {
    * @param state New state for the issue, if any
    * @param type New type for the issue
    */
-  private async updateIssue(message: Message, issue: IssueDocument, description: string, state: string, type: string) {
+  private async updateIssue(message: Message, issue: IssueDocument, description: string, state: IssueDocumentStatus, type: IssueDocumentType) {
     const messages = issue.messages.map((id, index) => {
       const guild = this.client.util.resolveGuild(issue.guilds[index], this.client.guilds.cache);
       const channel = this.client.util.resolveChannel(issue.channels[index], guild.channels.cache) as TextChannel;
@@ -190,30 +199,30 @@ export default class IssueCommand extends Command {
 
     embed.setTimestamp(updated);
 
-    const tState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase(), resolved[0]);
-    const tType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase(), resolved[0]);
-    const tComments = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS', resolved[0]);
-    const fields = [{ name: tComments, value: description }];
+    const tState = resolved[0].t(`COMMAND_ISSUE_RESPONSE_STATE_${state}`.toUpperCase());
+    const tType = resolved[0].t(`COMMAND_ISSUE_RESPONSE_TYPE_${type}`.toUpperCase());
+    const tComments = resolved[0].t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_COMMENTS');
+    const fields = description.toLowerCase() === 'skip' ? [] : [{ name: tComments, value: description }];
 
     if (issue.status !== state) {
-      const tStatusTitle = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS', resolved[0]);
-      const tOldState = this.t(`COMMAND_ISSUE_RESPONSE_STATE_${issue.status}`.toUpperCase(), resolved[0]);
+      const tStatusTitle = resolved[0].t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS');
+      const tOldState = resolved[0].t(`COMMAND_ISSUE_RESPONSE_STATE_${issue.status}`.toUpperCase());
       fields.unshift({ name: tStatusTitle, value: `${tOldState} → ${tState}` });
       embed.setColor(STATE_COLORS[state]);
     }
 
     if (issue.type !== type) {
-      const tTypeTitle = this.t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE', resolved[0]);
-      const tOldType = this.t(`COMMAND_ISSUE_RESPONSE_TYPE_${issue.type}`.toUpperCase(), resolved[0]);
+      const tTypeTitle = resolved[0].t('COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE');
+      const tOldType = resolved[0].t(`COMMAND_ISSUE_RESPONSE_TYPE_${issue.type}`.toUpperCase());
       fields.unshift({ name: tTypeTitle, value: `${tOldType} → ${tType}` });
     }
 
     const date = formatDate(updated, issue.locale, true, 'both');
     embed
-      .setFooter(`${TYPE_ICONS[type]} ${tType} \u2022 ${tState}`)
+      .setFooter(`${EMOJIS.ISSUE_TYPE_ICONS[type]} ${tType} \u2022 ${tState}`)
       .addField(
         EMBEDS.SEPARATORS.VERTICAL.name,
-        this.t('COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT', message, date.slice(0, date.length - 3))
+        message.t('COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT', date.slice(0, date.length - 3))
       )
       .addFields(fields);
 
@@ -223,7 +232,7 @@ export default class IssueCommand extends Command {
         name: message.author.username,
         iconURL: message.author.displayAvatarURL()
       },
-      description: this.t('COMMAND_ISSUE_RESPONSE_UPDATED', message, `[[\#${padNumber(issue.id, 6)}] ${issue.title}](${resolved[0].url})`),
+      description: message.t('COMMAND_ISSUE_RESPONSE_UPDATED', `[[\#${padNumber(issue.id, 6)}] ${issue.title}](${resolved[0].url})`),
       fields,
       timestamp: updated
     });

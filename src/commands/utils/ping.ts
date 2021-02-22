@@ -23,7 +23,7 @@ export default class PingCommand extends Command {
    * @param message Message received from Discord
    */
   public async exec(message: Message) {
-    const embed = { title: this.t('COMMAND_PING_RESPONSE_TITLE', message) };
+    const embed = { title: message.t('COMMAND_PING_RESPONSE_TITLE') };
     const sent = await this.embed(message, embed);
 
     const diff = (sent.editedTimestamp || sent.createdTimestamp) - (message.editedTimestamp || message.createdTimestamp);
@@ -32,9 +32,9 @@ export default class PingCommand extends Command {
     return this.embed(message, {
       ...embed,
       fields: [
-        { name: this.t('COMMAND_PING_RESPONSE_RTT', message), value: `${diff} ms`, inline: true },
+        { name: message.t('COMMAND_PING_RESPONSE_RTT'), value: `${diff} ms`, inline: true },
         EMBEDS.SEPARATORS.INLINE,
-        { name: this.t('COMMAND_PING_RESPONSE_HEARTBEAT', message), value: `${ping} ms`, inline: true }
+        { name: message.t('COMMAND_PING_RESPONSE_HEARTBEAT'), value: `${ping} ms`, inline: true }
       ]
     });
   }

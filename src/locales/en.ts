@@ -35,6 +35,17 @@ export default class EnglishLocale extends Locale {
       MESSAGE_STATUS_ERROR: 'Ouch!',
       MESSAGE_STATUS_WARNING: 'Hmmm...',
 
+      // Prompting
+      MODIFY_PROMPT_CANCEL_OR_TIMEOUT: (time: string) => oneLine`
+        Type \`cancel\` to cancel this action.
+        The command will be automatically cancelled in ${time}
+        if you didn't provide an answer by that time.
+      `,
+      DEFAULT_PROMPT_TIMEOUT: 'No answer was supplied in time, the command has been cancelled.',
+      DEFAULT_PROMPT_CANCEL: 'The command has been cancelled.',
+      DEFAULT_PROMPT_ENDED: 'Maximum number of retries reached, the command has been cancelled.',
+      DEFAULT_PROMPT_RETRY: 'Invalid value provided, please retry.',
+
       // Arguments
       ARGUMENT_OPTIONAL: 'optional',
       ARGUMENT_NO_DESCRIPTION: 'No description for this argument',
@@ -674,9 +685,10 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_ISSUE_DESCRIPTION_ARGUMENT_TYPE: 'Type of issue, either `bug` or `feature`',
       COMMAND_ISSUE_PROMPT_START_TITLE: 'Please provide a short title for this bug/feature request.',
-      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Please provide a description to explain your enquiry.',
+      COMMAND_ISSUE_PROMPT_START_DESCRIPTION: 'Please provide a description to explain your enquiry.\nType `skip` to skip this step.',
       COMMAND_ISSUE_PROMPT_RETRY_STATE: 'Invalid state name, please try again.',
       COMMAND_ISSUE_PROMPT_RETRY_TYPE: 'Invalid type name, please try again.',
+      COMMAND_ISSUE_RESPONSE_NO_DESCRIPTION: 'No description for this ticket.',
       COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY: 'Only developpers can change the state of an issue.',
       COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY: 'Only developpers can change the type of an issue.',
       COMMAND_ISSUE_RESPONSE_TYPE_BUG: 'Bug',
@@ -692,7 +704,21 @@ export default class EnglishLocale extends Locale {
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_STATUS: 'Status',
       COMMAND_ISSUE_RESPONSE_FIELD_TITLE_TYPE: 'Issue Type',
       COMMAND_ISSUE_RESPONSE_FIELD_UPDATED_AT: (date: string) => `*Updated on ${date}*`,
-      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Your issue ${ref} has been updated.`
+      COMMAND_ISSUE_RESPONSE_UPDATED: (ref: string) => `Your issue ${ref} has been updated.`,
+
+      // ISSUES Command
+      COMMAND_ISSUES_DESCRIPTION_SHORT: 'Bugs and features listing.',
+      COMMAND_ISSUES_DESCRIPTION_EXTENDED: 'List reported bugs and feature requests.',
+      COMMAND_ISSUES_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
+        List all active issues:
+        ${usage(prefix, '')}
+        List bugs:
+        ${usage(prefix, '--type bug')}
+        List deployed issues:
+        ${usage(prefix, '--state deploy')}
+      `,
+      COMMAND_ISSUES_RESPONSE_LIST_NO_ISSUES: 'There is no issue registered for the current filter.',
+      COMMAND_ISSUES_RESPONSE_LIST_TITLE: 'List of Issues'
     };
   }
 
