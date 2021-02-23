@@ -84,19 +84,21 @@ export default class IssueCommand extends Command {
   public async exec(message: Message, args: { title: string; description: string; state: IssueDocumentStatus; type: IssueDocumentType; list: boolean }) {
     const sanitized = args.title.replace(/^#?0*/, '');
     const issue = this.client.providers.issues.find(issue => issue.id === sanitized);
+    const stateIsSet = this.isFlagSet('state', message);
+    const typeIsSet = this.isFlagSet('type', message);
 
-    if (args.state && !this.client.isOwner(message.author)) {
+    if (stateIsSet && !this.client.isOwner(message.author)) {
       return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_STATE_OWNERS_ONLY'));
     }
 
     if (!issue) return this.createIssue(message, args.title, args.description, args.state, args.type);
 
-    if (args.type && !this.client.isOwner(message.author)) {
+    if (typeIsSet && !this.client.isOwner(message.author)) {
       return this.error(message, message.t('COMMAND_ISSUE_RESPONSE_CHANGE_TYPE_OWNERS_ONLY'));
     }
 
-    const state = this.isFlagSet('state', message) ? args.state : issue.status;
-    const type = this.isFlagSet('type', message) ? args.type : issue.type;
+    const state = stateIsSet ? args.state : issue.status;
+    const type = typeIsSet ? args.type : issue.type;
 
     return this.updateIssue(message, issue, args.description, state, type);
   }
