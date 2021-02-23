@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.4] - 2021-02-23
+
+### Fixed
+
+- Incorrect coordinates for dopple_village and breeder_village transports
+- Command `almanax`: revert translation scope back to command instead of message to handle the almanax task
+- Command `issue`: could not set initial type if author was not an owner
+
 ## [0.2.3] - 2021-02-22
 
 ### Fixed
@@ -165,7 +173,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Task `twitter`: fetch news from twitter in (almost) real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.3...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.4...HEAD
+[0.2.3]: https://github.com/brinkflew/krosmobot/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/brinkflew/krosmobot/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/brinkflew/krosmobot/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/brinkflew/krosmobot/compare/v0.2.0...v0.2.1
