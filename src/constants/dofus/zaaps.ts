@@ -114,14 +114,14 @@ export const ZAAPS = [
     type: 'stagecoach'
   },
   {
-    zone: 'dopple_village',
+    zone: 'breeder_village',
     x: -16,
     y: 1,
     world: 'main',
     type: 'zaap'
   },
   {
-    zone: 'breeder_village',
+    zone: 'dopple_village',
     x: -34,
     y: -8,
     world: 'main',
