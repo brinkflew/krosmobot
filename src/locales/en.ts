@@ -582,7 +582,7 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Sends a reminder containing 'Test' in 24 hours:
-        ${usage(prefix, 'remind 1d Test')}
+        ${usage(prefix, 'remind --time 1d Test')}
       `,
       COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME: 'Duration after which the reminder will be sent, number followed by a suffix (d = days, h = hours, m = minutes)',
       COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'text to send in the reminder',

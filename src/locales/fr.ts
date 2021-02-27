@@ -584,7 +584,7 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Envoie un rappel contenant 'Test' dans 24 heures :
-        ${usage(prefix, 'remind 1d Test')}
+        ${usage(prefix, 'remind --time 1d Test')}
       `,
       COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME: 'Durée après laquelle le rappel sera envoyé, un nombre suivit d\'un suffixe (j = jours, h = heures, m = minutes)',
       COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'Texte à envoyer dans le rappel',
