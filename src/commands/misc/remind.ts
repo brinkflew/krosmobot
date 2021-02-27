@@ -1,6 +1,6 @@
 import { Message } from 'discord.js';
 import { Command } from '@/structures';
-import { formatRelative } from '@/utils';
+import { formatDate } from '@/utils';
 import { TIME } from '@/constants';
 
 /**
@@ -18,12 +18,25 @@ export default class RemindCommand extends Command {
       },
       args: [
         {
-          id: 'time',
+          id: 'in',
           match: 'option',
-          flag: ['--time', '--in'],
+          flag: ['--in'],
           type: 'duration',
-          unordered: true,
-          description: 'COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME'
+          description: 'COMMAND_REMIND_DESCRIPTION_ARGUMENT_IN'
+        },
+        {
+          id: 'on',
+          match: 'option',
+          flag: ['--on'],
+          type: 'date',
+          description: 'COMMAND_REMIND_DESCRIPTION_ARGUMENT_ON'
+        },
+        {
+          id: 'at',
+          match: 'option',
+          flag: ['--at'],
+          type: 'time',
+          description: 'COMMAND_REMIND_DESCRIPTION_ARGUMENT_AT'
         },
         {
           id: 'text',
@@ -39,10 +52,26 @@ export default class RemindCommand extends Command {
    * Run the command
    * @param message Message received from Discord
    */
-  public async exec(message: Message, args: { time: number | null; text: string }) {
+  public async exec(message: Message, args: { in: number | null; on: number | null; at: number | null; text: string }) {
     if (typeof args.text !== 'string') return this.error(message, message.t('COMMAND_REMIND_RESPONSE_NO_CONTENT'));
-    if (typeof args.time !== 'number') args.time = TIME.MS_PER_DAY;
-    if (args.time < TIME.MS_PER_MINUTE) return this.error(message, message.t('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW'));
+    if (args.in && (args.on || args.at)) return this.error(message, message.t('COMMAND_REMIND_RESPONSE_INVALID_COMBINATION'));
+
+    let timestamp = 0;
+
+    if (args.on && args.at) {
+      timestamp = args.on + args.at;
+    } else if (args.on && !args.at) {
+      const now = new Date();
+      timestamp = args.on + ((now.getHours() - 1) * TIME.MS_PER_HOUR) + (now.getMinutes() * TIME.MS_PER_MINUTE);
+    } else if (!args.on && args.at) {
+      const now = new Date();
+      now.setHours(1, 0, 0, 0);
+      timestamp = args.at + now.valueOf();
+    } else {
+      timestamp = Date.now() + (args.in || TIME.MS_PER_DAY);
+    }
+
+    if (timestamp < Date.now() + TIME.MS_PER_MINUTE) return this.error(message, message.t('COMMAND_REMIND_RESPONSE_TIME_TOO_LOW'));
 
     const locale = this.getLocale(message);
     const doc = {
@@ -51,11 +80,11 @@ export default class RemindCommand extends Command {
       channel: message.channel.id,
       content: args.text,
       locale: locale.id,
-      timestamp: Date.now() + args.time
+      timestamp
     };
 
     void this.client.providers.reminders.update(message.id, doc);
-    return this.success(message, message.t('COMMAND_REMIND_RESPONSE_SUCCESS', formatRelative(args.time, locale)));
+    return this.success(message, message.t('COMMAND_REMIND_RESPONSE_SUCCESS', formatDate(timestamp, locale.id, true, 'both').slice(0, -3)));
   }
 
 }

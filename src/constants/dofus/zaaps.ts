@@ -581,6 +581,482 @@ export const ZAAPS = [
     y: -15,
     world: 'main',
     type: 'zaap'
+  },
+  {
+    zone: 'bonta_alchemists_workshop',
+    x: -29,
+    y: -53,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_carvers_workshop',
+    x: -28,
+    y: -61,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_farmers_workshop',
+    x: -29,
+    y: -50,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_fishermens_workshop',
+    x: -36,
+    y: -52,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_handymens_workshop',
+    x: -26,
+    y: -60,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_hunters_workshop',
+    x: -32,
+    y: -52,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_jewellers_workshop',
+    x: -34,
+    y: -61,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_miners_workshop',
+    x: -27,
+    y: -57,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_shoemakers_workshop',
+    x: -29,
+    y: -58,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_smithmagis_workshop',
+    x: -32,
+    y: -55,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_smiths_workshop',
+    x: -28,
+    y: -55,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_tailors_workshop',
+    x: -29,
+    y: -56,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_consumables_marketplace',
+    x: -30,
+    y: -60,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_creature_marketplace',
+    x: -36,
+    y: -56,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_equipment_marketplace',
+    x: -27,
+    y: -51,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_resource_marketplace',
+    x: -30,
+    y: -53,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_rune_marketplace',
+    x: -32,
+    y: -55,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_soul_marketplace',
+    x: -32,
+    y: -57,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_arena',
+    x: -32,
+    y: -57,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_atyu_sirviss_inn',
+    x: -29,
+    y: -57,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_bragutte_inn',
+    x: -34,
+    y: -60,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_bank',
+    x: -31,
+    y: -54,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_feubuk_inn',
+    x: -27,
+    y: -56,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_kikim_inn',
+    x: -34,
+    y: -50,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_library',
+    x: -33,
+    y: -58,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_market_place',
+    x: -32,
+    y: -54,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_militia',
+    x: -33,
+    y: -56,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_pinchaut_inn',
+    x: -28,
+    y: -50,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_profession_information_center',
+    x: -33,
+    y: -55,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_swashbuckler_inn',
+    x: -26,
+    y: -58,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_tower_of_bontarian_orders',
+    x: -34,
+    y: -57,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'bonta_woodenglas_inn',
+    x: -29,
+    y: -61,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_alchemists_workshop',
+    x: -23,
+    y: 40,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_carvers_workshop',
+    x: -21,
+    y: 40,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_farmers_workshop',
+    x: -23,
+    y: 32,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_fishermens_workshop',
+    x: -20,
+    y: 39,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_handymens_workshop',
+    x: -30,
+    y: 35,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_hunters_workshop',
+    x: -29,
+    y: 32,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_jewellers_workshop',
+    x: -28,
+    y: 39,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_miners_workshop',
+    x: -20,
+    y: 34,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_shoemakers_workshop',
+    x: -23,
+    y: 36,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_smithmagis_workshop',
+    x: -28,
+    y: 36,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_smiths_workshop',
+    x: -21,
+    y: 34,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_tailors_workshop',
+    x: -24,
+    y: 36,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_consumables_marketplace',
+    x: -27,
+    y: 32,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_creature_marketplace',
+    x: -32,
+    y: 37,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_equipment_marketplace',
+    x: -27,
+    y: 39,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_resource_marketplace',
+    x: -22,
+    y: 40,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_rune_marketplace',
+    x: -28,
+    y: 36,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_soul_marketplace',
+    x: -27,
+    y: 38,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_arena',
+    x: -27,
+    y: 38,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_atolmonds_inn',
+    x: -29,
+    y: 32,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_bank',
+    x: -27,
+    y: 35,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_burnt_cat_inn',
+    x: -26,
+    y: 41,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_bwork_inn',
+    x: -22,
+    y: 31,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_djaul_inn',
+    x: -24,
+    y: 37,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_exit',
+    x: -26,
+    y: 41,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_library',
+    x: -28,
+    y: 37,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_market_place',
+    x: -27,
+    y: 36,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_militia',
+    x: -26,
+    y: 36,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_misery_inn',
+    x: -22,
+    y: 39,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_profession_information_center',
+    x: -27,
+    y: 34,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_public_paddock',
+    x: -32,
+    y: 37,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'brakmar_tower_of_brakmarian_orders',
+    x: -26,
+    y: 34,
+    world: 'main',
+    type: 'zaapi'
+  },
+  {
+    zone: 'sufokia_jelly_quay',
+    x: 13,
+    y: 29,
+    world: 'main',
+    type: 'quay'
+  },
+  {
+    zone: 'sufokia_diy_quay',
+    x: 8,
+    y: 25,
+    world: 'main',
+    type: 'quay'
+  },
+  {
+    zone: 'sufokia_bandit_quay',
+    x: 15,
+    y: 22,
+    world: 'main',
+    type: 'quay'
+  },
+  {
+    zone: 'sufokia_temple_way_quay',
+    x: 22,
+    y: 23,
+    world: 'main',
+    type: 'quay'
   }
 ];
 

@@ -59,6 +59,8 @@ export default class FrenchLocale extends Locale {
       DOFUS_TRANSPORT_SCARPLANES: 'Scaéroplane',
       DOFUS_TRANSPORT_STAGECOACH: 'Diligence',
       DOFUS_TRANSPORT_ZAAP: 'Zaap',
+      DOFUS_TRANSPORT_ZAAPI: 'Zaapi',
+      DOFUS_TRANSPORT_QUAY: 'Quai',
 
       // Dofus Zones
       DOFUS_ZONE_HAKAM_TREE_CANOPY_VILLAGE: 'Village de la Canopée',
@@ -131,6 +133,74 @@ export default class FrenchLocale extends Locale {
       DOFUS_ZONE_MAIN_TEARS_OF_OURONIGRIDE: 'Larmes d\'Ouronigride',
       DOFUS_ZONE_MAIN_TURTLE_BEACH: 'Plage de la Tortue',
       DOFUS_ZONE_MAIN_VULKANIA_VILLAGE: 'Village de Vulkania',
+      DOFUS_ZONE_MAIN_BONTA_ALCHEMISTS_WORKSHOP: 'Bonta - Atelier des Alchimistes',
+      DOFUS_ZONE_MAIN_BONTA_CARVERS_WORKSHOP: 'Bonta - Atelier des Sculpteurs',
+      DOFUS_ZONE_MAIN_BONTA_FARMERS_WORKSHOP: 'Bonta -  Atelier des Paysans',
+      DOFUS_ZONE_MAIN_BONTA_FISHERMENS_WORKSHOP: 'Bonta - Atelier des Pêcheurs',
+      DOFUS_ZONE_MAIN_BONTA_HANDYMENS_WORKSHOP: 'Bonta - Atelier des Bricoleurs',
+      DOFUS_ZONE_MAIN_BONTA_HUNTERS_WORKSHOP: 'Bonta - Atelier des Chasseurs',
+      DOFUS_ZONE_MAIN_BONTA_JEWELLERS_WORKSHOP: 'Bonta - Atelier des Bijoutiers',
+      DOFUS_ZONE_MAIN_BONTA_MINERS_WORKSHOP: 'Bonta - Atelier des Mineurs',
+      DOFUS_ZONE_MAIN_BONTA_SHOEMAKERS_WORKSHOP: 'Bonta - Atelier des Cordonniers',
+      DOFUS_ZONE_MAIN_BONTA_SMITHMAGIS_WORKSHOP: 'Bonta - Atelier des Forgemages',
+      DOFUS_ZONE_MAIN_BONTA_SMITHS_WORKSHOP: 'Bonta - Atelier des Forgerons',
+      DOFUS_ZONE_MAIN_BONTA_TAILORS_WORKSHOP: 'Bonta - Atelier des Tailleurs',
+      DOFUS_ZONE_MAIN_BONTA_CONSUMABLES_MARKETPLACE: 'Bonta - Hôtel de Vente des Consommables',
+      DOFUS_ZONE_MAIN_BONTA_CREATURE_MARKETPLACE: 'Bonta - Hôtel de Vente des Créatures',
+      DOFUS_ZONE_MAIN_BONTA_EQUIPMENT_MARKETPLACE: 'Bonta - Hôtel de Vente des Équipements',
+      DOFUS_ZONE_MAIN_BONTA_RESOURCE_MARKETPLACE: 'Bonta - Hôtel de Vente des Ressources',
+      DOFUS_ZONE_MAIN_BONTA_RUNE_MARKETPLACE: 'Bonta - Hôtel de Vente des Runes',
+      DOFUS_ZONE_MAIN_BONTA_SOUL_MARKETPLACE: 'Bonta - Hôtel de Vente des Âmes',
+      DOFUS_ZONE_MAIN_BONTA_ARENA: 'Bonta - Arène',
+      DOFUS_ZONE_MAIN_BONTA_ATYU_SIRVISS_INN: 'Bonta - Taverne Alakarte',
+      DOFUS_ZONE_MAIN_BONTA_BRAGUTTE_INN: 'Bonta - Taverne de la Bragutte',
+      DOFUS_ZONE_MAIN_BONTA_BANK: 'Bonta - Banque',
+      DOFUS_ZONE_MAIN_BONTA_FEUBUK_INN: 'Bonta - Taverne du Feubuk',
+      DOFUS_ZONE_MAIN_BONTA_KIKIM_INN: 'Bonta - Taverne de la Tabasse',
+      DOFUS_ZONE_MAIN_BONTA_LIBRARY: 'Bonta - Bibliothèque',
+      DOFUS_ZONE_MAIN_BONTA_MARKET_PLACE: 'Bonta - Place Marchande',
+      DOFUS_ZONE_MAIN_BONTA_MILITIA: 'Bonta - Milice',
+      DOFUS_ZONE_MAIN_BONTA_PINCHAUT_INN: 'Bonta - Taverne du Pinchaut',
+      DOFUS_ZONE_MAIN_BONTA_PROFESSION_INFORMATION_CENTER: 'Bonta - Hôtel des Métiers',
+      DOFUS_ZONE_MAIN_BONTA_SWASHBUCKLER_INN: 'Bonta - Taverne du Ferayeur',
+      DOFUS_ZONE_MAIN_BONTA_TOWER_OF_BONTARIAN_ORDERS: 'Bonta - Tours des Ordres',
+      DOFUS_ZONE_MAIN_BONTA_WOODENGLAS_INN: 'Bonta - Taverne de la Chopenbois',
+      DOFUS_ZONE_MAIN_BRAKMAR_ALCHEMISTS_WORKSHOP: 'Brâkmar - Atelier des Alchimistes',
+      DOFUS_ZONE_MAIN_BRAKMAR_CARVERS_WORKSHOP: 'Brâkmar - Atelier des Sculpteurs',
+      DOFUS_ZONE_MAIN_BRAKMAR_FARMERS_WORKSHOP: 'Brâkmar -  Atelier des Paysans',
+      DOFUS_ZONE_MAIN_BRAKMAR_FISHERMENS_WORKSHOP: 'Brâkmar Atelier des Pêcheurs',
+      DOFUS_ZONE_MAIN_BRAKMAR_HANDYMENS_WORKSHOP: 'Brâkmar Atelier des Bricoleurs',
+      DOFUS_ZONE_MAIN_BRAKMAR_HUNTERS_WORKSHOP: 'Brâkmar - Atelier des Chasseurs',
+      DOFUS_ZONE_MAIN_BRAKMAR_JEWELLERS_WORKSHOP: 'Brâkmar - Atelier des Bijoutiers',
+      DOFUS_ZONE_MAIN_BRAKMAR_MINERS_WORKSHOP: 'Brâkmar - Atelier des Mineurs',
+      DOFUS_ZONE_MAIN_BRAKMAR_SHOEMAKERS_WORKSHOP: 'Brâkmar - Atelier des Cordonniers',
+      DOFUS_ZONE_MAIN_BRAKMAR_SMITHMAGIS_WORKSHOP: 'Brâkmar Atelier des Forgemages',
+      DOFUS_ZONE_MAIN_BRAKMAR_SMITHS_WORKSHOP: 'Brâkmar - Atelier des Forgerons',
+      DOFUS_ZONE_MAIN_BRAKMAR_TAILORS_WORKSHOP: 'Brâkmar - Atelier des Tailleurs',
+      DOFUS_ZONE_MAIN_BRAKMAR_CONSUMABLES_MARKETPLACE: 'Brâkmar - Hôtel de Vente des Consommables',
+      DOFUS_ZONE_MAIN_BRAKMAR_CREATURE_MARKETPLACE: 'Brâkmar - Hôtel de Vente des Créatures',
+      DOFUS_ZONE_MAIN_BRAKMAR_EQUIPMENT_MARKETPLACE: 'Brâkmar - Hôtel de Vente des Équipements',
+      DOFUS_ZONE_MAIN_BRAKMAR_RESOURCE_MARKETPLACE: 'Brâkmar - Hôtel de Vente des Ressources',
+      DOFUS_ZONE_MAIN_BRAKMAR_RUNE_MARKETPLACE: 'Brâkmar - Hôtel de Vente des Runes',
+      DOFUS_ZONE_MAIN_BRAKMAR_SOUL_MARKETPLACE: 'Brâkmar - Hôtel de Vente des Âmes',
+      DOFUS_ZONE_MAIN_BRAKMAR_ARENA: 'Brâkmar - Arène',
+      DOFUS_ZONE_MAIN_BRAKMAR_ATOLMONDS_INN: 'Brâkmar - Taverne Atolmond',
+      DOFUS_ZONE_MAIN_BRAKMAR_BANK: 'Brakmar - Banque',
+      DOFUS_ZONE_MAIN_BRAKMAR_BURNT_CAT_INN: 'Brâkmar - Taverne du Chabrulé',
+      DOFUS_ZONE_MAIN_BRAKMAR_BWORK_INN: 'Brâkmar - Taverne du Bwork',
+      DOFUS_ZONE_MAIN_BRAKMAR_DJAUL_INN: 'Brâkmar - Taverne de Djaul',
+      DOFUS_ZONE_MAIN_BRAKMAR_EXIT: 'Brâkmar - Sortie',
+      DOFUS_ZONE_MAIN_BRAKMAR_LIBRARY: 'Brâkmar - Bibliothèque',
+      DOFUS_ZONE_MAIN_BRAKMAR_MARKET_PLACE: 'Brâkmar - Place Marchande',
+      DOFUS_ZONE_MAIN_BRAKMAR_MILITIA: 'Brâkmar - Milice',
+      DOFUS_ZONE_MAIN_BRAKMAR_MISERY_INN: 'Brâkmar - Taverne de la Misère',
+      DOFUS_ZONE_MAIN_BRAKMAR_PROFESSION_INFORMATION_CENTER: 'Brâkmar - Hôtel des Métiers',
+      DOFUS_ZONE_MAIN_BRAKMAR_PUBLIC_PADDOCK: 'Brâkmar - Enclos Public',
+      DOFUS_ZONE_MAIN_BRAKMAR_TOWER_OF_BRAKMARIAN_ORDERS: 'Brâkmar - Tour de Brâkmar',
+      DOFUS_ZONE_MAIN_SUFOKIA_JELLY_QUAY: 'Sufokia - Quai des Gelées',
+      DOFUS_ZONE_MAIN_SUFOKIA_DIY_QUAY: 'Sufokia - Quai de la Bricole',
+      DOFUS_ZONE_MAIN_SUFOKIA_BANDIT_QUAY: 'Sufokia - Quai des Bandits',
+      DOFUS_ZONE_MAIN_SUFOKIA_TEMPLE_WAY_QUAY: 'Sufokia - Quai de la Voie du Temple',
 
       // TWITTER Task
       TASK_TWITTER_ORIGINAL_TWEET: 'Ouvrir l\'original',
@@ -296,7 +366,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message envoyé dans le channel **#${channel}**`,
 
       // ALMANAX Command
-      COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Récupères l\'almanax du jour.',
+      COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Récupère l\'almanax du jour.',
       COMMAND_ALMANAX_DESCRIPTION_EXTENDED: stripIndent`
         ${oneLine`
           Affiche les détails de l'almanax du jour, ses bonus et l'offrande à apporter au temple afin d'accomplir
@@ -316,7 +386,7 @@ export default class FrenchLocale extends Locale {
         Afficher l'almanax d'il y a trois jours :
         ${usage(prefix, 'almanax -3')}
         Afficher plus de détails pour l'almanax de la semaine prochaine :
-        ${usage(prefix, 'almanax details +7')}
+        ${usage(prefix, 'almanax --detail +7')}
       `,
       COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_EXTENDED: 'Affiche la version étendue',
       COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_OFFSET: 'Date ou nombre de jours à ajouter par rapport à la date du jour',
@@ -584,14 +654,19 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Envoie un rappel contenant 'Test' dans 24 heures :
-        ${usage(prefix, 'remind 1d Test')}
+        ${usage(prefix, 'remind --in 1d Test')}
+        Envoie un rappel contenant 'Test' le 12 février à 8:30 au matin:
+        ${usage(prefix, 'remind --on 12/02 --at 8:30 Test')}
       `,
-      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME: 'Durée après laquelle le rappel sera envoyé, un nombre suivit d\'un suffixe (j = jours, h = heures, m = minutes)',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_IN: 'Durée après laquelle le rappel sera envoyé, un nombre suivit d\'un suffixe (j = jours, h = heures, m = minutes)',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_ON: 'Date à laquelle le rappel sera envoyé, peut être combiné avec `--at`',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_AT: 'Heure à laquelle le rappel sera envoyé, peut être combiné avec `--on`',
       COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'Texte à envoyer dans le rappel',
+      COMMAND_REMIND_RESPONSE_INVALID_COMBINATION: 'L\'option `--in` ne peut pas être utilisée simultanément avec les options `--on` et/ou `--at`.',
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'Le rappel nécessite un contenu à envoyer.',
-      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'Le temps avant l\'envoi du rappel ne peut pas être plus petit que 1 minute.',
-      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `Un rappel sera envoyé dans ${time}`,
-      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`,
+      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'Le rappel doit être planifié au moins une minute dans le futur.',
+      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `Un rappel sera envoyé le ${time}.`,
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author}\n**Rappel :** ${content}`,
 
       // ABOUT Command
       COMMAND_ABOUT_DESCRIPTION_SHORT: `A propos du bot.'`,
@@ -621,7 +696,7 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_ABOUT_RESPONSE_INVITE_TITLE: 'Ajoutez-moi à votre serveur',
       COMMAND_ABOUT_RESPONSE_INVITE_CONTENT: (invite: string) => oneLine`
-        Je peut être invité sur n'importe quel serveur Discord au moyen de ce [lien](${invite}).
+        Je peux être invité sur n'importe quel serveur Discord au moyen de ce [lien](${invite}).
       `,
       COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE: 'Vous m\'offrez un café ?',
       COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT: oneLine`
@@ -715,9 +790,9 @@ export default class FrenchLocale extends Locale {
         Liste les tickets actifs :
         ${usage(prefix, '')}
         Liste les bugs :
-        ${usage(prefix, '--type bug')}
+        ${usage(prefix, 'issues --type bug')}
         List les tickets déployés :
-        ${usage(prefix, '--state deploy')}
+        ${usage(prefix, 'issues --state deploy')}
       `,
       COMMAND_ISSUES_RESPONSE_LIST_NO_ISSUES: 'Il n\'y a pas de ticket enregistré correspondant au filtre actuel.',
       COMMAND_ISSUES_RESPONSE_LIST_TITLE: 'Liste des Tickets'

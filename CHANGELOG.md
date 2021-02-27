@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.5] - 2021-02-27
+
+### Added
+
+- Argument `time`: parse hours, minutes and seconds from string
+- Argument `date`: parse date, month and year from string
+
+### Changed
+
+- Command `zaap`: match coordinates containing whitespace characters
+- Command `zaap`: add support for city zaapis and sufokian quays
+- Command `remind`: Allow setting specific date and time
+
+### Fixed
+
+- Command `almanax`: typo in help's translations
+- Command `about`: typo in translations
+- Command `issue`: missing command's name in help's examples
+- Command `remind`: Missing flag `--time` in examples
+
 ## [0.2.4] - 2021-02-23
 
 ### Fixed
@@ -175,7 +195,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Task `almanax`: automatically fetch the [almanax](http://www.krosmoz.com/en/almanax) of the day at midnight
 - Task `twitter`: fetch news from twitter in (almost) real-time
 
-[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.4...HEAD
+[unreleased]: https://github.com/brinkflew/krosmobot/compare/v0.2.5...HEAD
+[0.2.3]: https://github.com/brinkflew/krosmobot/compare/v0.2.4...v0.2.5
 [0.2.3]: https://github.com/brinkflew/krosmobot/compare/v0.2.3...v0.2.4
 [0.2.3]: https://github.com/brinkflew/krosmobot/compare/v0.2.2...v0.2.3
 [0.2.2]: https://github.com/brinkflew/krosmobot/compare/v0.2.1...v0.2.2

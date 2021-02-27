@@ -20,7 +20,7 @@ export default class ZaapCommand extends Command {
         {
           id: 'coords',
           type: 'dofusCoordinates',
-          match: 'phrase',
+          match: 'rest',
           description: 'COMMAND_ZAAP_DESCRIPTION_ARGUMENT_COORDINATES'
         }
       ]
