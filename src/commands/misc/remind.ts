@@ -65,7 +65,7 @@ export default class RemindCommand extends Command {
       timestamp = args.on + ((now.getHours() - 1) * TIME.MS_PER_HOUR) + (now.getMinutes() * TIME.MS_PER_MINUTE);
     } else if (!args.on && args.at) {
       const now = new Date();
-      now.setHours(0, 0, 0, 0);
+      now.setHours(1, 0, 0, 0);
       timestamp = args.at + now.valueOf();
     } else {
       timestamp = Date.now() + (args.in || TIME.MS_PER_DAY);
