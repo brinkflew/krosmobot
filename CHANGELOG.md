@@ -7,16 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Argument `time`: parse hours, minutes and seconds from string
+- Argument `date`: parse date, month and year from string
+
 ### Changed
 
 - Command `zaap`: match coordinates containing whitespace characters
 - Command `zaap`: add support for city zaapis and sufokian quays
+- Command `remind`: Allow setting specific date and time
 
 ### Fixed
 
 - Command `almanax`: typo in help's translations
 - Command `about`: typo in translations
 - Command `issue`: missing command's name in help's examples
+- Command `remind`: Missing flag `--time` in examples
 
 ## [0.2.4] - 2021-02-23
 

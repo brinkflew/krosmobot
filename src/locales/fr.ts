@@ -654,14 +654,19 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Envoie un rappel contenant 'Test' dans 24 heures :
-        ${usage(prefix, 'remind 1d Test')}
+        ${usage(prefix, 'remind --in 1d Test')}
+        Envoie un rappel contenant 'Test' le 12 février à 8:30 au matin:
+        ${usage(prefix, 'remind --on 12/02 --at 8:30 Test')}
       `,
-      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME: 'Durée après laquelle le rappel sera envoyé, un nombre suivit d\'un suffixe (j = jours, h = heures, m = minutes)',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_IN: 'Durée après laquelle le rappel sera envoyé, un nombre suivit d\'un suffixe (j = jours, h = heures, m = minutes)',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_ON: 'Date à laquelle le rappel sera envoyé, peut être combiné avec `--at`',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_AT: 'Heure à laquelle le rappel sera envoyé, peut être combiné avec `--on`',
       COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'Texte à envoyer dans le rappel',
+      COMMAND_REMIND_RESPONSE_INVALID_COMBINATION: 'L\'option `--in` ne peut pas être utilisée simultanément avec les options `--on` et/ou `--at`.',
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'Le rappel nécessite un contenu à envoyer.',
-      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'Le temps avant l\'envoi du rappel ne peut pas être plus petit que 1 minute.',
-      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `Un rappel sera envoyé dans ${time}`,
-      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Rappel :** ${content}`,
+      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'Le rappel doit être planifié au moins une minute dans le futur.',
+      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `Un rappel sera envoyé le ${time}.`,
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author}\n**Rappel :** ${content}`,
 
       // ABOUT Command
       COMMAND_ABOUT_DESCRIPTION_SHORT: `A propos du bot.'`,
