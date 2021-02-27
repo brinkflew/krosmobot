@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Argument `time`: parse hours, minutes and seconds from string
+- Argument `date`: parse date, month and year from string
+
 ### Fixed
 
 - Command `remind`: Missing flag `--time` in examples
