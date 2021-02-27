@@ -312,7 +312,7 @@ export default class EnglishLocale extends Locale {
         Display the almanax from 3 days ago:
         ${usage(prefix, 'almanax -3')}
         display details of the almanax for next week:
-        ${usage(prefix, 'almanax details +7')}
+        ${usage(prefix, 'almanax --detail +7')}
       `,
       COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_EXTENDED: 'Display the extended version',
       COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_OFFSET: 'Date or number of days to add to the current date',
