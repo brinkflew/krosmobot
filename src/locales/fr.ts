@@ -621,7 +621,7 @@ export default class FrenchLocale extends Locale {
       `,
       COMMAND_ABOUT_RESPONSE_INVITE_TITLE: 'Ajoutez-moi à votre serveur',
       COMMAND_ABOUT_RESPONSE_INVITE_CONTENT: (invite: string) => oneLine`
-        Je peut être invité sur n'importe quel serveur Discord au moyen de ce [lien](${invite}).
+        Je peux être invité sur n'importe quel serveur Discord au moyen de ce [lien](${invite}).
       `,
       COMMAND_ABOUT_RESPONSE_SUPPORT_TITLE: 'Vous m\'offrez un café ?',
       COMMAND_ABOUT_RESPONSE_SUPPORT_CONTENT: oneLine`
