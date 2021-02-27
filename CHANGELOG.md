@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Command `zaap`: match coordinates containing whitespace characters
+- Command `zaap`: add support for city zaapis and sufokian quays
 
 ## [0.2.4] - 2021-02-23
 
