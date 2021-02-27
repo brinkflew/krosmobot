@@ -366,7 +366,7 @@ export default class FrenchLocale extends Locale {
       COMMAND_ECHO_RESPONSE_SENT: (channel: string) => `Message envoyé dans le channel **#${channel}**`,
 
       // ALMANAX Command
-      COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Récupères l\'almanax du jour.',
+      COMMAND_ALMANAX_DESCRIPTION_SHORT: 'Récupère l\'almanax du jour.',
       COMMAND_ALMANAX_DESCRIPTION_EXTENDED: stripIndent`
         ${oneLine`
           Affiche les détails de l'almanax du jour, ses bonus et l'offrande à apporter au temple afin d'accomplir
@@ -386,7 +386,7 @@ export default class FrenchLocale extends Locale {
         Afficher l'almanax d'il y a trois jours :
         ${usage(prefix, 'almanax -3')}
         Afficher plus de détails pour l'almanax de la semaine prochaine :
-        ${usage(prefix, 'almanax details +7')}
+        ${usage(prefix, 'almanax --detail +7')}
       `,
       COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_EXTENDED: 'Affiche la version étendue',
       COMMAND_ALMANAX_DESCRIPTION_ARGUMENT_OFFSET: 'Date ou nombre de jours à ajouter par rapport à la date du jour',

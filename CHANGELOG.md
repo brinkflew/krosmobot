@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Command `zaap`: match coordinates containing whitespace characters
 - Command `zaap`: add support for city zaapis and sufokian quays
 
+### Fixed
+
+- Locales: typos in `almanax` command's help
+
 ## [0.2.4] - 2021-02-23
 
 ### Fixed
