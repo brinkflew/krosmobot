@@ -19,21 +19,21 @@ export const time = (client: Client) => describe('Time', () => {
   it('should parse a single number as hours', async () => {
     const args = await Argument.cast('time', client.commands.resolver, message, '08');
     const date = new Date(0);
-    date.setHours(9, 0, 0, 0);
+    date.setHours(8, 0, 0, 0);
     expect(args).toEqual(date.valueOf());
   });
 
   it('should parse two numbers as hours and minutes', async () => {
     const args = await Argument.cast('time', client.commands.resolver, message, '08h30');
     const date = new Date(0);
-    date.setHours(9, 30, 0, 0);
+    date.setHours(8, 30, 0, 0);
     expect(args).toEqual(date.valueOf());
   });
 
   it('should parse three numbers as a hours, minutes and seconds', async () => {
     const args = await Argument.cast('time', client.commands.resolver, message, '8:30:15');
     const date = new Date(0);
-    date.setHours(9, 30, 15, 0);
+    date.setHours(8, 30, 15, 0);
     expect(args).toEqual(date.valueOf());
   });
 
