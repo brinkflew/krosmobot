@@ -785,9 +785,9 @@ export default class FrenchLocale extends Locale {
         Liste les tickets actifs :
         ${usage(prefix, '')}
         Liste les bugs :
-        ${usage(prefix, '--type bug')}
+        ${usage(prefix, 'issues --type bug')}
         List les tickets déployés :
-        ${usage(prefix, '--state deploy')}
+        ${usage(prefix, 'issues --state deploy')}
       `,
       COMMAND_ISSUES_RESPONSE_LIST_NO_ISSUES: 'Il n\'y a pas de ticket enregistré correspondant au filtre actuel.',
       COMMAND_ISSUES_RESPONSE_LIST_TITLE: 'Liste des Tickets'
