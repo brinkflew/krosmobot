@@ -582,14 +582,19 @@ export default class EnglishLocale extends Locale {
       `,
       COMMAND_REMIND_DESCRIPTION_EXAMPLE: (prefix: string) => stripIndent`
         Sends a reminder containing 'Test' in 24 hours:
-        ${usage(prefix, 'remind --time 1d Test')}
+        ${usage(prefix, 'remind --in 1d Test')}
+        Sends a reminder containing 'Test' on 12 of February at 8:30 in the morning:
+        ${usage(prefix, 'remind --on 12/02 --at 8:30 Test')}
       `,
-      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TIME: 'Duration after which the reminder will be sent, number followed by a suffix (d = days, h = hours, m = minutes)',
-      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'text to send in the reminder',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_IN: 'Duration after which the reminder will be sent, number followed by a suffix (d = days, h = hours, m = minutes)',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_ON: 'Date on which the reminder will be sent, can be combined with `--at`',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_AT: 'Time at which the reminder will be sent, can be combined with `--on`',
+      COMMAND_REMIND_DESCRIPTION_ARGUMENT_TEXT: 'Text to send in the reminder',
       COMMAND_REMIND_RESPONSE_NO_CONTENT: 'The reminder requires content to send.',
-      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'The time before sending the reminder cannot be lesser than 1 minute.',
-      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `A reminder will be sent in ${time}`,
-      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author} **Reminder:** ${content}`,
+      COMMAND_REMIND_RESPONSE_INVALID_COMBINATION: 'Option `--in` cannot be used simultaneously to options `--on` and/or `--at`.',
+      COMMAND_REMIND_RESPONSE_TIME_TOO_LOW: 'The reminder must be planned for a least 1 minute in the future.',
+      COMMAND_REMIND_RESPONSE_SUCCESS: (time: string) => `A reminder will be sent on ${time}.`,
+      COMMAND_REMIND_RESPONSE_PROCESSED: (content: string, author: string) => `${author}\n**Reminder:** ${content}`,
 
       // ABOUT Command
       COMMAND_ABOUT_DESCRIPTION_SHORT: 'About this bot.',

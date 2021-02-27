@@ -20,7 +20,7 @@ export const date = (_message: Message, phrase: string) => {
     datetime.setFullYear(year);
   }
 
-  if (matches[5]) datetime.setMonth(parseInt(matches[5], 10));
+  if (matches[5]) datetime.setMonth(parseInt(matches[5], 10) - 1);
   if (matches[1]) datetime.setDate(parseInt(matches[1], 10));
   return datetime.valueOf();
 };

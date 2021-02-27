@@ -28,7 +28,7 @@ export const date = (client: Client) => describe('Date', () => {
     const args = await Argument.cast('date', client.commands.resolver, message, '08/10');
     const date = new Date();
     date.setHours(1, 0, 0, 0);
-    date.setMonth(10, 8);
+    date.setMonth(9, 8);
     expect(args).toEqual(date.valueOf());
   });
 
@@ -36,7 +36,7 @@ export const date = (client: Client) => describe('Date', () => {
     const args = await Argument.cast('date', client.commands.resolver, message, '08/10/2025');
     const date = new Date();
     date.setHours(1, 0, 0, 0);
-    date.setFullYear(2025, 10, 8);
+    date.setFullYear(2025, 9, 8);
     expect(args).toEqual(date.valueOf());
   });
 
@@ -44,7 +44,7 @@ export const date = (client: Client) => describe('Date', () => {
     const args = await Argument.cast('date', client.commands.resolver, message, '08/10/25');
     const date = new Date();
     date.setHours(1, 0, 0, 0);
-    date.setFullYear(2025, 10, 8);
+    date.setFullYear(2025, 9, 8);
     expect(args).toEqual(date.valueOf());
   });
 

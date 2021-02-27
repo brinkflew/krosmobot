@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Argument `time`: parse hours, minutes and seconds from string
 - Argument `date`: parse date, month and year from string
 
+### Changed
+
+- Command `remind`: Allow setting specific date and time
+
 ### Fixed
 
 - Command `remind`: Missing flag `--time` in examples
